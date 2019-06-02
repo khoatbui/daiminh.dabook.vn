@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    }
+    .header-logo img {
+    height: 50px;
+    }
+    /*========================
+    BODY 
+    ========================*/
+    body {
+    background-color: aliceblue;
+    }
+    /*========================
+    HEADER 
+    ========================*/
+    #i-header {
+    background-color: #fff;
+    }
+    /*========================
+    CONTENT 
+    ========================*/
+    /*========================
+    SIDEBAR
+    
+    ========================*/
+    /*========================
+    FOOTER 
+    ========================*/
+    /*========================
+    RESPONSIVE 
+    ========================*/
+    /* Extra small devices (portrait phones, less than 576px)*/
+    @media (max-width: 575.98px) {
+    .main{
+    margin-left :10px;
+    margin-right :10px;
+    box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15);
+    border-radius: 6px !important;
+    }
+    .image-des {
+    height: 150px;
+    max-height: 150px;
+    min-height: 150px;
+    }
+    .app-download {
+    height: 150px;
+    margin-top: 80px;
+    }
+    .app-download-image {
+    height: 250px;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%);
+    }
+    .app-download-barcode{
+    height: 50px;
+    }
+    .app-download-action h3{
+    font-size: 1rem;
+    color: rgb(60, 72, 88);
+    display: inline-block;
+    }
+    .app-download-row{
+    position: relative;
+    }
+    .app-download-action{
+    background-color: #FFF;
+    display: inline-block;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translate(-50%);
+    width: auto;
+    height: auto;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    }
+    .app-download-action>.row{
+    display: inline-block !important;
+    white-space: nowrap;
+    }
+    .app-download-button button{
+    padding: 5px;
+    } 
+    .app-download-button button span{
+    font-size: 0.7rem !important;
+    }
+    .app-download-button button i{
+    font-size: 1rem !important;
+    }
+    .fly-margin-component {
+    margin: 0 !important;
+    }
+    .btn-search-fly{
+    flex-grow: 1;
+    }
+    }
+    /*Small devices (landscape phones, 576px and up)*/
+    @media (min-width: 576px) and (max-width: 767.98px) {
+    .main{
+    margin-left :10px;
+    margin-right :10px;
+    box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15);
+    border-radius: 6px !important;
+    }
+    .image-des {
+    height: 170px;
+    max-height: 170px;
+    min-height: 170px;
+    }
+    .pl-10 {
+    padding-left: 3rem !important;
+    }
+    .pr-10 {
+    padding-right: 3rem !important;
+    }
+    .app-download {
+    height: 150px;
+    margin-top: 80px;
+    }
+    .app-download-image {
+    height: 250px;
+    bottom: 0px;
+    }
+    .app-download-barcode{
+    height: 60px;
+    }
+    .app-download-action h3{
+    font-size: 1rem;
+    color: rgb(60, 72, 88);
+    display: inline-block;
+    }
+    .app-download-row{
+    position: relative;
+    }
+    .app-download-action{
+    background-color: #FFF;
+    display: inline-block;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(0%,50%);
+    width: auto;
+    height: auto;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    }
+    .app-download-action>.row{
+    display: inline-block !important;
+    }
+    .app-download-button button{
+    padding: 5px;
+    }
+    .app-download-button button span{
+    font-size: 0.7rem !important;
+    }
+    .app-download-button button i{
+    font-size: 1rem !important;
+    }
+    .fly-margin-component {
+    margin: 0 !important;
+    }
+    }
+    /* Medium devices (tablets, 768px and up)*/
+    @media (min-width: 768px) and (max-width: 991.98px) {
+    .image-des {
+    height: 150px;
+    max-height: 200px;
+    min-height: 200px;
+    }
+    .pl-10 {
+    padding-left: 8rem !important;
+    }
+    .pr-10 {
+    padding-right: 8rem !important;
+    }
+    .app-download {
+    height: 200px;
+    margin-top: 80px;
+    }
+    .app-download-image {
+    height: 300px;
+    bottom: 0px;
+    }
+    .app-download-barcode{
+    height: 70px;
+    }
+    .app-download-button button{
+    padding: 10px;
+    }
+    .app-download-button button span{
+    font-size: 1rem !important;
+    }
+    .app-download-button button i{
+    font-size: 1.5rem !important;
+    }
+    .m-md-4 {
+    margin: 1.5rem !important;
+    }
+    .m-sm-2 {
+    margin: 0;
+    }
+    }
+    /* Large devices (desktops, 992px and up)*/
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+    .image-des {
+    height: 200px;
+    max-height: 200px;
+    min-height: 200px;
+    }
+    .pl-10 {
+    padding-left: 15rem !important;
+    }
+    .pr-10 {
+    padding-right: 15rem !important;
+    }
+    .app-download {
+    height: 250px;
+    margin-top: 80px;
+    }
+    .app-download-image {
+    height: 350px;
+    bottom: 0px;
+    }
+    .app-download-barcode{
+    height: 80px;
+    }
+    .app-download-button button span{
+    font-size: 1rem !important;
+    }
+    .app-download-button button i{
+    font-size: 1.5rem !important;
+    }
+    .fly-margin-component {
+    margin: 1.5rem !important;
+    }
+    }
+    /* Extra large devices (large desktops, 1200px and up)*/
+    @media (min-width: 1200px) {
+    .image-des {
+    height: 200px;
+    max-height: 200px;
+    min-height: 200px;
+    }
+    .pl-10 {
+    padding-left: 15rem !important;
+    }
+    .pr-10 {
+    padding-right: 15rem !important;
+    }
+    .app-download {
+    height: 300px;
+    margin-top: 80px;
+    }
+    .app-download-image {
+    height: 400px;
+    bottom: 0px;
+    }
+    .app-download-barcode{
+    height: 90px;
+    }
+    .app-download-button button span{
+    font-size: 1rem !important;
+    }
+    .app-download-button button i{
+    font-size: 2rem !important;
+    }
+    .fly-margin-component {
+    margin: 1.5rem !important;
+    }
+    }

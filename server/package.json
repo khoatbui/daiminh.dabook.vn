@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server trang web du lich Dai Minh",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vankhoat.bui",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
