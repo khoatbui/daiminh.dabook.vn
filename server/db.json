@@ -1,0 +1,152 @@
+{
+    "area":[
+        {
+            "areaId":"IN",
+            "areaName":"Tour trong nước"
+        },
+        {
+            "areaId":"OUT",
+            "areaName":"Tour nước ngoài"
+        }
+    ],
+    "destination":[
+        {
+            "areaId":"IN",
+            "destinationId":"INHN",
+            "destinationName":"Hà Nội",
+            "isHot":"1"
+        },
+        {
+            "areaId":"IN",
+            "destinationId":"INMB",
+            "destinationName":"Miền Bắc",
+            "isHot":"1"
+        },
+        {
+            "areaId":"IN",
+            "destinationId":"INMT",
+            "destinationName":"Miền Trung",
+            "isHot":"0"
+        },
+        {
+            "areaId":"IN",
+            "destinationId":"INHCM",
+            "destinationName":"Hồ Chí Minh",
+            "isHot":"1"
+        },
+        {
+            "areaId":"IN",
+            "destinationId":"INMK",
+            "destinationName":"Mê Kông",
+            "isHot":"0"
+        },
+        {
+            "areaId":"OUT",
+            "destinationId":"OUTHQ",
+            "destinationName":"Hàn Quốc",
+            "isHot":"1"
+        },
+        {
+            "areaId":"OUT",
+            "destinationId":"OUTNB",
+            "destinationName":"Nhật Bản",
+            "isHot":"1"
+        },
+        {
+            "areaId":"OUT",
+            "destinationId":"OUTTL",
+            "destinationName":"Thái Lan",
+            "isHot":"0"
+        },
+        {
+            "areaId":"OUT",
+            "destinationId":"OUTAM",
+            "destinationName":"Âu Mỹ",
+            "isHot":"0"
+        }
+    ],
+    "city":[
+        {
+            "areaId":"OUT",
+            "destinationId":"",
+            "cityId":"",
+            "cityName":""
+        }
+    ],
+    "travelStyle":[
+        {
+            "travelStyleId":"",
+            "travelStyleName":"",
+            "travelStyleImg":""
+        }
+    ],
+    "tourList":[
+        {
+            "destinationId":"",
+            "travelStyleId":"",
+            "cityId":"",
+            "tourId":"HL01",
+            "tourName":"HA LONG => QUANG NINH 1 NGAY 1 DEM",
+            "tourOveview":"",
+            "from":"",
+            "to":"",
+            "startDay":"",
+            "endDay":"",
+            "img":"",
+            "price":"",
+            "unitType":"",
+            "link":"",
+            "tags":"",
+            "voteStatus":"",
+            "voteScore":"",
+            "day":"",
+            "discount":"",
+            "creator":"",
+            "createDate":""
+        }
+    ],
+    "tourDetail":[
+        {
+            "tourId":"HL01",
+            "carolImg":"",
+            "subImg":"",
+            "program":"",
+            "priceDetail":"",
+            "serviceInclude":"",
+            "serviceNotInclude":"",
+            "shouldTake":""
+        }
+    ],
+    "serviceInclude":[
+        {
+            "serviceId":"",
+            "serviceName":""
+        }
+    ],
+    "payments":[
+        {
+            "bankName":"",
+            "bankLogo":"",
+            "bankOwner":"",
+            "bankAccount":"",
+            "bankLocation":"",
+            "note":""
+        }
+    ],
+    "order":[
+        {
+            "customerName":"",
+            "customerPhone":"",
+            "customerMail":"",
+            "customerAddress":"",
+            "customerCompany":"",
+            "departureDay":"",
+            "quantity":"",
+            "invoiceCompanyName":"",
+            "taxCode":"",
+            "companyAddress":"",
+            "invoiceAddress":"",
+            "note":""
+        }
+    ]
+}
