@@ -9,7 +9,7 @@
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
         </template>
         <v-card>
-          <v-card-title class="pink white--text">
+          <v-card-title>
             <span class="headline">{{ formTitle }}</span>
           </v-card-title>
 
@@ -65,56 +65,10 @@
                   <v-text-field v-model="editedItem.to" label="To"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-dialog
-                    ref="dialog"
-                    v-model="startDateModal"
-                    :return-value.sync="date"
-                    persistent
-                    lazy
-                    full-width
-                    width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field
-                        v-model="editedItem.startDate"
-                        label="Start Date"
-                        prepend-icon="event"
-                        readonly
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="editedItem.startDate" scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="startDateModal = false">Cancel</v-btn>
-                      <v-btn flat color="primary" @click="$refs.dialog.save(editedItem.startDate);startDateModal = false">OK</v-btn>
-                    </v-date-picker>
-                  </v-dialog>
+                  <v-text-field v-model="editedItem.startDate" label="StartDate"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-dialog
-                    ref="dialog"
-                    v-model="endDateModal"
-                    :return-value.sync="date"
-                    persistent
-                    lazy
-                    full-width
-                    width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field
-                        v-model="editedItem.endDate"
-                        label="End Date"
-                        prepend-icon="event"
-                        readonly
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="editedItem.endDate" scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="endDateModal = false">Cancel</v-btn>
-                      <v-btn flat color="primary" @click="$refs.dialog.save(editedItem.endDate)">OK</v-btn>
-                    </v-date-picker>
-                  </v-dialog>
+                  <v-text-field v-model="editedItem.endDate" label="EndDate"></v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md4>
@@ -218,9 +172,6 @@ const AXIOS = axios.create({
 });
 export default {
   data: () => ({
-    date: new Date().toISOString().substr(0, 10),
-    startDateModal: false,
-    endDateModal: false,
     dialog: false,
     headers: [
       {
@@ -261,9 +212,9 @@ export default {
     ],
     editedIndex: -1,
     editedItem: {
-      destinationId: "",
-      travelStyleId: "",
-      cityId: "",
+      destinationId:"",
+      travelStyleId:"",
+      cityId:"",
       tourId: "",
       tourName: "",
       tourOveview: "",
@@ -280,12 +231,12 @@ export default {
       voteScore: "",
       day: "",
       discount: "",
-      lang: ""
+      lang:""
     },
     defaultItem: {
-      destinationId: "",
-      travelStyleId: "",
-      cityId: "",
+      destinationId:"",
+      travelStyleId:"",
+      cityId:"",
       tourId: "",
       tourName: "",
       tourOveview: "",
@@ -302,7 +253,7 @@ export default {
       voteScore: "",
       day: "",
       discount: "",
-      lang: ""
+      lang:""
     }
   }),
 
@@ -393,14 +344,15 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.tourlist[this.editedIndex], this.editedItem);
       } else {
+
         AXIOS.post("http://localhost:3000/tourlist/insert", this.editedItem)
-          .then(response => {
-            console.log(this.editedItem);
-          })
-          .catch(function(error) {
-            console.log(error);
-          })
-          .finally(function() {});
+        .then(response => {
+          console.log( this.editedItem);
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
+        .finally(function() {});
         this.tourlist.push(this.editedItem);
       }
       this.close();

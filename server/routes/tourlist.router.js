@@ -28,7 +28,7 @@ router.get('/tstyle/:id', (req,res,next) =>{
 })
 
 router.post('/insert', jsonParser, function (req, res) {
-    console.log(req.body);
+    console.log(req.body.editedItem);
     db.get('tourList')
     .push({
         destinationId: "INMB",
