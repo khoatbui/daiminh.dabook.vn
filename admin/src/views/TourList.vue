@@ -86,7 +86,11 @@
                     <v-date-picker v-model="editedItem.startDate" scrollable>
                       <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="startDateModal = false">Cancel</v-btn>
-                      <v-btn flat color="primary" @click="$refs.dialog.save(editedItem.startDate);startDateModal = false">OK</v-btn>
+                      <v-btn
+                        flat
+                        color="primary"
+                        @click="$refs.dialog.save(editedItem.startDate);startDateModal = false"
+                      >OK</v-btn>
                     </v-date-picker>
                   </v-dialog>
                 </v-flex>
@@ -170,12 +174,16 @@
     <v-data-table :headers="headers" :items="tourlist" class="elevation-1">
       <template v-slot:items="props">
         <tr class="ellip-text">
+          <td class="justify-center layout px-0">
+            <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+          </td>
           <td>{{ props.item.destinationId }}</td>
           <td class="text-xs-right">{{ props.item.travelStyleId }}</td>
           <td class="text-xs-right">{{ props.item.cityId }}</td>
           <td class="text-xs-right">{{ props.item.tourId }}</td>
           <td class="text-xs-right">{{ props.item.tourName }}</td>
-          <td class="text-xs-right">{{ props.item.tourOveview }}</td>
+          <td class="text-xs-right">{{ props.item.tourOverview }}</td>
           <td class="text-xs-right">{{ props.item.from }}</td>
           <td class="text-xs-right">{{ props.item.to }}</td>
           <td class="text-xs-right">{{ props.item.startDay }}</td>
@@ -190,10 +198,6 @@
           <td class="text-xs-right">{{ props.item.day }}</td>
           <td class="text-xs-right">{{ props.item.discount }}</td>
           <td class="text-xs-right">{{ props.item.lang }}</td>
-          <td class="justify-center layout px-0">
-            <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
-          </td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -223,6 +227,7 @@ export default {
     endDateModal: false,
     dialog: false,
     headers: [
+      { text: "Actions", value: "name", sortable: false },
       {
         text: "Destination",
         align: "left",
@@ -233,7 +238,7 @@ export default {
       { text: "City", value: "cityId" },
       { text: "Tour", value: "tourId" },
       { text: "Tour Name", value: "tourName" },
-      { text: "Tour Oveview", value: "tourOveview" },
+      { text: "Tour Oveview", value: "tourOverview" },
       { text: "From", value: "from" },
       { text: "To", value: "to" },
       { text: "StartDay", value: "startDay" },
@@ -247,8 +252,7 @@ export default {
       { text: "Vote Score", value: "voteScore" },
       { text: "Day", value: "day" },
       { text: "Discount", value: "discount" },
-      { text: "Language", value: "lang" },
-      { text: "Actions", value: "name", sortable: false }
+      { text: "Language", value: "lang" }
     ],
     tourlist: [],
     destination: [],
@@ -266,7 +270,7 @@ export default {
       cityId: "",
       tourId: "",
       tourName: "",
-      tourOveview: "",
+      tourOverview: "",
       from: "",
       to: "",
       startDay: "",
@@ -288,7 +292,7 @@ export default {
       cityId: "",
       tourId: "",
       tourName: "",
-      tourOveview: "",
+      tourOverview: "",
       from: "",
       to: "",
       startDay: "",
@@ -377,8 +381,16 @@ export default {
 
     deleteItem(item) {
       const index = this.tourlist.indexOf(item);
+      console.log(index);
       confirm("Are you sure you want to delete this item?") &&
-        this.tourlist.splice(index, 1);
+        AXIOS.delete("http://localhost:3000/tourlist/" + index)
+          .then(response => {
+           this.tourlist.splice(index, 1)
+          })
+          .catch(function(error) {
+            console.log(error);
+          })
+          .finally(function() {});
     },
 
     close() {
@@ -391,7 +403,14 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.tourlist[this.editedIndex], this.editedItem);
+        AXIOS.post("http://localhost:3000/tourlist/update" , this.editedItem)
+          .then(response => {
+            console.log(this.editedItem);
+          })
+          .catch(function(error) {
+            console.log(error);
+          })
+          .finally(function() {});
       } else {
         AXIOS.post("http://localhost:3000/tourlist/insert", this.editedItem)
           .then(response => {

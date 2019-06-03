@@ -28,7 +28,6 @@ var router = express.Router()
 var db = require('../db')
 
 router.get('/',(req,res,next) => {
-    console.log(db.get('destination').value());
     res.send(db.get('destination').value());
 })
 
