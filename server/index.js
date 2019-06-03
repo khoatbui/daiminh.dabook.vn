@@ -1,98 +1,31 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const port = 3000
 
-const low =require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
+app.use(cors())
 
-const adapter = new FileSync('db.json')
-const db = low(adapter)
-
-// ******************************HOME********************************************
-
-/*=======GET LIST PROMOTION======
-[{+ Duong dan hinh anh
-+ Link
-+ Title
-+ Noi dung
-}]
-==================================*/
-app.get('/promotion-list', (req,res) =>{
-    res.send('promotion-list')
-})
-
-/*=======GET LIST TOUR THEO DIEM DEN HOT======
-[+ Điểm đến [{+ Hình ảnh
-            + Link
-            + Title
-            + Noi dung
-            }]
-]
-==================================*/
-app.get('/hot-tour-list', (req,res) =>{
-    res.send('hottour-list')
-})
-/*=======GET LIST DESTINATION======
-NOI DIA
- [
-     {+ Tinh thanh
-      + Link
-     }
- ]
-
- QUOC TE
- [
-     {+ Tinh thanh
-      + Link
-     }
- ]
-==================================*/
-app.get('/destination-list', (req,res) =>{
-    res.send('hottour-list')
-})
-
-
-// ******************************DESTINATION********************************************//
-/*=======GET DESTINATION LIST======
-NOI DIA
-[4 tinh thanh hot]
-[
-    {+ Tinh thanh
-    + Link
-    + Hinh anh
-    }
-]
-
- QUOC TE
-[4 tinh thanh hot]
-[{+ Tinh thanh
-    + Link
-    + Hinh anh
-    }]
-
-[{+ Ten tinh thanh trong nuoc
-    + Duong link
-    }]
-
-[{+ Ten tinh thanh trong nuoc
-    + Duong link
-    }]
-==================================*/
-
-
-
-// ******************************TRAVEL STYLE PAGE********************************************//
-/*=======GET TRAVEL STYLE LIST======
-+ Duong dan hinh anh
-+ Link
-+ Title
-+ Noi dung
-==================================*/
-
+const mainRoute = require('./routes/main.router')
+const destinationRoute = require('./routes/destination.router')
+const travelStyleRoute = require('./routes/travelstyle.router')
+const cityRoute = require('./routes/city.router')
+const tourListRoute = require('./routes/tourlist.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
 
+// ****************ROUTER****************
+app.use('/main',mainRoute);
+app.use('/destination',destinationRoute);
+app.use('/travelstyle',travelStyleRoute);
+app.use('/city',cityRoute);
+app.use('/tourlist',tourListRoute);
+
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
 app.get('/', (req,res) =>{
     res.send('hello world')
 })

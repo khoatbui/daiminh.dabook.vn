@@ -1,152 +1,284 @@
 {
-    "area":[
-        {
-            "areaId":"IN",
-            "areaName":"Tour trong nước"
-        },
-        {
-            "areaId":"OUT",
-            "areaName":"Tour nước ngoài"
-        }
-    ],
-    "destination":[
-        {
-            "areaId":"IN",
-            "destinationId":"INHN",
-            "destinationName":"Hà Nội",
-            "isHot":"1"
-        },
-        {
-            "areaId":"IN",
-            "destinationId":"INMB",
-            "destinationName":"Miền Bắc",
-            "isHot":"1"
-        },
-        {
-            "areaId":"IN",
-            "destinationId":"INMT",
-            "destinationName":"Miền Trung",
-            "isHot":"0"
-        },
-        {
-            "areaId":"IN",
-            "destinationId":"INHCM",
-            "destinationName":"Hồ Chí Minh",
-            "isHot":"1"
-        },
-        {
-            "areaId":"IN",
-            "destinationId":"INMK",
-            "destinationName":"Mê Kông",
-            "isHot":"0"
-        },
-        {
-            "areaId":"OUT",
-            "destinationId":"OUTHQ",
-            "destinationName":"Hàn Quốc",
-            "isHot":"1"
-        },
-        {
-            "areaId":"OUT",
-            "destinationId":"OUTNB",
-            "destinationName":"Nhật Bản",
-            "isHot":"1"
-        },
-        {
-            "areaId":"OUT",
-            "destinationId":"OUTTL",
-            "destinationName":"Thái Lan",
-            "isHot":"0"
-        },
-        {
-            "areaId":"OUT",
-            "destinationId":"OUTAM",
-            "destinationName":"Âu Mỹ",
-            "isHot":"0"
-        }
-    ],
-    "city":[
-        {
-            "areaId":"OUT",
-            "destinationId":"",
-            "cityId":"",
-            "cityName":""
-        }
-    ],
-    "travelStyle":[
-        {
-            "travelStyleId":"",
-            "travelStyleName":"",
-            "travelStyleImg":""
-        }
-    ],
-    "tourList":[
-        {
-            "destinationId":"",
-            "travelStyleId":"",
-            "cityId":"",
-            "tourId":"HL01",
-            "tourName":"HA LONG => QUANG NINH 1 NGAY 1 DEM",
-            "tourOveview":"",
-            "from":"",
-            "to":"",
-            "startDay":"",
-            "endDay":"",
-            "img":"",
-            "price":"",
-            "unitType":"",
-            "link":"",
-            "tags":"",
-            "voteStatus":"",
-            "voteScore":"",
-            "day":"",
-            "discount":"",
-            "creator":"",
-            "createDate":""
-        }
-    ],
-    "tourDetail":[
-        {
-            "tourId":"HL01",
-            "carolImg":"",
-            "subImg":"",
-            "program":"",
-            "priceDetail":"",
-            "serviceInclude":"",
-            "serviceNotInclude":"",
-            "shouldTake":""
-        }
-    ],
-    "serviceInclude":[
-        {
-            "serviceId":"",
-            "serviceName":""
-        }
-    ],
-    "payments":[
-        {
-            "bankName":"",
-            "bankLogo":"",
-            "bankOwner":"",
-            "bankAccount":"",
-            "bankLocation":"",
-            "note":""
-        }
-    ],
-    "order":[
-        {
-            "customerName":"",
-            "customerPhone":"",
-            "customerMail":"",
-            "customerAddress":"",
-            "customerCompany":"",
-            "departureDay":"",
-            "quantity":"",
-            "invoiceCompanyName":"",
-            "taxCode":"",
-            "companyAddress":"",
-            "invoiceAddress":"",
-            "note":""
-        }
-    ]
+  "area": [
+    {
+      "areaId": "IN",
+      "areaName": "Tour trong nước",
+      "lang": ""
+    },
+    {
+      "areaId": "OUT",
+      "areaName": "Tour nước ngoài",
+      "lang": ""
+    }
+  ],
+  "destination": [
+    {
+      "areaId": "IN",
+      "destinationId": "INHN",
+      "destinationName": "Hà Nội",
+      "isHot": "1",
+      "lang": ""
+    },
+    {
+      "areaId": "IN",
+      "destinationId": "INMB",
+      "destinationName": "Miền Bắc",
+      "isHot": "1",
+      "lang": ""
+    },
+    {
+      "areaId": "IN",
+      "destinationId": "INMT",
+      "destinationName": "Miền Trung",
+      "isHot": "0",
+      "lang": ""
+    },
+    {
+      "areaId": "IN",
+      "destinationId": "INHCM",
+      "destinationName": "Hồ Chí Minh",
+      "isHot": "1",
+      "lang": ""
+    },
+    {
+      "areaId": "IN",
+      "destinationId": "INMK",
+      "destinationName": "Mê Kông",
+      "isHot": "0",
+      "lang": ""
+    },
+    {
+      "areaId": "OUT",
+      "destinationId": "OUTHQ",
+      "destinationName": "Hàn Quốc",
+      "isHot": "1",
+      "lang": ""
+    },
+    {
+      "areaId": "OUT",
+      "destinationId": "OUTNB",
+      "destinationName": "Nhật Bản",
+      "isHot": "1",
+      "lang": ""
+    },
+    {
+      "areaId": "OUT",
+      "destinationId": "OUTTL",
+      "destinationName": "Thái Lan",
+      "isHot": "0",
+      "lang": ""
+    },
+    {
+      "areaId": "OUT",
+      "destinationId": "OUTAM",
+      "destinationName": "Âu Mỹ",
+      "isHot": "0",
+      "lang": ""
+    }
+  ],
+  "city": [
+    {
+      "areaId": "OUT",
+      "destinationId": "INMB",
+      "cityId": "INMBHL",
+      "cityName": "Ha Long",
+      "lang": ""
+    }
+  ],
+  "travelStyle": [
+    {
+      "travelStyleId": "LU",
+      "travelStyleName": "Luxury",
+      "travelStyleImg": "",
+      "lang": ""
+    },
+    {
+      "travelStyleId": "GO",
+      "travelStyleName": "Golf",
+      "travelStyleImg": "",
+      "lang": ""
+    },
+    {
+      "travelStyleId": "CL",
+      "travelStyleName": "Classic",
+      "travelStyleImg": "",
+      "lang": ""
+    },
+    {
+      "travelStyleId": "AD",
+      "travelStyleName": "Adventure",
+      "travelStyleImg": "",
+      "lang": ""
+    }
+  ],
+  "tourList": [
+    {
+      "destinationId": "INMB",
+      "travelStyleId": "AD",
+      "cityId": "INMBHL",
+      "tourId": "INMBHL01",
+      "tourName": "HA LONG => QUANG NINH 1 NGAY 1 DEM",
+      "tourOveview": "Like so many organizations these days, Autodesk is a company in transition. It was until recently a traditional boxed software company selling licenses. Yet its own business model disruption is only part of the story — and",
+      "from": "HA LONG",
+      "to": " QUANG NINH",
+      "startDay": "13-04-2019",
+      "endDay": "15-04-2019",
+      "img": "",
+      "price": "1.000.000",
+      "unitType": "",
+      "link": "",
+      "tags": "Ha long,mao hiem",
+      "voteStatus": "SUAT SAC",
+      "voteScore": "9.1",
+      "day": "1",
+      "discount": "30",
+      "creator": "KhoatBui",
+      "createDate": "13-04-2019",
+      "lang": "VI"
+    },
+    {
+      "destinationId": "INMC",
+      "travelStyleId": "AD",
+      "cityId": "INMBHL",
+      "tourId": "INMBHL01",
+      "tourName": "HA LONG => QUANG NINH 1 NGAY 1 DEM",
+      "tourOveview": "Like so many organizations these days, Autodesk is a company in transition. It was until recently a traditional boxed software company selling licenses. Yet its own business model disruption is only part of the story — and",
+      "from": "HA LONG",
+      "to": " QUANG NINH",
+      "startDay": "13-04-2019",
+      "endDay": "15-04-2019",
+      "img": "",
+      "price": "1.000.000",
+      "unitType": "",
+      "link": "",
+      "tags": "Ha long,mao hiem",
+      "voteStatus": "SUAT SAC",
+      "voteScore": "9.1",
+      "day": "1",
+      "discount": "30",
+      "creator": "KhoatBui",
+      "createDate": "13-04-2019",
+      "lang": "VI"
+    },
+    {
+      "destinationId": "INMB",
+      "travelStyleId": "AD",
+      "cityId": "INMBHL",
+      "tourId": "INMBHL01",
+      "tourName": "HA LONG => QUANG NINH 1 NGAY 1 DEM",
+      "tourOveview": "Like so many organizations these days, Autodesk is a company in transition. It was until recently a traditional boxed software company selling licenses. Yet its own business model disruption is only part of the story — and",
+      "from": "HA LONG",
+      "to": " QUANG NINH",
+      "startDay": "13-04-2019",
+      "endDay": "15-04-2019",
+      "img": "",
+      "price": "1.000.000",
+      "unitType": "",
+      "link": "",
+      "tags": "Ha long,mao hiem",
+      "voteStatus": "SUAT SAC",
+      "voteScore": "9.1",
+      "day": "1",
+      "discount": "30",
+      "creator": "KhoatBui",
+      "createDate": "13-04-2019",
+      "lang": "VI"
+    },
+    {
+      "destinationId": "INMB",
+      "travelStyleId": "AD",
+      "cityId": "INMBHL",
+      "tourId": "INMBHL01",
+      "tourName": "HA LONG => QUANG NINH 1 NGAY 1 DEM",
+      "tourOveview": "Like so many organizations these days, Autodesk is a company in transition. It was until recently a traditional boxed software company selling licenses. Yet its own business model disruption is only part of the story — and",
+      "from": "HA LONG",
+      "to": " QUANG NINH",
+      "startDay": "13-04-2019",
+      "endDay": "15-04-2019",
+      "img": "",
+      "price": "1.000.000",
+      "unitType": "",
+      "link": "",
+      "tags": "Ha long,mao hiem",
+      "voteStatus": "SUAT SAC",
+      "voteScore": "9.1",
+      "day": "1",
+      "discount": "30",
+      "creator": "KhoatBui",
+      "createDate": "13-04-2019",
+      "lang": "VI"
+    },
+    {
+      "destinationId": "INMB",
+      "travelStyleId": "AD",
+      "cityId": "INMBHL",
+      "tourId": "INMBHL01",
+      "tourName": "HA LONG => QUANG NINH 1 NGAY 1 DEM",
+      "tourOveview": "Like so many organizations these days, Autodesk is a company in transition. It was until recently a traditional boxed software company selling licenses. Yet its own business model disruption is only part of the story — and",
+      "from": "HA LONG",
+      "to": " QUANG NINH",
+      "startDay": "13-04-2019",
+      "endDay": "15-04-2019",
+      "img": "",
+      "price": "1.000.000",
+      "unitType": "",
+      "link": "",
+      "tags": "Ha long,mao hiem",
+      "voteStatus": "SUAT SAC",
+      "voteScore": "9.1",
+      "day": "1",
+      "discount": "30",
+      "creator": "KhoatBui",
+      "createDate": "13-04-2019",
+      "lang": "VI"
+    }
+  ],
+  "tourDetail": [
+    {
+      "tourId": "HL01",
+      "carolImg": "",
+      "subImg": "",
+      "program": "",
+      "priceDetail": "",
+      "serviceInclude": "",
+      "serviceNotInclude": "",
+      "shouldTake": "",
+      "lang": ""
+    }
+  ],
+  "serviceInclude": [
+    {
+      "serviceId": "",
+      "serviceName": "",
+      "lang": ""
+    }
+  ],
+  "payments": [
+    {
+      "bankName": "",
+      "bankLogo": "",
+      "bankOwner": "",
+      "bankAccount": "",
+      "bankLocation": "",
+      "note": "",
+      "lang": ""
+    }
+  ],
+  "order": [
+    {
+      "customerName": "",
+      "customerPhone": "",
+      "customerMail": "",
+      "customerAddress": "",
+      "customerCompany": "",
+      "departureDay": "",
+      "quantity": "",
+      "invoiceCompanyName": "",
+      "taxCode": "",
+      "companyAddress": "",
+      "invoiceAddress": "",
+      "note": "",
+      "lang": ""
+    }
+  ]
 }
