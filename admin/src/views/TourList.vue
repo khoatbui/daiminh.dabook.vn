@@ -8,6 +8,7 @@
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
         </template>
+         <v-form  ref="form" v-model="valid">
         <v-card>
           <v-card-title class="pink white--text">
             <span class="headline">{{ formTitle }}</span>
@@ -24,7 +25,8 @@
                     item-text="destinationName"
                     item-value="destinationId"
                     label="Destination"
-                  ></v-select>
+                   required
+                    :rules="[() => editedItem.destinationId.length > 0 || 'Required field']"></v-select>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-select
@@ -33,7 +35,8 @@
                     item-text="travelStyleName"
                     item-value="travelStyleId"
                     label="TravelStyle"
-                  ></v-select>
+                   required
+                    :rules="[() => editedItem.travelStyleId.length > 0 || 'Required field']"></v-select>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-select
@@ -42,7 +45,8 @@
                     item-text="cityName"
                     item-value="cityId"
                     label="City"
-                  ></v-select>
+                   required
+                    :rules="[() => editedItem.cityId.length > 0 || 'Required field']"></v-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -50,7 +54,8 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.tourId" label="TourId"></v-text-field>
+                  <v-text-field  required
+                    :rules="[() => editedItem.tourId.length > 0 || 'Required field']" v-model="editedItem.tourId" label="TourId"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.tourName" label="TourName"></v-text-field>
@@ -116,7 +121,7 @@
                     <v-date-picker v-model="editedItem.endDate" scrollable>
                       <v-spacer></v-spacer>
                       <v-btn flat color="primary" @click="endDateModal = false">Cancel</v-btn>
-                      <v-btn flat color="primary" @click="$refs.dialog.save(editedItem.endDate)">OK</v-btn>
+                      <v-btn flat color="primary"  @click="$refs.dialog.save(editedItem.endDate)">OK</v-btn>
                     </v-date-picker>
                   </v-dialog>
                 </v-flex>
@@ -166,9 +171,10 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" dark @click="save">Save</v-btn>
+            <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
           </v-card-actions>
         </v-card>
+         </v-form>
       </v-dialog>
     </v-toolbar>
     <v-data-table :headers="headers" :items="tourlist" class="elevation-1">
@@ -222,6 +228,7 @@ const AXIOS = axios.create({
 });
 export default {
   data: () => ({
+    valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
@@ -284,7 +291,7 @@ export default {
       voteScore: "",
       day: "",
       discount: "",
-      lang: ""
+      lang: "EN"
     },
     defaultItem: {
       destinationId: "",
@@ -306,7 +313,7 @@ export default {
       voteScore: "",
       day: "",
       discount: "",
-      lang: ""
+      lang: "EN"
     }
   }),
 
@@ -406,6 +413,7 @@ export default {
         AXIOS.post("http://localhost:3000/tourlist/update" , this.editedItem)
           .then(response => {
             console.log(this.editedItem);
+            Object.assign(this.tourlist[this.editedIndex], this.editedItem);
           })
           .catch(function(error) {
             console.log(error);

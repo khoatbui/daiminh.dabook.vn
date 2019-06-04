@@ -3,12 +3,32 @@
     {
       "areaId": "IN",
       "areaName": "Tour trong nước",
-      "lang": ""
+      "lang": "VI"
+    },
+    {
+      "areaId": "IN",
+      "areaName": "Domestic tour",
+      "lang": "EN"
+    },
+    {
+      "areaId": "OUT",
+      "areaName": "International Tour",
+      "lang": "EN"
     },
     {
       "areaId": "OUT",
       "areaName": "Tour nước ngoài",
-      "lang": ""
+      "lang": "VI"
+    },
+    {
+      "areaId": "IN",
+      "areaName": "인바운드 둘러보기",
+      "lang": "KO"
+    },
+    {
+      "areaId": "OUT",
+      "areaName": "해외 여행",
+      "lang": "KO"
     }
   ],
   "destination": [
@@ -16,64 +36,71 @@
       "areaId": "IN",
       "destinationId": "INHN",
       "destinationName": "Hà Nội",
-      "isHot": "1",
+      "isHot": false,
       "lang": ""
     },
     {
       "areaId": "IN",
       "destinationId": "INMB",
       "destinationName": "Miền Bắc",
-      "isHot": "1",
-      "lang": ""
-    },
-    {
-      "areaId": "IN",
-      "destinationId": "INMT",
-      "destinationName": "Miền Trung",
-      "isHot": "0",
+      "isHot": false,
       "lang": ""
     },
     {
       "areaId": "IN",
       "destinationId": "INHCM",
       "destinationName": "Hồ Chí Minh",
-      "isHot": "1",
+      "isHot": false,
       "lang": ""
     },
     {
       "areaId": "IN",
       "destinationId": "INMK",
       "destinationName": "Mê Kông",
-      "isHot": "0",
+      "isHot": false,
       "lang": ""
     },
     {
       "areaId": "OUT",
       "destinationId": "OUTHQ",
       "destinationName": "Hàn Quốc",
-      "isHot": "1",
+      "isHot": false,
       "lang": ""
     },
     {
       "areaId": "OUT",
       "destinationId": "OUTNB",
       "destinationName": "Nhật Bản",
-      "isHot": "1",
+      "isHot": false,
       "lang": ""
     },
     {
       "areaId": "OUT",
       "destinationId": "OUTTL",
       "destinationName": "Thái Lan",
-      "isHot": "0",
+      "isHot": false,
       "lang": ""
     },
     {
       "areaId": "OUT",
       "destinationId": "OUTAM",
       "destinationName": "Âu Mỹ",
-      "isHot": "0",
+      "isHot": false,
       "lang": ""
+    },
+    {
+      "areaId": "OUT",
+      "destinationId": "OUTAJAX",
+      "destinationName": "Ajax Amstesdam",
+      "isHot": true,
+      "lang": "VI"
+    },
+    {
+      "areaId": "IN",
+      "destinationId": "INDB",
+      "destinationName": "Dien Bien",
+      "isHot": true,
+      "lang": "KO"
     }
   ],
   "city": [
@@ -82,7 +109,22 @@
       "destinationId": "INMB",
       "cityId": "INMBHL",
       "cityName": "Ha Long",
-      "lang": ""
+      "lang": "EN"
+    },
+    {
+      "areaId": "OUT",
+      "destinationId": "OUTHQ",
+      "cityId": "OUTHQSW",
+      "cityName": "Suwon",
+      "lang": "KO",
+      "destinatonId": "OUTHQ"
+    },
+    {
+      "areaId": "OUT",
+      "destinationId": "INMB",
+      "cityId": "safaf",
+      "cityName": "fsafa",
+      "lang": "KO"
     }
   ],
   "travelStyle": [
@@ -158,22 +200,17 @@
       "discount": "30",
       "lang": "EN",
       "startDate": "2019-06-20",
-      "endDate": "2019-06-19"
+      "endDate": "2019-06-19",
+      "carolImg": "fsf",
+      "subImg": "fds",
+      "serviceInclude": "fds",
+      "priceDetail": "fds",
+      "program": "fds",
+      "serviceNotInclude": "fsd",
+      "shouldTake": "fds"
     }
   ],
-  "tourDetail": [
-    {
-      "tourId": "HL01",
-      "carolImg": "",
-      "subImg": "",
-      "program": "",
-      "priceDetail": "",
-      "serviceInclude": "",
-      "serviceNotInclude": "",
-      "shouldTake": "",
-      "lang": ""
-    }
-  ],
+  "tourDetail": [],
   "serviceInclude": [
     {
       "serviceId": "",

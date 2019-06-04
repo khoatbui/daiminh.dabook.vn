@@ -9,7 +9,9 @@ const mainRoute = require('./routes/main.router')
 const destinationRoute = require('./routes/destination.router')
 const travelStyleRoute = require('./routes/travelstyle.router')
 const cityRoute = require('./routes/city.router')
+const areaRouter = require('./routes/area.router')
 const tourListRoute = require('./routes/tourlist.router')
+const tourDetailRoute = require('./routes/tourdetail.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -20,6 +22,8 @@ app.use('/destination',destinationRoute);
 app.use('/travelstyle',travelStyleRoute);
 app.use('/city',cityRoute);
 app.use('/tourlist',tourListRoute);
+app.use('/tourdetail',tourDetailRoute);
+app.use('/area',areaRouter);
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
