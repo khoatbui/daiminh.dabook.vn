@@ -14,53 +14,89 @@ const AXIOS = axios.create({
 
 
 var urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams);
-console.log(urlParams.has('des'));
-console.log(urlParams.get('des'));
 
-if (urlParams.has('destination')) {
-  AXIOS.get('http://localhost:3000/tourlist/destination-search/' + urlParams.get('destination'), { crossdomain: true })
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
-}
-else if (urlParams.has('travelstyle')) {
-  AXIOS.get('http://localhost:3000/tourlist/travelstyle-search/' + urlParams.get('travelstyle'), { crossdomain: true })
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
-  
-}
-else if (urlParams.has('city')) {
-  AXIOS.get('http://localhost:3000/tourlist/city-search/' + urlParams.get('city'), { crossdomain: true })
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
-  
-}
+var app = new Vue({
+  el: '#app',
+  data: {
+    tourlist: [],
+  },
+  created() {
+    this.initialize();
+  },
+  methods: {
+    initialize() {
+      if (urlParams.has('destination')) {
+        AXIOS.get('http://localhost:3000/tourlist/destination-search/' + urlParams.get('destination'), { crossdomain: true })
+          .then((response) => {
+            console.log(response.data);
+            this.tourlist = response.data;
+            console.log(this.tourlist);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+          });
+      }
+      else if (urlParams.has('travelstyle')) {
+        AXIOS.get('http://localhost:3000/tourlist/travelstyle-search/' + urlParams.get('travelstyle'), { crossdomain: true })
+          .then((response) => {
+            console.log(response.data);
+            this.tourlist = response.data;
+            console.log(this.tourlist);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+          });
+
+      }
+      else if (urlParams.has('city')) {
+        AXIOS.get('http://localhost:3000/tourlist/city-search/' + urlParams.get('city'), { crossdomain: true })
+          .then((response) => {
+            console.log(response.data);
+            this.tourlist = response.data;
+            console.log(this.tourlist);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+          });
+
+      }
+      else if (urlParams.has('searchbox')) {
+        AXIOS.get('http://localhost:3000/tourlist/searchbox-search/' + urlParams.get('searchbox'), { crossdomain: true })
+          .then((response) => {
+            console.log(response.data);
+            this.tourlist = response.data;
+            console.log(this.tourlist);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+          });
+
+      }
+      else {
+        AXIOS.get('http://localhost:3000/tourlist/', { crossdomain: true })
+          .then((response) => {
+            console.log(response.data);
+            this.tourlist = response.data;
+            console.log(this.tourlist);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+          });
+      }
+    }
+  }
+})
+
+
 
 

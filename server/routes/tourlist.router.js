@@ -59,4 +59,12 @@ router.get('/city-search/:id', (req, res, next) => {
     var tours = db.get('tourList').filter({ cityId: id});
     res.send(tours);
 })
+// Tim kiem ban ghi theo search box
+router.get('/searchbox-search/:id', (req, res, next) => {
+    var id = req.params.id;
+    var tours = db.get('tourList').filter(function(tour) {
+        return id.indexOf(tour.tag) > -1
+      });
+    res.send(tours);
+})
 module.exports = router
