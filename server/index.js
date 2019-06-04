@@ -12,6 +12,7 @@ const cityRoute = require('./routes/city.router')
 const areaRouter = require('./routes/area.router')
 const tourListRoute = require('./routes/tourlist.router')
 const tourDetailRoute = require('./routes/tourdetail.router')
+const uploadRoute = require('./routes/upload.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -24,6 +25,7 @@ app.use('/city',cityRoute);
 app.use('/tourlist',tourListRoute);
 app.use('/tourdetail',tourDetailRoute);
 app.use('/area',areaRouter);
+app.use('/upload',uploadRoute);
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

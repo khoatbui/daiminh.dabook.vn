@@ -29,7 +29,7 @@
                     :rules="[() => editedItem.tourId.length > 0 || 'Required field']"></v-select>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.carolImg" label="Carol Image"></v-text-field>
+                  <file-upload v-model="editedItem.carolImg" label="Carol Image" routerPath="http://localhost:3000/upload"></file-upload>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.subImg" label="Sub Image"></v-text-field>
@@ -96,6 +96,7 @@
   </div>
 </template>
 <script>
+import FileUpload from '../components/FileUpload.vue'
 import axios from "axios";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -110,6 +111,9 @@ const AXIOS = axios.create({
   }
 });
 export default {
+  components:{
+    FileUpload
+  },
   data: () => ({
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -228,6 +232,7 @@ export default {
     },
 
     close() {
+      console.log(this.editedItem);
       this.dialog = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
