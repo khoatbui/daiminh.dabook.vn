@@ -18,8 +18,8 @@ console.log(urlParams);
 console.log(urlParams.has('des'));
 console.log(urlParams.get('des'));
 
-if (urlParams.has('des')) {
-  AXIOS.get('http://localhost:3000/tourlist/des/' + urlParams.get('des'), { crossdomain: true })
+if (urlParams.has('destination')) {
+  AXIOS.get('http://localhost:3000/tourlist/destination-search/' + urlParams.get('destination'), { crossdomain: true })
     .then(function (response) {
       // handle success
       console.log(response);
@@ -32,8 +32,8 @@ if (urlParams.has('des')) {
       // always executed
     });
 }
-else if (urlParams.has('tstyle')) {
-  AXIOS.get('http://localhost:3000/tourlist/tstyle/' + urlParams.get('tstyle'), { crossdomain: true })
+else if (urlParams.has('travelstyle')) {
+  AXIOS.get('http://localhost:3000/tourlist/travelstyle-search/' + urlParams.get('travelstyle'), { crossdomain: true })
     .then(function (response) {
       // handle success
       console.log(response);
@@ -45,6 +45,22 @@ else if (urlParams.has('tstyle')) {
     .finally(function () {
       // always executed
     });
+  
+}
+else if (urlParams.has('city')) {
+  AXIOS.get('http://localhost:3000/tourlist/city-search/' + urlParams.get('city'), { crossdomain: true })
+    .then(function (response) {
+      // handle success
+      console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  
 }
 
 
