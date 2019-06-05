@@ -68,10 +68,14 @@
                 <div class="section pt-4 pb-4">
                     <div class="row mb-4">
                         <div class="status">
-                            <span class="active no-right">Tìm khách sạn</span>
-                            <span class="active no-left-right">Thông tin hành khách</span>
-                            <span class="active no-left">Phương thức thanh toán</span>
-                            <span>Hoàn thành đơn hàng</span>
+                            <span
+                                v-bind:class="{ 'active no-right': (bookingstep.find && bookingstep.confirm),'active': (bookingstep.find && !bookingstep.confirm),'':!bookingstep.find }">Tìm
+                                khách sạn</span>
+                            <span
+                                v-bind:class="{ 'active no-left': (bookingstep.confirm && !bookingstep.finish),'':(!bookingstep.confirm && !bookingstep.finish),'active no-left-right':bookingstep.finish }">Xác
+                                nhận thông tin</span>
+                            <span v-bind:class="{ 'active no-left': bookingstep.finish,'':!bookingstep.finish }">Hoàn
+                                thành giữ chỗ</span>
                         </div>
                     </div>
                     <div class="card m-0 p-0">
@@ -94,56 +98,157 @@
                                     </ul>
                                     <div class="tab-content tab-space">
                                         <div class="tab-pane active" id="flc" aria-expanded="true">
-                                            <div class="row border border-radius p-4 d-none">
+                                            <div class="row border border-radius p-4"
+                                                v-bind:class="{'d-none':bookingstep.confirm}">
                                                 <div class="col-12 p-2">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text text-left p-0">
-                                                                <i class="fas fa-map-marker-alt text-info"></i> </span>
-                                                        </div>
-                                                        <input type="text" class="form-control pl-2"
-                                                            placeholder="Hotel...">
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 p-2">
-                                                    <div class="form-row">
-                                                        <div class="col">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="In..." />
-                                                        </div>
-                                                        <div class="col">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Out..." />
+                                                    <div class="dropdown custom-hotel-list show w-100">
+                                                        <a class="btn btn-secondary dropdown-toggle" href="#"
+                                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false" v-model="bookingrequest.hotelId">
+                                                            {{bookingrequest.hotelName}}
+                                                        </a>
+
+                                                        <div class="dropdown-menu w-100 " aria-labelledby="dropdownMenuLink">
+                                                            <a class="dropdown-item" @click="bookingrequest.hotelId=hotel.id;bookingrequest.hotelName=hotel.value" v-for="hotel in hotels">{{hotel.value}}</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 p-2">
                                                     <div class="form-row">
                                                         <div class="col">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Số người..." />
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text text-left p-0">
+                                                                        <i class="fas fa-sign-in-alt text-info"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <input type="text" class="form-control starttime pl-2"
+                                                                    placeholder="In..." />
+                                                            </div>
                                                         </div>
                                                         <div class="col">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Số phòng..." />
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text text-left p-0">
+                                                                        <i class="fas fa-sign-out-alt text-info"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <input type="text" class="form-control endtime pl-2"
+                                                                    placeholder="Out..." />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 p-2">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Loại phòng..." />
+                                                    <div class="form-row">
+                                                        <div class="col">
+                                                            <div class="popover-group w-100">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Số người..."
+                                                                    @click="e => e.target.parentNode.nextElementSibling.classList.toggle('show')" v-model="'Golfer:  ' + bookingrequest.golfer +'   |   Ungolfer:  '+ bookingrequest.ungolfer" />
+                                                                <div class="popover-custom">
+                                                                    <div class="row m-1 border-bottom">
+                                                                        <div class="col-6">
+                                                                            Golfer:
+                                                                        </div>
+                                                                        <div class="col-2">
+                                                                            <button class="btn-plus" @click="minusPerson()"> <i
+                                                                                    class="fas fa-minus text-info"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="col-2 text-center">
+                                                                            {{bookingrequest.golfer}}
+                                                                        </div>
+                                                                        <div class="col-2">
+                                                                            <button class="btn-plus" @click="plusPerson()"> <i
+                                                                                    class="fas fa-plus text-info"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row m-1">
+                                                                        <div class="col-6">
+                                                                            NGolfer:
+                                                                        </div>
+                                                                        <div class="col-2">
+                                                                            <button class="btn-plus" @click="minusUnGolferPerson()"> <i
+                                                                                    class="fas fa-minus text-info"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="col-2 text-center">
+                                                                                {{bookingrequest.ungolfer}}
+                                                                        </div>
+                                                                        <div class="col-2">
+                                                                            <button class="btn-plus" @click="plusUnGolferPerson()"> <i
+                                                                                    class="fas fa-plus text-info"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="popover-group w-100">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Số phòng..."
+                                                                    @click="e => e.target.parentNode.nextElementSibling.classList.toggle('show')" v-model="'Luxury:  ' + bookingrequest.roomQty" />
+                                                                <div class="popover-custom">
+                                                                    <div class="row m-1">
+                                                                        <div class="col-6">
+                                                                            Luxury:
+                                                                        </div>
+                                                                        <div class="col-2">
+                                                                            <button class="btn-plus" @click="minusRoom"> <i
+                                                                                    class="fas fa-minus text-info"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="col-2 text-center">
+                                                                            {{bookingrequest.roomQty}}
+                                                                        </div>
+                                                                        <div class="col-2">
+                                                                            <button class="btn-plus" @click="plusRoom"> <i
+                                                                                    class="fas fa-plus text-info"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="col-12 p-2">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Loại dịch vụ..." />
+                                                        <div class="dropdown custom-hotel-list show w-100">
+                                                                <a class="btn btn-secondary dropdown-toggle" href="#"
+                                                                    role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false" v-model="bookingrequest.roomTypeId">
+                                                                    {{bookingrequest.roomTypeName}}
+                                                                </a>
+        
+                                                                <div class="dropdown-menu w-100 " aria-labelledby="dropdownMenuLink">
+                                                                    <a class="dropdown-item" @click="bookingrequest.roomTypeId=roomType.id;bookingrequest.roomTypeName=roomType.value" v-for="roomType in roomTypes">{{roomType.value}}</a>
+                                                                </div>
+                                                            </div>
                                                 </div>
                                                 <div class="col-12 p-2">
-                                                    <button class="btn btn-info w-100">
+                                                        <div class="dropdown custom-hotel-list show w-100">
+                                                                <a class="btn btn-secondary dropdown-toggle" href="#"
+                                                                    role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false" v-model="bookingrequest.serviceTypeId">
+                                                                    {{bookingrequest.serviceTypeName}}
+                                                                </a>
+        
+                                                                <div class="dropdown-menu w-100 " aria-labelledby="dropdownMenuLink">
+                                                                    <a class="dropdown-item" @click="bookingrequest.serviceTypeId=serviceType.id;bookingrequest.serviceTypeName=serviceType.value" v-for="serviceType in serviceTypes">{{serviceType.value}}</a>
+                                                                </div>
+                                                            </div>
+                                                </div>
+                                                <div class="col-12 p-2">
+                                                    <button class="btn btn-info w-100" @click="searchHotel">
                                                         <i class="fas fa-hotel"></i> Search
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div class="row border border-radius p-4 d-none">
+                                            <div class="row border border-radius p-4"
+                                                v-bind:class="{'d-none':(bookingstep.find || bookingstep.finish),'d-flex':(bookingstep.confirm && !bookingstep.finish)}">
                                                 <div class="col-12">
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
@@ -196,7 +301,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row border border-radius p-4">
+                                            <div class="row border border-radius p-4"
+                                                v-bind:class="{'d-none':!bookingstep.finish}">
                                                 <div class="col-12">
                                                     <div class="row pb-1 pt-1">
                                                         <div class="card-body">
@@ -239,7 +345,8 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="vinpearl" aria-expanded="false">
-                                            <div class="row border border-radius p-4 d-none">
+                                            <div class="row border border-radius p-4"
+                                                v-bind:class="{'d-none':bookingstep.confirm}">
                                                 <div class="col-12 p-2">
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -283,12 +390,13 @@
                                                         placeholder="Loại dịch vụ..." />
                                                 </div>
                                                 <div class="col-12 p-2">
-                                                    <button class="btn btn-info w-100">
-                                                        Search
+                                                    <button class="btn btn-info w-100" @click="searchHotel">
+                                                        <i class="fas fa-hotel"></i> Search
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div class="row border border-radius p-4">
+                                            <div class="row border border-radius p-4"
+                                                v-bind:class="{'d-none':(bookingstep.find || bookingstep.finish),'d-flex':(bookingstep.confirm && !bookingstep.finish)}">
                                                 <div class="col-12">
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
@@ -341,16 +449,59 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row border border-radius p-4"
+                                                v-bind:class="{'d-none':!bookingstep.finish}">
+                                                <div class="col-12">
+                                                    <div class="row pb-1 pt-1">
+                                                        <div class="card-body">
+                                                            <h6 class="title text-rose p-0 m-0">GIỮ CHỖ THÀNH CÔNG</h6>
+                                                            <ul>
+                                                                <li>
+                                                                    <p>Quý khách có thể thanh toán trước cho chúng tôi
+                                                                        thông qua hình thức
+                                                                        chuyển
+                                                                        khoản <a href="#">dưới đây</a></p>
+                                                                </li>
+                                                                <li>
+                                                                    <p>Chúng tôi sẽ liên hệ với quý khách (qua email
+                                                                        hoặc điện thoại) trong vòng
+                                                                        <span class="badge badge-success">30
+                                                                            phút</span>(T2-CN: 08:00 - 23:00)
+                                                                        để
+                                                                        xác nhận tour và thời hạn thanh toán.</p>
+                                                                </li>
+                                                                <li>
+                                                                    <p>Quý khách sẽ thanh toán (tại nhà, tại văn phòng
+                                                                        DaiMinh, chuyển khoản hay
+                                                                        thẻ) sau khi có xác nhận còn tour từ DaiMinh
+                                                                        Travel.</p>
+                                                                </li>
+                                                                <li>
+                                                                    <p>Trường hợp Quý khách muốn xác nhận ngay, vui lòng
+                                                                        liên hệ với DaiMinh
+                                                                        theo
+                                                                        Hotline: </p>
+                                                                    <ul class="ml-4">
+                                                                        <li><b> 024-562-3777</b></li>
+                                                                        <li><b> 19001696</b></li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
-                                <img class="card-img right-card d-none" src="../img/hotel/vinpearl-luxury.jpg"
-                                    alt="Card image cap">
+                            <div class="col-12 col-md-6 d-flex align-items-center">
+                                <img class="card-img right-card" src="../img/hotel/vinpearl-luxury.jpg"
+                                    alt="Card image cap" v-bind:class="{'d-none':bookingstep.confirm}">
                                 <div class="card-body">
-                                    <div class="row border border-radius p-4 d-none">
+                                    <div class="row border border-radius p-4"
+                                        v-bind:class="{'d-none':(bookingstep.find || bookingstep.finish),'d-flex':(bookingstep.confirm && !bookingstep.finish)}">
                                         <div class="col-12 p-2">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -390,18 +541,19 @@
                                             </div>
                                         </div>
                                         <div class="col-12 p-2">
-                                            <button class="btn btn-info w-100">
+                                            <button class="btn btn-info w-100" @click="reserveHotel">
                                                 <i class="fas fa-check-double"></i> Giữ chỗ
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="row border border-radius p-4">
+                                    <div class="row border border-radius p-4"
+                                        v-bind:class="{'d-none':!bookingstep.finish}">
                                         <div class="col-12 p-2">
                                             <div class="border-bottom pb-3 text-left">
                                                 <h6 class="title p-0 m-0">Hỗ trợ thanh toán</h6>
                                                 <div class="d-flex flex-sm-row align-items-start flex-wrap">
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" data-target="#bankModal"> <img
+                                                        data-toggle="modal" @click="showBank('visa')"> <img
                                                             class="card-img-top" src="../img/payment/visa.png"
                                                             alt="Card image cap"> </div>
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
@@ -548,23 +700,13 @@
     <script src="../components/FixHeaderComponent.js" type="text/javascript"></script>
     <script src="../components/SearchTourComponent.js" type="text/javascript"></script>
     <script src="../components/FooterComponent.js" type="text/javascript"></script>
+    <script src="../components/SelectBoxComponent.js" type="text/javascript"></script>
 
     <script src="../assets/vuejs/url-search-params.js" type="text/javascript"></script>
     <script src="../assets/axios/axios.min.js" type="text/javascript"></script>
-    <script src="../js/tourlist.api.js" type="text/javascript"></script>
+    <script src="../js/hotelbooking.api.js" type="text/javascript"></script>
 
     <script>        $('.starttime').datetimepicker({ icons: { time: "fa fa-clock-o", date: "fa fa-calendar", up: "fa fa-chevron-up", down: "fa fa-chevron-down", previous: 'fa fa-chevron-left', next: 'fa fa-chevron-right', today: 'fa fa-screenshot', clear: 'fa fa-trash', close: 'fa fa-remove' }, format: 'DD-MM-YYYY' }); $('.endtime').datetimepicker({ icons: { time: "fa fa-clock-o", date: "fa fa-calendar", up: "fa fa-chevron-up", down: "fa fa-chevron-down", previous: 'fa fa-chevron-left', next: 'fa fa-chevron-right', today: 'fa fa-screenshot', clear: 'fa fa-trash', close: 'fa fa-remove' }, format: 'DD-MM-YYYY' }); $("#starttime").on("dp.change", function (e) { $('#endtime').data("DateTimePicker").minDate(e.date); }); $("#endtime").on("dp.change", function (e) { $('#starttime').data("DateTimePicker").maxDate(e.date); });    </script>
-    <script>
-        var slider2 = document.getElementById('sliderPrice');
-
-        noUiSlider.create(slider2, {
-            start: [20, 60],
-            connect: true,
-            range: {
-                min: 0,
-                max: 100
-            }
-        });</script>
 </body>
 
 </html>

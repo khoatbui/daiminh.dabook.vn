@@ -736,3 +736,74 @@
 .border-right-dot{
     border-right: 1px dashed #dee2e6 !important;
 }
+.popover-group{
+    position: relative;
+    display: inline-block;
+}
+.popover-custom{
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background-color: #FFF;
+    box-shadow: 4px 2px 11px -5px rgba(0,0,0,.47);
+    z-index:1000;
+    width: auto;
+    white-space: nowrap;
+    border-radius: 4px;
+    padding: 4px;
+}
+.btn-plus{
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50%;
+    background-color: #FFF;
+    border:none;
+    cursor: pointer;
+}
+.btn-plus:hover{
+    box-shadow: 2px 7px 11px -5px rgba(0,0,0,.47);
+}
+.popover-custom{
+    visibility: hidden;
+}
+.show{
+    visibility: visible;
+  }
+  .drop-item{
+    cursor: pointer;
+    padding-top: 4px ;
+    padding-bottom: 4px ;
+    border-radius: 4px;
+  }
+  .drop-item:hover{
+      background-color:#dee2e6;
+  }
+  .custom-hotel-list a{
+      color: rgba(0,0,0,.47) !important;
+      background-color: #FFF !important;
+      font-size: 14px;
+      border-bottom: 1px solid #d2d2d2;
+      border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    text-transform: none !important;
+    text-align: left !important;
+    width: 100%;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+  }
+  .custom-hotel-list a::after{
+      display: none;
+  }
+.custom-hotel-list a:hover{
+    box-shadow: none !important;
+    color: rgba(0,0,0,.47) !important;
+    cursor: pointer;
+    border-bottom: 2px solid #00bcd4 !important;
+}
+.custom-hotel-list>.dropdown-menu .dropdown-item:hover{
+    background-color: #d2d2d2;
+    color: rgba(0,0,0,.47) !important;
+    cursor: pointer;
+    box-shadow: none !important;
+}
