@@ -5,7 +5,7 @@ Vue.component('index-header-component', {
       }
     },
     template: `<nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg" color-on-scroll="100">
-    <<div class="container">
+    <div class="container">
     <div class="navbar-translate"> <a class="navbar-brand" href="../index.html"> <img src="../img/new_logo.jpg"
                 alt="" height="50px;"> </a> <button class="navbar-toggler" type="button" data-toggle="collapse"
             aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span>
