@@ -1,3 +1,4 @@
+const apiUrl='http://103.237.144.222:3000';
 // Make a request for a user with a given ID
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -122,7 +123,7 @@ var app = new Vue({
       }
     },
     binCombobox() {
-      AXIOS.get('http://localhost:3000/hotel/combobox/hotel/VIN', { crossdomain: true })
+      AXIOS.get(apiUrl +'/hotel/combobox/hotel/VIN', { crossdomain: true })
       .then((response) => {
         this.vinHotels = response.data;
       })
@@ -131,7 +132,7 @@ var app = new Vue({
       })
       .finally(() => {
       });
-    AXIOS.get('http://localhost:3000/hotel/combobox/hotel/FLC', { crossdomain: true })
+    AXIOS.get(apiUrl +'/hotel/combobox/hotel/FLC', { crossdomain: true })
       .then((response) => {
         this.flcHotels = response.data;
       })
@@ -140,7 +141,7 @@ var app = new Vue({
       })
       .finally(() => {
       });
-      AXIOS.get('http://localhost:3000/hotel/combobox/package/VIN', { crossdomain: true })
+      AXIOS.get(apiUrl +'/hotel/combobox/package/VIN', { crossdomain: true })
         .then((response) => {
           this.vinPackage = response.data;
         })
@@ -149,7 +150,7 @@ var app = new Vue({
         })
         .finally(() => {
         });
-      AXIOS.get('http://localhost:3000/hotel/combobox/package/FLC', { crossdomain: true })
+      AXIOS.get(apiUrl +'/hotel/combobox/package/FLC', { crossdomain: true })
         .then((response) => {
           this.flcPackage = response.data;
         })
@@ -158,7 +159,7 @@ var app = new Vue({
         })
         .finally(() => {
         });
-        AXIOS.get('http://localhost:3000/hotel/combobox/roomtype/VIN', { crossdomain: true })
+        AXIOS.get(apiUrl +'/hotel/combobox/roomtype/VIN', { crossdomain: true })
         .then((response) => {
           this.vinroomTypes = response.data;
         })
@@ -167,7 +168,7 @@ var app = new Vue({
         })
         .finally(() => {
         });
-      AXIOS.get('http://localhost:3000/hotel/combobox/roomtype/FLC', { crossdomain: true })
+      AXIOS.get(apiUrl +'/hotel/combobox/roomtype/FLC', { crossdomain: true })
         .then((response) => {
           this.flcroomTypes = response.data;
         })
@@ -176,7 +177,7 @@ var app = new Vue({
         })
         .finally(() => {
         });
-        AXIOS.get('http://localhost:3000/hotel/combobox/addition-service/FLC', { crossdomain: true })
+        AXIOS.get(apiUrl +'/hotel/combobox/addition-service/FLC', { crossdomain: true })
         .then((response) => {
           this.flcOptionService = response.data;
         })
@@ -185,7 +186,7 @@ var app = new Vue({
         })
         .finally(() => {
         });
-        AXIOS.get('http://localhost:3000/hotel/combobox/addition-service/VIN', { crossdomain: true })
+        AXIOS.get(apiUrl +'/hotel/combobox/addition-service/VIN', { crossdomain: true })
         .then((response) => {
           this.vinOptionService = response.data;
         })
@@ -212,7 +213,7 @@ var app = new Vue({
       this.bookingstep.find = true;
       this.bookingstep.confirm = true;
       this.bookingstep.finish = true;
-      AXIOS.post("http://localhost:3000/mail/hotel-booking", this.bookingrequest)
+      AXIOS.post(apiUrl +'/mail/hotel-booking', this.bookingrequest)
         .then(response => {
           console.log(this.bookingrequest);
           console.log(response);

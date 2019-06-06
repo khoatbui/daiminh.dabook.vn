@@ -297,11 +297,13 @@
   "supplier": [
     {
       "supplierId": "FLC",
-      "supplierName": "FLC Luxury & Golf"
+      "supplierName": "FLC Luxury & Golf",
+      "lang": ""
     },
     {
       "supplierId": "VIN",
-      "supplierName": "Vin Pearl Luxury Resort"
+      "supplierName": "Vin Pearl Luxury Resort",
+      "lang": ""
     }
   ],
   "hotel": [
@@ -348,28 +350,32 @@
       "hotelId": "VINDN",
       "roomTypeId": "VINDNHT",
       "roomTypeName": "Vin Pearl Da Nang Luxury Hotel",
-      "img": ""
+      "img": "",
+      "lang": "EN"
     },
     {
       "supplierId": "VIN",
       "hotelId": "VINDN",
       "roomTypeId": "VINDNVL",
       "roomTypeName": "Vin Pearl Da Nang Luxury Villa",
-      "img": ""
+      "img": "",
+      "lang": "EN"
     },
     {
       "supplierId": "FLC",
       "hotelId": "FLCDN",
       "roomTypeId": "FLCDNHT",
       "roomTypeName": "FLC Da Nang Luxury Hotel",
-      "img": ""
+      "img": "",
+      "lang": "EN"
     },
     {
       "supplierId": "FLC",
       "hotelId": "FLCDN",
       "roomTypeId": "FLCDNLV",
       "roomTypeName": "FLC Da Nang Da Nang Luxury Villa",
-      "img": ""
+      "img": "",
+      "lang": "EN"
     }
   ],
   "package": [
@@ -380,7 +386,7 @@
       "packageId": "VINBB",
       "packageName": "Vin Pearl VINBB",
       "price": "70.000.000",
-      "lang": ""
+      "lang": "EN"
     },
     {
       "supplierId": "VIN",
@@ -389,7 +395,7 @@
       "packageId": "VINBBV",
       "packageName": "Vin Pearl VINBBV",
       "price": "70.000.000",
-      "lang": ""
+      "lang": "EN"
     },
     {
       "supplierId": "VIN",
@@ -398,7 +404,7 @@
       "packageId": "VINFB",
       "packageName": "Vin Pearl VINFB",
       "price": "70.000.000",
-      "lang": ""
+      "lang": "EN"
     },
     {
       "supplierId": "VIN",
@@ -407,7 +413,7 @@
       "packageId": "VINFBV",
       "packageName": "Vin Pearl VINFBV",
       "price": "70.000.000",
-      "lang": ""
+      "lang": "EN"
     },
     {
       "supplierId": "VIN",
@@ -416,7 +422,7 @@
       "packageId": "VINFBVS",
       "packageName": "Vin Pearl VINFBVS",
       "price": "70.000.000",
-      "lang": ""
+      "lang": "EN"
     },
     {
       "supplierId": "FLC",
@@ -425,7 +431,7 @@
       "packageId": "FLCBB",
       "packageName": "FLC Pearl Best B",
       "price": "70.000.000",
-      "lang": ""
+      "lang": "EN"
     }
   ],
   "optionService": [
@@ -435,7 +441,8 @@
       "roomTypeId": "",
       "optionServiceId": "24HOLD",
       "optionServiceName": "Addition 24 golf hold",
-      "price": ""
+      "price": "",
+      "lang": "EN"
     },
     {
       "supplierId": "FLC",
@@ -443,7 +450,8 @@
       "roomTypeId": "",
       "optionServiceId": "32HOLD",
       "optionServiceName": "Addition 32 golf hold",
-      "price": ""
+      "price": "",
+      "lang": "EN"
     },
     {
       "supplierId": "FLC",
@@ -451,7 +459,17 @@
       "roomTypeId": "",
       "optionServiceId": "BAGET",
       "optionServiceName": "Addition Baget golf hold",
-      "price": ""
+      "price": "",
+      "lang": "EN"
+    },
+    {
+      "optionServiceId": "vxzvz",
+      "optionServiceName": "cxzvxz",
+      "lang": "EN",
+      "supplierId": "VIN",
+      "hotelId": "FLCPQ",
+      "roomTypeId": "FLCDNHT",
+      "price": "tewtw"
     }
   ]
 }

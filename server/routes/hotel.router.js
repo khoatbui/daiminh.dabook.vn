@@ -17,7 +17,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
 router.get('/',(req,res,next) => {
-    res.send(db.get('area').value());
+    res.send(db.get('hotel').value());
 })
 router.get('/combobox/hotel/:index',(req,res,next) => {
     console.log(req.params.index);
@@ -40,37 +40,28 @@ router.get('/combobox/addition-service/:index',(req,res,next) => {
     res.send(db.get('optionService').filter({ supplierId: req.params.index }).value());
 })
 router.delete('/:index', function (req, res) {
-    db.get('area').value().splice(req.params.index, 1)
+    db.get('hotel').value().splice(req.params.index, 1)
     console.log(req.params.index);
 })
 
 router.post('/insert', jsonParser, function (req, res) {
-    db.get('area')
+    db.get('hotel')
         .push(req.body)
         .write()
     res.send('CREATE COMPLETED')
 })
 
 router.post('/update', jsonParser, function (req, res) {
-    console.log(  db.get('area')
-    .filter({ areaId: req.body.areaId })
-    .filter( v=> v.lang=== req.body.lang || v.lang=== "").value());
-    db.get('area')
-        .filter({ areaId: req.body.areaId })
-        .filter({ lang: req.body.lang })
+    db.get('hotel')
+        .filter({ hotelId: req.body.hotelId })
         .assign(req.body)
         .write()
     res.send('UPDATE COMPLETED')
 })
 
 router.post('/price-searching', jsonParser, function (req, res) {
-    var total;
-    console.log(  db.get('area')
-    .filter({ areaId: req.body.areaId })
-    .filter( v=> v.lang=== req.body.lang || v.lang=== "").value());
-    db.get('area')
-        .filter({ areaId: req.body.areaId })
-        .filter({ lang: req.body.lang })
+    db.get('hotel')
+        .filter({ hotelId: req.body.hotelId })
         .assign(req.body)
         .write()
     res.send('UPDATE COMPLETED')

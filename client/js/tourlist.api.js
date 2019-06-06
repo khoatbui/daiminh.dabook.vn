@@ -1,3 +1,4 @@
+const apiUrl='http://103.237.144.222:3000';
 // Make a request for a user with a given ID
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -26,7 +27,7 @@ var app = new Vue({
   methods: {
     initialize() {
       if (urlParams.has('destination')) {
-        AXIOS.get('http://localhost:3000/tourlist/destination-search/' + urlParams.get('destination'), { crossdomain: true })
+        AXIOS.get(apiUrl +'/tourlist/destination-search/' + urlParams.get('destination'), { crossdomain: true })
           .then((response) => {
             console.log(response.data);
             this.tourlist = response.data;
@@ -39,7 +40,7 @@ var app = new Vue({
           });
       }
       else if (urlParams.has('travelstyle')) {
-        AXIOS.get('http://localhost:3000/tourlist/travelstyle-search/' + urlParams.get('travelstyle'), { crossdomain: true })
+        AXIOS.get(apiUrl +'/tourlist/travelstyle-search/' + urlParams.get('travelstyle'), { crossdomain: true })
           .then((response) => {
             console.log(response.data);
             this.tourlist = response.data;
@@ -53,7 +54,7 @@ var app = new Vue({
 
       }
       else if (urlParams.has('city')) {
-        AXIOS.get('http://localhost:3000/tourlist/city-search/' + urlParams.get('city'), { crossdomain: true })
+        AXIOS.get(apiUrl +'/tourlist/city-search/' + urlParams.get('city'), { crossdomain: true })
           .then((response) => {
             console.log(response.data);
             this.tourlist = response.data;
@@ -67,7 +68,7 @@ var app = new Vue({
 
       }
       else if (urlParams.has('searchbox')) {
-        AXIOS.get('http://localhost:3000/tourlist/searchbox-search/' + urlParams.get('searchbox'), { crossdomain: true })
+        AXIOS.get(apiUrl +'/tourlist/searchbox-search/' + urlParams.get('searchbox'), { crossdomain: true })
           .then((response) => {
             console.log(response.data);
             this.tourlist = response.data;
@@ -81,7 +82,7 @@ var app = new Vue({
 
       }
       else {
-        AXIOS.get('http://localhost:3000/tourlist/', { crossdomain: true })
+        AXIOS.get(apiUrl +'/tourlist/', { crossdomain: true })
           .then((response) => {
             console.log(response.data);
             this.tourlist = response.data;
