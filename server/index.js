@@ -14,6 +14,7 @@ const tourListRoute = require('./routes/tourlist.router')
 const tourDetailRoute = require('./routes/tourdetail.router')
 const uploadRoute = require('./routes/upload.router')
 const mailRoute = require('./routes/automaticemail.router')
+const hotelRoute = require('./routes/hotel.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -28,6 +29,7 @@ app.use('/tourdetail',tourDetailRoute);
 app.use('/area',areaRouter);
 app.use('/upload',uploadRoute);
 app.use('/mail',mailRoute);
+app.use('/hotel',hotelRoute);
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

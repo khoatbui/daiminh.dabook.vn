@@ -657,10 +657,14 @@
     background: transparent !important;
     color: transparent !important;
 }
+.dropdown-menu .dropdown-item, .dropdown-menu a {
+    color: #002c69 !important;
+    font-size: 0.9rem;
+}
 
 .dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item:focus, .dropdown-menu a:hover, .dropdown-menu a:focus, .dropdown-menu a:active {
     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 191, 232,0.4) !important;
-    background-color: #00bfe8;
+    background-color: rgba(0, 44, 105,0.8);
     color: #FFFFFF !important;
     font-size: 0.9rem;
 }
@@ -771,8 +775,8 @@
   }
   .drop-item{
     cursor: pointer;
-    padding-top: 4px ;
-    padding-bottom: 4px ;
+    padding-top: 6px ;
+    padding-bottom: 6px ;
     border-radius: 4px;
   }
   .drop-item:hover{
@@ -806,4 +810,31 @@
     color: rgba(0,0,0,.47) !important;
     cursor: pointer;
     box-shadow: none !important;
+}
+.main-index{
+    position: relative;
+}
+.main-custom-card{
+    z-index: 1000;
+    color: #000 !important;
+    position: absolute;
+    width: 50vw;
+    height: 300px;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.main-custom-card .nav-item a{
+    z-index: 100000;
+    color:#002c69;
+}
+.main-custom-card .nav-item{
+    display: inline-block;
+}
+
+.main-custom-card .nav-tabs .nav-item .nav-link, .nav-tabs .nav-item .nav-link:hover, .nav-tabs .nav-item .nav-link:focus {
+    color:#002c69 !important;
+}
+.main-custom-card .nav-tabs .nav-item .nav-link {
+    color:#002c69 !important;
 }

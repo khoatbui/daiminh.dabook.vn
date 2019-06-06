@@ -1,16 +1,34 @@
 /*=======SEND MAI AUTOMATIC======
-+ Duong dan hinh anh
-+ Link
-+ Title
-+ Noi dung
++ Khi nhận request từ khách hàng, sẽ gửi emal tới nhân viên + email confirm cho khách
++ Code duoc sinh tu dong và luu vao database
 ==================================*/
 var express = require('express')
 var router = express.Router()
 var db = require('../db')
 var bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
+var moment = require('moment');
 var jsonParser = bodyParser.json()
-
+var emailInfo={
+    emailId:'contact@daiminhtravel.com',
+    emailPass:'daiminhmd2383'
+}
+var transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: emailInfo.emailId, 
+        pass: emailInfo.emailPass
+    },
+    tls:{
+        rejectUnauthorized:false
+    }
+});
+var current={
+    currentCode:0,
+    currentDate:6
+};
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.post('/hotel-booking', jsonParser, function (req, res) {
@@ -31,22 +49,10 @@ router.post('/hotel-booking', jsonParser, function (req, res) {
         <p>${req.body.message}</p>
     `;
     const strsubject=`[HOTEL-${req.body.hotelId}] Yeu cau tu khach hang ${req.body.name} / ${req.body.phone}`;
-    let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: "sysadmin@dabook.vn", // generated ethereal user
-            pass: "Black@ngelk510" // generated ethereal password
-        },
-        tls:{
-            rejectUnauthorized:false
-        }
-    });
-
-    // send mail with defined transport object
+    const transactionCode="VP" +moment().format('YYMM') + uniqeNumber();
+    console.log(transactionCode);
     let info = transporter.sendMail({
-        from: '"daiminh.dabook.vn" <sysadmin@dabook.vn>', // sender address
+        from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`, // sender address
         to: "khoatbui.dev@gmail.com", // list of receivers
         subject: strsubject, // Subject line
         text: "Hello world?", // plain text body
@@ -75,18 +81,6 @@ router.post('/tour-booking', jsonParser, function (req, res) {
         <p>${req.body.message}</p>
     `;
     const strsubject=`[TOUR-${req.body.tourId}]  Yeu cau tu khach hang ${req.body.name} / ${req.body.phone}`;
-    let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: "sysadmin@dabook.vn", // generated ethereal user
-            pass: "Black@ngelk510" // generated ethereal password
-        },
-        tls:{
-            rejectUnauthorized:false
-        }
-    });
 
     let info = transporter.sendMail({
         from: '"daiminh.dabook.vn" <sysadmin@dabook.vn>', // sender address
@@ -103,7 +97,6 @@ router.post('/tour-booking', jsonParser, function (req, res) {
 })
 
 router.post('/car-booking', jsonParser, function (req, res) {
-    console.log(req.body);
     const output = `
         <p>You have new contact request</p>
         <h3>Contact Detail</h3>
@@ -118,18 +111,6 @@ router.post('/car-booking', jsonParser, function (req, res) {
         <p>${req.body.message}</p>
     `;
     const strsubject=`[CAR-${req.body.carId}]  Yeu cau tu khach hang ${req.body.name} / ${req.body.phone}`;
-    let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: "sysadmin@dabook.vn", // generated ethereal user
-            pass: "Black@ngelk510" // generated ethereal password
-        },
-        tls:{
-            rejectUnauthorized:false
-        }
-    });
 
     let info = transporter.sendMail({
         from: '"daiminh.dabook.vn" <sysadmin@dabook.vn>', // sender address
@@ -140,8 +121,31 @@ router.post('/car-booking', jsonParser, function (req, res) {
     }).then(success => console.log('success: ', success))
     .catch(error => console.log('error: ', error))
 
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    //console.log("Message sent: %s", info.messageId);
+    //console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.send('UPDATE COMPLETED')
 })
+
+
+function uniqeNumber (){
+    console.log(current.currentDate);
+    console.log(moment().get('date'));
+    if (current.currentDate == moment().get('date'))
+    {
+        current.currentCode ++;
+    }
+    else{
+        current.currentCode=0;
+        current.currentDate=moment().get('date');
+    }
+    if (parseInt(current.currentCode)<10) {
+        return '00'+ current.currentCode;
+    }
+    else if (parseInt(current.currentCode)<100) {
+        return '0'+ current.currentCode;
+    }
+    else{
+        return current.currentCode;
+    }
+}
 module.exports = router
