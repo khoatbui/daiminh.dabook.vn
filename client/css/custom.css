@@ -64,6 +64,12 @@
 .btn:hover{
     color: #FFF !important;
 }
+.form-check .form-check-input:checked~.circle {
+    border-color: #019ee2 !important;
+}
+.form-check .form-check-label .circle .check {
+    background-color: #019ee2 !important;
+}
 /* ===========================
     INDEX
 =============================*/
