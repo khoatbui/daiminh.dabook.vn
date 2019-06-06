@@ -1,8 +1,14 @@
+require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
+
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true});
+
 const app = express()
 const port = 3000
-
+app.use(express.static('public'))
+app.use(express.static('uploads'))
 app.use(cors())
 
 const mainRoute = require('./routes/main.router')

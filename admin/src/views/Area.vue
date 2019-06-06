@@ -137,12 +137,9 @@ export default {
     initialize() {
       AXIOS.get("http://localhost:3000/area/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.area);
           this.area = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
     },
@@ -155,14 +152,12 @@ export default {
 
     deleteItem(item) {
       const index = this.area.indexOf(item);
-      console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete("http://localhost:3000/area/" + index)
           .then(response => {
             this.area.splice(index, 1);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
     },
@@ -180,20 +175,16 @@ export default {
       if (this.editedIndex > -1) {
         AXIOS.post("http://localhost:3000/area/update", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
             Object.assign(this.area[this.editedIndex], this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
       } else {
         AXIOS.post("http://localhost:3000/area/insert", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
         this.area.push(this.editedItem);

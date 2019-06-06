@@ -138,12 +138,9 @@ export default {
     initialize() {
       AXIOS.get("http://localhost:3000/travelstyle/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.travelStyle);
           this.travelStyle = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
     },
@@ -156,14 +153,12 @@ export default {
 
     deleteItem(item) {
       const index = this.travelStyle.indexOf(item);
-      console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete("http://localhost:3000/travelstyle/" + index)
           .then(response => {
             this.travelStyle.splice(index, 1);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
     },
@@ -180,20 +175,16 @@ export default {
       if (this.editedIndex > -1) {
         AXIOS.post("http://localhost:3000/travelStyle/update", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
             Object.assign(this.travelStyle[this.editedIndex], this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
       } else {
         AXIOS.post("http://localhost:3000/travelStyle/insert", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
         this.travelStyle.push(this.editedItem);

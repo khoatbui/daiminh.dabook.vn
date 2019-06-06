@@ -192,12 +192,9 @@ export default {
     initialize() {
       AXIOS.get("http://localhost:3000/tourdetail/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.tourdetail);
           this.tourdetail = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
 
@@ -206,7 +203,6 @@ export default {
           this.tourlist = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
     },
@@ -219,20 +215,17 @@ export default {
 
     deleteItem(item) {
       const index = this.tourdetail.indexOf(item);
-      console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete("http://localhost:3000/tourdetail/" + index)
           .then(response => {
             this.tourdetail.splice(index, 1);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
     },
 
     close() {
-      console.log(this.editedItem);
       this.dialog = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
@@ -244,20 +237,16 @@ export default {
       if (this.editedIndex > -1) {
         AXIOS.post("http://localhost:3000/tourdetail/update", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
             Object.assign(this.tourdetail[this.editedIndex], this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
       } else {
         AXIOS.post("http://localhost:3000/tourdetail/insert", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
         this.tourdetail.push(this.editedItem);

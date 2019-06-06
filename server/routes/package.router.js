@@ -22,7 +22,6 @@ router.get('/',(req,res,next) => {
 
 router.delete('/:index', function (req, res) {
     db.get('package').value().splice(req.params.index, 1)
-    console.log(req.params.index);
 })
 
 router.post('/insert', jsonParser, function (req, res) {

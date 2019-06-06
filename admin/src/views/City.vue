@@ -166,12 +166,9 @@ export default {
     initialize() {
       AXIOS.get("http://localhost:3000/city/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.city);
           this.city = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
 
@@ -180,7 +177,6 @@ export default {
           this.area = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
 
@@ -189,7 +185,6 @@ export default {
           this.destination = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
     },
@@ -202,14 +197,12 @@ export default {
 
     deleteItem(item) {
       const index = this.city.indexOf(item);
-      console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete("http://localhost:3000/city/" + index)
           .then(response => {
             this.city.splice(index, 1);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
     },
@@ -226,20 +219,16 @@ export default {
       if (this.editedIndex > -1) {
         AXIOS.post("http://localhost:3000/city/update", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
             Object.assign(this.city[this.editedIndex], this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
       } else {
         AXIOS.post("http://localhost:3000/city/insert", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
         this.city.push(this.editedItem);

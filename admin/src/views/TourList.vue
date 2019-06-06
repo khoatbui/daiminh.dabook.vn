@@ -337,45 +337,33 @@ export default {
     initialize() {
       AXIOS.get("http://localhost:3000/tourlist/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.tourlist);
           this.tourlist = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
 
       AXIOS.get("http://localhost:3000/destination/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.destination);
           this.destination = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
 
       AXIOS.get("http://localhost:3000/travelstyle/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.travelStyle);
           this.travelStyle = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
 
       AXIOS.get("http://localhost:3000/city/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.city);
           this.city = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
     },
@@ -388,14 +376,12 @@ export default {
 
     deleteItem(item) {
       const index = this.tourlist.indexOf(item);
-      console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete("http://localhost:3000/tourlist/" + index)
           .then(response => {
            this.tourlist.splice(index, 1)
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
     },
@@ -412,20 +398,16 @@ export default {
       if (this.editedIndex > -1) {
         AXIOS.post("http://localhost:3000/tourlist/update" , this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
             Object.assign(this.tourlist[this.editedIndex], this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
       } else {
         AXIOS.post("http://localhost:3000/tourlist/insert", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
         this.tourlist.push(this.editedItem);

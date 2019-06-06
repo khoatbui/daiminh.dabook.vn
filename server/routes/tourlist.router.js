@@ -17,7 +17,6 @@ router.get('/', (req, res, next) => {
 // Xoa ban ghi
 router.delete('/:index', function (req, res) {
     db.get('tourList').value().splice(req.params.index, 1)
-    console.log(req.params.index);
 })
 
 // Them moi ban ghi

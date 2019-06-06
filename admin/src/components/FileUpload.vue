@@ -40,7 +40,6 @@ export default {
       this.isUpload = false;
       const file = this.$refs.file.files[0];
       this.file = file;
-      console.log(this.file);
       this.message = this.file.name;
     },
     async onSubmit() {
@@ -56,11 +55,9 @@ export default {
             this.$emit('input', this.path)
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
       } catch (error) {
-        console.log(error);
         this.message = "Something went wrong!!";
       }
     }

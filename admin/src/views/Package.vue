@@ -173,12 +173,9 @@ export default {
     initialize() {
       AXIOS.get("http://localhost:3000/package/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.package);
           this.package = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
         AXIOS.get("http://localhost:3000/hotel/", { crossdomain: true })
@@ -186,7 +183,6 @@ export default {
           this.hotel = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
         AXIOS.get("http://localhost:3000/supplier/", { crossdomain: true })
@@ -194,7 +190,6 @@ export default {
           this.supplier = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
         AXIOS.get("http://localhost:3000/roomtype/", { crossdomain: true })
@@ -202,7 +197,6 @@ export default {
           this.roomType = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
     },
@@ -215,14 +209,12 @@ export default {
 
     deleteItem(item) {
       const index = this.package.indexOf(item);
-      console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete("http://localhost:3000/package/" + index)
           .then(response => {
             this.package.splice(index, 1);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
     },
@@ -240,20 +232,16 @@ export default {
       if (this.editedIndex > -1) {
         AXIOS.post("http://localhost:3000/package/update", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
             Object.assign(this.package[this.editedIndex], this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
       } else {
         AXIOS.post("http://localhost:3000/package/insert", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
         this.package.push(this.editedItem);

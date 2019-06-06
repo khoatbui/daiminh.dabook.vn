@@ -178,12 +178,9 @@ export default {
     initialize() {
       AXIOS.get("http://localhost:3000/optionService/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
-          console.log(this.optionService);
           this.optionService = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
 
@@ -192,7 +189,6 @@ export default {
           this.hotel = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
         AXIOS.get("http://localhost:3000/supplier/", { crossdomain: true })
@@ -200,7 +196,6 @@ export default {
           this.supplier = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
         AXIOS.get("http://localhost:3000/roomtype/", { crossdomain: true })
@@ -208,7 +203,6 @@ export default {
           this.roomType = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
     },
@@ -221,14 +215,12 @@ export default {
 
     deleteItem(item) {
       const index = this.optionService.indexOf(item);
-      console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete("http://localhost:3000/optionService/" + index)
           .then(response => {
             this.optionService.splice(index, 1);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
     },
@@ -246,20 +238,16 @@ export default {
       if (this.editedIndex > -1) {
         AXIOS.post("http://localhost:3000/optionService/update", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
             Object.assign(this.optionService[this.editedIndex], this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
       } else {
         AXIOS.post("http://localhost:3000/optionService/insert", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
         this.optionService.push(this.editedItem);

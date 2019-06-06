@@ -32,7 +32,6 @@ var current={
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.post('/hotel-booking', jsonParser, function (req, res) {
-    console.log(req.body);
     const output = `
         <p>You have new contact request</p>
         <h3>Contact Detail</h3>
@@ -50,7 +49,6 @@ router.post('/hotel-booking', jsonParser, function (req, res) {
     `;
     const strsubject=`[HOTEL-${req.body.hotelId}] Yeu cau tu khach hang ${req.body.name} / ${req.body.phone}`;
     const transactionCode="VP" +moment().format('YYMM') + uniqeNumber();
-    console.log(transactionCode);
     let info = transporter.sendMail({
         from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`, // sender address
         to: "khoatbui.dev@gmail.com", // list of receivers
@@ -60,13 +58,10 @@ router.post('/hotel-booking', jsonParser, function (req, res) {
     }).then(success => console.log('success: ', success))
     .catch(error => console.log('error: ', error))
 
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.send('UPDATE COMPLETED')
 })
 
 router.post('/tour-booking', jsonParser, function (req, res) {
-    console.log(req.body);
     const output = `
         <p>You have new contact request</p>
         <h3>Contact Detail</h3>
@@ -91,8 +86,6 @@ router.post('/tour-booking', jsonParser, function (req, res) {
     }).then(success => console.log('success: ', success))
     .catch(error => console.log('error: ', error))
 
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.send('UPDATE COMPLETED')
 })
 
@@ -121,15 +114,11 @@ router.post('/car-booking', jsonParser, function (req, res) {
     }).then(success => console.log('success: ', success))
     .catch(error => console.log('error: ', error))
 
-    //console.log("Message sent: %s", info.messageId);
-    //console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.send('UPDATE COMPLETED')
 })
 
 
 function uniqeNumber (){
-    console.log(current.currentDate);
-    console.log(moment().get('date'));
     if (current.currentDate == moment().get('date'))
     {
         current.currentCode ++;

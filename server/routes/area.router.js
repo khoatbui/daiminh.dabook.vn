@@ -22,7 +22,6 @@ router.get('/',(req,res,next) => {
 
 router.delete('/:index', function (req, res) {
     db.get('area').value().splice(req.params.index, 1)
-    console.log(req.params.index);
 })
 
 router.post('/insert', jsonParser, function (req, res) {
@@ -33,9 +32,6 @@ router.post('/insert', jsonParser, function (req, res) {
 })
 
 router.post('/update', jsonParser, function (req, res) {
-    console.log(  db.get('area')
-    .filter({ areaId: req.body.areaId })
-    .filter( v=> v.lang=== req.body.lang || v.lang=== "").value());
     db.get('area')
         .filter({ areaId: req.body.areaId })
         .filter({ lang: req.body.lang })

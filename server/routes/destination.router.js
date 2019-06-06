@@ -41,7 +41,6 @@ router.get('/',(req,res,next) => {
 
 router.delete('/:index', function (req, res) {
     db.get('destination').value().splice(req.params.index, 1)
-    console.log(req.params.index);
 })
 
 router.get('/des/:id', (req, res, next) => {

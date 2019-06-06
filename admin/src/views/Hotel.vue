@@ -136,11 +136,9 @@ export default {
     initialize() {
       AXIOS.get("http://localhost:3000/hotel/", { crossdomain: true })
         .then(response => {
-          console.log(response.data)
           this.hotel = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
         AXIOS.get("http://localhost:3000/supplier/", { crossdomain: true })
@@ -148,7 +146,6 @@ export default {
           this.supplier = response.data;
         })
         .catch(function(error) {
-          console.log(error);
         })
         .finally(function() {});
     },
@@ -161,14 +158,12 @@ export default {
 
     deleteItem(item) {
       const index = this.hotel.indexOf(item);
-      console.log(index);
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete("http://localhost:3000/hotel/" + index)
           .then(response => {
             this.hotel.splice(index, 1);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
     },
@@ -186,20 +181,16 @@ export default {
       if (this.editedIndex > -1) {
         AXIOS.post("http://localhost:3000/hotel/update", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
             Object.assign(this.hotel[this.editedIndex], this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
       } else {
         AXIOS.post("http://localhost:3000/hotel/insert", this.editedItem)
           .then(response => {
-            console.log(this.editedItem);
           })
           .catch(function(error) {
-            console.log(error);
           })
           .finally(function() {});
         this.hotel.push(this.editedItem);

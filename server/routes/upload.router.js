@@ -28,7 +28,6 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.post('/',upload.single('file'), function (req, res) {
-    console.log(req.file.path);
    res.json({'filepath':req.file.path});
 })
 module.exports = router
