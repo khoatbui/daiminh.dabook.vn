@@ -81,7 +81,7 @@
                     <div class="card m-0 p-0">
                         <div class="row d-flex align-items-stretch">
                             <div class="col-12 col-md-6">
-                                <div class="card-body">
+                                <div class="card-body" v-cloak>
                                     <ul class="nav nav-pills nomal-display nav-pills-rose" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link active" data-toggle="tab" href="#flc" role="tablist"
@@ -96,7 +96,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <div class="tab-content tab-space">
+                                    <div class="tab-content tab-space pb-0">
                                         <div class="tab-pane active" id="flc" aria-expanded="true">
                                             <div class="row border border-radius p-4"
                                                 v-bind:class="{'d-none':bookingstep.confirm}">
@@ -109,7 +109,7 @@
                                                             {{bookingrequest.hotelName}}
                                                         </a>
 
-                                                        <div class="dropdown-menu w-100 "
+                                                        <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
                                                                 @click="bookingrequest.hotelId=hotel.id;bookingrequest.hotelName=hotel.hotelName"
@@ -126,8 +126,8 @@
                                                                         <i class="fas fa-calendar-alt"></i>
                                                                     </span>
                                                                 </div>
-                                                                <input type="text" class="form-control starttime pl-2" id="flccheckin"
-                                                                    placeholder="In..."/>
+                                                                <input type="text" class="form-control starttime pl-2"
+                                                                    id="flccheckin" placeholder="Checkin..." />
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6">
@@ -137,8 +137,8 @@
                                                                         <i class="fas fa-calendar-alt"></i>
                                                                     </span>
                                                                 </div>
-                                                                <input type="text" class="form-control endtime pl-2" id="flccheckout"
-                                                                    placeholder="Out..."/>
+                                                                <input type="text" class="form-control endtime pl-2"
+                                                                    id="flccheckout" placeholder="Checkout..." />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -200,11 +200,11 @@
                                                                 <input type="text" class="form-control"
                                                                     placeholder="Số phòng..."
                                                                     @click="e => e.target.parentNode.nextElementSibling.classList.toggle('show')"
-                                                                    v-model="'So phong:  ' + bookingrequest.roomQty" />
+                                                                    v-model="'Number of room:  ' + bookingrequest.roomQty" />
                                                                 <div class="popover-custom">
                                                                     <div class="row m-1">
                                                                         <div class="col-6">
-                                                                            So phong:
+                                                                                Number of room:
                                                                         </div>
                                                                         <div class="col-2">
                                                                             <button class="btn-plus" @click="minusRoom">
@@ -234,7 +234,7 @@
                                                             {{bookingrequest.roomTypeName}}
                                                         </a>
 
-                                                        <div class="dropdown-menu w-100 "
+                                                        <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
                                                                 @click="bookingrequest.roomTypeId=roomType.roomTypeId;bookingrequest.roomTypeName=roomType.roomTypeName"
@@ -251,7 +251,7 @@
                                                             {{bookingrequest.packageName}}
                                                         </a>
 
-                                                        <div class="dropdown-menu w-100 "
+                                                        <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
                                                                 @click="bookingrequest.packageId=package.packageId;bookingrequest.packageName=package.packageName"
@@ -260,23 +260,26 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-12 p-2">
-                                                        <div class="dropdown custom-hotel-list show w-100">
-                                                            <a class="btn btn-secondary dropdown-toggle" href="#"
-                                                                role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="false"
-                                                                v-model="bookingrequest.optionServiceId">
-                                                                {{bookingrequest.optionServiceName}}
-                                                            </a>
-    
-                                                            <div class="dropdown-menu w-100 "
-                                                                aria-labelledby="dropdownMenuLink">
-                                                                <a class="dropdown-item"
-                                                                    @click="bookingrequest.optionServiceId=option.optionServiceId;bookingrequest.optionServiceName=option.optionServiceName"
-                                                                    v-for="option in flcOptionService">{{option.optionServiceName}}</a>
-                                                            </div>
+                                                    <div class="dropdown custom-hotel-list show w-100">
+                                                        <a class="btn btn-secondary dropdown-toggle" href="#"
+                                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false"
+                                                            v-model="bookingrequest.optionServiceId">
+                                                            {{bookingrequest.optionServiceName}}
+                                                        </a>
+
+                                                        <div class="dropdown-menu w-100 h-50-max"
+                                                            aria-labelledby="dropdownMenuLink">
+                                                            <a class="dropdown-item"
+                                                                @click="bookingrequest.optionServiceId=option.optionServiceId;bookingrequest.optionServiceName=option.optionServiceName"
+                                                                v-for="option in flcOptionService">{{option.optionServiceName}}</a>
                                                         </div>
                                                     </div>
-                                                <div class="col-12 p-2">
+                                                </div>
+                                                <div class="col-6 p-2">
+                                                        <h3><b class="text-success">{{totalPrice}}</b></h3>
+                                                    </div>
+                                                <div class="col-6 p-2">
                                                     <button class="btn btn-info w-100" @click="searchHotel">
                                                         <i class="fas fa-hotel"></i> Search
                                                     </button>
@@ -287,10 +290,11 @@
                                                 <div class="col-12">
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Thông tin phòng :</h6>
+                                                            <h6 class="title  p-0 m-0">Khách sạn/resort :</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0">{{bookingrequest.hotelName}}
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.hotelName}}
                                                             </h6>
                                                         </div>
                                                     </div>
@@ -299,23 +303,27 @@
                                                             <h6 class="title  p-0 m-0">Loại phòng :</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0">{{bookingrequest.roomTypeName}}</h6>
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.roomTypeName}}</h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
-                                                            <div class="col-4 border-right-dot">
-                                                                <h6 class="title  p-0 m-0"> Gói :</h6>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <h6 class="title text-info p-0 m-0"> {{bookingrequest.packageName}}</h6>
-                                                            </div>
+                                                        <div class="col-4 border-right-dot">
+                                                            <h6 class="title  p-0 m-0"> Gói :</h6>
                                                         </div>
+                                                        <div class="col-8">
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.packageName}}</h6>
+                                                        </div>
+                                                    </div>
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
                                                             <h6 class="title  p-0 m-0">Số người</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0"> Golfer : {{bookingrequest.golfer}} | NonGolfer : {{bookingrequest.ungolfer}} </h6>
+                                                            <h6 class="title text-info p-0 m-0"> Golfer :
+                                                                {{bookingrequest.golfer}} | NonGolfer :
+                                                                {{bookingrequest.ungolfer}} </h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
@@ -323,25 +331,29 @@
                                                             <h6 class="title  p-0 m-0">Số phòng</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0"> {{bookingrequest.roomQty}} </h6>
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.roomQty}} </h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
-                                                            <div class="col-4 border-right-dot">
-                                                                <h6 class="title  p-0 m-0">Thời gian :</h6>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <h6 class="title text-info p-0 m-0">{{bookingrequest.checkin}} -> {{bookingrequest.checkout}} </h6>
-                                                            </div>
+                                                        <div class="col-4 border-right-dot">
+                                                            <h6 class="title  p-0 m-0">Thời gian :</h6>
                                                         </div>
-                                                        <div class="row border-bottom pb-1 pt-1">
-                                                                <div class="col-4 border-right-dot">
-                                                                    <h6 class="title  p-0 m-0">Dịch vụ khác :</h6>
-                                                                </div>
-                                                                <div class="col-8">
-                                                                    <h6 class="title text-info p-0 m-0">{{bookingrequest.optionServiceName}} </h6>
-                                                                </div>
-                                                            </div>
+                                                        <div class="col-8">
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.checkin}} ->
+                                                                {{bookingrequest.checkout}} [{{totalTime}} days] </h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom pb-1 pt-1">
+                                                        <div class="col-4 border-right-dot">
+                                                            <h6 class="title  p-0 m-0">Dịch vụ khác :</h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.optionServiceName}} </h6>
+                                                        </div>
+                                                    </div>
                                                     <div class="row border-bottom bg-success-opac-50 pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
                                                             <h5 class="title  p-0 m-0">TỔNG TIỀN</h6>
@@ -407,10 +419,10 @@
                                                             {{bookingrequest.hotelName}}
                                                         </a>
 
-                                                        <div class="dropdown-menu w-100 "
+                                                        <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a v-for="hotel in vinHotels" class="dropdown-item"
-                                                                @click="bookingrequest.hotelId=hotel.hotelId;bookingrequest.hotelName=hotel.hotelName">{{hotel.hotelName}}</a>
+                                                                @click="bookingrequest.hotelId=hotel.hotelId;bookingrequest.hotelName=hotel.hotelName;getVinRoomTypeByHotel()">{{hotel.hotelName}}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -424,7 +436,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <input type="text" class="form-control starttime pl-2"
-                                                                    placeholder="In..." />
+                                                                 id="vincheckin"   placeholder="Checkin..." />
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6">
@@ -435,7 +447,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <input type="text" class="form-control endtime pl-2"
-                                                                    placeholder="Out..." />
+                                                                id="vincheckout"    placeholder="Checkout..." />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -445,13 +457,13 @@
                                                         <div class="col">
                                                             <div class="popover-group w-100">
                                                                 <input type="text" class="form-control"
-                                                                    placeholder="Số phòng..."
+                                                                    placeholder="Number of room..."
                                                                     @click="e => e.target.parentNode.nextElementSibling.classList.toggle('show')"
-                                                                    v-model="'Luxury:  ' + bookingrequest.roomQty" />
+                                                                    v-model="'Number of room:  ' + bookingrequest.roomQty" />
                                                                 <div class="popover-custom w-100">
                                                                     <div class="row m-1">
                                                                         <div class="col-6">
-                                                                            Số phòng:
+                                                                            Number of room:
                                                                         </div>
                                                                         <div class="col-2">
                                                                             <button class="btn-plus" @click="minusRoom">
@@ -481,10 +493,10 @@
                                                             {{bookingrequest.roomTypeName}}
                                                         </a>
 
-                                                        <div class="dropdown-menu w-100 "
+                                                        <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
-                                                                @click="bookingrequest.roomTypeId=roomType.roomTypeId;bookingrequest.roomTypeName=roomType.roomTypeName"
+                                                                @click="bookingrequest.roomTypeId=roomType.roomTypeId;bookingrequest.roomTypeName=roomType.roomTypeName;getVinPackageByHotel()"
                                                                 v-for="roomType in vinroomTypes">{{roomType.roomTypeName}}</a>
                                                         </div>
                                                     </div>
@@ -498,7 +510,7 @@
                                                             {{bookingrequest.packageName}}
                                                         </a>
 
-                                                        <div class="dropdown-menu w-100 "
+                                                        <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
                                                                 @click="bookingrequest.packageId=package.packageId;bookingrequest.packageName=package.packageName"
@@ -506,7 +518,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-12 p-2">
+                                                <div class="col-6 p-2">
+                                                        <h3><b class="text-success">{{bookingrequest.price}}</b></h3>
+                                                    </div>
+                                                <div class="col-6 p-2">
                                                     <button class="btn btn-info w-100" @click="searchHotel">
                                                         <i class="fas fa-hotel"></i> Search
                                                     </button>
@@ -517,10 +532,10 @@
                                                 <div class="col-12">
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Thông tin phòng :</h6>
+                                                            <h6 class="title  p-0 m-0">Địa điểm :</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0">FLC Villa Luxury resort
+                                                            <h6 class="title text-info p-0 m-0">{{bookingrequest.hotelName}}
                                                             </h6>
                                                         </div>
                                                     </div>
@@ -529,15 +544,33 @@
                                                             <h6 class="title  p-0 m-0">Loại phòng :</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0">Hotel luxury</h6>
+                                                            <h6 class="title text-info p-0 m-0">{{bookingrequest.roomTypeName}}</h6>
                                                         </div>
                                                     </div>
+                                                    <div class="row border-bottom pb-1 pt-1">
+                                                            <div class="col-4 border-right-dot">
+                                                                <h6 class="title  p-0 m-0">Gói :</h6>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <h6 class="title text-info p-0 m-0">{{bookingrequest.packageName}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    <div class="row border-bottom pb-1 pt-1">
+                                                            <div class="col-4 border-right-dot">
+                                                                <h6 class="title  p-0 m-0">Thời gian :</h6>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <h6 class="title text-info p-0 m-0">
+                                                                    {{bookingrequest.checkin}} ->
+                                                                    {{bookingrequest.checkout}} <span class="text-rose">[{{totalTime}} days]</span></h6>
+                                                            </div>
+                                                        </div>
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
                                                             <h6 class="title  p-0 m-0">Số người</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0"> Golfer : </h6>
+                                                            <h6 class="title text-info p-0 m-0"> {{bookingrequest.personQty}} </h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
@@ -545,7 +578,7 @@
                                                             <h6 class="title  p-0 m-0">Số phòng</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0"> 4 </h6>
+                                                            <h6 class="title text-info p-0 m-0"> {{bookingrequest.roomQty}} </h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
@@ -561,7 +594,7 @@
                                                             <h5 class="title  p-0 m-0">TỔNG TIỀN</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h5 class="title text-success p-0 m-0"> 2.000.000</h6>
+                                                            <h5 class="title text-success p-0 m-0"> {{totalPrice}}</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -623,29 +656,32 @@
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text text-left p-0">
-                                                        <i class="far fa-heart"></i> </span>
+                                                        <i class="far fa-heart" v-bind:class="formCheck.name"></i>
+                                                    </span>
                                                 </div>
-                                                <input type="text" class="form-control pl-2" placeholder="Họ tên..."
-                                                    v-model="bookingrequest.name">
+                                                <input type="text" class="form-control pl-2" required
+                                                    placeholder="Họ tên..." v-model="bookingrequest.name">
                                             </div>
                                         </div>
                                         <div class="col-12 p-2">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text text-left p-0">
-                                                        <i class="far fa-envelope"></i> </span>
+                                                        <i class="far fa-envelope" v-bind:class="formCheck.email"></i>
+                                                    </span>
                                                 </div>
-                                                <input type="email" class="form-control pl-2" placeholder="Email..."
-                                                    v-model="bookingrequest.email">
+                                                <input type="email" class="form-control pl-2" required
+                                                    placeholder="Email..." v-model="bookingrequest.email">
                                             </div>
                                         </div>
                                         <div class="col-12 p-2">
-                                            <div class="input-group">
+                                            <div class="input-group has-danger">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text text-left p-0">
-                                                        <i class="fas fa-phone"></i> </span>
+                                                        <i class="fas fa-phone" v-bind:class="formCheck.phone"></i>
+                                                    </span>
                                                 </div>
-                                                <input type="tel" class="form-control pl-2"
+                                                <input type="tel" class="form-control pl-2" required
                                                     placeholder="Số điện thoại..." v-model="bookingrequest.phone">
                                             </div>
                                         </div>
@@ -658,6 +694,12 @@
                                                 <input type="text" class="form-control pl-2"
                                                     placeholder="(Option) Thông tin khác..."
                                                     v-model="bookingrequest.other">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 p-0" v-show="!formCheck.isFail">
+                                            <div class="alert alert-danger pt-1 pb-1" role="alert">
+                                                Please fill required text form
+
                                             </div>
                                         </div>
                                         <div class="col-6 p-2">
@@ -821,6 +863,7 @@
     <script src="../vendor/material-kit-master/assets/js/material-kit.js?v=2.0.5" type="text/javascript"></script>
     <!-- javascript for init -->
 
+    <script src="../assets/moment/moment.js" type="text/javascript"></script>
     <script src="../assets/vuejs/vue.js" type="text/javascript"></script>
     <script src="../components/FixHeaderComponent.js" type="text/javascript"></script>
     <script src="../components/SearchTourComponent.js" type="text/javascript"></script>

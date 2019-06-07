@@ -25,6 +25,7 @@ const supplierRoute = require('./routes/supplier.router')
 const packageRoute = require('./routes/package.router')
 const roomtypeRoute = require('./routes/roomtype.router')
 const optionServiceRoute = require('./routes/optionservice.router')
+const packageHotelRELRouter = require('./routes/packagehotelREL.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -44,6 +45,7 @@ app.use('/supplier',supplierRoute);
 app.use('/package',packageRoute);
 app.use('/roomtype',roomtypeRoute);
 app.use('/optionservice',optionServiceRoute);
+app.use('/packagehotelrel',packageHotelRELRouter)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

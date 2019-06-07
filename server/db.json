@@ -302,33 +302,105 @@
     },
     {
       "supplierId": "VIN",
-      "supplierName": "Vin Pearl Luxury Resort",
+      "supplierName": "Vin Pearl Resort & Spa",
       "lang": ""
     }
   ],
   "hotel": [
     {
-      "supplierId": "FLC",
-      "hotelId": "FLCDN",
-      "hotelName": "FLC Da Nang",
+      "supplierId": "VIN",
+      "hotelId": "VINHA",
+      "hotelName": "VinPearl Resort & Spa Hội An",
       "star": "5"
     },
     {
-      "supplierId": "FLC",
-      "hotelId": "FLCPQ",
-      "hotelName": "FLC Phu Quoc",
+      "supplierId": "VIN",
+      "hotelId": "VINCR",
+      "hotelName": "Vinpearl Condotel Riverside",
       "star": "5"
     },
     {
-      "supplierId": "FLC",
-      "hotelId": "FLCHL",
-      "hotelName": "FLC Ha Long",
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "hotelName": "Vinpearl Luxury Đà Nẵng",
       "star": "5"
     },
     {
-      "supplierId": "FLC",
-      "hotelId": "FLCSS",
-      "hotelName": "FLC Sam Son",
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "hotelName": "Vinpearl Resort Nha Trang",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "hotelName": "VP resort and spa Nha Trang",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "hotelName": "Vinpearl Discovery 1 Nha Trang",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND2",
+      "hotelName": "Vinpearl Discovery 2 Nha Trang",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCE",
+      "hotelName": "Vinpearl Condotel Empire Nha Trang",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCB",
+      "hotelName": "Vinpearl Condotel Beachfront Nha Trang",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINLN",
+      "hotelName": "Vinpearl Luxury Nha Trang",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "hotelName": " Vinpearl Resort & Spa Phú Quốc",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "hotelName": "Vinpearl Resort & Golf Phú Quốc",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ1",
+      "hotelName": "Vinpearl Discovery 1 Phú Quốc",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ2",
+      "hotelName": "Vinpearl Discovery 2 Phú Quốc",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ3",
+      "hotelName": "Vinpearl Discovery 3 Phú Quốc",
+      "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINOQ",
+      "hotelName": "VinOasis Phú Quốc",
       "star": "5"
     },
     {
@@ -347,90 +419,934 @@
   "roomType": [
     {
       "supplierId": "VIN",
-      "hotelId": "VINDN",
-      "roomTypeId": "VINDNHT",
-      "roomTypeName": "Vin Pearl Da Nang Luxury Hotel",
+      "hotelId": "VINHA",
+      "roomTypeId": "VINHADE",
+      "roomTypeName": "Phòng Deluxe",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINHA",
+      "roomTypeId": "VINHADO",
+      "roomTypeName": "Deluxe ocean view",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINHA",
+      "roomTypeId": "VINHAJS",
+      "roomTypeName": "Junior suit",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINHA",
+      "roomTypeId": "VINHAPS",
+      "roomTypeName": "President suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINHA",
+      "roomTypeId": "VINHAV3",
+      "roomTypeName": "Villa -3 bedroom ocean view",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINHA",
+      "roomTypeId": "VINHAV4",
+      "roomTypeName": "Villa -4 bedroom",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINHA",
+      "roomTypeId": "VINHAV5",
+      "roomTypeName": "Villa -5 bedroom",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCR",
+      "roomTypeId": "VINHAV3",
+      "roomTypeName": "Studio Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCR",
+      "roomTypeId": "VINHAV4",
+      "roomTypeName": "Executive Suite",
       "img": "",
       "lang": "EN"
     },
     {
       "supplierId": "VIN",
       "hotelId": "VINDN",
-      "roomTypeId": "VINDNVL",
-      "roomTypeName": "Vin Pearl Da Nang Luxury Villa",
+      "roomTypeId": "VINDNDR",
+      "roomTypeName": "Deluxe Room",
       "img": "",
       "lang": "EN"
     },
     {
-      "supplierId": "FLC",
-      "hotelId": "FLCDN",
-      "roomTypeId": "FLCDNHT",
-      "roomTypeName": "FLC Da Nang Luxury Hotel",
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "roomTypeId": "VINDNDO",
+      "roomTypeName": "Deluxe Ocean View",
       "img": "",
       "lang": "EN"
     },
     {
-      "supplierId": "FLC",
-      "hotelId": "FLCDN",
-      "roomTypeId": "FLCDNLV",
-      "roomTypeName": "FLC Da Nang Da Nang Luxury Villa",
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "roomTypeId": "VINDNPV",
+      "roomTypeName": "Panoramic View",
       "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "roomTypeId": "VINDNEV",
+      "roomTypeName": "Executive Suite Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "roomTypeId": "VINDNPS",
+      "roomTypeName": "Presidential Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "roomTypeId": "VINDNV3",
+      "roomTypeName": "Villa 3 -Bedroom",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "roomTypeId": "VINDNV4",
+      "roomTypeName": "Villa 4 -Bedroom",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "roomTypeId": "VINHAV3",
+      "roomTypeName": "Studio Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "roomTypeId": "VINHAO3",
+      "roomTypeName": "Villa 3 -Bedroom Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINDN",
+      "roomTypeId": "VINHAO4",
+      "roomTypeName": "Villa 4 -Bedroom Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTDR",
+      "roomTypeName": "DELUXE ROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTDO",
+      "roomTypeName": "Deluxe Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTDJ",
+      "roomTypeName": "Deluxe Junior Suite Hill",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTDS",
+      "roomTypeName": "Deluxe Suite Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTGD",
+      "roomTypeName": "Grand Deluxe Room",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTGO",
+      "roomTypeName": "Grand Deluxe Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTGJ",
+      "roomTypeName": "Grand Junior Suite Hill",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTGS",
+      "roomTypeName": "Grand Deluxe Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTPS",
+      "roomTypeName": "Grand Privilege Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTPR",
+      "roomTypeName": "Presidential Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINNT",
+      "roomTypeId": "VINNTD3",
+      "roomTypeName": "3-bedroom Duplex Ocean View villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "roomTypeId": "VINRTDR",
+      "roomTypeName": "Deluxe Room",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "roomTypeId": "VINRTDO",
+      "roomTypeName": "Deluxe Ocean View Room",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "roomTypeId": "VINRTES",
+      "roomTypeName": "Executive Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "roomTypeId": "VINRTB2",
+      "roomTypeName": "2-Bedroom Villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "roomTypeId": "VINRTF2",
+      "roomTypeName": "2-Bedroom Beach Front",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "roomTypeId": "VINRTB3",
+      "roomTypeName": "3-Bedroom Villa (Pool/Duplex)",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "roomTypeId": "VINRTF3",
+      "roomTypeName": "3-Bedroom Beach Front",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "roomTypeId": "VINRTB4",
+      "roomTypeName": "4-Bedroom Villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRT",
+      "roomTypeId": "VINRTV4",
+      "roomTypeName": "4-Bedroom Presidential Villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "roomTypeId": "VIND1DR",
+      "roomTypeName": "DELUXE ROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "roomTypeId": "VIND1DO",
+      "roomTypeName": "Deluxe Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "roomTypeId": "VIND1ES",
+      "roomTypeName": "Executive Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "roomTypeId": "VIND1FS",
+      "roomTypeName": "Family Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "roomTypeId": "VIND1V2",
+      "roomTypeName": "VILLA 2-BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "roomTypeId": "VIND1V3",
+      "roomTypeName": "VILLA 3-BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "roomTypeId": "VIND1B3",
+      "roomTypeName": "VILLA 3-BEDROOM Beach/ Ocean",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "roomTypeId": "VIND1V4",
+      "roomTypeName": "VILLA 4-BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND1",
+      "roomTypeId": "VIND1B4",
+      "roomTypeName": "VILLA 4-BEDROOM Beach/ Ocean",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND2",
+      "roomTypeId": "VIND2B2",
+      "roomTypeName": "VILLA 2-BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND2",
+      "roomTypeId": "VIND2B3",
+      "roomTypeName": "VILLA 3-BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND2",
+      "roomTypeId": "VIND2O3",
+      "roomTypeName": "VILLA 3-BEDROOM Beach/ Ocean",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND2",
+      "roomTypeId": "VIND2B4",
+      "roomTypeName": "VILLA 4-BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VIND2",
+      "roomTypeId": "VIND2O4",
+      "roomTypeName": "VILLA 4-BEDROOM Beach/ Ocean",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCE",
+      "roomTypeId": "VINCESS",
+      "roomTypeName": "Studio Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCE",
+      "roomTypeId": "VINCEB1",
+      "roomTypeName": "One - bedroom Deluxe Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCE",
+      "roomTypeId": "VINCEB2",
+      "roomTypeName": "Two - bedroom Executive Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCB",
+      "roomTypeId": "VINCBST",
+      "roomTypeName": "Studio",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCB",
+      "roomTypeId": "VINCBSO",
+      "roomTypeName": "Studio Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCB",
+      "roomTypeId": "VINCBSG",
+      "roomTypeName": "Grand Studio Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCB",
+      "roomTypeId": "VINCBB2",
+      "roomTypeName": "2-Bedroom Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINCB",
+      "roomTypeId": "VINCBG2",
+      "roomTypeName": "Grand 2-Bedroom Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINLN",
+      "roomTypeId": "VINLNGV",
+      "roomTypeName": "Garden Villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINLN",
+      "roomTypeId": "VINLNPV",
+      "roomTypeName": "Poolside Villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINLN",
+      "roomTypeId": "VINLNBF",
+      "roomTypeName": "Beach Front Villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINLN",
+      "roomTypeId": "VINLNDV",
+      "roomTypeName": "Duplex Villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINLN",
+      "roomTypeId": "VINLNGD",
+      "roomTypeName": "Grand Duplex Villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINLN",
+      "roomTypeId": "VINLNPR",
+      "roomTypeName": "Presidential Residence",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQDG",
+      "roomTypeName": "Deluxe Garden View Room",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQDP",
+      "roomTypeName": "Deluxe Pool View Room",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQDO",
+      "roomTypeName": "Deluxe Ocean View Room",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQSS",
+      "roomTypeName": "Studio Suite (Garden/ Pool)",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQJS",
+      "roomTypeName": "Junior Suite Garden View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQES",
+      "roomTypeName": "Executive Suite Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQV3",
+      "roomTypeName": "Villa 3 Bedroom",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQO3",
+      "roomTypeName": "Villa 3 Bedroom Ocean view.",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQO4",
+      "roomTypeName": "Villa 4 Bedroom Ocean view.",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRQ",
+      "roomTypeId": "VINRQP4",
+      "roomTypeName": "Villas 4 Bedroom Presidential villa",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGDG",
+      "roomTypeName": "Deluxe Garden View Room",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGDO",
+      "roomTypeName": "Deluxe Ocean View Room",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGSS",
+      "roomTypeName": "Senior Suite Garden View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGSO",
+      "roomTypeName": "Senior Suite Ocean View",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGFS",
+      "roomTypeName": "Family Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGV2",
+      "roomTypeName": "Villa 2 Bedroom Garden View.",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGO2",
+      "roomTypeName": "Villa 2 Bedroom Ocean View.",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGV3",
+      "roomTypeName": "Villa 3 Bedroom Garden View.",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGO3",
+      "roomTypeName": "Villa 3 Bedroom Ocean view.",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGV4",
+      "roomTypeName": "Villa 4 Bedroom Garden View.",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINRG",
+      "roomTypeId": "VINRGO4",
+      "roomTypeName": "Villa 4 Bedroom Ocean View.",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ1",
+      "roomTypeId": "VINQ1V2",
+      "roomTypeName": "Villa 2 BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ1",
+      "roomTypeId": "VINQ1O2",
+      "roomTypeName": "Villa 2 BEDROOM OCEAN VIEW",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ1",
+      "roomTypeId": "VINQ1V3",
+      "roomTypeName": "Villa 3 BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ1",
+      "roomTypeId": "VINQ1O3",
+      "roomTypeName": "Villa 3 BEDROOM OCEAN VIEW",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ1",
+      "roomTypeId": "VINQ1V4",
+      "roomTypeName": "Villa 4 BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ1",
+      "roomTypeId": "VINQ1O4",
+      "roomTypeName": "Villa 4 BEDROOM OCEAN VIEW",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ2",
+      "roomTypeId": "VINQ2V2",
+      "roomTypeName": "Villa 2 BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ2",
+      "roomTypeId": "VINQ2V3",
+      "roomTypeName": "Villa 3 BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ2",
+      "roomTypeId": "VINQ2O3",
+      "roomTypeName": "Villa 3 BEDROOM OCEAN VIEW",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ2",
+      "roomTypeId": "VINQ2V4",
+      "roomTypeName": "Villa 4 BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ3",
+      "roomTypeId": "VINQ3V2",
+      "roomTypeName": "Villa 2 BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ3",
+      "roomTypeId": "VINQ3V3",
+      "roomTypeName": "Villa 3 BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ3",
+      "roomTypeId": "VINQ3O3",
+      "roomTypeName": "Villa 3 BEDROOM OCEAN VIEW",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINQ3",
+      "roomTypeId": "VINQ3V4",
+      "roomTypeName": "Villa 4 BEDROOM",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINOQ",
+      "roomTypeId": "VINOQST",
+      "roomTypeName": "Standard",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINOQ",
+      "roomTypeId": "VINOQJS",
+      "roomTypeName": "Junior Suite",
+      "img": "",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "VINOQ",
+      "roomTypeId": "VINOQVS",
+      "roomTypeName": "Vin Suite",
+      "img": "",
+      "lang": "EN"
+    }
+  ],
+  "packageHotelREL": [
+    {
+      "hotelId": "VINOQ",
+      "roomTypeId": "VINOQVS",
+      "packageId": "VINBB",
+      "packageName": "Bed & Breakfast",
+      "price": "7000000",
+      "lang": "EN"
+    },
+    {
+      "hotelId": "VINOQ",
+      "roomTypeId": "VINOQJS",
+      "packageId": "VINBB",
+      "packageName": "Bed & Breakfast",
+      "price": "9120000",
+      "lang": "EN"
+    },
+    {
+      "hotelId": "VINOQ",
+      "roomTypeId": "VINOQST",
+      "packageId": "VINBB",
+      "packageName": "Bed & Breakfast",
+      "price": "6195000",
       "lang": "EN"
     }
   ],
   "package": [
     {
       "supplierId": "VIN",
-      "hotelId": "VINDN",
-      "roomTypeId": "VINDNVIP",
       "packageId": "VINBB",
-      "packageName": "Vin Pearl VINBB",
-      "price": "70.000.000",
+      "packageName": "Bed & Breakfast",
+      "price": "6195000",
+      "note": "Room with a Breakfast on the Day of Stay",
       "lang": "EN"
     },
     {
       "supplierId": "VIN",
-      "hotelId": "VINDN",
-      "roomTypeId": "VINDNVIP",
-      "packageId": "VINBBV",
-      "packageName": "Vin Pearl VINBBV",
-      "price": "70.000.000",
-      "lang": "EN"
-    },
-    {
-      "supplierId": "VIN",
-      "hotelId": "VINDN",
-      "roomTypeId": "VINDNVIP",
       "packageId": "VINFB",
-      "packageName": "Vin Pearl VINFB",
-      "price": "70.000.000",
+      "packageName": "Full-board",
+      "price": "6195000",
+      "note": "Room with 03 meals: Dinner on Check-in day and Breakfast & Lunch on the check out day",
       "lang": "EN"
     },
     {
       "supplierId": "VIN",
-      "hotelId": "VINDN",
-      "roomTypeId": "VINDNVIP",
+      "packageId": "VINBBV",
+      "packageName": "Bed and Breakfast with Vinpearl Land",
+      "price": "6195000",
+      "note": "Room with 01 Breakfast per night and unlilited access to Vinpearlland for 02 adults per room per night",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "packageId": "VINBBVS",
+      "packageName": "Bed and Breakfast with Vinpearl Land and Vinpearl Safari",
+      "price": "6195000",
+      "note": "Room with 01 Breakfast per night and unlilited access to Vinpearlland and Vinpearl Safari for 02 adults per room per night",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
+      "packageId": "VINBBW",
+      "packageName": "Bed and Breakfast with Water Park",
+      "price": "6195000",
+      "note": "Room with 01 Breakfast per night and unlimited access to Water Park for 02 adults per room per night",
+      "lang": "EN"
+    },
+    {
+      "supplierId": "VIN",
       "packageId": "VINFBV",
-      "packageName": "Vin Pearl VINFBV",
-      "price": "70.000.000",
+      "packageName": "Full-board with Vinpearl Land",
+      "price": "6195000",
+      "note": "Room with 03 meals: Dinner on Check-in day and Breakfast & Lunch on the check out day and unlimited access to Vinpearl Land for 02 adults per room per night",
       "lang": "EN"
     },
     {
       "supplierId": "VIN",
-      "hotelId": "VINDN",
-      "roomTypeId": "VINDNVIP",
       "packageId": "VINFBVS",
-      "packageName": "Vin Pearl VINFBVS",
-      "price": "70.000.000",
+      "packageName": "Full-board with Vinpearl Land and Vinpearl Safari",
+      "price": "6195000",
+      "note": "Room with 03 meals and unlimited aceess to Vinpearl Land and Safari for 02 adults per room per night",
       "lang": "EN"
     },
     {
-      "supplierId": "FLC",
-      "hotelId": "FLCDN",
-      "roomTypeId": "FLCDNVIP",
-      "packageId": "FLCBB",
-      "packageName": "FLC Pearl Best B",
-      "price": "70.000.000",
+      "supplierId": "VIN",
+      "packageId": "VINFBW",
+      "packageName": "Full-board with Water Park",
+      "price": "6195000",
+      "note": "Room with 03 meals and unlimited aceess to Water Park for 02 adults per room per night",
       "lang": "EN"
     }
   ],

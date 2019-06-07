@@ -39,4 +39,7 @@ router.post('/update', jsonParser, function (req, res) {
         .write()
     res.send('UPDATE COMPLETED')
 })
+router.get('/combobox/roomtype-by-hotel/:index',(req,res,next) => {
+    res.send(db.get('roomType').filter({ hotelId: req.params.index }).value());
+})
 module.exports = router

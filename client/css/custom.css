@@ -1,3 +1,6 @@
+[v-cloak] {
+    display:none;
+  }
 * {
     font-family: "Roboto";    
     padding: 0px;
@@ -503,7 +506,10 @@
 .h-50{
     height: 200px !important;
 }
-
+.h-50-max{
+    max-height: 200px !important;
+    overflow-y: scroll;
+}
 
 /* ========================
     TOURLIST
