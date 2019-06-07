@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:3000';
+const apiUrl = 'http://103.237.144.222:3000';
 
 // Now the app has started!
 const AXIOS = axios.create({
