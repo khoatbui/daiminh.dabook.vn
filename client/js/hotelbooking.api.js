@@ -378,7 +378,12 @@ $('.starttime').datetimepicker({
     clear: 'fa fa-trash',
     close: 'fa fa-remove'
   },
-  format: 'DD-MM-YYYY'
+  format: 'DD-MM-YYYY',
+  widgetPositioning :{
+    horizontal: 'auto',
+    vertical: 'bottom'
+  },
+  minDate :moment()
 });
 $('.endtime').datetimepicker({
   icons: {
@@ -391,11 +396,12 @@ $('.endtime').datetimepicker({
     today: 'fa fa-screenshot',
     clear: 'fa fa-trash',
     close: 'fa fa-remove'
-  }, format: 'DD-MM-YYYY'
+  }, format: 'DD-MM-YYYY',
+  widgetPositioning :{
+    horizontal: 'auto',
+    vertical: 'bottom'
+  }
 });
-$("#starttime").on("dp.change", function (e) {
-  $('#endtime').data("DateTimePicker").minDate(e.date);
-});
-$("#endtime").on("dp.change", function (e) {
-  $('#starttime').data("DateTimePicker").maxDate(e.date);
-});    
+$(".starttime").on("dp.change", function (e) {
+  $('.endtime').data("DateTimePicker").minDate(e.date);
+});  
