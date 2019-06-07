@@ -16,7 +16,7 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',controller.getHotel)
+router.get('/',controller.index)
 
 router.get('/combobox/hotel/:index',controller.getHotelBySupplier)
 

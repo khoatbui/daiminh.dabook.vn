@@ -8,4 +8,4 @@ var hotelSchema = new mongoose.Schema({
 });
 var Hotel =mongoose.model('Hotel',hotelSchema,'hotels');
 
-module.exports =Hotel;
+module.exports = Hotel;
