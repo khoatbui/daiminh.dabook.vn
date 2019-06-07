@@ -29,165 +29,109 @@
 </head>
 
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-not-transparent">
-        <div class="container">
-            <div class="navbar-translate"> <a class="navbar-brand" href="../index.html"> <img src="../img/new_logo.jpg"
-                        alt="" height="50px;"> </a> <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span>
-                    <span class="navbar-toggler-icon"></span> <span class="navbar-toggler-icon"></span> <span
-                        class="navbar-toggler-icon"></span> </button> </div>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"> <a href="../index.html" class="nav-link"> <i class="fa fa-menu"></i> Home
-                        </a> </li>
-                    <li class="nav-item"> <a href="../tour/destination.html" class="nav-link"> <i
-                                class="fa fa-menu"></i>
-                            Destination
-                        </a> </li>
-                    <li class="nav-item"> <a href="../tour/travelstyle.html" class="nav-link"> <i
-                                class="fa fa-menu"></i>
-                            Travel Style
-                        </a> </li>
-                    <li class="nav-item"> <a href="../tour/travelservice.html" class="nav-link"> <i
-                                class="fa fa-menu"></i>
-                            Travel Service
-                        </a> </li>
-                    <li class="nav-item"> <a href="../tour/mice.html" class="nav-link"> <i class="fa fa-menu"></i> MICE
-                        </a> </li>
-                    <li class="nav-item"> <a href="../tour/fit.html" class="nav-link"> <i class="fa fa-menu"></i> FIT
-                        </a> </li>
-                    <li class="nav-item"> <a href="../function/aboutus.html" class="nav-link"> <i
-                                class="fa fa-menu"></i>
-                            About Us
-                        </a> </li>
-                    <li class="nav-item ">
-                        <ul class="navbar-nav">
-                            <li class="hide"> <a href="#" class="nav-link"> <img class="language-icon"
-                                        src="../img/language/vietnam.png" alt=""> | VI
-                                </a>
-                            </li>
-                            <li class="active"> <a href="#" class="nav-link"> <img class="language-icon"
-                                        src="../img/language/united-kingdom.png" alt=""> | EN
-                                </a>
-                            </li>
-                            <li class="hide"> <a href="#" class="nav-link"> <img class="language-icon"
-                                        src="../img/language/south-korea.png" alt=""> | KO
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item d-inline-block d-sm-inline-block d-md-none d-lg-none d-xl-none">
-                        <ul
-                            class="navbar-nav footer-social d-flex flex-row justify-content-around align-items-center p-4">
-                            <li><a href="#"><img src="../img/social/kakao.png" alt=""></a></li>
-                            <li><a href="#"><img src="../img/social/facebook.png" alt=""></a></li>
-                            <li><a href="#"><img src="../img/social/skype.png" alt=""></a></li>
-                            <li><a href="#"><img src="../img/social/twitter.png" alt=""></a></li>
-                            <li><a href="#"><img src="../img/social/zalo.png" alt=""></a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="main top-navigation">
-        <div class="container-fluid p-0 m-0">
-            <div class="row w-100 p-0 m-0">
-                <div class="col-12 p-0 m-0">
-                    <iframe class="map-frame" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14897.618679712514!2d105.7770954!3d21.0164882!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x23546fd77caee54b!2zQ8O0bmcgVHkgVG5oaCBUaMawxqFuZyBN4bqhaSBE4buLY2ggVuG7pSAmIER1IEzhu4tjaCDEkOG6oWkgTWluaCAtIMSQ4bqhaSBNaW5oIFRyYXZlbA!5e0!3m2!1svi!2s!4v1558088062231!5m2!1svi!2s"
-                        aria-label="Strada Povernei 20, Bucuresti"></iframe>
+    <div id="app">
+        <fix-header-component></fix-header-component>
+        <div class="main top-navigation">
+            <div class="container-fluid p-0 m-0">
+                <div class="row w-100 p-0 m-0">
+                    <div class="col-12 p-0 m-0">
+                        <iframe class="map-frame" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14897.618679712514!2d105.7770954!3d21.0164882!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x23546fd77caee54b!2zQ8O0bmcgVHkgVG5oaCBUaMawxqFuZyBN4bqhaSBE4buLY2ggVuG7pSAmIER1IEzhu4tjaCDEkOG6oWkgTWluaCAtIMSQ4bqhaSBNaW5oIFRyYXZlbA!5e0!3m2!1svi!2s!4v1558088062231!5m2!1svi!2s"
+                            aria-label="Strada Povernei 20, Bucuresti"></iframe>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container contact-container">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-6">
-                    <h2>
-                        Send us an email
-                    </h2>
-                    <div class="card-body">
+            <div class="container contact-container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <h2>
+                            Send us an email
+                        </h2>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating is-empty bmd-form-group">
+                                        <label class="bmd-label-floating">First name</label>
+                                        <input type="text" name="name" class="form-control">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating is-empty bmd-form-group">
+                                        <label class="bmd-label-floating">Last name</label>
+                                        <input type="text" name="name" class="form-control">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group label-floating is-empty bmd-form-group">
+                                <label class="bmd-label-floating">Email address</label>
+                                <input type="email" name="email" class="form-control">
+                                <span class="material-input"></span>
+                            </div>
+                            <div class="form-group label-floating is-empty bmd-form-group">
+                                <label for="exampleMessage1" class="bmd-label-floating">Your Message</label>
+                                <textarea name="message" class="form-control" id="exampleMessage1" rows="6"></textarea>
+                                <span class="material-input"></span>
+                            </div>
+                        </div>
+                        <div
+                            class="card-footer no-bordertop d-flex flex-row justify-content-between align-items-center">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value=""> I'm not a robot
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-info pull-right">Send Message</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group label-floating is-empty bmd-form-group">
-                                    <label class="bmd-label-floating">First name</label>
-                                    <input type="text" name="name" class="form-control">
-                                    <span class="material-input"></span>
+                            <div class="col-12">
+                                <div class="info info-horizontal mt-0 mb-0 pt-0 pb-0">
+                                    <div class="icon icon-info">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="description">
+                                        <h4 class="info-title">Find us at the office</h4>
+                                        <p> Daiminh Trading, Services and Tourism Co.,Ltd
+                                            <br> Lot 118, TT3, My Dinh 1,
+                                            <br> Nam Tu Liem, Hanoi
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group label-floating is-empty bmd-form-group">
-                                    <label class="bmd-label-floating">Last name</label>
-                                    <input type="text" name="name" class="form-control">
-                                    <span class="material-input"></span>
+                            <div class="col-12">
+                                <div class="info info-horizontal mt-0 mb-0 pt-0 pb-0">
+                                    <div class="icon icon-info">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="description">
+                                        <h4 class="info-title">Give us a ring</h4>
+                                        <p> DaiMinh Travel
+                                            <br><span  class="text-rose">19001542</span>
+                                            <br> +84 0243-562-3777 [778]
+                                            <br> Mon - Fri, 8:00-22:00
+                                            <br> Sat, 8:00-12:00
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group label-floating is-empty bmd-form-group">
-                            <label class="bmd-label-floating">Email address</label>
-                            <input type="email" name="email" class="form-control">
-                            <span class="material-input"></span>
-                        </div>
-                        <div class="form-group label-floating is-empty bmd-form-group">
-                            <label for="exampleMessage1" class="bmd-label-floating">Your Message</label>
-                            <textarea name="message" class="form-control" id="exampleMessage1" rows="6"></textarea>
-                            <span class="material-input"></span>
-                        </div>
-                    </div>
-                    <div class="card-footer no-bordertop d-flex flex-row justify-content-between align-items-center">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value=""> I'm not a robot
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-info pull-right">Send Message</button>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-12 col-md-6">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="info info-horizontal mt-0 mb-0 pt-0 pb-0">
-                                <div class="icon icon-info">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="description">
-                                    <h4 class="info-title">Find us at the office</h4>
-                                    <p> Daiminh Trading, Services and Tourism Co.,Ltd
-                                        <br> Lot 118, TT3, My Dinh 1,
-                                        <br> Nam Tu Liem, Hanoi
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="info info-horizontal mt-0 mb-0 pt-0 pb-0">
-                                <div class="icon icon-info">
-                                    <i class="fas fa-phone"></i>
-                                </div>
-                                <div class="description">
-                                    <h4 class="info-title">Give us a ring</h4>
-                                    <p> Dabook Care
-                                        <br> +84 024-5623777/778
-                                        <br> Mon - Fri, 8:00-22:00
-                                        <br> Sat, 8:00-12:00
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="info info-horizontal mt-0 mb-0 pt-0 pb-0">
-                                <div class="icon icon-info">
-                                    <i class="far fa-envelope"></i>
-                                </div>
-                                <div class="description">
-                                    <h4 class="info-title">Mail/Chat with us</h4>
-                                    <p> Dabook Care
-                                        <br> <a href="#">care@dabook.vn</a>
-                                        <br> 24/7
-                                    </p>
+                            <div class="col-12">
+                                <div class="info info-horizontal mt-0 mb-0 pt-0 pb-0">
+                                    <div class="icon icon-info">
+                                        <i class="far fa-envelope"></i>
+                                    </div>
+                                    <div class="description">
+                                        <h4 class="info-title">Mail/Chat with us</h4>
+                                        <p> Dabook Care
+                                            <br> <a href="#">contact@daiminhtravel.com</a>
+                                            <br> 24/7
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -195,165 +139,9 @@
                 </div>
             </div>
         </div>
+        <footer-component></footer-component>
+
     </div>
-    <footer class="footer footer-default text-left">
-        <div class="container">
-            <div class="row mb-2">
-                <div class="col-lg-3 col-md-6 col-sm-12 text-left">
-                    <div class="row pt-2">
-                        <div class="col-6">
-                            <img class="footer-logo" src="../img/new_logo.jpg" alt=""></div>
-                        <div class="col-6">
-                            <img class="footer-logo" src="../img/logo dabook.png" alt="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group bmd-form-group mb-0"> <label class="bmd-label-floating">Your name
-                                    *</label>
-                                <input type="text" class="form-control" aria-label="Username"> </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group bmd-form-group mb-0"> <label class="bmd-label-floating">Email *</label>
-                                <input type="text" class="form-control" aria-label="Username"> </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group bmd-form-group mb-0"> <label class="bmd-label-floating">Phone</label>
-                                <input type="text" class="form-control" aria-label="Username"> </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group bmd-form-group mb-0"> <label class="bmd-label-floating">Give us
-                                    feedback</label>
-                                <input type="text" class="form-control" aria-label="Username"> </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 d-flex text-center align-items-center justify-content-start">
-                            <button class="btn btn-info btn-search-fly btn-sm"> <i
-                                    class="fas fa-plane-departure"></i>Send
-                                us</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <h4>Liên hệ</h4>
-                    <ul class="d-flex flex-column">
-                        <li> <span> <i class="fas fa-map-marker-alt mr-2"></i>Lot 118, TT3, My Dinh 1, Nam Tu Liem,
-                                Hanoi</span></li>
-                        <li class="text-danger"> <span> <i class="fab fa-hotjar mr-2"></i> 19001696</span> </li>
-                        <li> <span> <i class="fas fa-phone mr-2"></i>024-5623777/778</span> </li>
-                        <li><span> <i class="fas fa-fax mr-2"></i> 024-5623772 </span></li>
-                        <li> <span> <i class="fas fa-envelope mr-2"></i> contact@dabook.vn</span> </li>
-                        <li>
-                            <ul class="footer-social">
-                                <li><a href="#"><img src="../img/social/kakao.png" alt=""></a></li>
-                                <li><a href="#"><img src="../img/social/facebook.png" alt=""></a></li>
-                                <li><a href="#"><img src="../img/social/skype.png" alt=""></a></li>
-                                <li><a href="#"><img src="../img/social/twitter.png" alt=""></a></li>
-                                <li><a href="#"><img src="../img/social/zalo.png" alt=""></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <h4>Đối tác</h4>
-                    <div class="d-flex justify-content-start align-items-center flex-wrap">
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                                src="../img/partner/vietnamairline.jpg" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                                src="../img/partner/Jetstar.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                                src="../img/partner/vietjet.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                                src="../img/partner/amadeus.jpg" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                                src="../img/partner/vnisc.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange"
-                                src="../img/partner/bamboo.png" alt="Card image cap"></div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange"
-                                src="../img/partner/asiana.jpg" alt="Card image cap"></div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange"
-                                src="../img/partner/koreaair.png" alt="Card image cap"></div>
-                        <!-- <div class=" m-1 w-30 flex-grow-1 p-1">&nbsp;</div> -->
-                        <!-- <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange" src="img/doitac/image.png" alt="Card image cap"></div><div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange" src="img/doitac/sunworld.png" alt="Card image cap"></div><div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange" src="img/doitac/tripavisor.jpg" alt="Card image cap"></div> -->
-                    </div>
-                    <hr />
-                    <h4>Dịch vụ</h4>
-                    <ul class="d-flex flex-column">
-                        <li> <a href="../service/travelservice.html">Du lịch</a> </li>
-                        <li> <a href="../service/visaservice.html">Visa và Dịch vụ Visa</a> </li>
-                        <li> <a href="../service/lawandinvest.html">Trợ giúp pháp lý và đầu tư</a> </li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <h4>Giấy chứng nhận</h4>
-                    <div class="d-flex flex-sm-row align-items-start flex-wrap">
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/certificate/iata.jpg" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/certificate/thongbao_bocongthuong.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/certificate/dangki_bocongthuong.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/certificate/DMCA.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/certificate/Norton-Mobile-Security-Logo.jpg" alt="Card image cap"> </div>
-                    </div>
-                    <hr />
-                    <h4>Ho tro thanh toan</h4>
-                    <div class="d-flex flex-sm-row align-items-start flex-wrap">
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top" src="../img/payment/visa.png"
-                                alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/payment/mastercard.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/payment/paypal.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/payment/shinhanbank.jpg" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/payment/techcombank.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/payment/vietcombank.jpg" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/payment/hdbank.jpg" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/payment/vietinbank.png" alt="Card image cap"> </div>
-                        <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
-                                src="../img/payment/agribank.jpg" alt="Card image cap"> </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row border-top pt-2">
-                <div class="col-12 col-md-6 text-center"> &copy;
-                    <script> document.write(new Date().getFullYear())</script>, made with
-                    <i class="far fa-heart"></i> by
-                    <a href="https://www.dabook.vn/" target="blank">DaiMinh</a> for a better travel. </div>
-                <div class="col-12 col-md-6 text-center footer-policy">
-                    <ul>
-                        <li>
-                            <a href="../function/legal.html">Chính sách riêng tư |</a>
-                        </li>
-                        <li>
-                            <a href="../function/legal.html">Chính sách người dùng |</a>
-                        </li>
-                        <li>
-                            <a href="../function/contact.html">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer> <!-- Core JS Files -->
-    <div class="widget-component">
-        <ul class="d-flex flex-column">
-            <li class="special-margin">
-                <a class="btn btn-info btn-fab btn-round" href="tel:19001542">
-                    <i class="fas fa-phone"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <script src="https://sp.zalo.me/plugins/sdk.js"></script>
     <script src="../vendor/material-kit-master/assets/js/core/jquery.min.js" type="text/javascript"></script>
     <script src="../vendor/material-kit-master/assets/js/core/popper.min.js" type="text/javascript"></script>
     <script src="../vendor/material-kit-master/assets/js/core/bootstrap-material-design.min.js"
@@ -371,6 +159,14 @@
     <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
     <script src="../vendor/material-kit-master/assets/js/material-kit.js?v=2.0.5" type="text/javascript"></script>
     <!-- javascript for init -->
+    <script src="../assets/vuejs/vue.js" type="text/javascript"></script>
+    <script src="../components/FixHeaderComponent.js" type="text/javascript"></script>
+    <script src="../components/SearchTourComponent.js" type="text/javascript"></script>
+    <script src="../components/FooterComponent.js" type="text/javascript"></script>
+
+    <script src="../assets/vuejs/url-search-params.js" type="text/javascript"></script>
+    <script src="../assets/axios/axios.min.js" type="text/javascript"></script>
+    <script src="../js/tourlist.api.js" type="text/javascript"></script>
     <script>        $('.starttime').datetimepicker({ icons: { time: "fa fa-clock-o", date: "fa fa-calendar", up: "fa fa-chevron-up", down: "fa fa-chevron-down", previous: 'fa fa-chevron-left', next: 'fa fa-chevron-right', today: 'fa fa-screenshot', clear: 'fa fa-trash', close: 'fa fa-remove' }, format: 'DD-MM-YYYY' }); $('.endtime').datetimepicker({ icons: { time: "fa fa-clock-o", date: "fa fa-calendar", up: "fa fa-chevron-up", down: "fa fa-chevron-down", previous: 'fa fa-chevron-left', next: 'fa fa-chevron-right', today: 'fa fa-screenshot', clear: 'fa fa-trash', close: 'fa fa-remove' }, format: 'DD-MM-YYYY' }); $("#starttime").on("dp.change", function (e) { $('#endtime').data("DateTimePicker").minDate(e.date); }); $("#endtime").on("dp.change", function (e) { $('#starttime').data("DateTimePicker").maxDate(e.date); });    </script>
 </body>
 
