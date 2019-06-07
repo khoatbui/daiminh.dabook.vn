@@ -51,11 +51,11 @@ Vue.component('footer-component', {
                 <ul class="d-flex flex-column">
                     <li> <span> <i class="fas fa-map-marker-alt mr-2"></i>Lot 118, TT3, My Dinh 1, Nam Tu Liem,
                             Hanoi</span></li>
-                    <li class="text-danger"> <span> <i class="fab fa-hotjar mr-2"></i> 19001696</span> </li>
+                    <li class="text-danger"> <span> <i class="fab fa-hotjar mr-2"></i> 19001542</span> </li>
 
-                    <li> <span> <i class="fas fa-phone mr-2"></i>024-5623777/778</span> </li>
-                    <li><span> <i class="fas fa-fax mr-2"></i> 024-5623772 </span></li>
-                    <li> <span> <i class="fas fa-envelope mr-2"></i> contact@dabook.vn</span> </li>
+                    <li> <span> <i class="fas fa-phone mr-2"></i>0243-562-3777/778</span> </li>
+                    <li><span> <i class="fas fa-fax mr-2"></i>0243-562-3772 </span></li>
+                    <li> <span> <i class="fas fa-envelope mr-2"></i> contact@daiminhtravel.com</span> </li>
                     <li>
                         <ul class="footer-social">
                             <li><a href="#"><img src="../img/social/kakao.png" alt=""></a></li>
@@ -70,22 +70,20 @@ Vue.component('footer-component', {
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <h4>Đối tác</h4>
                 <div class="d-flex justify-content-start align-items-center flex-wrap">
-                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                            src="../img/partner/vietnamairline.jpg" alt="Card image cap"> </div>
-                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                            src="../img/partner/Jetstar.png" alt="Card image cap"> </div>
-                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                            src="../img/partner/vietjet.png" alt="Card image cap"> </div>
-                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                            src="../img/partner/amadeus.jpg" alt="Card image cap"> </div>
-                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
-                            src="../img/partner/vnisc.png" alt="Card image cap"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange"
-                            src="../img/partner/bamboo.png" alt="Card image cap"></div>
+                    src="../img/partner/Vinpearl.jpg" alt="Card image cap" data-toggle="tooltip" data-placement="top" title="Vinpearl"></div>
+                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
+                            src="../img/partner/flc.png" alt="Card image cap" data-toggle="tooltip" data-placement="top" title="FLC"> </div>
+                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
+                            src="../img/partner/hera.jpg" alt="Card image cap" data-toggle="tooltip" data-placement="top" title="Hera Cruise"> </div>
+                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
+                            src="../img/partner/heritage.png" alt="Card image cap" data-toggle="tooltip" data-placement="top" title="Heritage Line"> </div>
+                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
+                            src="../img/partner/lotte.png" alt="Card image cap" data-toggle="tooltip" data-placement="top" title="Lotte"> </div>
+                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top img-retange"
+                            src="../img/partner/Paradise.jpg" alt="Card image cap" data-toggle="tooltip" data-placement="top" title="Paradise Cruise"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange"
-                            src="../img/partner/asiana.jpg" alt="Card image cap"></div>
-                    <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange"
-                            src="../img/partner/koreaair.png" alt="Card image cap"></div>
+                            src="../img/partner/Sheraton.png" alt="Card image cap" data-toggle="tooltip" data-placement="top" title="Sheraton"></div>
                     <!-- <div class=" m-1 w-30 flex-grow-1 p-1">&nbsp;</div> -->
                     <!-- <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange" src="img/doitac/image.png" alt="Card image cap"></div><div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange" src="img/doitac/sunworld.png" alt="Card image cap"></div><div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange" src="img/doitac/tripavisor.jpg" alt="Card image cap"></div> -->
                 </div>

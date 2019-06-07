@@ -28,25 +28,25 @@ var app = new Vue({
       name: "",
       email: "",
       phone: "",
-      isFail:true
+      isFail: true
     },
     bookingrequest: {
       supplier: "FLC",
       roomId: "",
       hotelId: "",
-      hotelName: "Location...",
-      price: "1000.000",
+      hotelName: "Hotel name / Location...",
+      price: "1000000",
       amountPeople: "",
       roomQty: 1,
       checkin: "",
       checkout: "",
       golfer: 1,
       ungolfer: 0,
-      personQty:1,
+      personQty: 1,
       roomTypeId: "",
       roomTypeName: "RoomType...",
       packageId: "",
-      packageName: "Package ...",
+      packageName: "Service package ...",
       optionServiceId: "",
       optionServiceName: "(Option) Another Service...",
       name: "",
@@ -203,39 +203,39 @@ var app = new Vue({
         .finally(() => {
         });
     },
-    getRoomTypeByHotel(){
+    getRoomTypeByHotel() {
       AXIOS.get(apiUrl + '/hotel/combobox/roomtype/FLC', { crossdomain: true })
-      .then((response) => {
-        this.flcroomTypes = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-      });
+        .then((response) => {
+          this.flcroomTypes = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+        });
     },
-    getVinRoomTypeByHotel(){
+    getVinRoomTypeByHotel() {
       AXIOS.get(apiUrl + `/roomtype/combobox/roomtype-by-hotel/${this.bookingrequest.hotelId}`, { crossdomain: true })
-      .then((response) => {
-        console.log(response.data);
-        this.vinroomTypes = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-      });
+        .then((response) => {
+          console.log(response.data);
+          this.vinroomTypes = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+        });
     },
-    getVinPackageByHotel(){
+    getVinPackageByHotel() {
       AXIOS.get(apiUrl + `/packagehotelrel/combobox/package-by-hotel-roomtype/hotel/${this.bookingrequest.hotelId}/roomType/${this.bookingrequest.roomTypeId}`, { crossdomain: true })
-      .then((response) => {
-        this.vinPackage = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-      });
+        .then((response) => {
+          this.vinPackage = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+        });
     },
     searchHotel() {
       this.bookingstep.find = true;
@@ -250,12 +250,12 @@ var app = new Vue({
         this.bookingrequest.checkout = document.getElementById('vincheckout').value;
       }
       AXIOS.post(apiUrl + "/packagehotelrel/price", this.bookingrequest)
-      .then(response => {
-        this.bookingrequest.price = response.data[0].price;
-      })
-      .catch(function(error) {
-      })
-      .finally(function() {});
+        .then(response => {
+          this.bookingrequest.price = response.data[0].price;
+        })
+        .catch(function (error) {
+        })
+        .finally(function () { });
     },
     reserveHotel() {
       if (this.bookingrequest.name.length === 0) {
@@ -263,7 +263,7 @@ var app = new Vue({
           name: "text-rose",
           email: "",
           phone: "",
-          isFail:false
+          isFail: false
         }
       }
       else if (this.bookingrequest.email.length === 0) {
@@ -271,7 +271,7 @@ var app = new Vue({
           name: "",
           email: "text-rose",
           phone: "",
-          isFail:false
+          isFail: false
         }
       }
       else if (this.bookingrequest.phone.length === 0) {
@@ -279,7 +279,7 @@ var app = new Vue({
           name: "",
           email: "",
           phone: "text-rose",
-          isFail:false
+          isFail: false
         }
       }
       else {
@@ -287,7 +287,7 @@ var app = new Vue({
           name: "",
           email: "",
           phone: "",
-          isFail:true
+          isFail: true
         }
         this.bookingstep.find = true;
         this.bookingstep.confirm = true;
@@ -348,15 +348,15 @@ var app = new Vue({
     // a computed getter
     totalPrice: function () {
       // `this` points to the vm instance
-      var a = moment(this.bookingrequest.checkin,'D-M-YYYY');
-var b = moment(this.bookingrequest.checkout,'D-M-YYYY');
-var diffDays = b.diff(a, 'days');
-console.log(diffDays);
+      var a = moment(this.bookingrequest.checkin, 'D-M-YYYY');
+      var b = moment(this.bookingrequest.checkout, 'D-M-YYYY');
+      var diffDays = b.diff(a, 'days');
+      console.log(diffDays);
       return this.bookingrequest.price * diffDays * this.bookingrequest.roomQty;
     },
-    totalTime:function(){
-      var a = moment(this.bookingrequest.checkin,'D-M-YYYY');
-      var b = moment(this.bookingrequest.checkout,'D-M-YYYY');
+    totalTime: function () {
+      var a = moment(this.bookingrequest.checkin, 'D-M-YYYY');
+      var b = moment(this.bookingrequest.checkout, 'D-M-YYYY');
       var diffDays = b.diff(a, 'days');
       return diffDays;
     }
@@ -366,3 +366,36 @@ console.log(diffDays);
 
 
 
+$('.starttime').datetimepicker({
+  icons: {
+    time: "fa fa-clock-o",
+    date: "fa fa-calendar",
+    up: "fa fa-chevron-up",
+    down: "fa fa-chevron-down",
+    previous: 'fa fa-chevron-left',
+    next: 'fa fa-chevron-right',
+    today: 'fa fa-screenshot',
+    clear: 'fa fa-trash',
+    close: 'fa fa-remove'
+  },
+  format: 'DD-MM-YYYY'
+});
+$('.endtime').datetimepicker({
+  icons: {
+    time: "fa fa-clock-o",
+    date: "fa fa-calendar",
+    up: "fa fa-chevron-up",
+    down: "fa fa-chevron-down",
+    previous: 'fa fa-chevron-left',
+    next: 'fa fa-chevron-right',
+    today: 'fa fa-screenshot',
+    clear: 'fa fa-trash',
+    close: 'fa fa-remove'
+  }, format: 'DD-MM-YYYY'
+});
+$("#starttime").on("dp.change", function (e) {
+  $('#endtime').data("DateTimePicker").minDate(e.date);
+});
+$("#endtime").on("dp.change", function (e) {
+  $('#starttime').data("DateTimePicker").maxDate(e.date);
+});    

@@ -69,13 +69,13 @@
                     <div class="row mb-4">
                         <div class="status">
                             <span
-                                v-bind:class="{ 'active no-right': (bookingstep.find && bookingstep.confirm),'active': (bookingstep.find && !bookingstep.confirm),'':!bookingstep.find }">Tìm
-                                khách sạn</span>
+                                v-bind:class="{ 'active no-right': (bookingstep.find && bookingstep.confirm),'active': (bookingstep.find && !bookingstep.confirm),'':!bookingstep.find }">Hotel
+                                search</span>
                             <span
-                                v-bind:class="{ 'active no-left': (bookingstep.confirm && !bookingstep.finish),'':(!bookingstep.confirm && !bookingstep.finish),'active no-left-right':bookingstep.finish }">Xác
-                                nhận thông tin</span>
-                            <span v-bind:class="{ 'active no-left': bookingstep.finish,'':!bookingstep.finish }">Hoàn
-                                thành giữ chỗ</span>
+                                v-bind:class="{ 'active no-left': (bookingstep.confirm && !bookingstep.finish),'':(!bookingstep.confirm && !bookingstep.finish),'active no-left-right':bookingstep.finish }">Detail
+                                infomation</span>
+                            <span
+                                v-bind:class="{ 'active no-left': bookingstep.finish,'':!bookingstep.finish }">Request</span>
                         </div>
                     </div>
                     <div class="card m-0 p-0">
@@ -148,9 +148,9 @@
                                                         <div class="col-12 col-md-6">
                                                             <div class="popover-group w-100">
                                                                 <input type="text" class="form-control"
-                                                                    placeholder="Số người..."
+                                                                    placeholder="Guest..."
                                                                     @click="e => e.target.parentNode.nextElementSibling.classList.toggle('show')"
-                                                                    v-model="'Golfer:  ' + bookingrequest.golfer +'   |   Ungolfer:  '+ bookingrequest.ungolfer" />
+                                                                    v-model="'Golfer:  ' + bookingrequest.golfer +'   |   Non-golfer:  '+ bookingrequest.ungolfer" />
                                                                 <div class="popover-custom">
                                                                     <div class="row m-1 border-bottom">
                                                                         <div class="col-6">
@@ -174,7 +174,7 @@
                                                                     </div>
                                                                     <div class="row m-1">
                                                                         <div class="col-6">
-                                                                            NGolfer:
+                                                                            Non-Golfer:
                                                                         </div>
                                                                         <div class="col-2">
                                                                             <button class="btn-plus"
@@ -198,13 +198,13 @@
                                                         <div class="col-12 col-md-6">
                                                             <div class="popover-group w-100">
                                                                 <input type="text" class="form-control"
-                                                                    placeholder="Số phòng..."
+                                                                    placeholder="Number of room..."
                                                                     @click="e => e.target.parentNode.nextElementSibling.classList.toggle('show')"
                                                                     v-model="'Number of room:  ' + bookingrequest.roomQty" />
                                                                 <div class="popover-custom">
                                                                     <div class="row m-1">
                                                                         <div class="col-6">
-                                                                                Number of room:
+                                                                            Number of room:
                                                                         </div>
                                                                         <div class="col-2">
                                                                             <button class="btn-plus" @click="minusRoom">
@@ -277,8 +277,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-6 p-2">
-                                                        <h3><b class="text-success">{{totalPrice}}</b></h3>
-                                                    </div>
+                                                    <h3><b class="text-success">{{totalPrice}}</b></h3>
+                                                </div>
                                                 <div class="col-6 p-2">
                                                     <button class="btn btn-info w-100" @click="searchHotel">
                                                         <i class="fas fa-hotel"></i> Search
@@ -290,7 +290,7 @@
                                                 <div class="col-12">
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Khách sạn/resort :</h6>
+                                                            <h6 class="title  p-0 m-0">Hotel/location :</h6>
                                                         </div>
                                                         <div class="col-8">
                                                             <h6 class="title text-info p-0 m-0">
@@ -300,7 +300,7 @@
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Loại phòng :</h6>
+                                                            <h6 class="title  p-0 m-0">Room type :</h6>
                                                         </div>
                                                         <div class="col-8">
                                                             <h6 class="title text-info p-0 m-0">
@@ -309,7 +309,7 @@
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0"> Gói :</h6>
+                                                            <h6 class="title  p-0 m-0"> Service package :</h6>
                                                         </div>
                                                         <div class="col-8">
                                                             <h6 class="title text-info p-0 m-0">
@@ -318,26 +318,7 @@
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Số người</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0"> Golfer :
-                                                                {{bookingrequest.golfer}} | NonGolfer :
-                                                                {{bookingrequest.ungolfer}} </h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Số phòng</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0">
-                                                                {{bookingrequest.roomQty}} </h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Thời gian :</h6>
+                                                            <h6 class="title  p-0 m-0">Stay :</h6>
                                                         </div>
                                                         <div class="col-8">
                                                             <h6 class="title text-info p-0 m-0">
@@ -347,7 +328,26 @@
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Dịch vụ khác :</h6>
+                                                            <h6 class="title  p-0 m-0">Number of guests :</h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <h6 class="title text-info p-0 m-0"> Golfer :
+                                                                {{bookingrequest.golfer}} | NonGolfer :
+                                                                {{bookingrequest.ungolfer}} </h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom pb-1 pt-1">
+                                                        <div class="col-4 border-right-dot">
+                                                            <h6 class="title  p-0 m-0">Number of room</h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.roomQty}} </h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom pb-1 pt-1">
+                                                        <div class="col-4 border-right-dot">
+                                                            <h6 class="title  p-0 m-0">Addition details :</h6>
                                                         </div>
                                                         <div class="col-8">
                                                             <h6 class="title text-info p-0 m-0">
@@ -356,7 +356,7 @@
                                                     </div>
                                                     <div class="row border-bottom bg-success-opac-50 pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h5 class="title  p-0 m-0">TỔNG TIỀN</h6>
+                                                            <h5 class="title  p-0 m-0">TOTAL</h5>
                                                         </div>
                                                         <div class="col-8">
                                                             <h5 class="title text-success p-0 m-0"> 2.000.000</h6>
@@ -397,8 +397,8 @@
                                                                         theo
                                                                         Hotline: </p>
                                                                     <ul class="ml-4">
-                                                                        <li><b> 024-562-3777</b></li>
-                                                                        <li><b> 19001696</b></li>
+                                                                        <li><b> 0243-562-3777 (778)</b></li>
+                                                                        <li><b> 19001542</b></li>
                                                                     </ul>
                                                                 </li>
                                                             </ul>
@@ -436,7 +436,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <input type="text" class="form-control starttime pl-2"
-                                                                 id="vincheckin"   placeholder="Checkin..." />
+                                                                    id="vincheckin" placeholder="Checkin..." />
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6">
@@ -447,7 +447,7 @@
                                                                     </span>
                                                                 </div>
                                                                 <input type="text" class="form-control endtime pl-2"
-                                                                id="vincheckout"    placeholder="Checkout..." />
+                                                                    id="vincheckout" placeholder="Checkout..." />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -519,8 +519,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-6 p-2">
-                                                        <h3><b class="text-success">{{bookingrequest.price}}</b></h3>
-                                                    </div>
+                                                    <h3><b class="text-success">{{bookingrequest.price}}</b></h3>
+                                                </div>
                                                 <div class="col-6 p-2">
                                                     <button class="btn btn-info w-100" @click="searchHotel">
                                                         <i class="fas fa-hotel"></i> Search
@@ -532,58 +532,64 @@
                                                 <div class="col-12">
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Địa điểm :</h6>
+                                                            <h6 class="title  p-0 m-0">Hotel/location:</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0">{{bookingrequest.hotelName}}
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.hotelName}}
                                                             </h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Loại phòng :</h6>
+                                                            <h6 class="title  p-0 m-0">Room Type:</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0">{{bookingrequest.roomTypeName}}</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                            <div class="col-4 border-right-dot">
-                                                                <h6 class="title  p-0 m-0">Gói :</h6>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <h6 class="title text-info p-0 m-0">{{bookingrequest.packageName}}</h6>
-                                                            </div>
-                                                        </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                            <div class="col-4 border-right-dot">
-                                                                <h6 class="title  p-0 m-0">Thời gian :</h6>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <h6 class="title text-info p-0 m-0">
-                                                                    {{bookingrequest.checkin}} ->
-                                                                    {{bookingrequest.checkout}} <span class="text-rose">[{{totalTime}} days]</span></h6>
-                                                            </div>
-                                                        </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Số người</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0"> {{bookingrequest.personQty}} </h6>
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.roomTypeName}}</h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Số phòng</h6>
+                                                            <h6 class="title  p-0 m-0">Service Package :</h6>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h6 class="title text-info p-0 m-0"> {{bookingrequest.roomQty}} </h6>
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.packageName}}</h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Dịch vụ khác</h6>
+                                                            <h6 class="title  p-0 m-0">Stay :</h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.checkin}} ->
+                                                                {{bookingrequest.checkout}} <span
+                                                                    class="text-rose">[{{totalTime}} days]</span></h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom pb-1 pt-1">
+                                                        <div class="col-4 border-right-dot">
+                                                            <h6 class="title  p-0 m-0">Number of guests :</h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.personQty}} </h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom pb-1 pt-1">
+                                                        <div class="col-4 border-right-dot">
+                                                            <h6 class="title  p-0 m-0">Number of room :</h6>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <h6 class="title text-info p-0 m-0">
+                                                                {{bookingrequest.roomQty}} </h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row border-bottom pb-1 pt-1">
+                                                        <div class="col-4 border-right-dot">
+                                                            <h6 class="title  p-0 m-0">Additional details</h6>
                                                         </div>
                                                         <div class="col-8">
                                                             <h6 class="title text-info p-0 m-0"> Golfer : </h6>
@@ -591,7 +597,7 @@
                                                     </div>
                                                     <div class="row border-bottom bg-success-opac-50 pb-1 pt-1">
                                                         <div class="col-4 border-right-dot">
-                                                            <h5 class="title  p-0 m-0">TỔNG TIỀN</h6>
+                                                            <h5 class="title  p-0 m-0">TOTAL</h5>
                                                         </div>
                                                         <div class="col-8">
                                                             <h5 class="title text-success p-0 m-0"> {{totalPrice}}</h6>
@@ -632,8 +638,8 @@
                                                                         theo
                                                                         Hotline: </p>
                                                                     <ul class="ml-4">
-                                                                        <li><b> 024-562-3777</b></li>
-                                                                        <li><b> 19001696</b></li>
+                                                                        <li><b> 0243-562-3777 (778)</b></li>
+                                                                        <li><b> 19001542</b></li>
                                                                     </ul>
                                                                 </li>
                                                             </ul>
@@ -660,7 +666,7 @@
                                                     </span>
                                                 </div>
                                                 <input type="text" class="form-control pl-2" required
-                                                    placeholder="Họ tên..." v-model="bookingrequest.name">
+                                                    placeholder="Full name..." v-model="bookingrequest.name">
                                             </div>
                                         </div>
                                         <div class="col-12 p-2">
@@ -682,7 +688,7 @@
                                                     </span>
                                                 </div>
                                                 <input type="tel" class="form-control pl-2" required
-                                                    placeholder="Số điện thoại..." v-model="bookingrequest.phone">
+                                                    placeholder="Telephone..." v-model="bookingrequest.phone">
                                             </div>
                                         </div>
                                         <div class="col-12 p-2">
@@ -692,24 +698,24 @@
                                                         <i class="far fa-file-alt"></i></span>
                                                 </div>
                                                 <input type="text" class="form-control pl-2"
-                                                    placeholder="(Option) Thông tin khác..."
+                                                    placeholder="(Option) Other request..."
                                                     v-model="bookingrequest.other">
                                             </div>
                                         </div>
                                         <div class="col-12 p-0" v-show="!formCheck.isFail">
                                             <div class="alert alert-danger pt-1 pb-1" role="alert">
-                                                Please fill required text form
+                                                Please fill in required text form !
 
                                             </div>
                                         </div>
                                         <div class="col-6 p-2">
                                             <button class="btn w-100 btn-secondary" @click="back">
-                                                Quay lại
+                                                Back
                                             </button>
                                         </div>
                                         <div class="col-6 p-2">
                                             <button class="btn btn-info w-100" @click="reserveHotel">
-                                                <i class="far fa-calendar-check"></i> Giữ chỗ
+                                                <i class="far fa-calendar-check"></i> Request
                                             </button>
                                         </div>
                                     </div>
@@ -874,7 +880,7 @@
     <script src="../assets/axios/axios.min.js" type="text/javascript"></script>
     <script src="../js/hotelbooking.api.js" type="text/javascript"></script>
 
-    <script>        $('.starttime').datetimepicker({ icons: { time: "fa fa-clock-o", date: "fa fa-calendar", up: "fa fa-chevron-up", down: "fa fa-chevron-down", previous: 'fa fa-chevron-left', next: 'fa fa-chevron-right', today: 'fa fa-screenshot', clear: 'fa fa-trash', close: 'fa fa-remove' }, format: 'DD-MM-YYYY' }); $('.endtime').datetimepicker({ icons: { time: "fa fa-clock-o", date: "fa fa-calendar", up: "fa fa-chevron-up", down: "fa fa-chevron-down", previous: 'fa fa-chevron-left', next: 'fa fa-chevron-right', today: 'fa fa-screenshot', clear: 'fa fa-trash', close: 'fa fa-remove' }, format: 'DD-MM-YYYY' }); $("#starttime").on("dp.change", function (e) { $('#endtime').data("DateTimePicker").minDate(e.date); }); $("#endtime").on("dp.change", function (e) { $('#starttime').data("DateTimePicker").maxDate(e.date); });    </script>
+    <script>        </script>
 </body>
 
 </html>

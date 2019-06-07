@@ -104,9 +104,9 @@ Vue.component('fix-header-component', {
                             Travel Service
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item text-info" href="../hotel/hotel-booking-confirm.html"><i class="fab fa-buysellads mr-2"></i> Hotel </a>
-                            <a class="dropdown-item text-info" href="#"><i class="fas fa-air-freshener mr-2"></i> Car</a>
-                            <a class="dropdown-item text-info" href="#"><i class="fas fa-air-freshener mr-2"></i> Visa</a>
+                            <a class="dropdown-item text-info" href="../hotel/hotel-booking-confirm.html"><i class="fas fa-hotel mr-2"></i> Hotel </a>
+                            <a class="dropdown-item text-info" href="#"><i class="fas fa-taxi mr-2"></i> Car</a>
+                            <a class="dropdown-item text-info" href="#"><i class="fab fa-avianex mr-2"></i> Visa</a>
                         </div>
                     </li>
                 <li class="nav-item"> <a href="../tour/mice.html" class="nav-link"> <i class="fa fa-menu"></i> MICE
