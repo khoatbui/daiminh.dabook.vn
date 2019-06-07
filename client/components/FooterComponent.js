@@ -1,8 +1,10 @@
 // Define a new component called button-counter
 Vue.component('footer-component', {
     data: function () {
-      return {
-      }
+        return {
+            payments: [],
+            selectedPayment:{}
+        }
     },
     template: `
     <div class="p-0 m-0">
@@ -114,32 +116,32 @@ Vue.component('footer-component', {
                 <h4>Ho tro thanh toan</h4>
                 <div class="d-flex flex-sm-row align-items-start flex-wrap">
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
-                        data-target="#bankModal"> <img class="card-img-top" src="../img/payment/visa.png"
+                        data-target="#bankModal" @click="selectPayment('VISA')"> <img class="card-img-top" src="../img/payment/visa.png"
                             alt="Card image cap"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
                         data-target="#bankModal"> <img class="card-img-top" src="../img/payment/mastercard.png"
-                            alt="Card image cap"> </div>
+                            alt="Card image cap" @click="selectPayment('MASTERCARD')"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
                         data-target="#bankModal"> <img class="card-img-top" src="../img/payment/paypal.png"
-                            alt="Card image cap"> </div>
+                            alt="Card image cap" @click="selectPayment('PAYPAL')"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
                         data-target="#bankModal"> <img class="card-img-top" src="../img/payment/shinhanbank.jpg"
-                            alt="Card image cap"> </div>
+                            alt="Card image cap" @click="selectPayment('SHINHANBANK')"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
                         data-target="#bankModal"> <img class="card-img-top" src="../img/payment/techcombank.png"
-                            alt="Card image cap"> </div>
+                            alt="Card image cap" @click="selectPayment('TECHCOMBANK')"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
                         data-target="#bankModal"> <img class="card-img-top" src="../img/payment/vietcombank.jpg"
-                            alt="Card image cap"> </div>
+                            alt="Card image cap" @click="selectPayment('VIETCOMBANK')"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
                         data-target="#bankModal"> <img class="card-img-top" src="../img/payment/hdbank.jpg"
-                            alt="Card image cap"> </div>
+                            alt="Card image cap" @click="selectPayment('HDBANK')"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
                         data-target="#bankModal"> <img class="card-img-top" src="../img/payment/vietinbank.png"
-                            alt="Card image cap"> </div>
+                            alt="Card image cap" @click="selectPayment('VIETINBANK')"> </div>
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
                         data-target="#bankModal"> <img class="card-img-top" src="../img/payment/agribank.jpg"
-                            alt="Card image cap"> </div>
+                            alt="Card image cap" @click="selectPayment('AGRIBANK')"> </div>
                 </div>
             </div>
         </div>
@@ -180,16 +182,15 @@ Vue.component('footer-component', {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header border-bottom pb-3 text-left">
-                <h6 class="modal-title" id="bankModalLabel"><span class="badge badge-success">SHINHAN
-                        BANK</span>THÔNG TIN TÀI KHOẢN CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ VÀ DU LỊCH ĐẠI MINH</h6>
+                <h6 class="modal-title" id="bankModalLabel"><span class="badge badge-success">{{selectedPayment.bankName}}</span>THÔNG TIN TÀI KHOẢN CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ VÀ DU LỊCH ĐẠI MINH</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p><b>Chủ tài khoản : </b>Công ty TNHH thương mại, dịch vụ và du lịch Đại Minh</p>
-                <p><b>Số tài khoản : </b>0451001906812</p>
-                <p><b>Chi nhánh : </b>Vietcombank công ty - CN Thành Công</p>
+                <p><b>Chủ tài khoản : </b>{{selectedPayment.bankOwner}}</p>
+                <p><b>Số tài khoản : </b>{{selectedPayment.bankAccount}}</p>
+                <p><b>Chi nhánh : </b>{{selectedPayment.bankLocation}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
@@ -199,6 +200,28 @@ Vue.component('footer-component', {
     </div>
 </div>
 </div>`,
-    methods:{
+    created() {
+        this.initialize();
+    },
+    methods: {
+        initialize() {
+            AXIOS.get(apiUrl + '/payments', { crossdomain: true })
+                .then((response) => {
+                    this.payments = response.data;
+                    console.log(this.payments);
+                    this.selectedPayment=this.payments[0];
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                });
+        },
+        selectPayment(name){
+            console.log(name);
+            console.log(this.payments.find(x => x.bankName.toUpperCase() === name.toUpperCase()));
+            this.selectedPayment=this.payments.find(x => x.bankName.toUpperCase() === name.toUpperCase())
+        }
     }
-  })
+
+})

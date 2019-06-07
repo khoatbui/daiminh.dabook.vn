@@ -1,4 +1,5 @@
-const apiUrl='http://103.237.144.222:3000';
+//103.237.144.222
+const apiUrl='http://localhost:3000';
 // Make a request for a user with a given ID
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,

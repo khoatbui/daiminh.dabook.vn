@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true});
 
 const app = express()
-const port = 3000
+const port = process.env.PORT
 app.use(express.static('public'))
 app.use(express.static('uploads'))
 app.use(cors())
@@ -26,6 +26,7 @@ const packageRoute = require('./routes/package.router')
 const roomtypeRoute = require('./routes/roomtype.router')
 const optionServiceRoute = require('./routes/optionservice.router')
 const packageHotelRELRouter = require('./routes/packagehotelREL.router')
+const paymentsRouter = require('./routes/payment.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -45,7 +46,8 @@ app.use('/supplier',supplierRoute);
 app.use('/package',packageRoute);
 app.use('/roomtype',roomtypeRoute);
 app.use('/optionservice',optionServiceRoute);
-app.use('/packagehotelrel',packageHotelRELRouter)
+app.use('/packagehotelrel',packageHotelRELRouter);
+app.use('/payments',paymentsRouter)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

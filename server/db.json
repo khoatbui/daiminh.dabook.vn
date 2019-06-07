@@ -268,13 +268,58 @@
   ],
   "payments": [
     {
-      "bankName": "",
+      "bankName": "VIETCOMBANK",
       "bankLogo": "",
-      "bankOwner": "",
-      "bankAccount": "",
-      "bankLocation": "",
+      "bankOwner": "Công ty TNHH thương mại, dịch vụ và du lịch Đại Minh",
+      "bankAccount": "0451001906812",
+      "bankLocation": "Vietcombank công ty - CN Thành Công",
       "note": "",
-      "lang": ""
+      "lang": "VI"
+    },
+    {
+      "bankName": "SHINHANBANK",
+      "bankLogo": "",
+      "bankOwner": "Công ty TNHH thương mại, dịch vụ và du lịch Đại Minh",
+      "bankAccount": "700003733597",
+      "bankLocation": "Shinhanbank công ty - CN Hà Nội",
+      "note": "",
+      "lang": "VI"
+    },
+    {
+      "bankName": "TECHCOMBANK",
+      "bankLogo": "",
+      "bankOwner": "Công ty TNHH thương mại, dịch vụ và du lịch Đại Minh",
+      "bankAccount": "19120166939018",
+      "bankLocation": "Techcombank- CN Nội bài quỹ tiết kiệm The Manor",
+      "note": "",
+      "lang": "VI"
+    },
+    {
+      "bankName": "HDBANK",
+      "bankLogo": "",
+      "bankOwner": "Công ty TNHH thương mại, dịch vụ và du lịch Đại Minh",
+      "bankAccount": "118704070162636",
+      "bankLocation": "Ngân hàng TMCP phát triển Tp. Hồ Chí Minh - CN Ba Đinh- PGD Mỹ Đình 2",
+      "note": "",
+      "lang": "VI"
+    },
+    {
+      "bankName": "AGRIBANK",
+      "bankLogo": "",
+      "bankOwner": "Công ty TNHH thương mại, dịch vụ và du lịch Đại Minh",
+      "bankAccount": "1410206030890",
+      "bankLocation": "Ngân hàng nông nghiệp và phát triền nông thôn Việt Nam - CN Mỹ Đình",
+      "note": "",
+      "lang": "VI"
+    },
+    {
+      "bankName": "VIETINBANK",
+      "bankLogo": "",
+      "bankOwner": "Công ty TNHH thương mại, dịch vụ và du lịch Đại Minh",
+      "bankAccount": "118002690095",
+      "bankLocation": "Ngân hàng TMCP Công thương Việt Nam - Chi nhánh Nam Thăng Long - PGD Mễ Trì",
+      "note": "",
+      "lang": "VI"
     }
   ],
   "order": [

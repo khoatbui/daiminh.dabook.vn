@@ -5,10 +5,10 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var router = express.Router()
-var db = require('../db')
 var bodyParser = require('body-parser')
+var controller=require('../controllers/hotel.controller')
 
+var router = express.Router()
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -16,45 +16,22 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',(req,res,next) => {
-    res.send(db.get('hotel').value());
-})
-router.get('/combobox/hotel/:index',(req,res,next) => {
-    res.send(db.get('hotel').filter({ supplierId: req.params.index }).value());
-})
-router.get('/combobox/package/:index',(req,res,next) => {
-    res.send(db.get('package').filter({ supplierId: req.params.index }).value());
-})
-router.get('/combobox/roomtype/:index',(req,res,next) => {
-    res.send(db.get('roomType').filter({ supplierId: req.params.index }).value());
-})
-router.get('/combobox/addition-service/:index',(req,res,next) => {
-    res.send(db.get('optionService').filter({ supplierId: req.params.index }).value());
-})
-router.delete('/:index', function (req, res) {
-    db.get('hotel').value().splice(req.params.index, 1)
-})
+router.get('/',controller.getHotel)
 
-router.post('/insert', jsonParser, function (req, res) {
-    db.get('hotel')
-        .push(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
-})
+router.get('/combobox/hotel/:index',controller.getHotelBySupplier)
 
-router.post('/update', jsonParser, function (req, res) {
-    db.get('hotel')
-        .filter({ hotelId: req.body.hotelId })
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
-})
+router.get('/combobox/package/:index',controller.getPackageBySupplier)
 
-router.post('/price-searching', jsonParser, function (req, res) {
-    db.get('hotel')
-        .filter({ hotelId: req.body.hotelId })
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
-})
+router.get('/combobox/roomtype/:index',controller.getRoomTypeBySupplier)
+
+router.get('/combobox/addition-service/:index',controller.getAdditionServiceBySupplier)
+
+router.delete('/:index',controller.deleteHotel)
+
+router.post('/insert', jsonParser,controller.insertHotel)
+
+router.post('/update', jsonParser, controller.updateHotel)
+
+router.post('/price-searching', jsonParser, controller.priceSearch)
+
 module.exports = router
