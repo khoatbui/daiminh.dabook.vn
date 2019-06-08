@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>optionService CRUD</v-toolbar-title>
+      <v-toolbar-title>HOTEL PACKAGE PRICE CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="900px">
@@ -18,14 +18,14 @@
             <v-subheader>KEY</v-subheader>
             <v-container grid-list-xl>
               <v-layout wrap>
-                 <v-flex xs12 sm6 md4>
+                <v-flex xs12 sm6 md4>
                   <v-select
                     v-model="editedItem.supplierId"
                     :items="supplier"
                     item-text="supplierName"
                     item-value="_id"
                     label="Supplier"
-                    @input="changedSupplierCombobox"
+                     @input="changedSupplierCombobox"
                   ></v-select>
                 </v-flex>
                  <v-flex xs12 sm6 md4>
@@ -38,28 +38,29 @@
                     @input="changedHotelCombobox"
                   ></v-select>
                 </v-flex>
-                 <v-flex xs12 sm6 md4>
+                <v-flex xs12 sm6 md4>
                   <v-select
                     v-model="editedItem.roomTypeId"
-                    :items="roomType"
+                    :items="roomtype"
                     item-text="roomTypeName"
                     item-value="_id"
-                    label="RoomType"
+                    label="Room Type"
                   ></v-select>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field required
-                    :rules="[() => editedItem.optionServiceCode.length > 0 || 'Required field']"
-                     v-model="editedItem.optionServiceCode" label="OptionServiceCode"></v-text-field>
+                  <v-select
+                    v-model="editedItem.packageId"
+                    :items="packages"
+                    item-text="packageName"
+                    item-value="_id"
+                    label="Package"
+                  ></v-select>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.optionServiceName" label="optionServiceName"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
-                </v-flex>
-                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.note" label="Note"></v-text-field>
+                  <v-text-field
+                  required
+                      :rules="[() => editedItem.price.length > 0 || 'Required field']"
+                   v-model="editedItem.price" label="Price"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-select
@@ -89,23 +90,21 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="optionService" class="elevation-1">
+    <v-data-table :headers="headers" :items="packagesHotelREL" class="elevation-1">
       <template v-slot:items="props">
         <tr class="ellip-text">
-          <td class="justify-center layout px-0">
+          <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
           <td>{{ props.item._id }}</td>
-           <td>{{ props.item.supplierId }}</td>
+          <td>{{ props.item.supplierId }}</td>
           <td>{{ props.item.hotelId }}</td>
           <td>{{ props.item.roomTypeId }}</td>
-          <td>{{ props.item.optionServiceCode }}</td>
-          <td>{{ props.item.optionServiceName }}</td>
+          <td>{{ props.item.packageId }}</td>
           <td>{{ props.item.price }}</td>
-          <td>{{ props.item.note }}</td>
-          <td>{{ props.item.isUsed }}</td>
           <td>{{ props.item.lang }}</td>
+          <td>{{ props.item.isUsed }}</td>
           <td>{{ props.item.createBy }}</td>
           <td>{{ props.item.createDate }}</td>
         </tr>
@@ -114,6 +113,10 @@
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
     </v-data-table>
+     <v-snackbar v-model="snackbar.snackbar">
+      {{ snackbar.text }}
+      <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -139,55 +142,50 @@ export default {
     endDateModal: false,
     dialog: false,
     headers: [
-      { text: "Actions", value: "name", sortable: false },
-      { text: "Option Service Id", value: "_id" },
+      { text: "Actions", sortable: false },
+      { text: "ID",value: "_id"},
       { text: "Supplier", value: "supplierId" },
       { text: "Hotel", value: "hotelId" },
       { text: "Room Type", value: "roomTypeId" },
-      { text: "optionServiceCode",value: "optionServiceCode"
-      },
-      { text: "optionServiceName", value: "optionServiceName" },
+      { text: "Package", value: "packageId" },
       { text: "Price", value: "price" },
-      { text: "Note", value: "note" },
+      { text: "Language", value: "lang" },
       { text: "Used", value: "isUsed" },
       { text: "CreateBy", value: "createBy" },
       { text: "CreateDate", value: "createDate" }
     ],
-    optionService: [],
+    roomtype: [],
     supplier: [],
     hotel: [],
-    roomType: [],
+     packages: [],
+      packagesHotelREL: [],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
       { langCode: "VI", langName: "VietNam" }
     ],
     editedIndex: -1,
-         editId: "",
+     editId: "",
     editedItem: {
-       supplierId: "",
-    hotelId: "",
-    roomTypeId:"",
-    optionServiceCode:"",
-    optionServiceName:"",
-    price:1000000,
-    lang: "EN",
-    note:"",
-    isUsed:true,
-    createBy: "",
+        supplierId: "",
+      hotelId: "",
+      roomTypeId: "",
+      packageId: "",
+      price: 10000000,
+      lang: "EN",
+      isUsed:true,
+      createBy: "",
       modifyBy:""
     },
     defaultItem: {
-       supplierId: "",
-    hotelId: "",
-    roomTypeId:"",
-    optionServiceCode:"",
-    optionServiceName:"",
-    price:1000000,
-    lang: "EN",
-    note:"",
-    isUsed:true,
-    createBy: "",
+     supplierId: "",
+      hotelId: "",
+      roomTypeId: "",
+      packageId: "",
+      price: 10000000,
+      lang: "EN",
+      isUsed:true,
+      createBy: "",
       modifyBy:""
     },
     snackbar: {
@@ -214,17 +212,9 @@ export default {
 
   methods: {
     initialize() {
-      AXIOS.get(apiIP +"/optionService/", { crossdomain: true })
+         AXIOS.get(apiIP +"/packagehotelrel/", { crossdomain: true })
         .then(response => {
-          this.optionService = response.data;
-        })
-        .catch(function(error) {
-        })
-        .finally(function() {});
-
-        AXIOS.get(apiIP +"/hotel/", { crossdomain: true })
-        .then(response => {
-          this.hotel = response.data;
+          this.packagesHotelREL = response.data;
         })
         .catch(function(error) {
         })
@@ -237,18 +227,10 @@ export default {
         .catch(function(error) {
         })
         .finally(function() {});
-
-        AXIOS.get(apiIP +"/roomtype/", { crossdomain: true })
-        .then(response => {
-          this.roomType = response.data;
-        })
-        .catch(function(error) {
-        })
-        .finally(function() {});
     },
 
     editItem(item) {
-      this.editedIndex = this.optionService.indexOf(item);
+      this.editedIndex = this.roomtype.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
       delete this.editedItem._id;
@@ -257,9 +239,9 @@ export default {
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP +"/optionService/"+ item._id)
+        AXIOS.delete(apiIP +"/packagehotelrel/" + item._id)
           .then(response => {
-            this.snackbar.snackbar = true;
+             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
             this.$router.go();
           })
@@ -281,7 +263,7 @@ export default {
       this.editedItem.createBy = this.user.userName;
        if (this.$refs.form.validate()) {
       if (this.editedIndex > -1) {
-        AXIOS.post(apiIP +"/optionService/update/"+ this.editId, this.editedItem)
+        AXIOS.post(apiIP +"/packagehotelrel/update/" + this.editId, this.editedItem)
           .then(response => {
             this.$router.go();
           })
@@ -289,9 +271,9 @@ export default {
           })
           .finally(function() {});
       } else {
-        AXIOS.post(apiIP +"/optionService/insert", this.editedItem)
+        AXIOS.post(apiIP +"/packagehotelrel/insert", this.editedItem)
           .then(response => {
-             this.$router.go();
+            this.$router.go();
           })
           .catch(function(error) {
           })
@@ -304,9 +286,17 @@ export default {
     changedSupplierCombobox(event){
       AXIOS.get(apiIP +"/hotel/combobox/hotel/"+event, { crossdomain: true })
         .then(response => {
-                console.log(response.data);
-
           this.hotel = response.data;
+          console.log(response.data);
+        })
+        .catch(function(error) {
+        })
+        .finally(function() {});
+
+        AXIOS.get(apiIP +"/package/combobox/package/"+event, { crossdomain: true })
+        .then(response => {
+
+          this.packages = response.data;
         })
         .catch(function(error) {
         })
@@ -316,9 +306,7 @@ export default {
     changedHotelCombobox(event){
       AXIOS.get(apiIP +"/roomtype/combobox/roomtype/"+event, { crossdomain: true })
         .then(response => {
-                console.log(response.data);
-
-          this.roomType = response.data;
+          this.roomtype = response.data;
         })
         .catch(function(error) {
         })

@@ -1,106 +1,105 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>package CRUD</v-toolbar-title>
+      <v-toolbar-title>PACKAGE CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
         </template>
-        <v-form  ref="form" v-model="valid">
-        <v-card>
-          <v-card-title class="pink white--text">
-            <span class="headline">{{ formTitle }}</span>
-          </v-card-title>
+        <v-form ref="form" v-model="valid">
+          <v-card>
+            <v-card-title class="pink white--text">
+              <span class="headline">{{ formTitle }}</span>
+            </v-card-title>
 
-          <v-card-text>
-            <v-subheader>KEY</v-subheader>
-            <v-container grid-list-xl>
-              <v-layout wrap>
-                 <v-flex xs12 sm6 md4>
-                  <v-select
-                    v-model="editedItem.supplierId"
-                    :items="supplier"
-                    item-text="supplierName"
-                    item-value="supplierId"
-                    label="Supplier"
-                  ></v-select>
-                </v-flex>
-                 <v-flex xs12 sm6 md4>
-                  <v-select
-                    v-model="editedItem.hotelId"
-                    :items="hotel"
-                    item-text="hotelName"
-                    item-value="hotelId"
-                    label="Hotel"
-                  ></v-select>
-                </v-flex>
-                 <v-flex xs12 sm6 md4>
-                  <v-select
-                    v-model="editedItem.roomTypeId"
-                    :items="roomType"
-                    item-text="roomTypeName"
-                    item-value="roomTypeId"
-                    label="RoomType"
-                  ></v-select>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field required
-                    :rules="[() => editedItem.packageId.length > 0 || 'Required field']"
-                     v-model="editedItem.packageId" label="packageId"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.packageName" label="packageName"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-select
-                    v-model="editedItem.lang"
-                    :items="language"
-                    item-text="langName"
-                    item-value="langCode"
-                    label="Language"
-                  ></v-select>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card-text>
+            <v-card-text>
+              <v-subheader>KEY</v-subheader>
+              <v-container grid-list-xl>
+                <v-layout wrap>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.supplierId"
+                      :items="supplier"
+                      item-text="supplierName"
+                      item-value="_id"
+                      label="Supplier"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field
+                      required
+                      :rules="[() => editedItem.packageCode.length > 0 || 'Required field']"
+                      v-model="editedItem.packageCode"
+                      label="packageCode"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.packageName" label="packageName"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.note" label="Note"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-text>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
-          </v-card-actions>
-        </v-card>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
+            </v-card-actions>
+          </v-card>
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="package" class="elevation-1">
+    <v-data-table :headers="headers" :items="packages" class="elevation-1">
       <template v-slot:items="props">
         <tr class="ellip-text">
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
-           <td>{{ props.item.supplierId }}</td>
-          <td class="text-xs-right">{{ props.item.hotelId }}</td>
-          <td class="text-xs-right">{{ props.item.roomTypeId }}</td>
-          <td>{{ props.item.packageId }}</td>
-          <td class="text-xs-right">{{ props.item.packageName }}</td>
-          <td class="text-xs-right">{{ props.item.price }}</td>
-          <td class="text-xs-right">{{ props.item.lang }}</td>
+          <td>{{ props.item._id }}</td>
+          <td>{{ props.item.supplierId }}</td>
+          <td>{{ props.item.packageCode}}</td>
+          <td>{{ props.item.packageName }}</td>
+          <td>{{ props.item.price }}</td>
+          <td>{{ props.item.note }}</td>
+          <td>{{ props.item.isUsed }}</td>
+          <td>{{ props.item.lang }}</td>
+          <td>{{ props.item.createBy }}</td>
+          <td>{{ props.item.createDate }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
     </v-data-table>
+    <v-snackbar v-model="snackbar.snackbar">
+      {{ snackbar.text }}
+      <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script>
+var apiIP = "http://localhost:3001";
 import axios from "axios";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -123,33 +122,49 @@ export default {
     dialog: false,
     headers: [
       { text: "Actions", value: "name", sortable: false },
+      { text: "PackageId", align: "center", value: "_id" },
       { text: "Supplier", align: "center", value: "supplierId" },
-      { text: "Hotel", align: "center", value: "hotelId" },
-      { text: "Room Type", align: "center", value: "roomTypeId" },
-      { text: "PackageId", align: "center", value: "packageId" },
+      { text: "PackageCode", align: "center", value: "packageCode" },
       { text: "PackageName", align: "center", value: "packageName" },
       { text: "Price", align: "center", value: "price" },
-      { text: "Language", align: "center", value: "lang" }
+      { text: "Note", align: "center", value: "note" },
+      { text: "IsUsed", value: "isUsed" },
+      { text: "Language", align: "center", value: "lang" },
+      { text: "Create By", value: "createBy" },
+      { text: "Create Date", value: "createDate" }
     ],
-    package: [],
+    packages: [],
     supplier: [],
-    hotel: [],
-    roomType: [],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
       { langCode: "VI", langName: "VietNam" }
     ],
     editedIndex: -1,
+    editId: "",
     editedItem: {
-      packageId: "",
+      supplierId: "",
+      packageCode: "",
       packageName: "",
-      lang: "EN"
+      lang: "EN",
+      isUsed: true,
+      note: "",
+      createBy: "",
+      modifyBy: ""
     },
     defaultItem: {
-      packageId: "",
+      supplierId: "",
+      packageCode: "",
       packageName: "",
-      lang: "EN"
+      lang: "EN",
+      isUsed: true,
+      note: "",
+      createBy: "",
+      modifyBy: ""
+    },
+    snackbar: {
+      snackbar: false,
+      text: ""
     }
   }),
 
@@ -171,51 +186,38 @@ export default {
 
   methods: {
     initialize() {
-      AXIOS.get("http://localhost:3000/package/", { crossdomain: true })
+      AXIOS.get(apiIP + "/package/", { crossdomain: true })
         .then(response => {
-          this.package = response.data;
+          this.packages = response.data;
         })
-        .catch(function(error) {
-        })
+        .catch(function(error) {})
         .finally(function() {});
-        AXIOS.get("http://localhost:3000/hotel/", { crossdomain: true })
-        .then(response => {
-          this.hotel = response.data;
-        })
-        .catch(function(error) {
-        })
-        .finally(function() {});
-        AXIOS.get("http://localhost:3000/supplier/", { crossdomain: true })
+
+      AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
         .then(response => {
           this.supplier = response.data;
         })
-        .catch(function(error) {
-        })
-        .finally(function() {});
-        AXIOS.get("http://localhost:3000/roomtype/", { crossdomain: true })
-        .then(response => {
-          this.roomType = response.data;
-        })
-        .catch(function(error) {
-        })
+        .catch(function(error) {})
         .finally(function() {});
     },
 
     editItem(item) {
-      this.editedIndex = this.package.indexOf(item);
+      this.editedIndex = this.packages.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
+      delete this.editedItem._id;
+      this.editId = item._id;
     },
 
     deleteItem(item) {
-      const index = this.package.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete("http://localhost:3000/package/" + index)
+        AXIOS.delete(apiIP + "/package/" + item._id)
           .then(response => {
-            this.package.splice(index, 1);
+            this.snackbar.snackbar = true;
+            this.snackbar.text = response.data;
+            this.$router.go();
           })
-          .catch(function(error) {
-          })
+          .catch(function(error) {})
           .finally(function() {});
     },
 
@@ -228,26 +230,26 @@ export default {
     },
 
     save() {
-       if (this.$refs.form.validate()) {
-      if (this.editedIndex > -1) {
-        AXIOS.post("http://localhost:3000/package/update", this.editedItem)
-          .then(response => {
-            Object.assign(this.package[this.editedIndex], this.editedItem);
-          })
-          .catch(function(error) {
-          })
-          .finally(function() {});
-      } else {
-        AXIOS.post("http://localhost:3000/package/insert", this.editedItem)
-          .then(response => {
-          })
-          .catch(function(error) {
-          })
-          .finally(function() {});
-        this.package.push(this.editedItem);
+      this.editedItem.modifyBy = this.user.userName;
+      this.editedItem.createBy = this.user.userName;
+      if (this.$refs.form.validate()) {
+        if (this.editedIndex > -1) {
+          AXIOS.post(apiIP + "/package/update/" + this.editId, this.editedItem)
+            .then(response => {
+              this.$router.go();
+            })
+            .catch(function(error) {})
+            .finally(function() {});
+        } else {
+          AXIOS.post(apiIP + "/package/insert", this.editedItem)
+            .then(response => {
+              this.$router.go();
+            })
+            .catch(function(error) {})
+            .finally(function() {});
+        }
+        this.close();
       }
-      this.close();
-       }
     }
   }
 };

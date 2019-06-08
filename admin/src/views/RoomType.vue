@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>roomtype CRUD</v-toolbar-title>
+      <v-toolbar-title>ROOMT CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="900px">
@@ -23,8 +23,9 @@
                     v-model="editedItem.supplierId"
                     :items="supplier"
                     item-text="supplierName"
-                    item-value="supplierId"
+                    item-value="_id"
                     label="Supplier"
+                     @input="changedSupplierCombobox"
                   ></v-select>
                 </v-flex>
                  <v-flex xs12 sm6 md4>
@@ -32,17 +33,17 @@
                     v-model="editedItem.hotelId"
                     :items="hotel"
                     item-text="hotelName"
-                    item-value="hotelId"
+                    item-value="_id"
                     label="Hotel"
                   ></v-select>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field required
-                    :rules="[() => editedItem.roomTypeId.length > 0 || 'Required field']"
-                     v-model="editedItem.roomTypeId" label="roomtypeId"></v-text-field>
+                    :rules="[() => editedItem.roomTypeCode.length > 0 || 'Required field']"
+                     v-model="editedItem.roomTypeCode" label="roomtypeCode"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.roomtypeName" label="roomtypeName"></v-text-field>
+                  <v-text-field v-model="editedItem.roomTypeName" label="roomtypeName"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-select
@@ -52,6 +53,12 @@
                     item-value="langCode"
                     label="Language"
                   ></v-select>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-checkbox
+      v-model="editedItem.isUsed"
+      :label="`IsUsed?`"
+    ></v-checkbox>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -69,24 +76,34 @@
     <v-data-table :headers="headers" :items="roomtype" class="elevation-1">
       <template v-slot:items="props">
         <tr class="ellip-text">
-          <td class="justify-center layout px-0">
+          <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
           <td>{{ props.item.supplierId }}</td>
-          <td class="text-xs-right">{{ props.item.hotelId }}</td>
-          <td>{{ props.item.roomTypeId }}</td>
-          <td class="text-xs-right">{{ props.item.roomTypeName }}</td>
-          <td class="text-xs-right">{{ props.item.lang }}</td>
+          <td>{{ props.item.hotelId }}</td>
+                    <td>{{ props.item._id }}</td>
+
+          <td>{{ props.item.roomTypeCode }}</td>
+          <td>{{ props.item.roomTypeName }}</td>
+          <td>{{ props.item.lang }}</td>
+          <td>{{ props.item.isUsed }}</td>
+          <td>{{ props.item.createBy }}</td>
+          <td>{{ props.item.createDate }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
     </v-data-table>
+     <v-snackbar v-model="snackbar.snackbar">
+      {{ snackbar.text }}
+      <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script>
+var apiIP = "http://localhost:3001";
 import axios from "axios";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -108,17 +125,22 @@ export default {
     endDateModal: false,
     dialog: false,
     headers: [
-      { text: "Actions", value: "name", sortable: false },
-      { text: "Supplier", align: "center", value: "supplierId" },
-      { text: "Hotel", align: "center", value: "hotelId" },
+      { text: "Actions", sortable: false },
+      { text: "Supplier", value: "supplierId" },
+      { text: "Hotel", value: "hotelId" },
       {
-        text: "roomtypeId",
-        align: "center",
-        sortable: false,
-        value: "roomtypeId"
+        text: "RoomTypeId",
+        value: "_id"
       },
-      { text: "roomtypeName", align: "center", value: "roomtypeName" },
-      { text: "Language", align: "center", value: "lang" }
+      {
+        text: "Room Type Code",
+        value: "roomTypeCode"
+      },
+      { text: "Room Type Name", value: "roomTypeName" },
+      { text: "Language", value: "lang" },
+      { text: "Used", value: "isUsed" },
+      { text: "CreateBy", value: "createBy" },
+      { text: "CreateDate", value: "createDate" }
     ],
     roomtype: [],
     supplier: [],
@@ -129,15 +151,26 @@ export default {
       { langCode: "VI", langName: "VietNam" }
     ],
     editedIndex: -1,
+     editId: "",
     editedItem: {
-      roomTypeId: "",
+      roomTypeCode: "",
       roomTypeName: "",
-      lang: "EN"
+      lang: "EN",
+      isUsed:true,
+      createBy: "",
+      modifyBy:""
     },
     defaultItem: {
-      roomTypeId: "",
+      roomTypeCode: "",
       roomTypeName: "",
-      lang: "EN"
+      lang: "EN",
+      isUsed:true,
+      createBy: "",
+      modifyBy:""
+    },
+    snackbar: {
+      snackbar: false,
+      text: ""
     }
   }),
 
@@ -159,7 +192,7 @@ export default {
 
   methods: {
     initialize() {
-      AXIOS.get("http://localhost:3000/roomtype/", { crossdomain: true })
+      AXIOS.get(apiIP +"/roomtype/", { crossdomain: true })
         .then(response => {
           this.roomtype = response.data;
         })
@@ -167,7 +200,7 @@ export default {
         })
         .finally(function() {});
 
-         AXIOS.get("http://localhost:3000/hotel/", { crossdomain: true })
+         AXIOS.get(apiIP +"/hotel/", { crossdomain: true })
         .then(response => {
           this.hotel = response.data;
         })
@@ -175,7 +208,7 @@ export default {
         })
         .finally(function() {});
 
-        AXIOS.get("http://localhost:3000/supplier/", { crossdomain: true })
+        AXIOS.get(apiIP +"/supplier/", { crossdomain: true })
         .then(response => {
           this.supplier = response.data;
         })
@@ -188,14 +221,17 @@ export default {
       this.editedIndex = this.roomtype.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
+      delete this.editedItem._id;
+      this.editId = item._id;
     },
 
     deleteItem(item) {
-      const index = this.roomtype.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete("http://localhost:3000/roomtype/" + index)
+        AXIOS.delete(apiIP +"/roomtype/" + item._id)
           .then(response => {
-            this.roomtype.splice(index, 1);
+             this.snackbar.snackbar = true;
+            this.snackbar.text = response.data;
+            this.$router.go();
           })
           .catch(function(error) {
           })
@@ -211,26 +247,40 @@ export default {
     },
 
     save() {
+       this.editedItem.modifyBy = this.user.userName;
+      this.editedItem.createBy = this.user.userName;
        if (this.$refs.form.validate()) {
       if (this.editedIndex > -1) {
-        AXIOS.post("http://localhost:3000/roomtype/update", this.editedItem)
+        AXIOS.post(apiIP +"/roomtype/update/" + this.editId, this.editedItem)
           .then(response => {
-            Object.assign(this.roomtype[this.editedIndex], this.editedItem);
+            this.$router.go();
           })
           .catch(function(error) {
           })
           .finally(function() {});
       } else {
-        AXIOS.post("http://localhost:3000/roomtype/insert", this.editedItem)
+        AXIOS.post(apiIP +"/roomtype/insert", this.editedItem)
           .then(response => {
+            this.$router.go();
           })
           .catch(function(error) {
           })
           .finally(function() {});
-        this.roomtype.push(this.editedItem);
       }
       this.close();
        }
+    },
+
+    changedSupplierCombobox(event){
+      AXIOS.get(apiIP +"/hotel/combobox/hotel/"+event, { crossdomain: true })
+        .then(response => {
+                console.log(response.data);
+
+          this.hotel = response.data;
+        })
+        .catch(function(error) {
+        })
+        .finally(function() {});
     }
   }
 };

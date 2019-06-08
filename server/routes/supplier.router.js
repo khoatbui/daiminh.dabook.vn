@@ -1,14 +1,14 @@
-/*=======GET TRAVEL STYLE LIST======
+/*=======SUPPLIER======
 + Duong dan hinh anh
 + Link
 + Title
 + Noi dung
 ==================================*/
 var express = require('express')
-var router = express.Router()
-var db = require('../db')
 var bodyParser = require('body-parser')
+var controller=require('../controllers/supplier.controller')
 
+var router = express.Router()
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -16,27 +16,11 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',(req,res,next) => {
-    res.send(db.get('supplier').value());
-})
+router.get('/',controller.index)
 
-router.delete('/:index', function (req, res) {
-    db.get('supplier').value().splice(req.params.index, 1)
-})
+router.delete('/:_id', controller.deleteSupplier)
 
-router.post('/insert', jsonParser, function (req, res) {
-    db.get('supplier')
-        .push(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
-})
+router.post('/insert',jsonParser, controller.insertSupplier)
 
-router.post('/update', jsonParser, function (req, res) {
-    db.get('supplier')
-        .filter({ supplierId: req.body.supplierId })
-        .filter({ lang: req.body.lang })
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
-})
+router.post('/update/:_id', jsonParser,controller.updateSupplier)
 module.exports = router

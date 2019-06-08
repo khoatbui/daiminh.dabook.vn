@@ -23,7 +23,7 @@
                       v-model="editedItem.supplierId"
                       :items="supplier"
                       item-text="supplierName"
-                      item-value="supplierId"
+                      item-value="_id"
                       label="Supplier"
                     ></v-select>
                   </v-flex>
@@ -41,6 +41,15 @@
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.star" label="Star"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -67,35 +76,23 @@
           <td>{{ props.item.hotelCode }}</td>
           <td>{{ props.item.hotelName }}</td>
           <td>{{ props.item.star }}</td>
-           <td>{{ props.item.createBy }}</td>
-            <td>{{ props.item.createDate }}</td>
+          <td>{{ props.item.createBy }}</td>
+          <td>{{ props.item.createDate }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
     </v-data-table>
-        <v-snackbar
-      v-model="snackbar.snackbar"
-      :color="color"
-      :multi-line="mode === 'multi-line'"
-      :timeout="timeout"
-      :vertical="mode === 'vertical'"
-    >
+    <v-snackbar
+      v-model="snackbar.snackbar">
       {{ snackbar.text }}
-      <v-btn
-        dark
-        flat
-        @click="snackbar.snackbar = false"
-      >
-        Close
-      </v-btn>
+      <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
   </div>
 </template>
 <script>
-var apiIP='http://localhost:3001';
-console.log(apiIP);
+var apiIP = "http://localhost:3001";
 import axios from "axios";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -123,32 +120,36 @@ export default {
       { text: "hotelCode", value: "hotelCode" },
       { text: "HotelName", value: "hotelName" },
       { text: "Star", value: "star" },
-       { text: "Create By", value: "createBy" },
-        { text: "Create Date", value: "createDate" }
+      { text: "Create By", value: "createBy" },
+      { text: "Create Date", value: "createDate" }
+    ],language: [
+      { langCode: "EN", langName: "English" },
+      { langCode: "KO", langName: "Korea" },
+      { langCode: "VI", langName: "VietNam" }
     ],
     supplier: [],
     hotel: [],
     editedIndex: -1,
-    editId:'',
+    editId: "",
     editedItem: {
       supplierId: "",
-      hotelCode: "",
       hotelName: "",
       star: "5",
-      createBy:"",
-      createDate:"",
+      createBy: "",
+      modifyBy:"",
+      hotelCode: ""
     },
     defaultItem: {
       supplierId: "",
-      hotelCode: "",
       hotelName: "",
       star: "5",
-      createBy:"",
-      createDate:"",
+      createBy: "",
+      modifyBy:"",
+      hotelCode: ""
     },
-    snackbar:{
-      snackbar:false,
-      text:""
+    snackbar: {
+      snackbar: false,
+      text: ""
     }
   }),
 
@@ -170,38 +171,34 @@ export default {
 
   methods: {
     initialize() {
-      AXIOS.get(apiIP +"/hotel/", { crossdomain: true })
+      AXIOS.get(apiIP + "/hotel/", { crossdomain: true })
         .then(response => {
           this.hotel = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP +"/supplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
         .then(response => {
           this.supplier = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
-      
-          this.editedItem.createBy = this.user.userName;
-
     },
 
     editItem(item) {
       this.editedIndex = this.hotel.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      delete  this.editedItem._id;
-      this.editId=item._id;
+      delete this.editedItem._id;
+      this.editId = item._id;
       this.dialog = true;
     },
 
     deleteItem(item) {
-      const index = this.hotel.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP +"/hotel/" + item._id)
+        AXIOS.delete(apiIP + "/hotel/" + item._id)
           .then(response => {
-            this.snackbar.snackbar=true;
-            this.text=response.data;
+            this.snackbar.snackbar = true;
+            this.snackbar.text = response.data;
             this.$router.go();
           })
           .catch(function(error) {})
@@ -217,19 +214,20 @@ export default {
     },
 
     save() {
+      this.editedItem.modifyBy = this.user.userName;
+      this.editedItem.createBy = this.user.userName;
       if (this.$refs.form.validate()) {
-        this.editedItem.createDate=new Date();
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP +"/hotel/update/" + this.editId, this.editedItem)
+          AXIOS.post(apiIP + "/hotel/update/" + this.editId, this.editedItem)
             .then(response => {
-              this.$router.go()
+              this.$router.go();
             })
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP +"/hotel/insert", this.editedItem)
+          AXIOS.post(apiIP + "/hotel/insert", this.editedItem)
             .then(response => {
-                    this.$router.go()
+              this.$router.go();
             })
             .catch(function(error) {})
             .finally(function() {});
