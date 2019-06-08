@@ -510,7 +510,10 @@
     max-height: 200px !important;
     overflow-y: scroll;
 }
-
+.h-350-max{
+    max-height: 350px !important;
+    overflow:hidden;
+}
 /* ========================
     TOURLIST
 ============================*/
