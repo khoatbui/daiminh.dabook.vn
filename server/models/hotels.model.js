@@ -6,6 +6,6 @@ var hotelSchema = new mongoose.Schema({
     hotelName: String,
     star: String
 });
-var Hotel =mongoose.model('Hotel',hotelSchema,'hotels');
+var Hotel =mongoose.model('Hotel',hotelSchema,'hotel');
 
 module.exports = Hotel;

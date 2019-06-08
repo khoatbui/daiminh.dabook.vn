@@ -459,6 +459,12 @@
       "hotelId": "VINPQ",
       "hotelName": "VIN Perl Phu Quoc",
       "star": "5"
+    },
+    {
+      "supplierId": "VIN",
+      "hotelId": "CC",
+      "hotelName": "CC",
+      "star": "5"
     }
   ],
   "roomType": [

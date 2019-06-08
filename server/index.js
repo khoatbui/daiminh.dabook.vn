@@ -4,7 +4,6 @@ const cors = require('cors')
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true});
-
 const app = express()
 const port = process.env.PORT
 app.use(express.static('public'))

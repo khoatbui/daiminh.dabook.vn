@@ -6,12 +6,13 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 import Vuetify from 'vuetify'
-
+import User from './mixins/User';
 Vue.use(Vuetify, {
   iconfont: 'fa'
  })
 Vue.config.productionTip = false
-
+// inject a handler for `myOption` custom option
+Vue.mixin(User)
 import 'babel-polyfill'
 new Vue({
   router,

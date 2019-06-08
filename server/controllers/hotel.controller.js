@@ -2,39 +2,57 @@ var db = require('../db')
 var Hotel = require('../models/hotels.model')
 
 module.exports.index =function(req,res){
-    Hotel.find().then(function(hotels){
-        res.send({
-            hotels:hotels
-        })
+    Hotel.find().then(function(hotel){
+        res.send(hotel)
     })
 };
 
 module.exports.getHotel=(req,res,next) => {
-    res.send(db.get('hotel').value());
+    Hotel.find().then(function(hotel){
+        res.send(hotel)
+    })
 };
 
 module.exports.deleteHotel= function (req, res) {
-    db.get('hotel').value().splice(req.params.index, 1)
+    console.log(req.params._id );
+    Hotel.deleteOne({ _id: req.params._id }, function(err) {
+        if (!err) {
+            res.send('SUCCESS')
+        }
+        else {
+            res.send('ERROR')
+        }
+    });
 };
 
 module.exports.insertHotel= function (req, res) {
-    db.get('hotel')
-        .push(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
+    console.log(req.body);
+    Hotel.create(req.body, function (err, hotel) {
+        if (err){
+            console.log(err);
+        } 
+        else{
+            res.send(hotel)
+        }
+        })
 };
 
 module.exports.updateHotel=function (req, res) {
-    db.get('hotel')
-        .filter({ hotelId: req.body.hotelId })
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
+    console.log(req.params._id);
+    console.log(req.body);
+    Hotel.updateOne({ _id: req.params._id },{$set:req.body}).exec(function(err, hotel){
+        if(err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+                 res.status(200).send(hotel);
+        }
+     });
 };
 
 module.exports.priceSearch=function (req, res) {
     db.get('hotel')
-        .filter({ hotelId: req.body.hotelId })
+        .filter({ hotelCode: req.body.hotelCode })
         .assign(req.body)
         .write()
     res.send('UPDATE COMPLETED')
