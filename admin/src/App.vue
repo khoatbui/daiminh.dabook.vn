@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar app dark color="cyan darken-3" absolute clipped-left>
+    <v-toolbar app dark color="light-blue darken-4" absolute clipped-left>
       <v-toolbar-side-icon></v-toolbar-side-icon>
       <v-toolbar-title>
         <v-btn flat to="/">Home</v-btn>
@@ -19,8 +19,9 @@
                   <v-menu :nudge-width="100">
         <template v-slot:activator="{ on }">
           <v-toolbar-title v-on="on">
-            <span>Hotel</span>
+            <v-btn flat><span> Hotel </span>
             <v-icon dark>arrow_drop_down</v-icon>
+            </v-btn>
           </v-toolbar-title>
         </template>
 
@@ -36,6 +37,9 @@
           </v-list-tile>
           <v-list-tile>
            <v-btn flat to="/package">Package</v-btn>
+          </v-list-tile>
+           <v-list-tile>
+           <v-btn flat to="/package-hotel-rel">Package Hotel REL</v-btn>
           </v-list-tile>
           <v-list-tile>
            <v-btn flat to="/option-service">Option Service</v-btn>

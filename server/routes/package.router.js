@@ -5,10 +5,10 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var router = express.Router()
-var db = require('../db')
+var controller=require('../controllers/package.controller')
 var bodyParser = require('body-parser')
 
+var router = express.Router()
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -16,27 +16,13 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',(req,res,next) => {
-    res.send(db.get('package').value());
-})
+router.get('/',controller.index)
 
-router.delete('/:index', function (req, res) {
-    db.get('package').value().splice(req.params.index, 1)
-})
+router.delete('/:_id', controller.deletePackage)
 
-router.post('/insert', jsonParser, function (req, res) {
-    db.get('package')
-        .push(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
-})
+router.post('/insert', jsonParser, controller.insertPackage)
 
-router.post('/update', jsonParser, function (req, res) {
-    db.get('package')
-        .filter({ packageId: req.body.packageId })
-        .filter({ lang: req.body.lang })
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
-})
+router.post('/update/:_id', jsonParser, controller.updatePackage)
+
+router.get('/combobox/package/:_id',controller.getPackageBySupplier)
 module.exports = router

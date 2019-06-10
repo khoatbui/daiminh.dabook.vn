@@ -1,6 +1,6 @@
 var db = require('../db')
 var Hotel = require('../models/hotels.model')
-
+var mongoose = require('mongoose');
 module.exports.index =function(req,res){
     Hotel.find().then(function(hotel){
         res.send(hotel)
@@ -14,7 +14,6 @@ module.exports.getHotel=(req,res,next) => {
 };
 
 module.exports.deleteHotel= function (req, res) {
-    console.log(req.params._id );
     Hotel.deleteOne({ _id: req.params._id }, function(err) {
         if (!err) {
             res.send('SUCCESS')
@@ -26,8 +25,9 @@ module.exports.deleteHotel= function (req, res) {
 };
 
 module.exports.insertHotel= function (req, res) {
-    console.log(req.body);
-    Hotel.create(req.body, function (err, hotel) {
+    req.body.createDate=new Date();
+    delete req.body.modifyBy;
+        Hotel.create(req.body, function (err, hotel) {
         if (err){
             console.log(err);
         } 
@@ -38,13 +38,14 @@ module.exports.insertHotel= function (req, res) {
 };
 
 module.exports.updateHotel=function (req, res) {
-    console.log(req.params._id);
-    console.log(req.body);
-    Hotel.updateOne({ _id: req.params._id },{$set:req.body}).exec(function(err, hotel){
+    req.body.modifyDate=new Date();
+    delete req.body.createBy;
+        Hotel.updateOne({ _id: req.params._id },{$set:req.body},(err, hotel) =>{
         if(err) {
             console.log(err);
             res.status(500).send(err);
         } else {
+            console.log(hotel);
                  res.status(200).send(hotel);
         }
      });
@@ -59,11 +60,10 @@ module.exports.priceSearch=function (req, res) {
 };
 
 module.exports.getHotelBySupplier=(req,res,next) => {
-    res.send(db.get('hotel').filter({ supplierId: req.params.index }).value());
-};
-
-module.exports.getPackageBySupplier=(req,res,next) => {
-    res.send(db.get('package').filter({ supplierId: req.params.index }).value());
+    Hotel.find({supplierId:req.params.index}).then(function(hotel){
+        console.log(hotel);
+        res.send(hotel)
+    })
 };
 
 module.exports.getRoomTypeBySupplier=(req,res,next) => {

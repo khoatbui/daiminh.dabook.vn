@@ -5,10 +5,10 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var router = express.Router()
-var db = require('../db')
 var bodyParser = require('body-parser')
+var controller=require('../controllers/packagehotelrel.controller')
 
+var router = express.Router()
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -16,29 +16,13 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',(req,res,next) => {
-    res.send(db.get('packageHotelREL').value());
-})
+router.get('/',controller.index)
 
-router.delete('/:index', function (req, res) {
-    db.get('packageHotelREL').value().splice(req.params.index, 1)
-})
+router.delete('/:_id',controller.deletePackageHotelREL)
 
-router.post('/insert', jsonParser, function (req, res) {
-    db.get('packageHotelREL')
-        .push(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
-})
+router.post('/insert', jsonParser, controller.insertPackageHotelREL)
 
-router.post('/update', jsonParser, function (req, res) {
-    db.get('packageHotelREL')
-        .filter({ areaId: req.body.areaId })
-        .filter({ lang: req.body.lang })
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
-})
+router.post('/update/:_id', jsonParser, controller.updatePackageHotelREL)
 
 router.get('/combobox/package-by-hotel-roomtype/hotel/:hotelId/roomType/:roomTypeId',(req,res,next) => {
     res.send(db.get('packageHotelREL')
