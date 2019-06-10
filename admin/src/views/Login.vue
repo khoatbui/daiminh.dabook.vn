@@ -47,7 +47,7 @@
   </v-layout>
 </template>
 <script>
-var apiIP = "http://localhost:3001";
+var apiIP = process.env.VUE_APP_API_IPADDRESS
 console.log(apiIP);
 import axios from "axios";
 const AXIOS = axios.create({

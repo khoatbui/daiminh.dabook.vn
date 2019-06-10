@@ -88,7 +88,8 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+var apiIP = process.env.VUE_APP_API_IPADDRESS
+import axios from "axios"
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -100,7 +101,7 @@ const AXIOS = axios.create({
     "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
     "Access-Control-Allow-Credentials": true
   }
-});
+})
 export default {
   data: () => ({
     valid: true,
@@ -148,95 +149,95 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+      return this.editedIndex === -1 ? "New Item" : "Edit Item"
     }
   },
 
   watch: {
     dialog(val) {
-      val || this.close();
+      val || this.close()
     }
   },
 
   created() {
-    this.initialize();
+    this.initialize()
   },
 
   methods: {
     initialize() {
       AXIOS.get("http://localhost:3000/city/", { crossdomain: true })
         .then(response => {
-          this.city = response.data;
+          this.city = response.data
         })
         .catch(function(error) {
         })
-        .finally(function() {});
+        .finally(function() {})
 
          AXIOS.get("http://localhost:3000/area/", { crossdomain: true })
         .then(response => {
-          this.area = response.data;
+          this.area = response.data
         })
         .catch(function(error) {
         })
-        .finally(function() {});
+        .finally(function() {})
 
          AXIOS.get("http://localhost:3000/destination/", { crossdomain: true })
         .then(response => {
-          this.destination = response.data;
+          this.destination = response.data
         })
         .catch(function(error) {
         })
-        .finally(function() {});
+        .finally(function() {})
     },
 
     editItem(item) {
-      this.editedIndex = this.city.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
+      this.editedIndex = this.city.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialog = true
     },
 
     deleteItem(item) {
-      const index = this.city.indexOf(item);
+      const index = this.city.indexOf(item)
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete("http://localhost:3000/city/" + index)
           .then(response => {
-            this.city.splice(index, 1);
+            this.city.splice(index, 1)
           })
           .catch(function(error) {
           })
-          .finally(function() {});
+          .finally(function() {})
     },
 
     close() {
-      this.dialog = false;
+      this.dialog = false
       setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      }, 300)
     },
 
     save() {
       if (this.editedIndex > -1) {
         AXIOS.post("http://localhost:3000/city/update", this.editedItem)
           .then(response => {
-            Object.assign(this.city[this.editedIndex], this.editedItem);
+            Object.assign(this.city[this.editedIndex], this.editedItem)
           })
           .catch(function(error) {
           })
-          .finally(function() {});
+          .finally(function() {})
       } else {
-        AXIOS.post("http://localhost:3000/city/insert", this.editedItem)
-          .then(response => {
+        AXIOS.post ("http://localhost:3000/city/insert", this.editedItem)
+          .then (response => {
           })
-          .catch(function(error) {
+          .catch (function(error) {
           })
-          .finally(function() {});
-        this.city.push(this.editedItem);
+          .finally (function() {})
+        this.city.push (this.editedItem)
       }
-      this.close();
+      this.close ()
     }
   }
-};
+}
 </script>
 <style>
 .ellip-text td {

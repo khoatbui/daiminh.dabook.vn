@@ -1,3 +1,4 @@
+//http://103.237.144.222:3000
 const apiUrl = 'http://103.237.144.222:3000';
 
 // Now the app has started!
@@ -35,7 +36,7 @@ var app = new Vue({
       roomId: "",
       hotelId: "",
       hotelName: "Hotel name / Location...",
-      price: "1000000",
+      price: 1000000,
       amountPeople: "",
       roomQty: 1,
       checkin: "",
@@ -76,7 +77,7 @@ var app = new Vue({
   methods: {
     initialize() {
       if (urlParams.has('destination')) {
-        AXIOS.get('http://localhost:3000/tourlist/destination-search/' + urlParams.get('destination'), { crossdomain: true })
+        AXIOS.get(apiUrl + '/tourlist/destination-search/' + urlParams.get('destination'), { crossdomain: true })
           .then((response) => {
           })
           .catch((error) => {
@@ -86,7 +87,7 @@ var app = new Vue({
           });
       }
       else if (urlParams.has('travelstyle')) {
-        AXIOS.get('http://localhost:3000/tourlist/travelstyle-search/' + urlParams.get('travelstyle'), { crossdomain: true })
+        AXIOS.get(apiUrl + '/tourlist/travelstyle-search/' + urlParams.get('travelstyle'), { crossdomain: true })
           .then((response) => {
           })
           .catch((error) => {
@@ -97,7 +98,7 @@ var app = new Vue({
 
       }
       else if (urlParams.has('city')) {
-        AXIOS.get('http://localhost:3000/tourlist/city-search/' + urlParams.get('city'), { crossdomain: true })
+        AXIOS.get(apiUrl + '/tourlist/city-search/' + urlParams.get('city'), { crossdomain: true })
           .then((response) => {
           })
           .catch((error) => {
@@ -108,7 +109,7 @@ var app = new Vue({
 
       }
       else if (urlParams.has('searchbox')) {
-        AXIOS.get('http://localhost:3000/tourlist/searchbox-search/' + urlParams.get('searchbox'), { crossdomain: true })
+        AXIOS.get(apiUrl + '/tourlist/searchbox-search/' + urlParams.get('searchbox'), { crossdomain: true })
           .then((response) => {
           })
           .catch((error) => {
@@ -119,7 +120,7 @@ var app = new Vue({
 
       }
       else {
-        AXIOS.get('http://localhost:3000/tourlist/', { crossdomain: true })
+        AXIOS.get(apiUrl + '/tourlist/', { crossdomain: true })
           .then((response) => {
           })
           .catch((error) => {
@@ -130,7 +131,7 @@ var app = new Vue({
       }
     },
     binCombobox() {
-      AXIOS.get(apiUrl + '/hotel/combobox/hotel/VIN', { crossdomain: true })
+      AXIOS.get(apiUrl + '/hotel/combobox/hotelbysuppliercode/VIN', { crossdomain: true })
         .then((response) => {
           this.vinHotels = response.data;
         })
@@ -139,45 +140,9 @@ var app = new Vue({
         })
         .finally(() => {
         });
-      AXIOS.get(apiUrl + '/hotel/combobox/hotel/FLC', { crossdomain: true })
+      AXIOS.get(apiUrl + '/hotel/combobox/hotelbysuppliercode/FLC', { crossdomain: true })
         .then((response) => {
           this.flcHotels = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-        });
-      AXIOS.get(apiUrl + '/hotel/combobox/package/VIN', { crossdomain: true })
-        .then((response) => {
-          this.vinPackage = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-        });
-      AXIOS.get(apiUrl + '/hotel/combobox/package/FLC', { crossdomain: true })
-        .then((response) => {
-          this.flcPackage = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-        });
-      AXIOS.get(apiUrl + '/hotel/combobox/roomtype/VIN', { crossdomain: true })
-        .then((response) => {
-          this.vinroomTypes = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-        });
-      AXIOS.get(apiUrl + '/hotel/combobox/roomtype/FLC', { crossdomain: true })
-        .then((response) => {
-          this.flcroomTypes = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -203,9 +168,10 @@ var app = new Vue({
         .finally(() => {
         });
     },
-    getRoomTypeByHotel() {
-      AXIOS.get(apiUrl + '/hotel/combobox/roomtype/FLC', { crossdomain: true })
+    getFlcRoomTypeByHotel() {
+      AXIOS.get(apiUrl + `/roomtype/combobox/roomtype/${this.bookingrequest.hotelId}`, { crossdomain: true })
         .then((response) => {
+          console.log(response.data);
           this.flcroomTypes = response.data;
         })
         .catch((error) => {
@@ -215,9 +181,8 @@ var app = new Vue({
         });
     },
     getVinRoomTypeByHotel() {
-      AXIOS.get(apiUrl + `/roomtype/combobox/roomtype-by-hotel/${this.bookingrequest.hotelId}`, { crossdomain: true })
+      AXIOS.get(apiUrl + `/roomtype/combobox/roomtype/${this.bookingrequest.hotelId}`, { crossdomain: true })
         .then((response) => {
-          console.log(response.data);
           this.vinroomTypes = response.data;
         })
         .catch((error) => {
@@ -227,8 +192,9 @@ var app = new Vue({
         });
     },
     getVinPackageByHotel() {
-      AXIOS.get(apiUrl + `/packagehotelrel/combobox/package-by-hotel-roomtype/hotel/${this.bookingrequest.hotelId}/roomType/${this.bookingrequest.roomTypeId}`, { crossdomain: true })
+      AXIOS.get(apiUrl + `/packagehotelrel/combobox/packagebyhotelroomtype/hotel/${this.bookingrequest.hotelId}/roomType/${this.bookingrequest.roomTypeId}`, { crossdomain: true })
         .then((response) => {
+          console.log(response.data[0].packageId.packageName);
           this.vinPackage = response.data;
         })
         .catch((error) => {
@@ -236,6 +202,26 @@ var app = new Vue({
         })
         .finally(() => {
         });
+    },
+    getFlcPackageByHotel() {
+      console.log(this.bookingrequest.hotelId);
+      console.log(this.bookingrequest.roomTypeId);
+
+      AXIOS.get(apiUrl + `/packagehotelrel/combobox/packagebyhotelroomtype/hotel/${this.bookingrequest.hotelId}/roomType/${this.bookingrequest.roomTypeId}`, { crossdomain: true })
+        .then((response) => {
+          console.log(response.data);
+          this.flcPackage = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+        });
+    },
+    changePackageCombobox(package) {
+      this.bookingrequest.packageId = package.packageId._id;
+      this.bookingrequest.packageName = package.packageId.packageName;
+      this.bookingrequest.price = package.price;
     },
     searchHotel() {
       this.bookingstep.find = true;
@@ -354,11 +340,24 @@ var app = new Vue({
       console.log(diffDays);
       return this.bookingrequest.price * diffDays * this.bookingrequest.roomQty;
     },
+    totalPriceFLC: function () {
+      // `this` points to the vm instance
+      var a = moment(this.bookingrequest.checkin, 'D-M-YYYY');
+      var b = moment(this.bookingrequest.checkout, 'D-M-YYYY');
+      var diffDays = b.diff(a, 'days');
+      console.log(diffDays);
+      return this.bookingrequest.price * diffDays * this.bookingrequest.roomQty;
+    },
     totalTime: function () {
       var a = moment(this.bookingrequest.checkin, 'D-M-YYYY');
       var b = moment(this.bookingrequest.checkout, 'D-M-YYYY');
       var diffDays = b.diff(a, 'days');
       return diffDays;
+    },
+    getPackageNote: function () {
+      var package = this.vinPackage.filter(obj => { return obj._id === this.bookingrequest.packageId })
+      console.log(package);
+      return package.note;
     }
   }
 })
@@ -379,11 +378,11 @@ $('.starttime').datetimepicker({
     close: 'fa fa-remove'
   },
   format: 'DD-MM-YYYY',
-  widgetPositioning :{
+  widgetPositioning: {
     horizontal: 'auto',
     vertical: 'bottom'
   },
-  minDate :moment()
+  minDate: moment()
 });
 $('.endtime').datetimepicker({
   icons: {
@@ -397,7 +396,7 @@ $('.endtime').datetimepicker({
     clear: 'fa fa-trash',
     close: 'fa fa-remove'
   }, format: 'DD-MM-YYYY',
-  widgetPositioning :{
+  widgetPositioning: {
     horizontal: 'auto',
     vertical: 'bottom'
   }

@@ -20,6 +20,8 @@ router.get('/',controller.index)
 
 router.get('/combobox/hotel/:index',controller.getHotelBySupplier)
 
+router.get('/combobox/hotelbysuppliercode/:index',controller.getHotelBySupplierCode)
+
 router.get('/combobox/roomtype/:index',controller.getRoomTypeBySupplier)
 
 router.get('/combobox/addition-service/:index',controller.getAdditionServiceBySupplier)

@@ -1,5 +1,6 @@
 var db = require('../db')
 var Hotel = require('../models/hotels.model')
+var Supplier=require('../models/supplier.model')
 var mongoose = require('mongoose');
 module.exports.index =function(req,res){
     Hotel.find().then(function(hotel){
@@ -63,6 +64,14 @@ module.exports.getHotelBySupplier=(req,res,next) => {
     Hotel.find({supplierId:req.params.index}).then(function(hotel){
         console.log(hotel);
         res.send(hotel)
+    })
+};
+
+module.exports.getHotelBySupplierCode=(req,res,next) => {
+    Supplier.findOne({supplierCode:req.params.index}).then(function(supp){
+        Hotel.find({supplierId:supp._id}).then(function(hotel){
+            res.send(hotel)
+        })
     })
 };
 

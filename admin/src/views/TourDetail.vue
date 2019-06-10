@@ -96,6 +96,7 @@
   </div>
 </template>
 <script>
+var apiIP = process.env.VUE_APP_API_IPADDRESS
 import FileUpload from '../components/FileUpload.vue'
 import axios from "axios";
 const AXIOS = axios.create({

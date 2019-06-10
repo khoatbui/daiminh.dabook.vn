@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 
-var pakageHotelRELSchema = new mongoose.Schema({
+var mailSchema = new mongoose.Schema({
     supplierId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Supplier' },
     hotelId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' },
     roomTypeId: { type: mongoose.Schema.Types.ObjectId, ref: 'RoomType' },
@@ -9,13 +9,11 @@ var pakageHotelRELSchema = new mongoose.Schema({
     lang: String,
     note:String,
     isUsed:Boolean,
-    startDate:Date,
-    endDate:Date,
     createBy:String,
     createDate:Date,
     modifyBy:String,
     modifyDate:Date
 });
-var PackageHotelREL =mongoose.model('PackageHotelREL',pakageHotelRELSchema,'packageHotelREL');
+var Mail =mongoose.model('Mail',mailSchema,'mail');
 
-module.exports = PackageHotelREL;
+module.exports = Mail;

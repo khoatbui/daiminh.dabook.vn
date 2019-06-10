@@ -112,7 +112,7 @@
                                                         <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
-                                                                @click="bookingrequest.hotelId=hotel.id;bookingrequest.hotelName=hotel.hotelName"
+                                                                @click="bookingrequest.hotelId=hotel._id;bookingrequest.hotelName=hotel.hotelName;getFlcRoomTypeByHotel()"
                                                                 v-for="hotel in flcHotels">{{hotel.hotelName}}</a>
                                                         </div>
                                                     </div>
@@ -147,7 +147,7 @@
                                                     <div class="form-row">
                                                         <div class="col-12 col-md-6">
                                                             <div class="popover-group w-100">
-                                                                <input type="text" class="form-control"
+                                                                <input type="text" class="form-control" readonly
                                                                     placeholder="Guest..."
                                                                     @click="e => e.target.parentNode.nextElementSibling.classList.toggle('show')"
                                                                     v-model="'Golfer:  ' + bookingrequest.golfer +'   |   Non-golfer:  '+ bookingrequest.ungolfer" />
@@ -197,7 +197,7 @@
                                                         </div>
                                                         <div class="col-12 col-md-6">
                                                             <div class="popover-group w-100">
-                                                                <input type="text" class="form-control"
+                                                                <input type="text" class="form-control" readonly
                                                                     placeholder="Number of room..."
                                                                     @click="e => e.target.parentNode.nextElementSibling.classList.toggle('show')"
                                                                     v-model="'Number of room:  ' + bookingrequest.roomQty" />
@@ -237,7 +237,7 @@
                                                         <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
-                                                                @click="bookingrequest.roomTypeId=roomType.roomTypeId;bookingrequest.roomTypeName=roomType.roomTypeName"
+                                                                @click="bookingrequest.roomTypeId=roomType._id;bookingrequest.roomTypeName=roomType.roomTypeName;getFlcPackageByHotel()"
                                                                 v-for="roomType in flcroomTypes">{{roomType.roomTypeName}}</a>
                                                         </div>
                                                     </div>
@@ -254,8 +254,8 @@
                                                         <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
-                                                                @click="bookingrequest.packageId=package.packageId;bookingrequest.packageName=package.packageName"
-                                                                v-for="package in flcPackage">{{package.packageName}}</a>
+                                                                @click="changePackageCombobox(package)"
+                                                                v-for="package in flcPackage">{{package.packageId.packageName}}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -276,8 +276,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 p-2">
-                                                    <h3><b class="text-success">{{totalPrice}}</b></h3>
+                                                <div class="col-6 p-2 bg-success-opac-50">
+                                                    <h6 class="badge badge-rose"><b>{{bookingrequest.price}} $/night</b></h6>
                                                 </div>
                                                 <div class="col-6 p-2">
                                                     <button class="btn btn-info w-100" @click="searchHotel">
@@ -323,7 +323,7 @@
                                                         <div class="col-8">
                                                             <h6 class="title text-info p-0 m-0">
                                                                 {{bookingrequest.checkin}} ->
-                                                                {{bookingrequest.checkout}} [{{totalTime}} days] </h6>
+                                                                {{bookingrequest.checkout}} <span class="text-rose">[{{totalTime}} nights]</span> </h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
@@ -359,7 +359,7 @@
                                                             <h5 class="title  p-0 m-0">TOTAL</h5>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h5 class="title text-success p-0 m-0"> 2.000.000</h6>
+                                                            <h5 class="title text-success p-0 m-0"> {{totalPriceFLC}}</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -422,7 +422,7 @@
                                                         <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a v-for="hotel in vinHotels" class="dropdown-item"
-                                                                @click="bookingrequest.hotelId=hotel.hotelId;bookingrequest.hotelName=hotel.hotelName;getVinRoomTypeByHotel()">{{hotel.hotelName}}</a>
+                                                                @click="bookingrequest.hotelId=hotel._id;bookingrequest.hotelName=hotel.hotelName;getVinRoomTypeByHotel()">{{hotel.hotelName}}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -456,7 +456,7 @@
                                                     <div class="form-row">
                                                         <div class="col">
                                                             <div class="popover-group w-100">
-                                                                <input type="text" class="form-control"
+                                                                <input type="text" class="form-control" readonly
                                                                     placeholder="Number of room..."
                                                                     @click="e => e.target.parentNode.nextElementSibling.classList.toggle('show')"
                                                                     v-model="'Number of room:  ' + bookingrequest.roomQty" />
@@ -496,12 +496,12 @@
                                                         <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
-                                                                @click="bookingrequest.roomTypeId=roomType.roomTypeId;bookingrequest.roomTypeName=roomType.roomTypeName;getVinPackageByHotel()"
+                                                                @click="bookingrequest.roomTypeId=roomType._id;bookingrequest.roomTypeName=roomType.roomTypeName;getVinPackageByHotel()"
                                                                 v-for="roomType in vinroomTypes">{{roomType.roomTypeName}}</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-12 p-2">
+                                                <div class="col-12 p-2 absolute-parrent">
                                                     <div class="dropdown custom-hotel-list show w-100">
                                                         <a class="btn btn-secondary dropdown-toggle" href="#"
                                                             role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -513,13 +513,19 @@
                                                         <div class="dropdown-menu w-100 h-50-max"
                                                             aria-labelledby="dropdownMenuLink">
                                                             <a class="dropdown-item"
-                                                                @click="bookingrequest.packageId=package.packageId;bookingrequest.packageName=package.packageName"
-                                                                v-for="package in vinPackage">{{package.packageName}}</a>
+                                                                @click="changePackageCombobox(package)"
+                                                                v-for="package in vinPackage">{{package.packageId.packageName}}</a>
                                                         </div>
                                                     </div>
+                                                    <div class="absolute-right">
+                                                        <button class="badge badge-default text-rose info-button" data-toggle="tooltip" data-placement="top" v-bind:title="getPackageNote">
+                                                            <i class="fas fa-info"></i>  
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-6 p-2">
-                                                    <h3><b class="text-success">{{bookingrequest.price}}</b></h3>
+                                                <div class="col-6 p-2 bg-success-opac-50">
+                                                    <h6 class="badge badge-rose"><b>{{bookingrequest.price}} $/night</b></h6>
+                                                    <p></p>
                                                 </div>
                                                 <div class="col-6 p-2">
                                                     <button class="btn btn-info w-100" @click="searchHotel">
@@ -566,7 +572,7 @@
                                                             <h6 class="title text-info p-0 m-0">
                                                                 {{bookingrequest.checkin}} ->
                                                                 {{bookingrequest.checkout}} <span
-                                                                    class="text-rose">[{{totalTime}} days]</span></h6>
+                                                                    class="text-rose">[{{totalTime}} nights]</span></h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">

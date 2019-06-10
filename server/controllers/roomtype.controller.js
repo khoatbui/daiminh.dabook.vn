@@ -62,3 +62,9 @@ module.exports.getRoomTypeByHotel=(req,res,next) => {
         res.send(roomtype)
     })
 };
+
+module.exports.getRoomTypeByHotelCode=(req,res,next) => {
+    RoomType.find({hotelId:req.params.index}).then(function(roomtype){
+        res.send(roomtype)
+    })
+};

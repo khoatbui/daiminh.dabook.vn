@@ -1,11 +1,11 @@
-var db = require('../db')
 var PackageHotelREL = require('../models/packagehotelrel.model')
 var mongoose = require('mongoose');
 var moment =require('moment');
 moment().format();
 
 module.exports.index = function (req, res) {
-    PackageHotelREL.find().then(function (package) {
+    PackageHotelREL.find().populate('supplierId').populate('hotelId').populate('roomTypeId').populate('packageId').then(function (package) {
+        console.log(package);
         res.send(package)
     })
 };
@@ -55,5 +55,20 @@ module.exports.updatePackageHotelREL = function (req, res) {
             res.status(200).send(package);
         }
     });
+};
+
+module.exports.getPackageByHotelRoomType = (req, res, next) => {
+    console.log(req.params.hotelId);
+    console.log(req.params.roomTypeId);
+    PackageHotelREL.find({"hotelId":req.params.hotelId,"roomTypeId":req.params.roomTypeId}).populate('packageId').then(function (pac) {
+        console.log(pac);
+        res.send(pac)
+    })
+};
+module.exports.getPriceByService=(req, res, next) => {
+    PackageHotelREL.find({"hotelId":req.params.hotelId,"roomTypeId":req.params.roomTypeId}).populate('packageId').then(function (pac) {
+        console.log(pac);
+        res.send(pac)
+    })
 };
 

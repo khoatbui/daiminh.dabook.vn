@@ -340,9 +340,28 @@
         box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.14);
     }
 
-
-
-
+.absolute-parrent{
+    position: relative;
+}
+.absolute-right{
+    position: absolute;
+    top:0;
+    right: 0;
+}
+.info-button{
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    background-color: #FFF !important;
+    border:none;
+}
+.info-button i{
+    font-size: 12px;
+}
 
     /* =============
        CONTACT

@@ -157,6 +157,7 @@
   </div>
 </template>
 <script>
+var apiIP = process.env.VUE_APP_API_IPADDRESS
 import axios from "axios";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,

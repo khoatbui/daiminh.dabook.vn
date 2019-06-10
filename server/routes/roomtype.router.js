@@ -26,4 +26,6 @@ router.post('/insert', jsonParser, controller.insertRoomType)
 router.post('/update/:_id', jsonParser, controller.updateRoomType)
 
 router.get('/combobox/roomtype/:index',controller.getRoomTypeByHotel)
+
+router.get('/combobox/roomtypebyhotelcode/:index',controller.getRoomTypeByHotelCode)
 module.exports = router

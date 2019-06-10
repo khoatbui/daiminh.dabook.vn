@@ -1,14 +1,11 @@
-/*=======SEND MAI AUTOMATIC======
-+ Khi nhận request từ khách hàng, sẽ gửi emal tới nhân viên + email confirm cho khách
-+ Code duoc sinh tu dong và luu vao database
-==================================*/
-var express = require('express')
-var router = express.Router()
-var db = require('../db')
-var bodyParser = require('body-parser')
-const nodemailer = require('nodemailer')
-var moment = require('moment');
-var jsonParser = bodyParser.json()
+var Mail = require('../models/mail.model')
+var mongoose = require('mongoose');
+var moment =require('moment');
+var nodemailer = require('nodemailer')
+moment().format();
+
+
+// =======================
 var emailInfo={
     emailId:'contact@daiminhtravel.com',
     emailPass:'daiminhmd2383'
@@ -29,9 +26,78 @@ var current={
     currentCode:0,
     currentDate:6
 };
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+// ========================================
+module.exports.index = function (req, res) {
+    Mail.find().populate('supplierId').populate('hotelId').populate('roomTypeId').populate('packageId').then(function (package) {
+        console.log(package);
+        res.send(package)
+    })
+};
 
-router.post('/hotel-booking', jsonParser, function (req, res) {
+module.exports.getMail = (req, res, next) => {
+    Mail.find().then(function (package) {
+        res.send(package)
+    })
+};
+
+module.exports.deleteMail = function (req, res) {
+    console.log(req.params._id);
+    Mail.deleteOne({ _id: req.params._id }, function (err) {
+        if (!err) {
+            res.send('SUCCESS')
+        }
+        else {
+            res.send('ERROR')
+        }
+    });
+};
+
+module.exports.insertMail = function (req, res) {
+    req.body.createDate=new Date();
+    delete req.body.modifyBy;
+
+    Mail.create(req.body, function (err, package) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.send(package)
+        }
+    })
+};
+
+module.exports.updateMail = function (req, res) {
+    req.body.modifyDate=new Date();
+    delete req.body.createBy;
+    Mail.updateOne({ _id: req.params._id }, { $set: req.body }, (err, package) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+            console.log(package);
+
+            res.status(200).send(package);
+        }
+    });
+};
+
+module.exports.getPackageByHotelRoomType = (req, res, next) => {
+    console.log(req.params.hotelId);
+    console.log(req.params.roomTypeId);
+    Mail.find({"hotelId":req.params.hotelId,"roomTypeId":req.params.roomTypeId}).populate('packageId').then(function (pac) {
+        console.log(pac);
+        res.send(pac)
+    })
+};
+
+module.exports.getPriceByService=(req, res, next) => {
+    Mail.find({"hotelId":req.params.hotelId,"roomTypeId":req.params.roomTypeId}).populate('packageId').then(function (pac) {
+        console.log(pac);
+        res.send(pac)
+    })
+};
+
+module.exports.sendHotelBookingEmail=function (req, res) {
     const output = `
         <p>You have new contact request</p>
         <h3>Contact Detail</h3>
@@ -41,8 +107,8 @@ router.post('/hotel-booking', jsonParser, function (req, res) {
             <li>Email : ${req.body.email}</li>
             <li>Phone : ${req.body.phone}</li>
             <li>HotelId : ${req.body.hotelId}</li>
-            <li>HotelName : ${req.body.hotelId}</li>
-            <li>Price : ${req.body.hotelId}</li>
+            <li>HotelName : ${req.body.hotelName}</li>
+            <li>Price : ${req.body.price}</li>
         </ul>
         <h3>Message</h3>
         <p>${req.body.message}</p>
@@ -59,9 +125,9 @@ router.post('/hotel-booking', jsonParser, function (req, res) {
     .catch(error => console.log('error: ', error))
 
     res.send('UPDATE COMPLETED')
-})
+};
 
-router.post('/tour-booking', jsonParser, function (req, res) {
+module.exports.sendTourBookingEmail= function (req, res) {
     const output = `
         <p>You have new contact request</p>
         <h3>Contact Detail</h3>
@@ -87,9 +153,9 @@ router.post('/tour-booking', jsonParser, function (req, res) {
     .catch(error => console.log('error: ', error))
 
     res.send('UPDATE COMPLETED')
-})
+};
 
-router.post('/car-booking', jsonParser, function (req, res) {
+module.exports.sendCarBookingEmail=function (req, res) {
     const output = `
         <p>You have new contact request</p>
         <h3>Contact Detail</h3>
@@ -115,7 +181,8 @@ router.post('/car-booking', jsonParser, function (req, res) {
     .catch(error => console.log('error: ', error))
 
     res.send('UPDATE COMPLETED')
-})
+};
+
 
 
 function uniqeNumber (){
@@ -137,4 +204,4 @@ function uniqeNumber (){
         return current.currentCode;
     }
 }
-module.exports = router
+

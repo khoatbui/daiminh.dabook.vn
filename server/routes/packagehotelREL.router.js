@@ -24,11 +24,7 @@ router.post('/insert', jsonParser, controller.insertPackageHotelREL)
 
 router.post('/update/:_id', jsonParser, controller.updatePackageHotelREL)
 
-router.get('/combobox/package-by-hotel-roomtype/hotel/:hotelId/roomType/:roomTypeId',(req,res,next) => {
-    res.send(db.get('packageHotelREL')
-    .filter({ hotelId: req.params.hotelId })
-    .filter({ roomTypeId: req.params.roomTypeId }).value());
-})
+router.get('/combobox/packagebyhotelroomtype/hotel/:hotelId/roomType/:roomTypeId',controller.getPackageByHotelRoomType)
 router.get('/price/hotel/:hotelId/roomType/:roomTypeId/package/:packageId',(req,res,next) => {
     console.log(req.params);
     res.send(db.get('packageHotelREL')
