@@ -8,126 +8,128 @@ moment().format();
 
 // =======================
 var emailInfo = {
-    emailId: 'contact@daiminhtravel.com',
-    emailPass: 'daiminhmd2383'
+  emailId: 'contact@daiminhtravel.com',
+  emailPass: 'daiminhmd2383'
 }
 var transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.SYSTEM_EMAIL,
-        pass: process.env.SYSTEM_PASS
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.SYSTEM_EMAIL,
+    pass: process.env.SYSTEM_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 var current = {
-    currentCode: 0,
-    currentDate: 6
+  currentCode: 0,
+  currentDate: 6
 };
 // ========================================
 module.exports.index = function (req, res) {
-    Mail.find().populate('supplierId').populate('hotelId').populate('roomTypeId').populate('packageId').then(function (package) {
-        console.log(package);
-        res.send(package)
-    })
+  Mail.find().populate('supplierId').populate('hotelId').populate('roomTypeId').populate('packageId').then(function (package) {
+    console.log(package);
+    res.send(package)
+  })
 };
 
 module.exports.getMail = (req, res, next) => {
-    Mail.find().then(function (package) {
-        res.send(package)
-    })
+  Mail.find().then(function (package) {
+    res.send(package)
+  })
 };
 
 module.exports.deleteMail = function (req, res) {
-    console.log(req.params._id);
-    Mail.deleteOne({ _id: req.params._id }, function (err) {
-        if (!err) {
-            res.send('SUCCESS')
-        }
-        else {
-            res.send('ERROR')
-        }
-    });
+  console.log(req.params._id);
+  Mail.deleteOne({ _id: req.params._id }, function (err) {
+    if (!err) {
+      res.send('SUCCESS')
+    }
+    else {
+      res.send('ERROR')
+    }
+  });
 };
 
 module.exports.insertMail = function (req, res) {
-    req.body.createDate = new Date();
-    delete req.body.modifyBy;
+  req.body.createDate = new Date();
+  delete req.body.modifyBy;
 
-    Mail.create(req.body, function (err, package) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.send(package)
-        }
-    })
+  Mail.create(req.body, function (err, package) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send(package)
+    }
+  })
 };
 
 module.exports.updateMail = function (req, res) {
-    req.body.modifyDate = new Date();
-    delete req.body.createBy;
-    Mail.updateOne({ _id: req.params._id }, { $set: req.body }, (err, package) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send(err);
-        } else {
-            console.log(package);
+  req.body.modifyDate = new Date();
+  delete req.body.createBy;
+  Mail.updateOne({ _id: req.params._id }, { $set: req.body }, (err, package) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send(err);
+    } else {
+      console.log(package);
 
-            res.status(200).send(package);
-        }
-    });
+      res.status(200).send(package);
+    }
+  });
 };
 
 module.exports.getPackageByHotelRoomType = (req, res, next) => {
-    console.log(req.params.hotelId);
-    console.log(req.params.roomTypeId);
-    Mail.find({ "hotelId": req.params.hotelId, "roomTypeId": req.params.roomTypeId }).populate('packageId').then(function (pac) {
-        console.log(pac);
-        res.send(pac)
-    })
+  console.log(req.params.hotelId);
+  console.log(req.params.roomTypeId);
+  Mail.find({ "hotelId": req.params.hotelId, "roomTypeId": req.params.roomTypeId }).populate('packageId').then(function (pac) {
+    console.log(pac);
+    res.send(pac)
+  })
 };
 
 module.exports.getPriceByService = (req, res, next) => {
-    Mail.find({ "hotelId": req.params.hotelId, "roomTypeId": req.params.roomTypeId }).populate('packageId').then(function (pac) {
-        console.log(pac);
-        res.send(pac)
-    })
+  Mail.find({ "hotelId": req.params.hotelId, "roomTypeId": req.params.roomTypeId }).populate('packageId').then(function (pac) {
+    console.log(pac);
+    res.send(pac)
+  })
 };
 
 module.exports.sendHotelBookingEmail = function (req, res) {
-    const transactionCode = req.body.packageCode + moment().format('YYMM') + uniqeNumber();
+  const transactionCode = req.body.packageCode + moment().format('YYMM') + uniqeNumber();
 
-    const strCustomerSubject = `[DAIMINH-TRAVEL] Order confirmation ${transactionCode}`;
-    const strEmployeeeSubject = `[HOTEL-${transactionCode}] Sale confirmation : ${req.body.name} | ${req.body.phone}`;
-    const outputCustomer = generateCustomoerHotelConfirm(req.body,transactionCode);
-    const outputStaff = generateStaffHotelConfirm(req.body,transactionCode);
-    let Cusinfo = transporter.sendMail({
-        from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`, // sender address
-        to: req.body.email, // list of receivers
-        subject: strCustomerSubject, // Subject line
-        text: "Hello world?", // plain text body
-        html: outputCustomer // html body
-    }).then(success => console.log('success: ', success))
-        .catch(error => console.log('error: ', error))
+  const strCustomerSubject = `[DAIMINH-TRAVEL] Order confirmation ${transactionCode}`;
+  const strEmployeeeSubject = `[HOTEL-${transactionCode}] Sale confirmation : ${req.body.name} | ${req.body.phone}`;
 
-    let Empinfo = transporter.sendMail({
-        from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`, // sender address
-        to: process.env.HOTEL_CUSTOMER_MAIL_TO, // list of receivers
-        subject: strEmployeeeSubject, // Subject line
-        text: "Hello world?", // plain text body
-        html: outputStaff // html body
-    }).then(success => console.log('success: ', success))
-        .catch(error => console.log('error: ', error))
+  const outputCustomer = generateCustomerHotelConfirm(req.body, transactionCode);
+  const outputStaff = generateStaffHotelConfirm(req.body, transactionCode);
 
-    res.send(transactionCode)
+  let Cusinfo = transporter.sendMail({
+    from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`,
+    to: req.body.email,
+    subject: strCustomerSubject,
+    text: "Hello world?",
+    html: outputCustomer
+  }).then(success => console.log('success: ', success))
+    .catch(error => console.log('error: ', error))
+
+  let Empinfo = transporter.sendMail({
+    from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`,
+    to: process.env.HOTEL_CUSTOMER_MAIL_TO,
+    subject: strEmployeeeSubject,
+    text: "Hello world?",
+    html: outputStaff
+  }).then(success => console.log('success: ', success))
+    .catch(error => console.log('error: ', error))
+
+  res.send(transactionCode)
 };
 
 module.exports.sendTourBookingEmail = function (req, res) {
-    const output = `
+  const output = `
         <p>You have new contact request</p>
         <h3>Contact Detail</h3>
         <ul>
@@ -140,32 +142,32 @@ module.exports.sendTourBookingEmail = function (req, res) {
         <h3>Message</h3>
         <p>${req.body.message}</p>
     `;
-    const strCustomerSubject = `[DAIMINH-TRAVEL] Xac nhan don hang ${transactionCode}`;
-    const strEmployeeeSubject = `[HOTEL-${transactionCode}] Sale confirmation : ${req.body.name} | ${req.body.phone}`;
+  const strCustomerSubject = `[DAIMINH-TRAVEL] Xac nhan don hang ${transactionCode}`;
+  const strEmployeeeSubject = `[HOTEL-${transactionCode}] Sale confirmation : ${req.body.name} | ${req.body.phone}`;
 
-    let Cusinfo = transporter.sendMail({
-        from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`, // sender address
-        to: req.body.email, // list of receivers
-        subject: strCustomerSubject, // Subject line
-        text: "Hello world?", // plain text body
-        html: output // html body
-    }).then(success => console.log('success: ', success))
-        .catch(error => console.log('error: ', error))
+  let Cusinfo = transporter.sendMail({
+    from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`, // sender address
+    to: req.body.email, // list of receivers
+    subject: strCustomerSubject, // Subject line
+    text: "Hello world?", // plain text body
+    html: output // html body
+  }).then(success => console.log('success: ', success))
+    .catch(error => console.log('error: ', error))
 
-    let Empinfo = transporter.sendMail({
-        from:`"daiminh.dabook.vn" <${emailInfo.emailId}>`, // sender address
-        to: process.env.TOUR_CUSTOMER_MAIL_TO, // list of receivers
-        subject: strEmployeeeSubject, // Subject line
-        text: "Hello world?", // plain text body
-        html: output // html body
-    }).then(success => console.log('success: ', success))
-        .catch(error => console.log('error: ', error))
+  let Empinfo = transporter.sendMail({
+    from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`, // sender address
+    to: process.env.TOUR_CUSTOMER_MAIL_TO, // list of receivers
+    subject: strEmployeeeSubject, // Subject line
+    text: "Hello world?", // plain text body
+    html: output // html body
+  }).then(success => console.log('success: ', success))
+    .catch(error => console.log('error: ', error))
 
-    res.send(transactionCode)
+  res.send(transactionCode)
 };
 
 module.exports.sendCarBookingEmail = function (req, res) {
-    const output = `
+  const output = `
         <p>You have new contact request</p>
         <h3>Contact Detail</h3>
         <ul>
@@ -178,43 +180,43 @@ module.exports.sendCarBookingEmail = function (req, res) {
         <h3>Message</h3>
         <p>${req.body.message}</p>
     `;
-    const strsubject = `[CAR-${req.body.carId}]  Yeu cau tu khach hang ${req.body.name} / ${req.body.phone}`;
+  const strsubject = `[CAR-${req.body.carId}]  Yeu cau tu khach hang ${req.body.name} / ${req.body.phone}`;
 
-    let info = transporter.sendMail({
-        from: '"daiminh.dabook.vn" <sysadmin@dabook.vn>', // sender address
-        to: "khoatbui.dev@gmail.com", // list of receivers
-        subject: strsubject, // Subject line
-        text: "Hello world?", // plain text body
-        html: output // html body
-    }).then(success => console.log('success: ', success))
-        .catch(error => console.log('error: ', error))
+  let info = transporter.sendMail({
+    from: '"daiminh.dabook.vn" <sysadmin@dabook.vn>', // sender address
+    to: "khoatbui.dev@gmail.com", // list of receivers
+    subject: strsubject, // Subject line
+    text: "Hello world?", // plain text body
+    html: output // html body
+  }).then(success => console.log('success: ', success))
+    .catch(error => console.log('error: ', error))
 
-    res.send('UPDATE COMPLETED')
+  res.send('UPDATE COMPLETED')
 };
 
 
 
 function uniqeNumber() {
-    if (current.currentDate == moment().get('date')) {
-        current.currentCode++;
-    }
-    else {
-        current.currentCode = 0;
-        current.currentDate = moment().get('date');
-    }
-    if (parseInt(current.currentCode) < 10) {
-        return '00' + current.currentCode;
-    }
-    else if (parseInt(current.currentCode) < 100) {
-        return '0' + current.currentCode;
-    }
-    else {
-        return current.currentCode;
-    }
+  if (current.currentDate == moment().get('date')) {
+    current.currentCode++;
+  }
+  else {
+    current.currentCode = 0;
+    current.currentDate = moment().get('date');
+  }
+  if (parseInt(current.currentCode) < 10) {
+    return '00' + current.currentCode;
+  }
+  else if (parseInt(current.currentCode) < 100) {
+    return '0' + current.currentCode;
+  }
+  else {
+    return current.currentCode;
+  }
 }
 
-function generateStaffHotelConfirm(reqBody,transactionCode){
-  var template=`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+function generateStaffHotelConfirm(reqBody, transactionCode) {
+  var template = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">
   
   <head>
@@ -536,7 +538,7 @@ function generateStaffHotelConfirm(reqBody,transactionCode){
                           <tr class="order-summary" style="border-bottom: 1px solid #7B6972; color: #7B6972; font-weight: bold; padding: 10px; padding-bottom: 20px; text-align: left; vertical-align: top;">
                             <th class="small-12 large-6 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 274px;">
                               <div class="left-order-summary" style="color: #7B6972; flex-grow: 1; flex-shrink: 1; font-weight: bold; padding: 0 8px; text-align: left;">
-                                Order #: <a href="#" class="link-button" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;"> ${transactionCode} </a>
+                                Order #: <a href="http://daiminh.dabook.vn/function/order-result.html/${transactionCode}" class="link-button" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;"> ${transactionCode} </a>
                               </div>
                             </th>
                             <th class="small-12 large-6 last columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 16px; text-align: left; width: 274px;">
@@ -556,9 +558,9 @@ function generateStaffHotelConfirm(reqBody,transactionCode){
                           <tr style="padding: 0; text-align: left; vertical-align: top;">
                             <th class="small-12 large-6 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 274px;">
                               <div class="section">
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Dear Mr(Ms). ${reqBody.name},</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Thank you very much for your Request: Code:${transactionCode}</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Dai Minh Travel proud to assist you through your upcoming journey as per your request details:</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Đơn hàng từ khách hàng ${reqBody.name}</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Mã đơn hàng:${transactionCode}</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Vui lòng kiểm tra thông tin chi tiết bên dưới</p>
                               </div>
                             </th>
                           </tr>
@@ -676,7 +678,7 @@ function generateStaffHotelConfirm(reqBody,transactionCode){
                   </tr>
                   <tr style="padding: 0; text-align: left; vertical-align: top;">
                     <td class="padding" style="-moz-hyphens: auto; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; hyphens: auto; line-height: 1.3; margin: 0; padding: 10px; text-align: left; vertical-align: top; word-wrap: break-word;">
-                      <h5 style="Margin: 0; Margin-bottom: 10px; color: inherit; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 0; text-align: left; word-wrap: normal;">Please be noticed that:</h5>
+                      <h5 style="Margin: 0; Margin-bottom: 10px; color: inherit; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 0; text-align: left; word-wrap: normal;padding-left:20px">Lưu ý:</h5>
                       <table class="row border-top" style="border-collapse: collapse; border-spacing: 0; border-top: 1px solid #7B6972; display: table; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%;">
                         <tbody>
                           <tr class="small-12 large-12 columns" style="padding: 0; text-align: left; vertical-align: top;">
@@ -685,11 +687,10 @@ function generateStaffHotelConfirm(reqBody,transactionCode){
                           <tr class="row-border paragraph" style="border-bottom: 1px solid #dee2e6; font-size: 12px; line-height: 1.7em; padding: 10px; text-align: left; vertical-align: top;">
                             <th class="small-12 large-12  columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 564px;">
                               <ul>
-                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Following the Laws of Vietnam, all products have to be tagged in VND – Vietnam Dong. To Check the PRICE on your currency please clink here <a class="link-button" href="https://www.vietcombank.com.vn/ExchangeRates/Converter.aspx?lang=en"
-                                    target="_blank" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;">USD CONVERT
-                                    TO VND</a></li>
-                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Within the next 1 hours, there will be One email sent from Dai Minh Travel to guide you on the Reconfirmation and Payment to Complete your Request.</li>
-                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Please spend sometimes to review our <a class="link-button" href="http://daiminh.dabook.vn/function/legal.html" target="_blank" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;">Privacy Policy | Term of use </a>                                </li>
+                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Vui lòng xác nhận lại thông tin với khách hàng trong vòng 1 tiếng</li>
+                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Sau khi đơn hàng hoàn tất, vui lòng cập nhập trạng thái đơn hàng tại 
+                                <a href="http://admin.dabook.vn/hotel-order/${transactionCode}" class="link-button" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;"> Hoàn tất đơn hàng(admin.dabook.vn) </a>
+                                </li>
                               </ul>
                             </th>
                           </tr>
@@ -703,29 +704,11 @@ function generateStaffHotelConfirm(reqBody,transactionCode){
                       <table class="row" style="border-collapse: collapse; border-spacing: 0; display: table; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%;">
                         <tbody>
                           <tr class="row-border paragraph" style="border-bottom: 1px solid #dee2e6; font-size: 12px; line-height: 1.7em; padding: 10px; text-align: left; vertical-align: top;">
-                            <th class="small-12 large-12  columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 564px;">
-                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Dai Minh is looking forward to serving you soon,</p>
-                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Wish you a pleasant journey,</p>
-                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Best Regards,</p>
-                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Reservation Department</p>
-                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Dai Minh Travel </p>
-                            </th>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr style="padding: 0; text-align: left; vertical-align: top;">
-  
-                    <td class="padding" style="-moz-hyphens: auto; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; hyphens: auto; line-height: 1.3; margin: 0; padding: 10px; text-align: left; vertical-align: top; word-wrap: break-word;">
-                      <table class="row" style="border-collapse: collapse; border-spacing: 0; display: table; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%;">
-                        <tbody>
-                          <tr class="row-border paragraph" style="border-bottom: 1px solid #dee2e6; font-size: 12px; line-height: 1.7em; padding: 10px; text-align: left; vertical-align: top;">
                             <th class="small-12 large-6 columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: right; width: 274px;">
-                              <span class="footer-item " style="font-size: 12px; line-height: 1.7em;"><a href="tel:19001542" class="footer-item-contact border-right" style="Margin: 0; border-right: 1px solid #50C0C0; color: #50C0C0; font-family: Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: bold; line-height: 1.3; margin: 0; padding: 10px; text-align: left; text-decoration: none;"><i class="fas fa-headset"></i> 19001542</a> </span>
+                              <span class="footer-item " style="font-size: 12px; line-height: 1.7em;"><a href="tel:19001542" class="footer-item-contact border-right" style="Margin: 0; border-right: 1px solid #50C0C0; color: #50C0C0; font-family: Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: bold; line-height: 1.3; margin: 0; padding: 10px; text-align: left; text-decoration: none;"><i class="fas fa-headset"></i>Support:19001542</a> </span>
                             </th>
-                            <th class="small-12 large-6  columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 274px;"><span class="footer-item" style="font-size: 12px; line-height: 1.7em;"><a class="footer-item-contact" href="mailto:nhungbt@daiminhtravel.com" style="Margin: 0; color: #50C0C0; font-family: Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: bold; line-height: 1.3; margin: 0; padding: 10px; text-align: left; text-decoration: none;"><i class="far fa-envelope"></i>
-                                nhungbt@daiminhtravel.com</a></span>
+                            <th class="small-12 large-6  columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 274px;"><span class="footer-item" style="font-size: 12px; line-height: 1.7em;"><a class="footer-item-contact" href="mailto:sysadmin@dabook.vn" style="Margin: 0; color: #50C0C0; font-family: Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: bold; line-height: 1.3; margin: 0; padding: 10px; text-align: left; text-decoration: none;"><i class="far fa-envelope"></i>
+                                IMG : sysadmin@dabook.vn</a></span>
                             </th>
                           </tr>
                         </tbody>
@@ -746,8 +729,8 @@ function generateStaffHotelConfirm(reqBody,transactionCode){
   </html>`;
   return template;
 }
-function generateCustomoerHotelConfirm(reqBody,transactionCode){
-  var template=`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+function generateCustomerHotelConfirm(reqBody, transactionCode) {
+  var template = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">
   
   <head>
@@ -1081,12 +1064,12 @@ function generateCustomoerHotelConfirm(reqBody,transactionCode){
                           <tr class="order-summary" style="border-bottom: 1px solid #7B6972; color: #7B6972; font-weight: bold; padding: 10px; padding-bottom: 20px; text-align: left; vertical-align: top;">
                             <th class="small-12 large-6 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 274px;">
                               <div class="left-order-summary " style="color: #7B6972; flex-grow: 1; flex-shrink: 1; font-weight: bold; padding: 0 8px; text-align: left;">
-                                Order #: <a href="#" class="link-button" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;"> ${transactionCode} </a>
+                                Order #: <a href="http://daiminh.dabook.vn/function/order-result/${transactionCode}" class="link-button" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;"> ${transactionCode} </a>
                               </div>
                             </th>
                             <th class="small-12 large-6 last columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 16px; text-align: left; width: 274px;">
                               <div class="right-order-summary" style="color: #7B6972; flex-grow: 1; flex-shrink: 1; font-weight: bold; padding: 0 8px; text-align: right;">
-                                Order Date: 10/06/2019
+                                Order Date: ${moment(new Date()).format("YYYY-MM-DD HH:mm:ss")}
                               </div>
                             </th>
                           </tr>
@@ -1101,7 +1084,7 @@ function generateCustomoerHotelConfirm(reqBody,transactionCode){
                           <tr style="padding: 0; text-align: left; vertical-align: top;">
                             <th class="small-12 large-6 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 274px;">
                               <div class="section" style="padding: 10px;">
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Dear Mr(Ms). ${reqBody.name},</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;Margin:0;Margin-bottom:10px;color:#7b6972;font-family:Helvetica,Arial,sans-serif;font-size:18px;font-weight:normal;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">Dear Mr(Ms). ${reqBody.name},</p>
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Thank you very much for your request</p>
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">DaiMinh Travel's staff is checking the availibility of services as per your request</p>
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Within the next 6 hours, DaiMinh Travel's staff will email you for detail information / reconfirmation and so on</p>
@@ -1141,9 +1124,8 @@ function generateCustomoerHotelConfirm(reqBody,transactionCode){
                           <tr class="row-border paragraph" style="border-bottom: 1px solid #dee2e6; font-size: 12px; line-height: 1.7em; padding: 20px; text-align: left; vertical-align: top;">
                             <th class="small-12 large-12  columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 564px;">
                               <ul>
-                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Following the Laws of Vietnam, all products have to be tagged in VND – Vietnam Dong. To Check the PRICE on your currency please clink here <a class="link-button" href="https://www.vietcombank.com.vn/ExchangeRates/Converter.aspx?lang=en"
-                                    target="_blank" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;">USD CONVERT
-                                                          TO VND</a></li>
+                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Following the Laws of Vietnam, all products have to be tagged in VND – Vietnam Dong. To Check the PRICE on your currency please clink here <a class="link-button" href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=USD&To=VND"
+                                    target="_blank" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;">USD convert to VND</a></li>
                                 <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Please spend sometimes to review our <a class="link-button" href="http://daiminh.dabook.vn/function/legal.html" target="_blank" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;">Privacy Policy | Term of use </a>                                </li>
                               </ul>
                             </th>
