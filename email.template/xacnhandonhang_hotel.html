@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/43094bff7d.js"></script>
+    <link rel="stylesheet" href="css/foundation-emails.css" />
+    <style>
+        .body {
+            width: 100%;
+            height: 100%;
+            background-color: #50C0C0 !important;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .container-body {
+            font-family: 'Roboto', sans-serif !important;
+            margin: 10px auto !important;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.14);
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .body-section {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            font-size: 12px;
+            position: relative;
+        }
+
+        .thankyou-title {
+            color: #50C0C0;
+            text-transform: uppercase;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .order-summary {
+            padding: 10px;
+            color: #7B6972;
+            font-weight: bold;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #7B6972;
+        }
+
+        .left-order-summary {
+            color: #7B6972;
+            font-weight: bold;
+            flex-shrink: 1;
+            flex-grow: 1;
+            padding: 0 8px;
+            text-align: left;
+        }
+
+        .right-order-summary {
+            color: #7B6972;
+            font-weight: bold;
+            flex-shrink: 1;
+            flex-grow: 1;
+            padding: 0 8px;
+            text-align: right;
+        }
+
+        .header-section {
+            background-color: #50C0C0;
+            padding: 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            height: 30px;
+            box-sizing: border-box;
+            border: 2px solid #50C0C0;
+            font-size: 1rem;
+            color: #FFF;
+            margin: 0
+        }
+
+        .padding {
+            padding: 10px;
+        }
+
+        .row-border {
+            border-bottom: 1px solid #dee2e6;
+            padding: 20px;
+        }
+
+        .col-1 {
+            padding: 0 8px;
+            font-weight: bold;
+            border-right: 1px dashed #dee2e6;
+        }
+
+        .col-2 {
+            padding: 0 8px;
+        }
+
+        .border-right {
+            border-right: 1px solid #50C0C0;
+        }
+
+        .paragraph {
+            font-size: 12px;
+            line-height: 1.7em;
+        }
+
+        .link-button,
+        .link-button:active,
+        .link-button:focus {
+            background-color: #5d4a8e !important;
+            color: #FFF !important;
+            padding: 2px 4px;
+            border-radius: 4px;
+            margin: 4px;
+            box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.14);
+            text-decoration: none;
+        }
+
+        .border-top {
+            border-top: 1px solid #7B6972;
+        }
+
+        .footer-item {
+            font-size: 12px;
+            line-height: 1.7em;
+        }
+
+        .footer-item-contact {
+            color: #50C0C0;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .ribbon {
+            text-align: center;
+            display: block;
+            width: 100px;
+            height: 60px;
+            background: #e91e63 !important;
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            color: #FFF;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.14);
+        }
+
+        .ribbon:after {
+            content: "";
+            display: block;
+            position: relative;
+            top: 0px;
+            width: 0;
+            height: 0;
+            border-width: 30px 50px 50px 50px;
+            border-style: solid;
+            border-color: #e91e63 #e91e63 transparent #e91e63;
+        }
+
+        .status-notice {
+            background: #e91e63 !important;
+            color: #FFF;
+            font-weight: bold;
+            border-radius: 10px;
+            display: inline-block;
+            font-size: 1rem;
+            padding: 0;
+            box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.14);
+        }
+        .ticket-order{
+            margin: 0;
+            padding: 30px;
+            border-right: 3px dashed #FFF;
+        }
+        .ticket-status{
+            margin: 0;
+            padding: 30px;
+        }
+
+        .section {
+            padding: 10px;
+        }
+
+        .center-element {
+            padding: 30px 0;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .logo-img {
+            width: 160px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <style> -->
+    <table class="body" data-made-with-foundation>
+
+        <tr class="">
+            <td class="float-center" align="center" valign="top">
+                <center>
+                    <table class="container container-body">
+                        <!-- <tr>
+                            <td class="padding">
+                                <table class="row">
+                                    <tr style="text-align: center">
+                                        <th class="order-status ribbon">
+                                            STATUS : CHECKING SERVICE'S AVAILABILITY
+                                        </th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <td class="padding">
+                                <table class="row">
+                                    <tr style="text-align: center">
+                                        <th class="small-6 large-6 columns center-element"
+                                            style="text-align: center;display: inline-block;">
+                                            <img class="logo-img" src="http://daiminh.dabook.vn/img/new_logo.jpg"
+                                                alt="">
+                                        </th>
+                                        <th class="small-6 large-6 columns center-element"
+                                            style="text-align: center;display: inline-block;">
+                                            <img class="logo-img" src="http://daiminh.dabook.vn/img/logo dabook.png"
+                                                alt="">
+                                        </th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="padding">
+                                <table class="row">
+                                    <tr>
+                                        <th class="small-12 large-12 columns">
+                                            <h3 class="thankyou-title">Thank you for choosing DaiMinh Travel</h3>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="padding">
+                                <table class="row">
+                                    <tr class="order-summary">
+                                        <th class="small-12 large-6 first columns">
+                                            <div class="left-order-summary ">
+                                                Order #: <a href="#" class="link-button"> FLC05392029404 </a>
+                                            </div>
+                                        </th>
+                                        <th class="small-12 large-6 last columns">
+                                            <div class="right-order-summary">
+                                                Order Date: 10/06/2019
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="padding">
+                                <table class="row">
+                                    <tr>
+                                        <th class="small-12 large-6 first columns">
+                                            <div class="section">
+                                                <p class="paragraph">Dear Mr. James Anderson,</p>
+                                                <p class="paragraph">Thank you very much for your request</p>
+                                                <p class="paragraph">DaiMinh Travel's staff is checking the availibility
+                                                    of services as per your request</p>
+                                                <p class="paragraph">Within the next 6 hours, DaiMinh Travel's staff
+                                                    will email you for detail information / reconfirmation and so on</p>
+                                                <p class="paragraph">Please wait and check your email then</p>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="padding">
+                                <table class="row">
+                                    <tr>
+                                        <th class="small-12 large-12 columns" style="text-align: center">
+                                            <div class="status-notice">
+                                                <h5 class="ticket-order" style="display: inline-block"> Order #: <b>FLC05392029404</b></h5>
+                                                <h5 class="ticket-status" style="display: inline-block">Status # :<b> CHECKING SERVICE'S AVAILABILITY</b></h5>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="padding">
+                                <table class="row border-top">
+                                    <tr class="small-12 large-12 columns">
+                                        <h6 style="padding-left: 20px; color:#7B6972">Please be noticed that:</h6>
+                                    </tr>
+                                    <tr class="row-border paragraph">
+                                        <th class="small-12 large-12  columns">
+                                            <ul>
+                                                <li class="paragraph">Following the Laws of Vietnam, all products have
+                                                    to be tagged in VND –
+                                                    Vietnam Dong. To
+                                                    Check
+                                                    the PRICE on your currency please clink here <a class="link-button"
+                                                        href="https://www.vietcombank.com.vn/ExchangeRates/Converter.aspx?lang=en"
+                                                        target="_blank">USD CONVERT
+                                                        TO VND</a></li>
+                                                <li class="paragraph">Please spend sometimes to review our <a
+                                                        class="link-button"
+                                                        href="http://daiminh.dabook.vn/function/legal.html"
+                                                        target="_blank">Privacy Policy | Term of use </a> </li>
+                                            </ul>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="padding">
+                                <table class="row ">
+                                    <tr class="row-border paragraph">
+                                        <th class="small-12 large-12  columns" style="padding-left: 20px;">
+                                            <p class="paragraph">Dai Minh is looking forward to serving you soon,</p>
+                                            <p class="paragraph">Wish you a pleasant journey,</p>
+                                            <p class="paragraph">Best Regards,</p>
+                                            <p class="paragraph">Reservation Department</p>
+                                            <p class="paragraph">Dai Minh Travel </p>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="padding">
+                                <table class="row">
+                                    <tr class="row-border paragraph">
+                                        <th class="small-12 large-6  columns" style="text-align: right">
+                                            <span class="footer-item "><a href="tel:19001542"
+                                                    class="footer-item-contact border-right"><i
+                                                        class="fas fa-headset"></i></i> 19001542</a> </span>
+                                        </th>
+                                        <th class="small-12 large-6  columns" style="text-align: left"><span
+                                                class="footer-item"><a class="footer-item-contact"
+                                                    href="mailto:nhungbt@daiminhtravel.com"><i
+                                                        class="far fa-envelope"></i>
+                                                    nhungbt@daiminhtravel.com</a></span>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

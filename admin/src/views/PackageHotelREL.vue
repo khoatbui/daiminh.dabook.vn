@@ -51,6 +51,16 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.packageId"
+                      :items="packages"
+                      item-text="packageName"
+                      item-value="_id"
+                      v-bind:class="{ disabled: disableSelect }"
+                      label="Package"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
                     <v-menu
                       v-model="menu1"
                       :close-on-content-click="false"
@@ -99,12 +109,26 @@
                   <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
-                      :rules="[() => editedItem.price.toString().length > 0 || 'Required field']"
+                      :rules="rule.priceRule"
                       v-model="editedItem.price"
-                      label="Price"
+                      label="Base Price"
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
+                    <v-text-field
+                      required
+                      v-model="editedItem.markUpPlus"
+                      label="Mark up (+) | Example: 50000 | Min 50000"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field
+                      required
+                      v-model="editedItem.markUpPercent"
+                      label="Mark up(%) | Example: 30 | Min : 3%"
+                    ></v-text-field>
+                  </v-flex>
+                   <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.lang"
                       :items="language"
@@ -119,7 +143,6 @@
                 </v-layout>
               </v-container>
             </v-card-text>
-
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
@@ -137,7 +160,7 @@
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
           <td>{{ props.item._id }}</td>
-          <td>
+          <td style="width:100px">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <span v-on="on">{{ props.item.supplierId.supplierName }}</span>
@@ -153,7 +176,7 @@
               <span>{{ props.item.hotelId.hotelName }}</span>
             </v-tooltip>
           </td>
-           <td>
+          <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <span v-on="on">{{ props.item.roomTypeId.roomTypeName }}</span>
@@ -170,6 +193,8 @@
             </v-tooltip>
           </td>
           <td>{{ props.item.price }}</td>
+          <td>{{ props.item.markUpPlus }}</td>
+          <td>{{ props.item.markUpPercent }}</td>
           <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
@@ -178,7 +203,7 @@
               <span>{{ props.item.startDate }}</span>
             </v-tooltip>
           </td>
-           <td>
+          <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <span v-on="on">{{ props.item.endDate }}</span>
@@ -203,7 +228,8 @@
   </div>
 </template>
 <script>
-var apiIP = process.env.VUE_APP_API_IPADDRESS
+var apiIP = process.env.VUE_APP_API_IPADDRESS;
+console.log( process.env.VUE_APP_API_DEFAULT_MARKUP)
 import axios from "axios";
 import moment from "moment";
 const AXIOS = axios.create({
@@ -233,6 +259,8 @@ export default {
       { text: "Room Type", value: "roomTypeId" },
       { text: "Package", value: "packageId" },
       { text: "Price", value: "price" },
+      { text: "MarkUp(+)", value: "markUpPlus" },
+      { text: "MarkUp(%)", value: "markUpPercent" },
       { text: "StartDate", value: "startDate" },
       { text: "EndDate", value: "endDate" },
       { text: "Language", value: "lang" },
@@ -245,6 +273,23 @@ export default {
     hotel: [],
     packages: [],
     packagesHotelREL: [],
+    rule:{
+    markUpPlusRule: [
+      // v => (v.toString().length > 0) || "Required field",
+      // v => /^\d+$/.test(v) || "Only accept number",
+      // v => parseInt(v) >= 50000 ||( "Minimum = 50.000 VND")
+    ],
+    markUpPercentRule: [
+      // v => v.toString().length > 0 || "Required field",
+      // v => /^$|^\d+$/.test(v) || "Only accept number",
+      // v => parseInt(v) >= 3 || "Minimum = 3%"
+    ],
+    priceRule: [
+      v => v.toString().length > 0 || "Required field",
+      v => /^\d+$/.test(v) || "Only accept number",
+      v => parseInt(v) >= 1 || "Minimum = 1"
+    ]
+    },
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
@@ -261,6 +306,8 @@ export default {
       roomTypeId: "",
       packageId: "",
       price: 10000000,
+      markUpPercent: 10,
+      markUpPlus: 50000,
       lang: "EN",
       isUsed: true,
       createBy: "",
@@ -274,6 +321,8 @@ export default {
       roomTypeId: "",
       packageId: "",
       price: 10000000,
+      markUpPercent: 10,
+      markUpPlus: 50000,
       lang: "EN",
       isUsed: true,
       createBy: "",
@@ -343,14 +392,18 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.roomtype.indexOf(item);
+      this.editedIndex = this.packagesHotelREL.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.editedItem.supplierId = item.supplierId._id;
       this.editedItem.hotelId = item.hotelId._id;
       this.editedItem.roomTypeId = item.roomTypeId._id;
       this.editedItem.packageId = item.packageId._id;
-      this.editedItem.startDate = moment(item.startDate).utc().format("YYYY-MM-DD");
-      this.editedItem.endDate = moment(item.endDate).utc().format("YYYY-MM-DD");
+      this.editedItem.startDate = moment(item.startDate)
+        .utc()
+        .format("YYYY-MM-DD");
+      this.editedItem.endDate = moment(item.endDate)
+        .utc()
+        .format("YYYY-MM-DD");
       this.disableSelect = true;
       this.dialog = true;
       delete this.editedItem._id;
@@ -382,6 +435,10 @@ export default {
       console.log(this.editedItem);
       this.editedItem.modifyBy = this.user.userName;
       this.editedItem.createBy = this.user.userName;
+      if (this.editedItem.markUpPlus.toString().length <= 0 && this.editedItem.markUpPercent.toString().length <= 0) {
+        this.editedItem.markUpPercent = process.env.VUE_APP_API_DEFAULT_MARKUP;
+        // IMPORTANT
+      }
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(

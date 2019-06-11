@@ -1,5 +1,5 @@
 //http://103.237.144.222:3000
-const apiUrl = 'http://103.237.144.222:3000';
+const apiUrl = 'http://localhost:3001';
 
 // Now the app has started!
 const AXIOS = axios.create({
@@ -48,12 +48,14 @@ var app = new Vue({
       roomTypeName: "RoomType...",
       packageId: "",
       packageName: "Service package ...",
+      packageCode:"",
       optionServiceId: "",
       optionServiceName: "(Option) Another Service...",
       name: "",
       email: "",
       phone: "",
-      other: ""
+      other: "",
+      totalPrice:""
     },
     flcHotels: [],
     vinHotels: [],
@@ -171,7 +173,6 @@ var app = new Vue({
     getFlcRoomTypeByHotel() {
       AXIOS.get(apiUrl + `/roomtype/combobox/roomtype/${this.bookingrequest.hotelId}`, { crossdomain: true })
         .then((response) => {
-          console.log(response.data);
           this.flcroomTypes = response.data;
         })
         .catch((error) => {
@@ -186,7 +187,6 @@ var app = new Vue({
           this.vinroomTypes = response.data;
         })
         .catch((error) => {
-          console.log(error);
         })
         .finally(() => {
         });
@@ -194,7 +194,6 @@ var app = new Vue({
     getVinPackageByHotel() {
       AXIOS.get(apiUrl + `/packagehotelrel/combobox/packagebyhotelroomtype/hotel/${this.bookingrequest.hotelId}/roomType/${this.bookingrequest.roomTypeId}`, { crossdomain: true })
         .then((response) => {
-          console.log(response.data[0].packageId.packageName);
           this.vinPackage = response.data;
         })
         .catch((error) => {
@@ -204,8 +203,6 @@ var app = new Vue({
         });
     },
     getFlcPackageByHotel() {
-      console.log(this.bookingrequest.hotelId);
-      console.log(this.bookingrequest.roomTypeId);
 
       AXIOS.get(apiUrl + `/packagehotelrel/combobox/packagebyhotelroomtype/hotel/${this.bookingrequest.hotelId}/roomType/${this.bookingrequest.roomTypeId}`, { crossdomain: true })
         .then((response) => {
@@ -221,12 +218,13 @@ var app = new Vue({
     changePackageCombobox(package) {
       this.bookingrequest.packageId = package.packageId._id;
       this.bookingrequest.packageName = package.packageId.packageName;
+      this.bookingrequest.packageCode = package.packageId.packageCode;
       this.bookingrequest.price = package.price;
+      console.log(this.bookingrequest);
     },
     searchHotel() {
       this.bookingstep.find = true;
       this.bookingstep.confirm = true;
-      console.log(this.bookingrequest.supplier);
       if (this.bookingrequest.supplier == 'FLC') {
         this.bookingrequest.checkin = document.getElementById('flccheckin').value;
         this.bookingrequest.checkout = document.getElementById('flccheckout').value;
@@ -280,11 +278,9 @@ var app = new Vue({
         this.bookingstep.finish = true;
         AXIOS.post(apiUrl + '/mail/hotel-booking', this.bookingrequest)
           .then(response => {
-            console.log(this.bookingrequest);
-            console.log(response);
+            console.log(response.data)
           })
           .catch(function (error) {
-            console.log(error);
           })
           .finally(function () { });
 
@@ -337,7 +333,6 @@ var app = new Vue({
       var a = moment(this.bookingrequest.checkin, 'D-M-YYYY');
       var b = moment(this.bookingrequest.checkout, 'D-M-YYYY');
       var diffDays = b.diff(a, 'days');
-      console.log(diffDays);
       return this.bookingrequest.price * diffDays * this.bookingrequest.roomQty;
     },
     totalPriceFLC: function () {
@@ -345,7 +340,6 @@ var app = new Vue({
       var a = moment(this.bookingrequest.checkin, 'D-M-YYYY');
       var b = moment(this.bookingrequest.checkout, 'D-M-YYYY');
       var diffDays = b.diff(a, 'days');
-      console.log(diffDays);
       return this.bookingrequest.price * diffDays * this.bookingrequest.roomQty;
     },
     totalTime: function () {
@@ -356,7 +350,6 @@ var app = new Vue({
     },
     getPackageNote: function () {
       var package = this.vinPackage.filter(obj => { return obj._id === this.bookingrequest.packageId })
-      console.log(package);
       return package.note;
     }
   }

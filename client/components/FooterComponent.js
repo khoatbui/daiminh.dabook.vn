@@ -49,7 +49,7 @@ Vue.component('footer-component', {
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <h4>Liên hệ</h4>
+                <h4>Contact</h4>
                 <ul class="d-flex flex-column">
                     <li> <span> <i class="fas fa-map-marker-alt mr-2"></i>Lot 118, TT3, My Dinh 1, Nam Tu Liem,
                             Hanoi</span></li>
@@ -68,9 +68,15 @@ Vue.component('footer-component', {
                         </ul>
                     </li>
                 </ul>
+                <hr />
+                <h4>Addition Infomation</h4>
+                <ul class="d-flex flex-column">
+                    <li><a href="#"><b> Business Licience : </b><span class="text-rose"> 0101472382 </span></a></li>
+                    <li><a href="#"><b>International Tour Opertor Licience : </b><span class="text-rose"> 01-035/2015/TCDL-GPLHQT</span></a></li>
+                </ul>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <h4>Đối tác</h4>
+                <h4>Our partner</h4>
                 <div class="d-flex justify-content-start align-items-center flex-wrap">
                     <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange"
                     src="../img/partner/Vinpearl.jpg" alt="Card image cap" data-toggle="tooltip" data-placement="top" title="Vinpearl"></div>
@@ -90,15 +96,15 @@ Vue.component('footer-component', {
                     <!-- <div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange" src="img/doitac/image.png" alt="Card image cap"></div><div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange" src="img/doitac/sunworld.png" alt="Card image cap"></div><div class="card m-1 w-30 flex-grow-1 p-1"><img class="card-img-top img-retange" src="img/doitac/tripavisor.jpg" alt="Card image cap"></div> -->
                 </div>
                 <hr />
-                <h4>Dịch vụ</h4>
+                <h4>Service</h4>
                 <ul class="d-flex flex-column">
                     <li> <a href="../service/travelservice.html">Du lịch</a> </li>
-                    <li> <a href="../service/visaservice.html">Visa và Dịch vụ Visa</a> </li>
-                    <li> <a href="../service/lawandinvest.html">Trợ giúp pháp lý và đầu tư</a> </li>
+                    <li> <a href="../service/visaservice.html">Visa</a> </li>
+                    <li> <a href="../service/lawandinvest.html">Legal & Investment Consultancy </a> </li>
                 </ul>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <h4>Giấy chứng nhận</h4>
+                <h4>Certificate</h4>
                 <div class="d-flex flex-sm-row align-items-start flex-wrap">
                     <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
                             src="../img/certificate/iata.jpg" alt="Card image cap"> </div>
@@ -111,9 +117,12 @@ Vue.component('footer-component', {
                     <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
                             src="../img/certificate/Norton-Mobile-Security-Logo.jpg" alt="Card image cap">
                     </div>
+                    <div class="card m-1 w-30 flex-grow-1 p-1"> <img class="card-img-top"
+                    src="../img/certificate/tcdl.jpg" alt="Card image cap">
+                </div>
                 </div>
                 <hr />
-                <h4>Ho tro thanh toan</h4>
+                <h4>Payment</h4>
                 <div class="d-flex flex-sm-row align-items-start flex-wrap">
                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer" data-toggle="modal"
                         data-target="#bankModal" @click="selectPayment('VISA')"> <img class="card-img-top" src="../img/payment/visa.png"
@@ -153,10 +162,10 @@ Vue.component('footer-component', {
             <div class="col-12 col-md-6 text-center footer-policy">
                 <ul>
                     <li>
-                        <a href="../function/legal.html">Chính sách riêng tư |</a>
+                        <a href="../function/legal.html">Privacy Policy |</a>
                     </li>
                     <li>
-                        <a href="../function/legal.html">Chính sách người dùng |</a>
+                        <a href="../function/legal.html">Terms of Use |</a>
                     </li>
                     <li>
                         <a href="../function/contact.html">Contact</a>
