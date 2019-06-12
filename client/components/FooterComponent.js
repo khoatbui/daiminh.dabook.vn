@@ -191,19 +191,20 @@ Vue.component('footer-component', {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header border-bottom pb-3 text-left">
-                <h6 class="modal-title" id="bankModalLabel"><span class="badge badge-success">{{selectedPayment.bankName}}</span>THÔNG TIN TÀI KHOẢN CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ VÀ DU LỊCH ĐẠI MINH</h6>
+                <h6 class="modal-title" id="bankModalLabel"><span class="badge badge-success">{{selectedPayment.bankCode}}</span>THÔNG TIN TÀI KHOẢN CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ VÀ DU LỊCH ĐẠI MINH</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <p><b>Chủ tài khoản : </b>{{selectedPayment.bankOwner}}</p>
-                <p><b>Số tài khoản : </b>{{selectedPayment.bankAccount}}</p>
+                <p><b>Số tài khoản : </b><span id="bank-account">{{selectedPayment.bankAccount}}</span></p>
                 <p><b>Chi nhánh : </b>{{selectedPayment.bankLocation}}</p>
             </div>
             <div class="modal-footer">
+            <input type="text" class="invisible" aria-label="Username" id="ihidden-input" v-model="selectedPayment.bankAccount">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary btn-sm btn-info">Bank copy</button>
+                <button type="button" class="btn btn-primary btn-sm btn-info" @click="bankCopy">Bank copy</button>
             </div>
         </div>
     </div>
@@ -217,7 +218,6 @@ Vue.component('footer-component', {
             AXIOS.get(apiUrl + '/payments', { crossdomain: true })
                 .then((response) => {
                     this.payments = response.data;
-                    console.log(this.payments);
                     this.selectedPayment=this.payments[0];
                 })
                 .catch((error) => {
@@ -227,9 +227,16 @@ Vue.component('footer-component', {
                 });
         },
         selectPayment(name){
-            console.log(name);
-            console.log(this.payments.find(x => x.bankName.toUpperCase() === name.toUpperCase()));
-            this.selectedPayment=this.payments.find(x => x.bankName.toUpperCase() === name.toUpperCase())
+            document.getElementById('bank-account').classList.remove("text-rose");
+            this.selectedPayment=this.payments.find(x => x.bankCode.toUpperCase() === name.toUpperCase())
+        },
+        bankCopy(){
+            
+            document.getElementById('bank-account').classList.add("text-rose");
+            var copyText = document.getElementById("ihidden-input");
+            copyText.select();
+            console.log(copyText.value);
+            document.execCommand("copy");
         }
     }
 

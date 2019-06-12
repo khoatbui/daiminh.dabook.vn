@@ -650,38 +650,6 @@
     background-size: cover;
 }
 
-
-
-
-/* ========================
-    RESPONSIVE
-============================*/
-@media (min-width: 1200px){
-.navbar .hestia-mega-menu>.dropdown-menu {
-    width: 1170px;
-}
-.h-30{
-    height: 100px !important;
-}
-}
-@media (min-width: 992px){
-.navbar .hestia-mega-menu>.dropdown-menu {
-    width: 970px;
-}
-.h-30{
-    height: 100px !important;
-}
-}
-@media (min-width: 769px){
-.navbar .hestia-mega-menu>.dropdown-menu {
-    width: 750px;
-    left: 50%;
-    /* transform: translateX(-50%); */
-}
-.h-30{
-    height: 100px !important;
-}
-}
 .navbar .hestia-mega-menu>.dropdown-menu {
     margin: auto;
     left: 0;
@@ -729,7 +697,7 @@
 }
 .hotel-booking-confirm .status {
     height: 55px;
-    /* width: 900px; */
+    width: 70%;
     margin: 40px auto;
     margin-bottom: 10px;
     border-radius: 30px;
@@ -745,7 +713,7 @@
 }
 .hotel-booking-confirm .status span {
     height: 55px;
-    width: 225px;
+    width: 33.33%;
     border-radius: 30px;
     text-align: center;
     display: inline-block;
@@ -872,3 +840,76 @@
 .main-custom-card .nav-tabs .nav-item .nav-link {
     color:#002c69 !important;
 }
+.input-modal-btn{
+        background-color: #FFF !important;
+        border: 1px solid #d2d2d2!important;
+        box-shadow: none!important;
+        color: gray!important;
+}
+.input-modal-btn:hover{
+    color: #222!important;
+}
+.input-modal-btn:focus{
+background-image: linear-gradient(
+ to top,
+ #00bfe8 2px,
+ rgba(156, 39, 176, 0) 2px),linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
+}
+.btn-icon-sm{
+    width: 25px !important;
+    height:25px!important;
+    border-radius: 50%!important;
+    line-height: 25px!important;
+    padding: 0;
+}
+.btn-icon-sm i{
+    font-size:12px;
+}
+.border-sm{
+    border:1px solid #dee2e6 !important;
+}
+
+/* ========================
+    RESPONSIVE
+============================*/
+@media (min-width: 1200px){
+    .navbar .hestia-mega-menu>.dropdown-menu {
+        width: 1170px;
+    }
+    .h-30{
+        height: 100px !important;
+    }
+    .border-sm{
+        border:1px solid #dee2e6 !important;
+    }
+    }
+    @media (min-width: 992px){
+    .navbar .hestia-mega-menu>.dropdown-menu {
+        width: 970px;
+    }
+    .h-30{
+        height: 100px !important;
+    }
+    .border-sm{
+        border:1px solid #dee2e6 !important;
+    }
+    }
+    @media (min-width: 769px){
+    .navbar .hestia-mega-menu>.dropdown-menu {
+        width: 750px;
+        left: 50%;
+        /* transform: translateX(-50%); */
+    }
+    .h-30{
+        height: 100px !important;
+    }
+    .border-sm{
+        border:1px solid #dee2e6 !important;
+    }
+    }
+    @media (min-width: 582px){
+        .border-sm{
+            border:none !important;
+        }
+
+    }

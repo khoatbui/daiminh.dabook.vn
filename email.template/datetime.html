@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/now.min.css"></script>
+</head>
+<body>
+    <input type="text" id="startDate">
+    <script>
+    let datepicker = new Now({
+	startDate: null,
+	endDate: null,
+	minDate: null,
+	maxDate: null,
+	outputFormat: "MM/DD/YYYY HH:mm",
+	double: false,
+	enableTimePicker: true,
+	minuteStep: 1,
+	defaultTime: "15:00",
+	disableMinutesSwitcher: false,
+	dateSeparator: "–",
+	inline: true,
+	keyboardEvents: true,
+	labelTo: "label to",
+	labelFrom: "label from",
+	mondayIsFirst: false,
+	singleDate: false,
+	placeholderText: "Choose a date",
+	enableMonthSwitcher: true,
+	enableYearSwitcher: true,
+	showHeader: true,
+	disabledDates: null,
+    borderColor: '#F0F0F3',
+    textColor: '#5D5D5E',
+    inactiveTextColor: '#B6B4B6',
+    iconColor: '#919191',
+    inactiveIconColor: '#DBD7DB',
+    disabledIconColor: '#f6f2f6',
+    inactiveMonthColor: '#f3fdff',
+    textInverseColor: '#fff',
+    dayBackgroundHoverColor: '#26A69A',
+    backgroundColor: '#fff'
+});
+    </script>
+</body>
+</html>

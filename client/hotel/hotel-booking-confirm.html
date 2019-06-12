@@ -84,20 +84,20 @@
                                 <div class="card-body" v-cloak>
                                     <ul class="nav nav-pills nomal-display nav-pills-rose" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="tab" href="#flc" role="tablist"
+                                            <a class="nav-link" data-toggle="tab" href="#flc" role="tablist"
                                                 aria-expanded="true" @click="clearSearch('FLC')">
                                                 FLC
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#vinpearl" role="tablist"
+                                            <a class="nav-link active" data-toggle="tab" href="#vinpearl" role="tablist"
                                                 aria-expanded="false" @click="clearSearch('VIN')">
                                                 VinPearl
                                             </a>
                                         </li>
                                     </ul>
                                     <div class="tab-content tab-space pb-0">
-                                        <div class="tab-pane active" id="flc" aria-expanded="true">
+                                        <div class="tab-pane" id="flc" aria-expanded="true">
                                             <div class="row border border-radius p-4"
                                                 v-bind:class="{'d-none':bookingstep.confirm}">
                                                 <div class="col-12 p-2">
@@ -276,11 +276,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 p-2 bg-success-opac-50">
-                                                    <h6 class="badge badge-rose"><b>{{bookingrequest.price}} $/night</b></h6>
+                                                <div class="col-6 p-2 d-flex align-items-center">
+                                                    <h6 class="badge badge-rose badge-pill"><b>{{bookingrequest.price}}
+                                                            $/night</b></h6>
                                                 </div>
                                                 <div class="col-6 p-2">
-                                                    <button class="btn btn-info w-100" @click="searchHotel">
+                                                    <button class="btn btn-info w-100 btn-sm" @click="searchHotel">
                                                         <i class="fas fa-hotel"></i> Search
                                                     </button>
                                                 </div>
@@ -323,7 +324,9 @@
                                                         <div class="col-8">
                                                             <h6 class="title text-info p-0 m-0">
                                                                 {{bookingrequest.checkin}} ->
-                                                                {{bookingrequest.checkout}} <span class="text-rose">[{{totalTime}} nights]</span> </h6>
+                                                                {{bookingrequest.checkout}} <span
+                                                                    class="text-rose">[{{totalTime}} nights]</span>
+                                                            </h6>
                                                         </div>
                                                     </div>
                                                     <div class="row border-bottom pb-1 pt-1">
@@ -359,7 +362,8 @@
                                                             <h5 class="title  p-0 m-0">TOTAL</h5>
                                                         </div>
                                                         <div class="col-8">
-                                                            <h5 class="title text-success p-0 m-0"> {{totalPriceFLC}}</h6>
+                                                            <h5 class="title text-success p-0 m-0"> {{totalPriceFLC}}
+                                                                </h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -369,33 +373,33 @@
                                                 <div class="col-12">
                                                     <div class="row pb-1 pt-1">
                                                         <div class="card-body">
-                                                            <h6 class="title text-rose p-0 m-0">GIỮ CHỖ THÀNH CÔNG</h6>
+                                                            <h6 class="title text-rose p-0 m-0">SUCCESSFULLY BOOKED
+                                                                <span class="badge badge-rose">ORDER ID #
+                                                                    {{orderCode}}</span></h6>
                                                             <ul>
                                                                 <li>
-                                                                    <p>Quý khách có thể thanh toán trước cho chúng tôi
-                                                                        thông qua hình thức
-                                                                        chuyển
-                                                                        khoản <a href="#">dưới đây</a></p>
+                                                                    <p>You can proceed the payment via Bank transfer or
+                                                                        one of these methods <a href="#">dưới đây</a>
+                                                                    </p>
                                                                 </li>
                                                                 <li>
-                                                                    <p>Chúng tôi sẽ liên hệ với quý khách (qua email
-                                                                        hoặc điện thoại) trong vòng
-                                                                        <span class="badge badge-success">30
-                                                                            phút</span>(T2-CN: 08:00 - 23:00)
-                                                                        để
-                                                                        xác nhận tour và thời hạn thanh toán.</p>
+                                                                    <p>Dai Minh Travel will contact you (email or mobile
+                                                                        phone) within <span
+                                                                            class="badge badge-success">30
+                                                                            minutes</span> (Monday – Sunday 08AM – 23PM)
+                                                                        to reconfirm services & payment due date.</p>
                                                                 </li>
                                                                 <li>
-                                                                    <p>Quý khách sẽ thanh toán (tại nhà, tại văn phòng
-                                                                        DaiMinh, chuyển khoản hay
-                                                                        thẻ) sau khi có xác nhận còn tour từ DaiMinh
-                                                                        Travel.</p>
+                                                                    <p>You ONLY make payment (in cash at home / at DM
+                                                                        Office, Bank transfer) after the Reconfirmation
+                                                                        is officially acknowledged by Dai Minh Travel.
+                                                                    </p>
                                                                 </li>
                                                                 <li>
-                                                                    <p>Trường hợp Quý khách muốn xác nhận ngay, vui lòng
-                                                                        liên hệ với DaiMinh
-                                                                        theo
-                                                                        Hotline: </p>
+                                                                    <p>In case of, Immediate Reconfirmation requested by
+                                                                        yourself, should you kindly contact Dai Minh
+                                                                        Travel Hotline:
+                                                                    </p>
                                                                     <ul class="ml-4">
                                                                         <li><b> 0243-562-3777 (778)</b></li>
                                                                         <li><b> 19001542</b></li>
@@ -407,7 +411,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="vinpearl" aria-expanded="false">
+                                        <div class="tab-pane active" id="vinpearl" aria-expanded="false">
                                             <div class="row border border-radius p-4"
                                                 v-bind:class="{'d-none':bookingstep.confirm}">
                                                 <div class="col-12 p-2">
@@ -518,17 +522,19 @@
                                                         </div>
                                                     </div>
                                                     <div class="absolute-right">
-                                                        <button class="badge badge-default text-rose info-button" data-toggle="tooltip" data-placement="top" v-bind:title="getPackageNote">
-                                                            <i class="fas fa-info"></i>  
+                                                        <button class="badge badge-default text-rose info-button"
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            v-bind:title="getPackageNote">
+                                                            <i class="fas fa-info"></i>
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 p-2 bg-success-opac-50">
-                                                    <h6 class="badge badge-rose"><b>{{bookingrequest.price}} $/night</b></h6>
-                                                    <p></p>
+                                                <div class="col-6 p-2 d-flex align-items-center">
+                                                    <h6 class="badge badge-rose badge-pill"><b>{{bookingrequest.price}}
+                                                            $/night</b></h6>
                                                 </div>
                                                 <div class="col-6 p-2">
-                                                    <button class="btn btn-info w-100" @click="searchHotel">
+                                                    <button class="btn btn-info w-100 btn-sm" @click="searchHotel">
                                                         <i class="fas fa-hotel"></i> Search
                                                     </button>
                                                 </div>
@@ -616,33 +622,33 @@
                                                 <div class="col-12">
                                                     <div class="row pb-1 pt-1">
                                                         <div class="card-body">
-                                                            <h6 class="title text-rose p-0 m-0">GIỮ CHỖ THÀNH CÔNG</h6>
+                                                            <h6 class="title text-rose p-0 m-0">SUCCESSFULLY BOOKED
+                                                                <span class="badge badge-rose">ORDER ID #
+                                                                    {{orderCode}}</span></h6>
                                                             <ul>
                                                                 <li>
-                                                                    <p>Quý khách có thể thanh toán trước cho chúng tôi
-                                                                        thông qua hình thức
-                                                                        chuyển
-                                                                        khoản <a href="#">dưới đây</a></p>
+                                                                    <p>You can proceed the payment via Bank transfer or
+                                                                        one of these methods <a href="#">dưới đây</a>
+                                                                    </p>
                                                                 </li>
                                                                 <li>
-                                                                    <p>Chúng tôi sẽ liên hệ với quý khách (qua email
-                                                                        hoặc điện thoại) trong vòng
-                                                                        <span class="badge badge-success">30
-                                                                            phút</span>(T2-CN: 08:00 - 23:00)
-                                                                        để
-                                                                        xác nhận tour và thời hạn thanh toán.</p>
+                                                                    <p>Dai Minh Travel will contact you (email or mobile
+                                                                        phone) within <span
+                                                                            class="badge badge-success">30
+                                                                            minutes</span> (Monday – Sunday 08AM – 23PM)
+                                                                        to reconfirm services & payment due date.</p>
                                                                 </li>
                                                                 <li>
-                                                                    <p>Quý khách sẽ thanh toán (tại nhà, tại văn phòng
-                                                                        DaiMinh, chuyển khoản hay
-                                                                        thẻ) sau khi có xác nhận còn tour từ DaiMinh
-                                                                        Travel.</p>
+                                                                    <p>You ONLY make payment (in cash at home / at DM
+                                                                        Office, Bank transfer) after the Reconfirmation
+                                                                        is officially acknowledged by Dai Minh Travel.
+                                                                    </p>
                                                                 </li>
                                                                 <li>
-                                                                    <p>Trường hợp Quý khách muốn xác nhận ngay, vui lòng
-                                                                        liên hệ với DaiMinh
-                                                                        theo
-                                                                        Hotline: </p>
+                                                                    <p>In case of, Immediate Reconfirmation requested by
+                                                                        yourself, should you kindly contact Dai Minh
+                                                                        Travel Hotline:
+                                                                    </p>
                                                                     <ul class="ml-4">
                                                                         <li><b> 0243-562-3777 (778)</b></li>
                                                                         <li><b> 19001542</b></li>
@@ -715,12 +721,12 @@
                                             </div>
                                         </div>
                                         <div class="col-6 p-2">
-                                            <button class="btn w-100 btn-secondary" @click="back">
+                                            <button class="btn w-100 btn-secondary btn-sm" @click="back">
                                                 Back
                                             </button>
                                         </div>
                                         <div class="col-6 p-2">
-                                            <button class="btn btn-info w-100" @click="reserveHotel">
+                                            <button class="btn btn-info w-100 btn-sm" @click="reserveHotel">
                                                 <i class="far fa-calendar-check"></i> Request
                                             </button>
                                         </div>
@@ -729,77 +735,75 @@
                                         v-bind:class="{'d-none':!bookingstep.finish}">
                                         <div class="col-12 p-2">
                                             <div class="border-bottom pb-3 text-left">
-                                                <h6 class="title p-0 m-0">Hỗ trợ thanh toán</h6>
+                                                <h6 class="title p-0 m-0">PAYMENTS METHOD</h6>
                                                 <div class="d-flex flex-sm-row align-items-start flex-wrap">
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" @click="showBank('visa')"> <img
-                                                            class="card-img-top" src="../img/payment/visa.png"
-                                                            alt="Card image cap"> </div>
+                                                        @click="showBank('visa')"> <img class="card-img-top"
+                                                            src="../img/payment/visa.png" alt="Card image cap"> </div>
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" data-target="#bankModal"> <img
-                                                            class="card-img-top" src="../img/payment/mastercard.png"
-                                                            alt="Card image cap"> </div>
+                                                        @click="showBank('MASTER')"> <img class="card-img-top"
+                                                            src="../img/payment/mastercard.png" alt="Card image cap">
+                                                    </div>
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" data-target="#bankModal"> <img
-                                                            class="card-img-top" src="../img/payment/paypal.png"
-                                                            alt="Card image cap"> </div>
+                                                        @click="showBank('PAYPAL')"> <img class="card-img-top"
+                                                            src="../img/payment/paypal.png" alt="Card image cap"> </div>
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" data-target="#bankModal"> <img
-                                                            class="card-img-top" src="../img/payment/shinhanbank.jpg"
-                                                            alt="Card image cap"> </div>
+                                                        @click="showBank('SHINHANBANK')"> <img class="card-img-top"
+                                                            src="../img/payment/shinhanbank.jpg" alt="Card image cap">
+                                                    </div>
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" data-target="#bankModal"> <img
-                                                            class="card-img-top" src="../img/payment/techcombank.png"
-                                                            alt="Card image cap"> </div>
+                                                        @click="showBank('TECHCOMBANK')"> <img class="card-img-top"
+                                                            src="../img/payment/techcombank.png" alt="Card image cap">
+                                                    </div>
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" data-target="#bankModal"> <img
-                                                            class="card-img-top" src="../img/payment/vietcombank.jpg"
-                                                            alt="Card image cap"> </div>
+                                                        @click="showBank('VIETCOMBANK')"> <img class="card-img-top"
+                                                            src="../img/payment/vietcombank.jpg" alt="Card image cap">
+                                                    </div>
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" data-target="#bankModal"> <img
-                                                            class="card-img-top" src="../img/payment/hdbank.jpg"
-                                                            alt="Card image cap"> </div>
+                                                        @click="showBank('HDBANK')"> <img class="card-img-top"
+                                                            src="../img/payment/hdbank.jpg" alt="Card image cap"> </div>
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" data-target="#bankModal"> <img
-                                                            class="card-img-top" src="../img/payment/vietinbank.png"
-                                                            alt="Card image cap"> </div>
+                                                        @click="showBank('VIETINBANK')"> <img class="card-img-top"
+                                                            src="../img/payment/vietinbank.png" alt="Card image cap">
+                                                    </div>
                                                     <div class="card m-1 w-30 flex-grow-1 p-1 cursor-pointer"
-                                                        data-toggle="modal" data-target="#bankModal"> <img
-                                                            class="card-img-top" src="../img/payment/agribank.jpg"
-                                                            alt="Card image cap"> </div>
+                                                        @click="showBank('AGRIBANK')"> <img class="card-img-top"
+                                                            src="../img/payment/agribank.jpg" alt="Card image cap">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="pb-3 text-left">
                                                 <h6 class="modal-title" id="bankModalLabel"><span
-                                                        class="badge badge-success">SHINHAN
-                                                        BANK</span>THÔNG TIN TÀI KHOẢN CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ
-                                                    VÀ DU LỊCH ĐẠI MINH</h6>
+                                                        class="badge badge-success">{{selectedBank.bankCode}}</span>Dai
+                                                    Minh Trading, Service and Tourism Company Limited' Bank account</h6>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row border-bottom pb-1 pt-1">
                                                     <div class="col-4 border-right-dot">
-                                                        <h6 class="title  p-0 m-0">Chủ tài khoản :</h6>
+                                                        <h6 class="title  p-0 m-0">Beneficial :</h6>
                                                     </div>
                                                     <div class="col-8">
-                                                        <h6 class=" text-info p-0 m-0"> Công ty TNHH thương mại,
-                                                            dịch vụ và du lịch Đại Minh </h6>
+                                                        <h6 class=" text-info p-0 m-0"> {{selectedBank.bankOwner}}</h6>
+                                                        <p class=" text-info p-0 m-0">(Dai Minh Trading, Service and
+                                                            Tourism Company Limited)</p>
                                                     </div>
                                                 </div>
                                                 <div class="row border-bottom pb-1 pt-1">
                                                     <div class="col-4 border-right-dot">
-                                                        <h6 class="title  p-0 m-0">Số tài khoản :</h6>
+                                                        <h6 class="title  p-0 m-0">Bank Account :</h6>
                                                     </div>
                                                     <div class="col-8">
-                                                        <h6 class=" text-info p-0 m-0">0451001906812 </h6>
+                                                        <h6 class=" text-info p-0 m-0">{{selectedBank.bankAccount}}
+                                                        </h6>
                                                     </div>
                                                 </div>
                                                 <div class="row border-bottom pb-1 pt-1">
                                                     <div class="col-4 border-right-dot">
-                                                        <h6 class="title  p-0 m-0">Chi nhánh :</h6>
+                                                        <h6 class="title  p-0 m-0">Beneficial Bank / Branch :</h6>
                                                     </div>
                                                     <div class="col-8">
-                                                        <h6 class=" text-info p-0 m-0">Vietcombank công ty - CN
-                                                            Thành Công </h6>
+                                                        <h6 class=" text-info p-0 m-0">{{selectedBank.bankLocation}}
+                                                        </h6>
                                                     </div>
                                                 </div>
                                             </div>

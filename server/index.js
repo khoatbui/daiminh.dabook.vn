@@ -25,7 +25,7 @@ const packageRoute = require('./routes/package.router')
 const roomtypeRoute = require('./routes/roomtype.router')
 const optionServiceRoute = require('./routes/optionservice.router')
 const packageHotelRELRouter = require('./routes/packagehotelREL.router')
-const paymentsRouter = require('./routes/payment.router')
+const paymentsRouter = require('./routes/payments.router')
 
 app.set('view engine','pug');
 app.set('views','./views');

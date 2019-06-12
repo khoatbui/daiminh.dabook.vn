@@ -101,7 +101,7 @@ module.exports.getPriceByService = (req, res, next) => {
 module.exports.sendHotelBookingEmail = function (req, res) {
   const transactionCode = req.body.packageCode + moment().format('YYMM') + uniqeNumber();
 
-  const strCustomerSubject = `[DAIMINH-TRAVEL] Order confirmation ${transactionCode}`;
+  const strCustomerSubject = `[DAIMINH-TRAVEL] Services Checking In Progess for Mr/Ms.${req.body.name} | OrderID: ${transactionCode}`;
   const strEmployeeeSubject = `[HOTEL-${transactionCode}] Sale confirmation : ${req.body.name} | ${req.body.phone}`;
 
   const outputCustomer = generateCustomerHotelConfirm(req.body, transactionCode);
@@ -111,7 +111,7 @@ module.exports.sendHotelBookingEmail = function (req, res) {
     from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`,
     to: req.body.email,
     subject: strCustomerSubject,
-    text: "Hello world?",
+    text: "Order confirmation",
     html: outputCustomer
   }).then(success => console.log('success: ', success))
     .catch(error => console.log('error: ', error))
@@ -120,7 +120,7 @@ module.exports.sendHotelBookingEmail = function (req, res) {
     from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`,
     to: process.env.HOTEL_CUSTOMER_MAIL_TO,
     subject: strEmployeeeSubject,
-    text: "Hello world?",
+    text: "Sale confirmation",
     html: outputStaff
   }).then(success => console.log('success: ', success))
     .catch(error => console.log('error: ', error))
@@ -524,7 +524,7 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                         <tbody>
                           <tr style="padding: 0; text-align: left; vertical-align: top;">
                             <th class="small-12 large-12 columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 564px;">
-                              <h3 class="thankyou-title" style="Margin: 0; Margin-bottom: 10px; color: #50C0C0; font-family: Helvetica, Arial, sans-serif; font-size: 28px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 20px; text-align: center; text-transform: uppercase; word-wrap: normal;">Thank you for choosing DaiMinh Travel</h3>
+                              <h3 class="thankyou-title" style="Margin: 0; Margin-bottom: 10px; color: #50C0C0; font-family: Helvetica, Arial, sans-serif; font-size: 28px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 20px; text-align: center; text-transform: uppercase; word-wrap: normal;">Thank you for bringing customers the best experience</h3>
                             </th>
                           </tr>
                         </tbody>
@@ -558,9 +558,9 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                           <tr style="padding: 0; text-align: left; vertical-align: top;">
                             <th class="small-12 large-6 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 274px;">
                               <div class="section">
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Đơn hàng từ khách hàng ${reqBody.name}</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Mã đơn hàng:${transactionCode}</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Vui lòng kiểm tra thông tin chi tiết bên dưới</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Order from" ${reqBody.name}</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Order ID/ Order Code:${transactionCode}</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Please checking in bellow detail</p>
                               </div>
                             </th>
                           </tr>
@@ -687,9 +687,9 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                           <tr class="row-border paragraph" style="border-bottom: 1px solid #dee2e6; font-size: 12px; line-height: 1.7em; padding: 10px; text-align: left; vertical-align: top;">
                             <th class="small-12 large-12  columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 564px;">
                               <ul>
-                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Vui lòng xác nhận lại thông tin với khách hàng trong vòng 1 tiếng</li>
-                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Sau khi đơn hàng hoàn tất, vui lòng cập nhập trạng thái đơn hàng tại 
-                                <a href="http://admin.dabook.vn/hotel-order/${transactionCode}" class="link-button" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;"> Hoàn tất đơn hàng(admin.dabook.vn) </a>
+                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Please confirm the information with the customer within 1 hour</li>
+                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">After the order is completed, please update the order status at 
+                                <a href="http://admin.dabook.vn/hotel-order/${transactionCode}" class="link-button" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;"> Complete the order(admin.dabook.vn) </a>
                                 </li>
                               </ul>
                             </th>
@@ -1037,7 +1037,7 @@ function generateCustomerHotelConfirm(reqBody, transactionCode) {
                               <img class="logo-img" src="http://daiminh.dabook.vn/img/new_logo.jpg" alt="" style="-ms-interpolation-mode: bicubic; clear: both; display: block; max-width: 100%; outline: none; text-decoration: none; width: 160px;">
                             </th>
                             <th class="small-6 large-6 columns center-element" style="Margin: 0 auto; color: #0a0a0a; display: inline-block; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 30px 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: center; width: 274px;">
-                              <img class="logo-img" src="http://daiminh.dabook.vn/img/logo dabook.png" alt="" style="-ms-interpolation-mode: bicubic; clear: both; display: block; max-width: 100%; outline: none; text-decoration: none; width: 160px;">
+                              <img class="logo-img" src="http://daiminh.dabook.vn/img/logo_dabook.jpg" alt="" style="-ms-interpolation-mode: bicubic; clear: both; display: block; max-width: 100%; outline: none; text-decoration: none; width: 160px;">
                             </th>
                           </tr>
                         </tbody>
@@ -1049,8 +1049,9 @@ function generateCustomerHotelConfirm(reqBody, transactionCode) {
                       <table class="row" style="border-collapse: collapse; border-spacing: 0; display: table; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%;">
                         <tbody>
                           <tr style="padding: 0; text-align: left; vertical-align: top;">
-                            <th class="small-12 large-12 columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 564px;">
-                              <h3 class="thankyou-title" style="Margin: 0; Margin-bottom: 10px; color: #50C0C0; font-family: Helvetica, Arial, sans-serif; font-size: 28px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 20px; text-align: center; text-transform: uppercase; word-wrap: normal;">Thank you for choosing DaiMinh Travel</h3>
+                            <th class="small-12 large-12 columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: center; width: 564px;">
+                              <h3 class="thankyou-title" style="Margin: 0; Margin-bottom: 10px; color: #50C0C0; font-family: Helvetica, Arial, sans-serif; font-size: 28px; font-weight: normal; line-height: 1.3; margin: 0; padding: 0px; text-align: center; text-transform: uppercase; word-wrap: normal;">Thank you for choosing DaiMinh Travel</h3>
+                              <h3 class="thankyou-title" style="Margin: 0; Margin-bottom: 10px; color: #50C0C0; font-family: Helvetica, Arial, sans-serif; font-size: 28px; font-weight: normal; line-height: 1.3; margin: 0; padding:0px; text-align: center; text-transform: uppercase; word-wrap: normal;">다이밍여행사를 선택해 주셔서 감사합니다.</h3>
                             </th>
                           </tr>
                         </tbody>
@@ -1084,11 +1085,21 @@ function generateCustomerHotelConfirm(reqBody, transactionCode) {
                           <tr style="padding: 0; text-align: left; vertical-align: top;">
                             <th class="small-12 large-6 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 274px;">
                               <div class="section" style="padding: 10px;">
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;Margin:0;Margin-bottom:10px;color:#7b6972;font-family:Helvetica,Arial,sans-serif;font-size:18px;font-weight:normal;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">Dear Mr(Ms). ${reqBody.name},</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Thank you very much for your request</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">DaiMinh Travel's staff is checking the availibility of services as per your request</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Within the next 6 hours, DaiMinh Travel's staff will email you for detail information / reconfirmation and so on</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Please wait and check your email then</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;Margin:0;color:#7b6972;font-family:Helvetica,Arial,sans-serif;font-size:18px;font-weight:normal;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">Dear Mr(Ms). ${reqBody.name},</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;Margin:0;Margin-bottom:10px;color:#7b6972;font-family:Helvetica,Arial,sans-serif;font-size:18px;font-weight:normal;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">Mr(Ms) ${reqBody.name} 님,</p>
+
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; padding: 0; text-align: left;">Thank you very much for your request</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">투어를 신청해 주셔서 감사합니다.</p>
+
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; padding: 0; text-align: left;">DaiMinh Travel's staff is checking the availibility of services as per your request</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">고객님이 신청해주신 투어 예약 가능 여부를 확인중입니다. </p>
+
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; padding: 0; text-align: left;">Within the next 6 hours, DaiMinh Travel's staff will email you for detail information / reconfirmation and so on</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">6 시간 이내로 다이밍여행사 직원이 자세한 투어 내용과 함께 재확인 이메일을 보내드릴 것입니다.</p>
+
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; padding: 0; text-align: left;">Please wait and check your email then</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">잠시 후 이메일을 다시 확인해주시기 바랍니다.</p>
+
                               </div>
                             </th>
                           </tr>
@@ -1103,8 +1114,8 @@ function generateCustomerHotelConfirm(reqBody, transactionCode) {
                           <tr style="padding: 0; text-align: left; vertical-align: top;">
                             <th class="small-12 large-12 columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: center; width: 564px;">
                               <div class="status-notice" style="background: #e91e63 !important; border-radius: 10px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF; display: inline-block; font-size: 1rem; font-weight: bold; padding: 0;">
-                                <h5 class="ticket-order" style="Margin: 0; Margin-bottom: 10px; border-right: 3px dashed #FFF; color: inherit; display: inline-block; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 30px; text-align: left; word-wrap: normal;"> Order #: <b>${transactionCode}</b></h5>
-                                <h5 class="ticket-status" style="Margin: 0; Margin-bottom: 10px; color: inherit; display: inline-block; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 30px; text-align: left; word-wrap: normal;">Status # :<b> CHECKING SERVICE'S AVAILABILITY</b></h5>
+                                <h5 class="ticket-order" style="Margin: 0; Margin-bottom: 10px; border-right: 3px dashed #FFF; color: inherit; display: inline-block; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 30px; text-align: left; word-wrap: normal;"> Order: <b>${transactionCode}</b></h5>
+                                <h5 class="ticket-status" style="Margin: 0; Margin-bottom: 10px; color: inherit; display: inline-block; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 30px; text-align: left; word-wrap: normal;">Status:<b> CHECKING SERVICE'S AVAILABILITY</b></h5>
                               </div>
                             </th>
   
@@ -1115,7 +1126,9 @@ function generateCustomerHotelConfirm(reqBody, transactionCode) {
                   </tr>
                   <tr style="padding: 0; text-align: left; vertical-align: top;">
                     <td class="padding" style="-moz-hyphens: auto; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; hyphens: auto; line-height: 1.3; margin: 0; padding: 10px; text-align: left; vertical-align: top; word-wrap: break-word;">
-                      <h6 style="Margin: 0; Margin-bottom: 10px; color: #7B6972; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 0; padding-left: 20px; text-align: left; word-wrap: normal;">Please be noticed that:</h6>
+                      <h6 style="Margin: 0; Margin-bottom: 10px; color: #7B6972; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: normal; line-height: 1.3; margin: 0; padding: 0; padding-left: 20px; text-align: left; word-wrap: normal;">Please be noticed that:</h6>
+                      <h6 style="Margin: 0; Margin-bottom: 10px; color: #7B6972; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 0; padding-left: 20px; text-align: left; word-wrap: normal;">주의 사항을 확인하십시오:</h6>
+
                       <table class="row border-top" style="border-collapse: collapse; border-spacing: 0; border-top: 1px solid #7B6972; display: table; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%;">
                         <tbody>
                           <tr class="small-12 large-12 columns" style="padding: 0; text-align: left; vertical-align: top;">
@@ -1126,7 +1139,13 @@ function generateCustomerHotelConfirm(reqBody, transactionCode) {
                               <ul>
                                 <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Following the Laws of Vietnam, all products have to be tagged in VND – Vietnam Dong. To Check the PRICE on your currency please clink here <a class="link-button" href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=USD&To=VND"
                                     target="_blank" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;">USD convert to VND</a></li>
+                                    <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">베트남 법에 따라 모든 여행 상품은 베트남 동(VND)으로 표시됩니다. 
+                                    다른 통화로 상품 금액 확인을 원하시면 여기를 클릭하십시오. <a class="link-button" href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=USD&To=VND"
+                                    target="_blank" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;">USD convert to VND</a></li>
+
                                 <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Please spend sometimes to review our <a class="link-button" href="http://daiminh.dabook.vn/function/legal.html" target="_blank" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;">Privacy Policy | Term of use </a>                                </li>
+                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">개인정보정책과 이용약관을 꼭 참고하십시오. <a class="link-button" href="http://daiminh.dabook.vn/function/legal.html" target="_blank" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;">Privacy Policy | Term of use </a>                                </li>
+
                               </ul>
                             </th>
                           </tr>
@@ -1140,11 +1159,19 @@ function generateCustomerHotelConfirm(reqBody, transactionCode) {
                         <tbody>
                           <tr class="row-border paragraph" style="border-bottom: 1px solid #dee2e6; font-size: 12px; line-height: 1.7em; padding: 20px; text-align: left; vertical-align: top;">
                             <th class="small-12 large-12  columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 20px; padding-right: 8px; text-align: left; width: 564px;">
-                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Dai Minh is looking forward to serving you soon,</p>
-                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Wish you a pleasant journey,</p>
-                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Best Regards,</p>
+                              <p class="paragraph" style="Margin: 0; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Dai Minh is looking forward to serving you soon,</p>
+                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">다시 만나뵙기를 기대합니다.</p>
+
+                              <p class="paragraph" style="Margin: 0; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Wish you a pleasant journey,</p>
+                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">즐거운 여행 되십시오. </p>
+
+                              <p class="paragraph" style="Margin: 0; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Best Regards,</p>
+                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">감사합니다. </p>
+
                               <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Reservation Department</p>
-                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Dai Minh Travel </p>
+                              <p class="paragraph" style="Margin: 0; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Dai Minh Travel </p>
+                              <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">다이밍여행사 예약부서 드림</p>
+
                             </th>
                           </tr>
                         </tbody>

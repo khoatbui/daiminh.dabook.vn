@@ -1,5 +1,5 @@
 //http://103.237.144.222:3000
-const apiUrl = 'http://localhost:3001';
+const apiUrl = 'http://103.237.144.222:3000';
 
 // Now the app has started!
 const AXIOS = axios.create({
@@ -57,6 +57,7 @@ var app = new Vue({
       other: "",
       totalPrice:""
     },
+    orderCode:"",
     flcHotels: [],
     vinHotels: [],
     vinPackage: [],
@@ -65,6 +66,8 @@ var app = new Vue({
     flcroomTypes: [],
     vinOptionService: [],
     flcOptionService: [],
+    selectedBank:{},
+    banks:[],
     roomTypes: [{ 'id': 1, 'value': 'Hotel' },
     { 'id': 2, 'value': 'Villa' }],
     serviceTypes: [{ 'id': 1, 'value': 'include 18 holds' },
@@ -131,6 +134,17 @@ var app = new Vue({
           .finally(() => {
           });
       }
+
+      AXIOS.get(apiUrl + '/payments', { crossdomain: true })
+      .then((response) => {
+          this.banks = response.data;
+          this.selectedBank=this.banks[0];
+      })
+      .catch((error) => {
+          console.log(error);
+      })
+      .finally(() => {
+      });
     },
     binCombobox() {
       AXIOS.get(apiUrl + '/hotel/combobox/hotelbysuppliercode/VIN', { crossdomain: true })
@@ -278,7 +292,8 @@ var app = new Vue({
         this.bookingstep.finish = true;
         AXIOS.post(apiUrl + '/mail/hotel-booking', this.bookingrequest)
           .then(response => {
-            console.log(response.data)
+            this.orderCode=response.data;
+
           })
           .catch(function (error) {
           })
@@ -293,7 +308,7 @@ var app = new Vue({
       this.bookingstep.finish = false;
     },
     showBank(bank) {
-
+      this.selectedBank = this.banks.find(x => x.bankCode.toUpperCase() === bank.toUpperCase())
     },
     showPoposer() {
 

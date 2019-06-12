@@ -61,6 +61,16 @@ module.exports.getPackageByHotelRoomType = (req, res, next) => {
         res.send(pac)
     })
 };
+module.exports.getPackageByMultiHotelRoomType=(req, res, next) => {
+    var tempArray=[];
+    req.body.roomTypeId.forEach(element => {
+        tempArray.push(element.roomType._id);
+    });
+    PackageHotelREL.find({"hotelId":req.body.hotelId,"roomTypeId": { $in: tempArray }}).populate('packageId').then(function (pac) {
+        console.log(pac);
+        res.send(pac)
+    })
+};
 module.exports.getPriceByService=(req, res, next) => {
     PackageHotelREL.find({"hotelId":req.params.hotelId,"roomTypeId":req.params.roomTypeId}).populate('packageId').then(function (pac) {
         res.send(pac)
