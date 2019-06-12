@@ -868,7 +868,9 @@ background-image: linear-gradient(
 .border-sm{
     border:1px solid #dee2e6 !important;
 }
-
+.badge-padding-custom{
+    padding: 3px 5px !important;
+}
 /* ========================
     RESPONSIVE
 ============================*/

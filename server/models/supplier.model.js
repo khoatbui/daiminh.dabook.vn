@@ -4,6 +4,7 @@ var supplierSchema = new mongoose.Schema({
     supplierCode: String,
     supplierName: String,
     lang: String,
+    isActive:Boolean,
     createBy:String,
     createDate:Date,
     modifyBy:String,

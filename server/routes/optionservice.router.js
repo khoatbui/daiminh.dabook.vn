@@ -23,4 +23,8 @@ router.delete('/:_id', controller.deleteOptionService)
 router.post('/insert', jsonParser,controller.insertOptionService)
 
 router.post('/update/:_id', jsonParser,controller.updateOptionService)
+
+router.get('/combobox/optionbysupplierid/:_id', jsonParser,controller.getOptionServiceBySupplierId)
+
+router.get('/combobox/optionbysuppliercode/:_id', jsonParser,controller.getOptionServiceBySupplierCode)
 module.exports = router

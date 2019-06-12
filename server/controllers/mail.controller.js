@@ -99,17 +99,17 @@ module.exports.getPriceByService = (req, res, next) => {
 };
 
 module.exports.sendHotelBookingEmail = function (req, res) {
-  const transactionCode = req.body.packageCode + moment().format('YYMM') + uniqeNumber();
+  const transactionCode = req.body.hotel.hotelCode + moment().format('YYMM') + uniqeNumber();
 
-  const strCustomerSubject = `[DAIMINH-TRAVEL] Services Checking In Progess for Mr/Ms.${req.body.name} | OrderID: ${transactionCode}`;
-  const strEmployeeeSubject = `[HOTEL-${transactionCode}] Sale confirmation : ${req.body.name} | ${req.body.phone}`;
+  const strCustomerSubject = `[DAIMINH-TRAVEL] Services Checking In Progess for Mr/Ms.${req.body.customerInfo.name} | OrderID: ${transactionCode}`;
+  const strEmployeeeSubject = `[HOTEL-${transactionCode}] Sale confirmation : ${req.body.customerInfo.name} | ${req.body.customerInfo.phone}`;
 
   const outputCustomer = generateCustomerHotelConfirm(req.body, transactionCode);
   const outputStaff = generateStaffHotelConfirm(req.body, transactionCode);
 
   let Cusinfo = transporter.sendMail({
     from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`,
-    to: req.body.email,
+    to: req.body.customerInfo.email,
     subject: strCustomerSubject,
     text: "Order confirmation",
     html: outputCustomer
@@ -213,9 +213,41 @@ function uniqeNumber() {
   else {
     return current.currentCode;
   }
+};
+
+function timeStaffReply(){
+  var currentHour=moment().hour();
+  if (parseInt(currentHour)>9 && parseInt(currentHour)<23) {
+    return ( 12 - parseInt(currentHour) + 24);
+  }
+  else if (parseInt(currentHour)>0 && parseInt(currentHour)<=9) {
+    return parseInt(currentHour) + 8;
+  }
+  else{
+    return 10;
+  }
 }
 
 function generateStaffHotelConfirm(reqBody, transactionCode) {
+  var roomTypeSum="";
+  var packageSum="";
+  var optionServiceSum="";
+  var guestSum="";
+
+  reqBody.roomTypes.forEach(element => {
+    roomTypeSum += `${element.roomType.roomTypeName}[${element.roomType.roomTypeCode} : ${element.qty}] | ` ;
+  });
+
+  reqBody.packages.forEach(element => {
+    packageSum += `${element.package.packageId.packageName}[${element.package.packageId.packageCode} : ${element.qty}] | ` ;
+  });
+  
+  reqBody.optionServices.forEach(element => {
+    optionServiceSum += `${element.optionServices.optionServiceCode}[${element.optionServices.optionServiceName} : ${element.qty}] | ` ;
+  });
+
+  guestSum=reqBody.adult.golfer.qty +reqBody.adult.nongolfer.qty+reqBody.adult.adult.qty+reqBody.adult.children.qty;
+
   var template = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">
   
@@ -558,7 +590,7 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                           <tr style="padding: 0; text-align: left; vertical-align: top;">
                             <th class="small-12 large-6 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 274px;">
                               <div class="section">
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Order from" ${reqBody.name}</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Order from" ${reqBody.customerInfo.name}</p>
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Order ID/ Order Code:${transactionCode}</p>
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">Please checking in bellow detail</p>
                               </div>
@@ -570,7 +602,7 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                   </tr>
                   <tr style="padding: 0; text-align: left; vertical-align: top;">
                     <td class="padding" style="-moz-hyphens: auto; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; hyphens: auto; line-height: 1.3; margin: 0; padding: 10px; text-align: left; vertical-align: top; word-wrap: break-word;">
-                      <h5 class="header-section" style="Margin: 0; Margin-bottom: 10px; background-color: #50C0C0; border: 2px solid #50C0C0; border-top-left-radius: 8px; border-top-right-radius: 8px; box-sizing: border-box; color: #FFF; font-family: Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: normal; height: 30px; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 10px; text-align: left; word-wrap: normal;">Request Infomation</h5>
+                      <h5 class="header-section" style="Margin: 0; Margin-bottom: 10px; background-color: #50C0C0; border: 2px solid #50C0C0; border-top-left-radius: 8px; border-top-right-radius: 8px; box-sizing: border-box; color: #FFF; font-family: Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: normal; height: 30px; line-height: 1.3; margin: 0; margin-bottom: 10px; padding:0px 10px; text-align: left; word-wrap: normal;">Request Infomation</h5>
                       <table class="row body-section" style="border: 1px solid #dee2e6; border-collapse: collapse; border-radius: 12px; border-spacing: 0; display: table; font-size: 12px; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%;">
                         <tbody>
                           <tr class="small-6 large-12 columns" style="padding: 0; text-align: left; vertical-align: top;">
@@ -581,13 +613,13 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">HOTEL/LOCATION :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.hotelName}</div>
+                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.hotel.hotelName}</div>
                             </th>
                             <th class="small-6 large-1 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 32.33333px;">
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">ROOM TYPE :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2  paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.roomTypeName}</div>
+                              <div class="col-2  paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${roomTypeSum}</div>
                             </th>
                           </tr>
                           <tr class="row-border" style="border-bottom: 1px solid #dee2e6; padding: 10px; text-align: left; vertical-align: top;">
@@ -595,13 +627,13 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">SERVICE PACKAGE :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.packageName}</div>
+                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${packageSum}</div>
                             </th>
                             <th class="small-6 large-1 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 32.33333px;">
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">CHECKIN - CHECKOUT:</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.checkin} ==> ${reqBody.checkout}</div>
+                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.time.checkin} ==> ${reqBody.time.checkout}</div>
                             </th>
                           </tr>
                           <tr class="row-border" style="border-bottom: 1px solid #dee2e6; padding: 10px; text-align: left; vertical-align: top;">
@@ -609,13 +641,13 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">NUMBER OF GUESTS :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.personQty}</div>
+                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${guestSum}</div>
                             </th>
                             <th class="small-6 large-1 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 32.33333px;">
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">NUMBER OF ROOM</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.roomQty}</div>
+                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.totalRoom}</div>
                             </th>
                           </tr>
                           <tr class="row-border c" style="border-bottom: 1px solid #dee2e6; padding: 10px; text-align: left; vertical-align: top;">
@@ -623,7 +655,7 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">ADDITION DETAILS :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.optionServiceName}</div>
+                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${optionServiceSum}</div>
                             </th>
                             <th class="small-6 large-1 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 32.33333px;">
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">TOTAL :</div>
@@ -638,7 +670,7 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                   </tr>
                   <tr style="padding: 0; text-align: left; vertical-align: top;">
                     <td class="padding" style="-moz-hyphens: auto; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; hyphens: auto; line-height: 1.3; margin: 0; padding: 10px; text-align: left; vertical-align: top; word-wrap: break-word;">
-                      <h5 class="header-section" style="Margin: 0; Margin-bottom: 10px; background-color: #50C0C0; border: 2px solid #50C0C0; border-top-left-radius: 8px; border-top-right-radius: 8px; box-sizing: border-box; color: #FFF; font-family: Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: normal; height: 30px; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 10px; text-align: left; word-wrap: normal;">Request Infomation</h5>
+                      <h5 class="header-section" style="Margin: 0; Margin-bottom: 10px; background-color: #50C0C0; border: 2px solid #50C0C0; border-top-left-radius: 8px; border-top-right-radius: 8px; box-sizing: border-box; color: #FFF; font-family: Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: normal; height: 30px; line-height: 1.3; margin: 0; margin-bottom: 10px; padding:0 10px; text-align: left; word-wrap: normal;">Customer Infomation</h5>
                       <table class="row body-section" style="border: 1px solid #dee2e6; border-collapse: collapse; border-radius: 12px; border-spacing: 0; display: table; font-size: 12px; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%;">
                         <tbody>
                           <tr class="small-6 large-12 columns" style="padding: 0; text-align: left; vertical-align: top;">
@@ -649,13 +681,13 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">Fullname :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.name}</div>
+                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.customerInfo.name}</div>
                             </th>
                             <th class="small-6 large-1 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 32.33333px;">
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">Email :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.email}</div>
+                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.customerInfo.email}</div>
                             </th>
                           </tr>
                           <tr class="row-border" style="border-bottom: 1px solid #dee2e6; padding: 10px; text-align: left; vertical-align: top;">
@@ -663,13 +695,13 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">Telephone :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.phone}</div>
+                              <div class="col-2 border-right paragraph" style="border-right: 1px solid #50C0C0; font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.customerInfo.phone}</div>
                             </th>
                             <th class="small-6 large-1 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 32.33333px;">
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">Option :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.other}</div>
+                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.customerInfo.other}</div>
                             </th>
                           </tr>
                         </tbody>
@@ -678,7 +710,7 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                   </tr>
                   <tr style="padding: 0; text-align: left; vertical-align: top;">
                     <td class="padding" style="-moz-hyphens: auto; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; hyphens: auto; line-height: 1.3; margin: 0; padding: 10px; text-align: left; vertical-align: top; word-wrap: break-word;">
-                      <h5 style="Margin: 0; Margin-bottom: 10px; color: inherit; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 0; text-align: left; word-wrap: normal;padding-left:20px">Lưu ý:</h5>
+                      <h5 style="Margin: 0; Margin-bottom: 10px; color: inherit; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 10px; padding: 0; text-align: left; word-wrap: normal;padding-left:20px">Notice:</h5>
                       <table class="row border-top" style="border-collapse: collapse; border-spacing: 0; border-top: 1px solid #7B6972; display: table; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%;">
                         <tbody>
                           <tr class="small-12 large-12 columns" style="padding: 0; text-align: left; vertical-align: top;">
@@ -687,7 +719,7 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                           <tr class="row-border paragraph" style="border-bottom: 1px solid #dee2e6; font-size: 12px; line-height: 1.7em; padding: 10px; text-align: left; vertical-align: top;">
                             <th class="small-12 large-12  columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 564px;">
                               <ul>
-                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Please confirm the information with the customer within 1 hour</li>
+                                <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">Please confirm the information with the customer within ${timeStaffReply()} hour</li>
                                 <li class="paragraph" style="font-size: 12px; line-height: 1.7em;">After the order is completed, please update the order status at 
                                 <a href="http://admin.dabook.vn/hotel-order/${transactionCode}" class="link-button" style="Margin: 0; background-color: #5d4a8e !important; border-radius: 4px; box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.14); color: #FFF !important; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 4px; padding: 2px 4px; text-align: left; text-decoration: none;"> Complete the order(admin.dabook.vn) </a>
                                 </li>
@@ -1085,8 +1117,8 @@ function generateCustomerHotelConfirm(reqBody, transactionCode) {
                           <tr style="padding: 0; text-align: left; vertical-align: top;">
                             <th class="small-12 large-6 first columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 16px; padding-right: 8px; text-align: left; width: 274px;">
                               <div class="section" style="padding: 10px;">
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;Margin:0;color:#7b6972;font-family:Helvetica,Arial,sans-serif;font-size:18px;font-weight:normal;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">Dear Mr(Ms). ${reqBody.name},</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;Margin:0;Margin-bottom:10px;color:#7b6972;font-family:Helvetica,Arial,sans-serif;font-size:18px;font-weight:normal;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">Mr(Ms) ${reqBody.name} 님,</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;Margin:0;color:#7b6972;font-family:Helvetica,Arial,sans-serif;font-size:18px;font-weight:normal;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">Dear Mr(Ms). ${reqBody.customerInfo.name},</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;Margin:0;Margin-bottom:10px;color:#7b6972;font-family:Helvetica,Arial,sans-serif;font-size:18px;font-weight:normal;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">Mr(Ms) ${reqBody.customerInfo.name} 님,</p>
 
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; padding: 0; text-align: left;">Thank you very much for your request</p>
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">투어를 신청해 주셔서 감사합니다.</p>
@@ -1094,8 +1126,8 @@ function generateCustomerHotelConfirm(reqBody, transactionCode) {
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; padding: 0; text-align: left;">DaiMinh Travel's staff is checking the availibility of services as per your request</p>
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">고객님이 신청해주신 투어 예약 가능 여부를 확인중입니다. </p>
 
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; padding: 0; text-align: left;">Within the next 6 hours, DaiMinh Travel's staff will email you for detail information / reconfirmation and so on</p>
-                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">6 시간 이내로 다이밍여행사 직원이 자세한 투어 내용과 함께 재확인 이메일을 보내드릴 것입니다.</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; padding: 0; text-align: left;">Within the next ${timeStaffReply()} hours, DaiMinh Travel's staff will email you for detail information / reconfirmation and so on</p>
+                                <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">${timeStaffReply()} 시간 이내로 다이밍여행사 직원이 자세한 투어 내용과 함께 재확인 이메일을 보내드릴 것입니다.</p>
 
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; padding: 0; text-align: left;">Please wait and check your email then</p>
                                 <p class="paragraph" style="Margin: 0; Margin-bottom: 10px; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 1.7em; margin: 0; margin-bottom: 10px; padding: 0; text-align: left;">잠시 후 이메일을 다시 확인해주시기 바랍니다.</p>
