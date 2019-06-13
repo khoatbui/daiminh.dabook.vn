@@ -33,4 +33,7 @@ router.post('/price', jsonParser,(req,res,next) => {
 })
 
 router.post('/combobox/packagebymultihotelroomtype',jsonParser,controller.getPackageByMultiHotelRoomType)
+
+router.post('/combobox/packagebysinglehotelroomtype',jsonParser,controller.getPackageBySingleHotelRoomType)
+
 module.exports = router

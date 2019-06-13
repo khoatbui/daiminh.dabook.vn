@@ -44,6 +44,9 @@
 .cursor-pointer{
     cursor: pointer;
 }
+.no-cursor-pointer{
+    cursor: auto !important;
+}
 .bg-success-opac-50{
     background: rgba(0, 191, 232,0.1) !important;
 }
@@ -871,6 +874,20 @@ background-image: linear-gradient(
 .badge-padding-custom{
     padding: 3px 5px !important;
 }
+.modal-title-custom{
+    background: #4469b0;
+    color: #FFF;
+    border-top-left-radius: 4px;
+    padding: 4px !important;
+    border-top-right-radius: 4px;
+    border: 1px solid #4469b0;
+}
+.border-radius-4px{
+    border-radius: 4px
+}
+.border-custom{
+    border: 1px solid #4469b0;
+}
 /* ========================
     RESPONSIVE
 ============================*/
@@ -881,9 +898,9 @@ background-image: linear-gradient(
     .h-30{
         height: 100px !important;
     }
-    .border-sm{
+    /* .border-sm{
         border:1px solid #dee2e6 !important;
-    }
+    } */
     }
     @media (min-width: 992px){
     .navbar .hestia-mega-menu>.dropdown-menu {
@@ -892,9 +909,9 @@ background-image: linear-gradient(
     .h-30{
         height: 100px !important;
     }
-    .border-sm{
+    /* .border-sm{
         border:1px solid #dee2e6 !important;
-    }
+    } */
     }
     @media (min-width: 769px){
     .navbar .hestia-mega-menu>.dropdown-menu {
@@ -905,13 +922,13 @@ background-image: linear-gradient(
     .h-30{
         height: 100px !important;
     }
-    .border-sm{
+    /* .border-sm{
         border:1px solid #dee2e6 !important;
-    }
+    } */
     }
     @media (min-width: 582px){
-        .border-sm{
+        /* .border-sm{
             border:none !important;
-        }
+        } */
 
     }

@@ -13,6 +13,7 @@ var pakageHotelRELSchema = new mongoose.Schema({
     endDate:Date,
     markUpPlus:Number,
     markUpPercent:Number,
+    maxAdult:Number,
     createBy:String,
     createDate:Date,
     modifyBy:String,

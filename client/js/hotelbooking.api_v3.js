@@ -45,21 +45,18 @@ var app = new Vue({
                 phone: "",
                 other: ""
             },
-            orderCode: "",
-            total:{
-                totalPrice: 20000,
-                totalRoom: 0,
-                totalGuest:{
-                    totalGolfer:0,
-                    totalNonGolfer:0,
-                    totalAdult:0,
-                    totalChildren:0
-                },
-                totalNight:0
+            adult: {
+                golfer: { "qty": 0 },
+                nongolfer: { "qty": 0 },
+                adult: { "qty": 0 },
+                children: { "qty": 0 },
             },
+            orderCode: "",
+            totalPrice: 20000,
+            totalRoom: 0,
             time: {
-                checkin: moment().format('DD-MM-YYYY'),
-                checkout: moment(new Date()).add(1, 'days').format('DD-MM-YYYY')
+                checkin: moment(),
+                checkout: moment(new Date()).add(1, 'days')
             }
         },
         selection: {
@@ -89,13 +86,14 @@ var app = new Vue({
     created() {
         this.initialize();
         this.getHotelList(this.bookingrequest.supplier);
-        // this.getOptionServiceBySupplierId();
+        this.getOptionServiceBySupplierId();
     },
     methods: {
         initialize() {
             AXIOS.get(apiUrl + '/supplier', { crossdomain: true })
                 .then((response) => {
                     this.selection.suppliers = response.data;
+                    console.log(this.selection.suppliers);
                     response.data.forEach(element => {
                         if (element.isActive == true) {
                             this.bookingrequest.supplier = element;
@@ -121,15 +119,13 @@ var app = new Vue({
         },
         changeSupplier(sup) {
             this.bookingrequest.supplier = sup;
-            this.getHotelList(this.bookingrequest.supplier);
-            // this.getOptionServiceBySupplierId();
+            this.getOptionServiceBySupplierId();
         },
         getHotelList(sup) {
             AXIOS.get(apiUrl + '/hotel/combobox/hotelbysuppliercode/' + sup.supplierCode, { crossdomain: true })
                 .then((response) => {
                     this.selection.hotels = response.data;
                     this.bookingrequest.hotel = response.data[0];
-                    this.getRoomTypeByHotel();
                 })
                 .catch((error) => {
                     console.log(error);
@@ -173,6 +169,7 @@ var app = new Vue({
                     response.data.forEach(element => {
                         this.selection.packages.push({ "package": element, qty: 0 })
                     });
+                    console.log(this.selection.packages);
                 })
                 .catch(function (error) {
                 })
@@ -185,6 +182,7 @@ var app = new Vue({
                     response.data.forEach(element => {
                         this.selection.optionServices.push({ "optionServices": element, qty: 0 })
                     });
+                    console.log(this.selection.optionServices);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -205,6 +203,13 @@ var app = new Vue({
                 })
                 .finally(() => {
                 });
+        },
+        changePackageCombobox(package) {
+            this.bookingrequest.packageId = package.packageId._id;
+            this.bookingrequest.packageName = package.packageId.packageName;
+            this.bookingrequest.packageCode = package.packageId.packageCode;
+            this.bookingrequest.price = package.price;
+            console.log(this.bookingrequest);
         },
         searchHotel() {
             this.bookingstep.find = true;
@@ -277,11 +282,11 @@ var app = new Vue({
         showPoposer() {
 
         },
-        plusPerson(perItem) {
-            perItem.qty++;
+        plusPerson(item) {
+            item.qty++;
         },
-        minusPerson(perItem) {
-            perItem.qty--;
+        minusPerson(item) {
+            item.qty--;
         },
         savePerson() {
             this.bookingrequest.adult = JSON.parse(JSON.stringify(this.selection.adult));
@@ -293,92 +298,41 @@ var app = new Vue({
         },
         plusRoomType(item) {
             item.qty++;
+            console.log(this.selection.roomTypes);
         },
         minusRoomType(item) {
             item.qty--;
+            console.log(this.selection.roomTypes);
         },
         saveRoomType() {
-            this.selection.roomTypeSelect = [];
-            console.log(this.selection.roomTypes);
             this.selection.roomTypes.forEach(element => {
                 if (element.qty > 0) {
-                    for (let index = 0; index < element.qty; index++) {
-                        AXIOS.get(apiUrl + `/packagehotelrel/combobox/packagebyhotelroomtype/hotel/${this.bookingrequest.hotel._id}/roomType/${element.roomType._id}`, { crossdomain: true })
-                            .then((response) => {
-                                AXIOS.get(apiUrl + '/optionservice/combobox/optionbysupplierid/' + this.bookingrequest.supplier._id, { crossdomain: true })
-                                    .then((res) => {
-
-                                        this.selection.roomTypeSelect.push({
-                                            "roomType": JSON.parse(JSON.stringify(element)),
-                                            "package": response.data,
-                                            "optionService": res.data,
-                                            "guest":{
-                                                "adult":{
-                                                    name:"adult",
-                                                    qty:0},
-                                                "golfer":{
-                                                    name:"golfer",
-                                                    qty:0},
-                                                "nongolder":{
-                                                    name:"nongolder",
-                                                    qty:0},
-                                                "children":{
-                                                    "less4":{
-                                                        name:"less4",
-                                                        qty:0},
-                                                    "less12":{
-                                                        name:"less12",
-                                                        qty:0}
-                                                },
-                                                "totalGuest":0
-                                            }
-                                        })
-                                    })
-                                    .catch((error) => {
-                                        console.log(error);
-                                    })
-                                    .finally(() => {
-                                    });
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            })
-                            .finally(() => {
-                            });
-                    }
+                    this.bookingrequest.roomTypes.push(JSON.parse(JSON.stringify(element)))
                 }
             });
+            this.getPackageByMultiHotel();
         },
         closeRoomType() {
-            this.selection.roomTypeSelect.forEach(element => {
+            this.bookingrequest.roomTypes.forEach(element => {
                 if (element.qty > 0) {
                     this.selection.roomTypes.find(obj => {
                         return obj.roomType.roomCode === element.roomType.roomCode
                     }).qty = JSON.parse(JSON.stringify(element.qty));
                 }
             });
-            if (this.selection.roomTypeSelect.length == 0) {
+            if ( this.bookingrequest.roomTypes.length==0) {
                 this.selection.roomTypes.forEach(element => {
-                    element.qty = 0;
+                    element.qty=0;
                 });
             }
         },
-        savePackageAdultOptionService(){
-            this.bookingrequest.roomTypes=[];
-            this.selection.roomTypeSelect.forEach(element => {
-                this.bookingrequest.roomTypes.push({
-                    roomType:element.roomType,
-                    package:element.selectedPackage,
-                    optionService:element.selectedOptionService,
-                    guest:element.guest
-                })
-            });
-        },
         plusPackage(item) {
             item.qty++;
+            console.log(this.selection.packages);
         },
         minusPackage(item) {
             item.qty--;
+            console.log(this.selection.packages);
         },
         savePackage() {
             this.selection.packages.forEach(element => {
@@ -396,9 +350,9 @@ var app = new Vue({
                     }).qty = JSON.parse(JSON.stringify(element.qty));
                 }
             });
-            if (this.bookingrequest.packages.length == 0) {
+            if ( this.bookingrequest.packages.length==0) {
                 this.selection.packages.forEach(element => {
-                    element.qty = 0;
+                    element.qty=0;
                 });
             }
         },
@@ -423,11 +377,13 @@ var app = new Vue({
                     }) = JSON.parse(JSON.stringify(element));
                 }
             });
-            if (this.bookingrequest.optionServices.length == 0) {
+            if ( this.bookingrequest.optionServices.length==0) {
                 this.selection.optionServices.forEach(element => {
-                    element.qty = 0;
+                    element.qty=0;
                 });
             }
+            console.log(this.selection.optionServices);
+            console.log(this.bookingrequest.optionServices);
         }
     },
     computed: {
@@ -437,62 +393,32 @@ var app = new Vue({
             var a = moment(this.bookingrequest.time.checkin, 'D-M-YYYY');
             var b = moment(this.bookingrequest.time.checkout, 'D-M-YYYY');
             var diffDays = b.diff(a, 'days');
-            this.bookingrequest.roomTypes.forEach(element => {
-                if (typeof element.package !='undefined') {
-                total += element.package.price * diffDays;
-                }
+            console.log(diffDays);
+            this.bookingrequest.packages.forEach(element => {
+                total += element.qty * element.package.price;
             });
-            this.bookingrequest.roomTypes.forEach(element => {
-                if (typeof element.optionService !='undefined') {
-                    total += element.optionService.price;
-                }
+            this.bookingrequest.optionServices.forEach(element => {
+                total += element.qty * element.optionServices.price;
             });
-            return this.bookingrequest.total.totalPrice = total;
+            console.log(total);
+            return this.bookingrequest.totalPrice = total * diffDays;
         },
         totalTime: function () {
             var a = moment(this.bookingrequest.time.checkin, 'D-M-YYYY');
             var b = moment(this.bookingrequest.time.checkout, 'D-M-YYYY');
             var diffDays = b.diff(a, 'days');
-            return this.bookingrequest.total.totalNight= diffDays;
+            return diffDays;
         },
         totalRoom: function () {
-           return this.bookingrequest.total.totalRoom= this.bookingrequest.roomTypes.length;
-        },
-        totalGolfer:function(){
-            var total = 0;
-            if (this.bookingrequest.roomTypes.length>0) {
+            var totalRoom = 0;
             this.bookingrequest.roomTypes.forEach(element => {
-                total += element.guest.golfer.qty;
+                totalRoom += element.qty
             });
-        }
-            return this.bookingrequest.total.totalGuest.totalGolfer= total;
+            return this.bookingrequest.totalRoom = totalRoom;
         },
-        totalNonGolfer:function(){
-            var total = 0;
-            if (this.bookingrequest.roomTypes.length>0) {
-            this.bookingrequest.roomTypes.forEach(element => {
-                total += element.guest.nongolfer.qty;
-            });
-        }
-            return this.bookingrequest.total.totalGuest.totalNonGolfer= total;
-        },
-        totalAdult:function(){
-            var total = 0;
-            if (this.bookingrequest.roomTypes.length>0) {
-            this.bookingrequest.roomTypes.forEach(element => {
-                total += element.guest.adult.qty;
-            });
-        }
-            return this.bookingrequest.total.totalGuest.totalAdult= total;
-        },
-        totalChildren:function(){
-            var total = 0;
-            if (this.bookingrequest.roomTypes.length>0) {
-            this.bookingrequest.roomTypes.forEach(element => {
-                total += element.guest.children.less4.qty + element.guest.children.less12.qty;
-            });
-        }
-            return this.bookingrequest.total.totalGuest.totalChildren=total;
+        getPackageNote: function () {
+            var package = this.vinPackage.filter(obj => { return obj._id === this.bookingrequest.packageId })
+            return package.note;
         }
     }
 })
