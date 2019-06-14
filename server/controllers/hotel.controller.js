@@ -3,13 +3,13 @@ var Hotel = require('../models/hotels.model')
 var Supplier=require('../models/supplier.model')
 var mongoose = require('mongoose');
 module.exports.index =function(req,res){
-    Hotel.find().then(function(hotel){
+    Hotel.find().populate('supplierId').then(function(hotel){
         res.send(hotel)
     })
 };
 
 module.exports.getHotel=(req,res,next) => {
-    Hotel.find().then(function(hotel){
+    Hotel.find().populate('supplierId').then(function(hotel){
         res.send(hotel)
     })
 };

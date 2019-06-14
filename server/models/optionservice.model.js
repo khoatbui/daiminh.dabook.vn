@@ -1,9 +1,9 @@
 var mongoose = require('mongoose')
 
 var optionServiceSchema = new mongoose.Schema({
-    supplierId: mongoose.Schema.Types.ObjectId,
-    hotelId: mongoose.Schema.Types.ObjectId,
-    roomTypeId:mongoose.Schema.Types.ObjectId,
+    supplierId: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier' },
+    hotelId: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' },
+    roomTypeId:{ type: mongoose.Schema.Types.ObjectId, ref: 'RoomType' },
     optionServiceCode:String,
     optionServiceName:String,
     price:Number,

@@ -73,7 +73,7 @@
                                 search</span>
                             <span
                                 v-bind:class="{ 'active no-left': (bookingstep.confirm && !bookingstep.finish),'':(!bookingstep.confirm && !bookingstep.finish),'active no-left-right':bookingstep.finish }">Detail
-                                infomation</span>
+                            </span>
                             <span
                                 v-bind:class="{ 'active no-left': bookingstep.finish,'':!bookingstep.finish }">Request</span>
                         </div>
@@ -82,67 +82,86 @@
                         <div class="row d-flex align-items-stretch">
                             <div class="col-12 col-md-6">
                                 <div class="card-body" v-cloak>
-                                    <ul class="nav nav-pills nomal-display nav-pills-rose" role="tablist">
-                                        <li class="nav-item" v-for="item in selection.suppliers">
-                                            <a class="nav-link" v-bind:class="{ active: item.isActive }"
-                                                data-toggle="tab" href="#flc" role="tablist" aria-expanded="true"
-                                                @click="getHotelList(item);changeSupplier(item)">
-                                                {{item.supplierCode}}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content tab-space pb-0">
-                                        <div class="tab-pane active" id="flc" aria-expanded="true">
-                                            <div class="row border-sm border-radius p-4"
-                                                v-bind:class="{'d-none':bookingstep.confirm}">
-                                                <div class="col-12 p-2">
-                                                    <div class="dropdown custom-hotel-list show w-100">
-                                                        <a class="btn btn-secondary dropdown-toggle" href="#"
-                                                            role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false"
-                                                            v-model="bookingrequest.hotel">
-                                                            {{bookingrequest.hotel.hotelName}}
-                                                            <i class="fas fa-sort-down text-right float-right"></i>
-                                                        </a>
+                                    <div class="row pt-4 pb-4">
+                                        <div class="col-12 col-md-4 pl-0">
+                                            <ul class="nav nav-pills nomal-display nav-pills-rose text-left p-0"
+                                                role="tablist">
+                                                <li class="nav-item" v-for="item in selection.suppliers">
+                                                    <a class="nav-link" v-bind:class="{ active: item.isActive }"
+                                                        data-toggle="tab" href="#flc" role="tablist"
+                                                        aria-expanded="true"
+                                                        @click="getHotelList(item);changeSupplier(item)">
+                                                        {{item.supplierCode}}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-12  px-0 pt-sm-4 pt-md-0 col-md-8 text-right">
+                                            <span> <a class="">Please follow the 4 easy steps, click for instruction <i
+                                                        class="fas fa-info-circle text-info cursor-pointer"
+                                                        data-toggle="modal"
+                                                        data-target="#instructionModal"></i></a></span>
+                                        </div>
+                                    </div>
+                                    <div class="row border-sm border-radius p-4"
+                                        v-bind:class="{'d-none':bookingstep.confirm}">
+                                        <div class="col-1 tex-left p-0 d-flex align-items-center time-line">
+                                            <span class="btn btn-icon-xs btn-rose">1</span>
+                                        </div>
+                                        <div class="col-11 p-2">
+                                            <div class="dropdown custom-hotel-list show w-100">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" v-model="bookingrequest.hotel">
+                                                    {{bookingrequest.hotel.hotelName}}
+                                                    <i class="fas fa-sort-down text-right float-right"></i>
+                                                </a>
 
-                                                        <div class="dropdown-menu w-100 h-50-max"
-                                                            aria-labelledby="dropdownMenuLink">
-                                                            <a class="dropdown-item"
-                                                                @click="bookingrequest.hotel=hotel;getRoomTypeByHotel()"
-                                                                v-for="hotel in selection.hotels">{{hotel.hotelName}}</a>
+                                                <div class="dropdown-menu w-100 h-50-max"
+                                                    aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item"
+                                                        @click="bookingrequest.hotel=hotel;getRoomTypeByHotel()"
+                                                        v-for="hotel in selection.hotels">{{hotel.hotelName}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1 tex-left p-0 d-flex align-items-center time-line">
+                                            <span class="btn btn-icon-xs btn-rose">2</span>
+                                        </div>
+                                        <div class="col-11 p-2">
+                                            <div class="form-row">
+                                                <div class="col-12 col-md-6">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text text-left p-0">
+                                                                <i class="fas fa-calendar-alt"></i>
+                                                            </span>
                                                         </div>
+                                                        <input type="text" class="form-control starttime pl-2"
+                                                            id="checkin" placeholder="Checkin..." />
                                                     </div>
                                                 </div>
-                                                <div class="col-12 p-2">
-                                                    <div class="form-row">
-                                                        <div class="col-12 col-md-6">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text text-left p-0">
-                                                                        <i class="fas fa-calendar-alt"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <input type="text" class="form-control starttime pl-2"
-                                                                    id="checkin" placeholder="Checkin..." />
-                                                            </div>
+                                                <div class="col-12 col-md-6">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text text-left p-0">
+                                                                <i class="fas fa-calendar-alt"></i>
+                                                            </span>
                                                         </div>
-                                                        <div class="col-12 col-md-6">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text text-left p-0">
-                                                                        <i class="fas fa-calendar-alt"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <input type="text" class="form-control endtime pl-2"
-                                                                    id="checkout" placeholder="Checkout..." />
-                                                            </div>
-                                                        </div>
+                                                        <input type="text" class="form-control endtime pl-2"
+                                                            id="checkout" placeholder="Checkout..." />
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1 tex-left p-0 d-flex align-items-center time-line">
+                                            <span class="btn btn-icon-xs btn-rose">3</span>
+                                        </div>
+                                        <div class="col-11">
+                                            <div class="row">
                                                 <div class="col-6 p-2">
                                                     <a href="#" class="btn btn-sm w-100 btn-info input-modal-btn"
-                                                        data-toggle="modal" data-target="#roomTypeModal">RoomType with
-                                                        number<i v-if="selection.roomTypeSelect.length>0"
+                                                        data-toggle="modal" data-target="#roomTypeModal">Room Selection<i v-if="selection.roomTypeSelect.length>0"
                                                             class="fas fa-check text-info float-right"></i> </a>
                                                 </div>
                                                 <div class="col-6 p-2">
@@ -151,165 +170,171 @@
                                                         Package<i v-if="bookingrequest.roomTypes.length>0"
                                                             class="fas fa-check text-info float-right"></i> </a>
                                                 </div>
-                                                <div class="col-6 p-2 d-flex align-items-center">
-                                                    <h6 class="badge badge-default badge-pill"><b>{{totalPrice}}
-                                                            VND/night</b></h6>
-                                                </div>
-                                                <div class="col-6 p-2">
-                                                    <button class="btn btn-info w-100 btn-sm" @click="searchHotel">
-                                                        <i class="fas fa-hotel"></i> Search
-                                                    </button>
-                                                </div>
                                             </div>
-                                            <div class="row border border-radius p-4"
-                                                v-bind:class="{'d-none':(bookingstep.find || bookingstep.finish),'d-flex':(bookingstep.confirm && !bookingstep.finish)}">
-                                                <div class="col-12">
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Hotel/location :</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title p-0 m-0">
-                                                                {{bookingrequest.hotel.hotelName}}
-                                                            </h6>
-                                                        </div>
+                                            </div>
+                                            <div class="col-1 tex-left p-0 d-flex align-items-center time-line">
+                                                <span class="btn btn-icon-xs btn-rose">4</span>
+                                            </div>
+                                            <div class="col-11">
+                                                <div class="row">
+                                            
+                                                    <div class="col-6 p-2 d-flex align-items-center">
+                                                        <h6 class="badge badge-default badge-pill"><b>{{totalPrice}}
+                                                                VND/night</b></h6>
                                                     </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Room type :</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title  p-0 m-0">
-                                                                <a href="#"
-                                                                    class="btn btn-sm btn-info input-modal-btn p-1 m-0 no-cursor-pointer"
-                                                                    v-for="(item,index) in bookingrequest.roomTypes">
-                                                                    {{item.roomType.roomType.roomTypeName}} <span
-                                                                        class="badge badge-info badge-pill badge-padding-custom">Room :{{index +1}}</span>
-                                                                </a>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0"> Service package :</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title  p-0 m-0">
-                                                                <a href="#"
-                                                                    class="btn btn-sm btn-info input-modal-btn p-1 m-0 no-cursor-pointer"
-                                                                    v-for="(item,index) in bookingrequest.roomTypes">
-                                                                    {{item.package.packageId.packageName}} <span
-                                                                        class="badge badge-info badge-pill badge-padding-custom">Room:{{index + 1}}</span>
-                                                                </a>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Stay :</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title  p-0 m-0">
-                                                                {{bookingrequest.time.checkin}} ->
-                                                                {{bookingrequest.time.checkout}} <span>[{{totalTime}}
-                                                                    nights]</span>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Number of guests :</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title p-0 m-0">
-                                                                <span
-                                                                    v-if="bookingrequest.supplier.supplierCode=='FLC'">
-                                                                    Golfer :
-                                                                    {{totalGolfer}} | Non-Golfer :
-                                                                    {{totalNonGolfer}}</span>
-                                                                <span
-                                                                    v-if="bookingrequest.supplier.supplierCode!='FLC'">
-                                                                    Adult :
-                                                                    {{totalAdult}} | Childrens :
-                                                                    {{totalChildren}}</span>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Number of room</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title p-0 m-0">
-                                                                {{totalRoom}} </h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row border-bottom pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h6 class="title  p-0 m-0">Addition details :</h6>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h6 class="title p-0 m-0">
-                                                                <a href="#"
-                                                                    class="btn btn-sm btn-info input-modal-btn p-1 m-0 no-cursor-pointer"
-                                                                    v-for="item in bookingrequest.optionServices">
-                                                                    {{item.optionServices.optionServiceName}} <span
-                                                                        class="badge badge-info badge-pill badge-padding-custom">{{item.qty}}</span>
-                                                                </a>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row border-bottom bg-success-opac-50 pb-1 pt-1">
-                                                        <div class="col-4 border-right-dot">
-                                                            <h5 class="title  p-0 m-0">TOTAL</h5>
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <h5 class="title text-success p-0 m-0"> {{totalPrice}}
-                                                                </h6>
-                                                        </div>
+                                                    <div class="col-6 p-2">
+                                                        <button class="btn btn-info w-100 btn-sm" @click="searchHotel">
+                                                            <i class="fas fa-hotel"></i> OK
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row border border-radius p-4"
-                                                v-bind:class="{'d-none':!bookingstep.finish}">
-                                                <div class="col-12">
-                                                    <div class="row pb-1 pt-1">
-                                                        <div class="card-body">
-                                                            <h6 class="title text-rose p-0 m-0">SUCCESSFULLY BOOKED
-                                                                <span class="badge badge-rose">ORDER ID #
-                                                                    {{bookingrequest.orderCode}}</span></h6>
-                                                            <ul>
-                                                                <li>
-                                                                    <p>You can proceed the payment via Bank transfer or
-                                                                        one of these methods <a href="#">dưới đây</a>
-                                                                    </p>
-                                                                </li>
-                                                                <li>
-                                                                    <p>Dai Minh Travel will contact you (email or mobile
-                                                                        phone) within <span
-                                                                            class="badge badge-success">30
-                                                                            minutes</span> (Monday – Sunday 08AM – 23PM)
-                                                                        to reconfirm services & payment due date.</p>
-                                                                </li>
-                                                                <li>
-                                                                    <p>You ONLY make payment (in cash at home / at DM
-                                                                        Office, Bank transfer) after the Reconfirmation
-                                                                        is officially acknowledged by Dai Minh Travel.
-                                                                    </p>
-                                                                </li>
-                                                                <li>
-                                                                    <p>In case of, Immediate Reconfirmation requested by
-                                                                        yourself, should you kindly contact Dai Minh
-                                                                        Travel Hotline:
-                                                                    </p>
-                                                                    <ul class="ml-4">
-                                                                        <li><b> 0243-562-3777 (778)</b></li>
-                                                                        <li><b> 19001542</b></li>
-                                                                    </ul>
-                                                                </li>
+                                            </div>
+                                    <div class="row border border-radius p-4"
+                                        v-bind:class="{'d-none':(bookingstep.find || bookingstep.finish),'d-flex':(bookingstep.confirm && !bookingstep.finish)}">
+                                        <div class="col-12">
+                                            <div class="row border-bottom pb-1 pt-1">
+                                                <div class="col-4 border-right-dot">
+                                                    <h6 class="title  p-0 m-0">Hotel/location :</h6>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h6 class="title p-0 m-0">
+                                                        {{bookingrequest.hotel.hotelName}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row border-bottom pb-1 pt-1">
+                                                <div class="col-4 border-right-dot">
+                                                    <h6 class="title  p-0 m-0">Room type :</h6>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h6 class="title  p-0 m-0">
+                                                        <a href="#"
+                                                            class="btn btn-sm btn-info input-modal-btn p-1 m-0 no-cursor-pointer"
+                                                            v-for="(item,index) in bookingrequest.roomTypes">
+                                                            {{item.roomType.roomType.roomTypeName}} <span
+                                                                class="badge badge-info badge-pill badge-padding-custom">Room
+                                                                :{{index +1}}</span>
+                                                        </a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row border-bottom pb-1 pt-1">
+                                                <div class="col-4 border-right-dot">
+                                                    <h6 class="title  p-0 m-0"> Service package :</h6>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h6 class="title  p-0 m-0">
+                                                        <a href="#"
+                                                            class="btn btn-sm btn-info input-modal-btn p-1 m-0 no-cursor-pointer"
+                                                            v-for="(item,index) in bookingrequest.roomTypes">
+                                                            {{item.package.packageId.packageName}} <span
+                                                                class="badge badge-info badge-pill badge-padding-custom">Room:{{index + 1}}</span>
+                                                        </a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row border-bottom pb-1 pt-1">
+                                                <div class="col-4 border-right-dot">
+                                                    <h6 class="title  p-0 m-0">Stay :</h6>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h6 class="title  p-0 m-0">
+                                                        {{bookingrequest.time.checkin}} ->
+                                                        {{bookingrequest.time.checkout}} <span>[{{totalTime}}
+                                                            nights]</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row border-bottom pb-1 pt-1">
+                                                <div class="col-4 border-right-dot">
+                                                    <h6 class="title  p-0 m-0">Number of guests :</h6>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h6 class="title p-0 m-0">
+                                                        <span v-if="bookingrequest.supplier.supplierCode=='FLC'">
+                                                            Golfer :
+                                                            {{totalGolfer}} | Non-Golfer :
+                                                            {{totalNonGolfer}}</span>
+                                                        <span v-if="bookingrequest.supplier.supplierCode!='FLC'">
+                                                            Adult :
+                                                            {{totalAdult}} | Childrens :
+                                                            {{totalChildren}}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row border-bottom pb-1 pt-1">
+                                                <div class="col-4 border-right-dot">
+                                                    <h6 class="title  p-0 m-0">Number of room</h6>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h6 class="title p-0 m-0">
+                                                        {{totalRoom}} </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row border-bottom pb-1 pt-1">
+                                                <div class="col-4 border-right-dot">
+                                                    <h6 class="title  p-0 m-0">Addition details :</h6>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h6 class="title p-0 m-0">
+                                                        <a href="#"
+                                                            class="btn btn-sm btn-info input-modal-btn p-1 m-0 no-cursor-pointer"
+                                                            v-for="item in bookingrequest.optionServices">
+                                                            {{item.optionServices.optionServiceName}} <span
+                                                                class="badge badge-info badge-pill badge-padding-custom">{{item.qty}}</span>
+                                                        </a>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row border-bottom bg-success-opac-50 pb-1 pt-1">
+                                                <div class="col-4 border-right-dot">
+                                                    <h5 class="title  p-0 m-0">TOTAL</h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h5 class="title text-success p-0 m-0"> {{totalPrice}} vnd
+                                                        </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row border border-radius p-4"
+                                        v-bind:class="{'d-none':!bookingstep.finish}">
+                                        <div class="col-12">
+                                            <div class="row pb-1 pt-1">
+                                                <div class="card-body">
+                                                    <h6 class="title text-rose p-0 m-0">SUCCESSFULLY BOOKED
+                                                        <span class="badge badge-rose">ORDER ID #
+                                                            {{bookingrequest.orderCode}}</span></h6>
+                                                    <ul>
+                                                        <li>
+                                                            <p>You can proceed the payment via Bank transfer or
+                                                                one of these methods <a href="#">dưới đây</a>
+                                                            </p>
+                                                        </li>
+                                                        <li>
+                                                            <p>Dai Minh Travel will contact you (email or mobile
+                                                                phone) within <span class="badge badge-success">30
+                                                                    minutes</span> (Monday – Sunday 08AM – 23PM)
+                                                                to reconfirm services & payment due date.</p>
+                                                        </li>
+                                                        <li>
+                                                            <p>You ONLY make payment (in cash at home / at DM
+                                                                Office, Bank transfer) after the Reconfirmation
+                                                                is officially acknowledged by Dai Minh Travel.
+                                                            </p>
+                                                        </li>
+                                                        <li>
+                                                            <p>In case of, Immediate Reconfirmation requested by
+                                                                yourself, should you kindly contact Dai Minh
+                                                                Travel Hotline:
+                                                            </p>
+                                                            <ul class="ml-4">
+                                                                <li><b> 0243-562-3777 (778)</b></li>
+                                                                <li><b> 19001542</b></li>
                                                             </ul>
-                                                        </div>
-                                                    </div>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -317,7 +342,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 d-flex align-items-center">
+                            <div class="col-12 col-md-6 d-flex align-items-center"  v-cloak>
                                 <div class="card-body p-0" v-bind:class="{'d-none':bookingstep.confirm}">
                                     <div class="row border border-radius p-4 w-100 bg-info m-0">
                                         <div class="col-12">
@@ -326,7 +351,7 @@
                                                     <h6 class="title text-white p-0 m-0">Hotel/location :</h6>
                                                 </div>
                                                 <div class="col-8">
-                                                    <h6 class="title text-white p-0 m-0">
+                                                    <h6 class="title text-white p-0 m-0"  v-cloak>
                                                         {{bookingrequest.hotel.hotelName}}
                                                     </h6>
                                                 </div>
@@ -336,12 +361,13 @@
                                                     <h6 class="title text-white p-0 m-0">Room type :</h6>
                                                 </div>
                                                 <div class="col-8">
-                                                    <h6 class="title text-white p-0 m-0">
+                                                    <h6 class="title text-white p-0 m-0" v-cloak>
                                                         <a href="#"
                                                             class="btn btn-sm btn-info input-modal-btn p-1 m-0 no-cursor-pointer"
                                                             v-for="(item,index) in bookingrequest.roomTypes">
                                                             {{item.roomType.roomType.roomTypeName}} <span
-                                                                class="badge badge-default badge-pill badge-padding-custom">Room :{{index +1}}</span>
+                                                                class="badge badge-default badge-pill badge-padding-custom">Room
+                                                                :{{index +1}}</span>
                                                         </a>
                                                     </h6>
                                                 </div>
@@ -351,7 +377,7 @@
                                                     <h6 class="title text-white p-0 m-0"> Service package :</h6>
                                                 </div>
                                                 <div class="col-8">
-                                                    <h6 class="title text-white p-0 m-0">
+                                                    <h6 class="title text-white p-0 m-0" v-cloak>
                                                         <a href="#"
                                                             class="btn btn-sm btn-info input-modal-btn p-1 m-0 no-cursor-pointer"
                                                             v-for="(item,index) in bookingrequest.roomTypes">
@@ -366,7 +392,7 @@
                                                     <h6 class="title text-white p-0 m-0">Stay :</h6>
                                                 </div>
                                                 <div class="col-8">
-                                                    <h6 class="title text-white p-0 m-0">
+                                                    <h6 class="title text-white p-0 m-0" v-cloak>
                                                         {{bookingrequest.time.checkin}} ->
                                                         {{bookingrequest.time.checkout}} <span
                                                             class="text-white">[{{totalTime}} nights]</span>
@@ -378,7 +404,7 @@
                                                     <h6 class="title text-white p-0 m-0">Number of guests :</h6>
                                                 </div>
                                                 <div class="col-8">
-                                                    <h6 class="title text-white p-0 m-0">
+                                                    <h6 class="title text-white p-0 m-0" v-cloak>
                                                         <span v-if="bookingrequest.supplier.supplierCode=='FLC'"> Golfer
                                                             :
                                                             {{totalGolfer}} | Non-Golfer :
@@ -404,7 +430,7 @@
                                                     <h6 class="title text-white p-0 m-0">Addition details :</h6>
                                                 </div>
                                                 <div class="col-8">
-                                                    <h6 class="title text-white p-0 m-0">
+                                                    <h6 class="title text-white p-0 m-0" v-cloak>
                                                         <a href="#"
                                                             class="btn btn-sm btn-info input-modal-btn p-1 m-0 no-cursor-pointer"
                                                             v-for="item in bookingrequest.optionServices">
@@ -418,8 +444,8 @@
                                                 <div class="col-4 border-right-dot">
                                                     <h5 class="title text-white p-0 m-0">TOTAL</h5>
                                                 </div>
-                                                <div class="col-8">
-                                                    <h5 class="title text-white p-0 m-0"> {{totalPrice}}
+                                                <div class="col-8" v-cloak>
+                                                    <h5 class="title text-white p-0 m-0"> {{totalPrice}} vnd
                                                         </h6>
                                                 </div>
                                             </div>
@@ -427,7 +453,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body"
-                                    v-bind:class="{'d-none':(bookingstep.find || bookingstep.finish),'d-flex':(bookingstep.confirm && !bookingstep.finish)}">
+                                    v-bind:class="{'d-none':(bookingstep.find || bookingstep.finish),'d-flex':(bookingstep.confirm && !bookingstep.finish)}"  v-cloak>
 
                                     <div class="row border border-radius p-4">
                                         <div class="col-12 p-2">
@@ -494,7 +520,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body" v-bind:class="{'d-none':!bookingstep.finish}">
+                                <div class="card-body" v-bind:class="{'d-none':!bookingstep.finish}" v-cloak>
                                     <div class="row border border-radius p-4">
                                         <div class="col-12 p-2">
                                             <div class="border-bottom pb-3 text-left">
@@ -631,7 +657,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="roomTypeModalLabel">Please select type of room with number</h5>
+                        <h5 class="modal-title" id="roomTypeModalLabel">How many room do you need?</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -674,7 +700,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="packageModalLabel">Please select detail packages</h5>
+                        <h5 class="modal-title" id="packageModalLabel">Which package and How many people stay in the room?</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -693,7 +719,7 @@
                                                     <h6 class=" w-100">
                                                         <span class="w-100  border-bottom cursor-pointer"
                                                             data-toggle="collapse" :data-target="'#collapse_01' + index"
-                                                            aria-expanded="true" aria-controls="collapse_01">Choice
+                                                            aria-expanded="true" aria-controls="collapse_01">Select
                                                             package <i class="fas fa-sort-down float-right"></i></span>
                                                     </h6>
                                                     <div v-bind:id="'collapse_01' + index" class="collapse show pl-4"
@@ -704,7 +730,9 @@
                                                                     <label class="form-check-label">
                                                                         <input class="form-check-input" type="radio"
                                                                             v-bind:name="'package' +index"
-                                                                            v-bind:id="'package' +index" v-bind:value="subitem" v-model="item.selectedPackage" checked>
+                                                                            v-bind:id="'package' +index"
+                                                                            v-bind:value="subitem"
+                                                                            v-model="item.selectedPackage" checked>
                                                                         {{subitem.packageId.packageName}} |
                                                                         {{subitem.price}} vnd <span class="circle">
                                                                             <span class="check"></span>
@@ -717,8 +745,7 @@
                                                     <h6>
                                                         <span class="w-100  border-bottom cursor-pointer"
                                                             data-toggle="collapse" :data-target="'#collapse_02' + index"
-                                                            aria-expanded="true" aria-controls="collapse_02">Choice
-                                                            adult <i class="fas fa-sort-down float-right"></i></span>
+                                                            aria-expanded="true" aria-controls="collapse_02">Number of guest(s) <i class="fas fa-sort-down float-right"></i></span>
                                                     </h6>
                                                     <div v-bind:id="'collapse_02' + index" class="collapse"
                                                         aria-labelledby="headingTwo" data-parent="#accordionExample">
@@ -861,8 +888,8 @@
                                                     <h6>
                                                         <span class="w-100  border-bottom cursor-pointer"
                                                             data-toggle="collapse" :data-target="'#collapse_03' + index"
-                                                            aria-expanded="true" aria-controls="collapse_03">Choice
-                                                            option service <i
+                                                            aria-expanded="true" aria-controls="collapse_03">
+                                                            Optional service <i
                                                                 class="fas fa-sort-down float-right"></i></span>
                                                     </h6>
                                                     <div v-bind:id="'collapse_03' + index" class="collapse"
@@ -872,8 +899,11 @@
                                                                 <div class="form-check form-check-radio p-0 m-1">
                                                                     <label class="form-check-label">
                                                                         <input class="form-check-input" type="radio"
-                                                                            v-bind:name="'optionservice'+index" v-bind:id="'optionservice'+index"
-                                                                            v-bind:value="subitem" v-model="item.selectedOptionService" checked>
+                                                                            v-bind:name="'optionservice'+index"
+                                                                            v-bind:id="'optionservice'+index"
+                                                                            v-bind:value="subitem"
+                                                                            v-model="item.selectedOptionService"
+                                                                            checked>
                                                                         {{subitem.optionServiceName}} <span
                                                                             class="circle">
                                                                             <span class="check"></span>
@@ -893,7 +923,141 @@
                     </div>
                     <div class="modal-footer border-top pt-2">
                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-info btn-sm" @click="savePackageAdultOptionService" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-info btn-sm" @click="savePackageAdultOptionService"
+                            data-dismiss="modal">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Select Instruction Modal -->
+        <div class="modal fade" id="instructionModal" tabindex="-1" role="dialog"
+            aria-labelledby="instructionModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="instructionModalLabel">Booking instruction</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-1 tex-left p-0 d-flex align-items-center time-line">
+                                    <span class="btn btn-icon-xs btn-rose">1</span>
+                                </div>
+                                <div class="col-11">
+                                    <div class="row mb-2 mt-2 p-2 border-bottom">
+                                        <div class="col-12">
+                                            <p>Click and pick one of the hotel/resort</p>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="dropdown custom-hotel-list show">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" v-model="bookingrequest.hotel">
+                                                    Vinpearl Condotel Riverside
+                                                    <i class="fas fa-sort-down text-right float-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <p>and <button type="button" class="btn btn-info btn-sm">Save</button>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-1 tex-left p-0 d-flex align-items-center time-line">
+                                    <span class="btn btn-icon-xs btn-rose">2</span>
+                                </div>
+                                <div class="col-11">
+                                    <div class="row mb-2 mt-2 p-2 border-bottom">
+                                        <div class="col-12">
+                                            <p>Select the check-in & check-out</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text text-left p-0">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control pl-2"
+                                                    placeholder="Checkin..." />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text text-left p-0">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control pl-2"
+                                                    placeholder="Checkout..." />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 tex-left p-0 d-flex align-items-center time-line">
+                                    <span class="btn btn-icon-xs btn-rose">3</span>
+                                </div>
+                                <div class="col-11">
+                                    <div class="row mb-2 mt-2 p-2 border-bottom">
+                                        <div class="col-12">
+                                            <p>Clickin <a class="btn btn-sm btn-info input-modal-btn">RoomType
+                                                    with
+                                                    number </a></p>
+                                        </div>
+                                        <div class="col-8">
+                                            <p> And select number of Room(s)</p>
+                                        </div>
+                                        <div class="col-1 p-1 d-flex justify-content-center align-items-center">
+                                            <button class="btn btn-info btn-icon-xs">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-2 d-flex justify-content-center align-items-center">
+                                            <a class="btn btn-sm w-100 btn-info input-modal-btn p-0">0</a>
+                                        </div>
+                                        <div class="col-1 p-1 d-flex justify-content-center align-items-center">
+                                            <button class="btn btn-info btn-icon-xs">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 tex-left p-0 d-flex align-items-center time-line">
+                                    <span class="btn btn-icon-xs btn-rose">4</span>
+                                </div>
+                                <div class="col-11">
+                                    <div class="row mb-2 mt-2 p-2 border-bottom">
+                                        <div class="col-12">
+                                            <p>Click in <a class="btn btn-sm btn-info input-modal-btn">Service
+                                                    Package</a> for select a package for the room and number of guest in
+                                                the room. </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p>Some Hotel/Resort provides its guest(s) with service package such as
+                                                Meals/Recreational/Center entrance tickets / or others just pick</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 tex-left p-0 d-flex align-items-center time-line">
+                                    <span class="btn btn-icon-xs btn-rose">5</span>
+                                </div>
+                                <div class="col-11">
+                                    <div class="row mb-2 mt-2 p-2">
+                                        <div class="col-12">
+                                            <p>Dabook system's able to immediatly report on the result which is for reference</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                    <div class="modal-footer border-top pt-2">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

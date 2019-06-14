@@ -1,11 +1,10 @@
-var db = require('../db')
 var RoomType = require('../models/roomtype.model')
 var mongoose = require('mongoose');
 var moment =require('moment');
 moment().format();
 
 module.exports.index = function (req, res) {
-    RoomType.find().then(function (roomtype) {
+    RoomType.find().populate('supplierId').populate('hotelId').then(function (roomtype) {
         res.send(roomtype)
     })
 };

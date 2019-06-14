@@ -1,11 +1,10 @@
-var db = require('../db')
 var OptionService = require('../models/optionservice.model')
 var mongoose = require('mongoose');
 var moment =require('moment');
 moment().format();
 
 module.exports.index = function (req, res) {
-    OptionService.find().then(function (optionService) {
+    OptionService.find().populate('supplierId').populate('hotelId').populate('roomTypeId').then(function (optionService) {
         res.send(optionService)
     })
 };

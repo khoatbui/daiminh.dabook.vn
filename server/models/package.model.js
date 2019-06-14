@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
 
 var pakageSchema = new mongoose.Schema({
-    supplierId: mongoose.Schema.Types.ObjectId,
+    supplierId: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier' },
     packageCode:String,
     packageName:String,
     price:Number,

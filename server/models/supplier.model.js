@@ -3,6 +3,8 @@ var mongoose = require('mongoose')
 var supplierSchema = new mongoose.Schema({
     supplierCode: String,
     supplierName: String,
+    markUpPlus:Number,
+    markUpPercent:Number,
     lang: String,
     isActive:Boolean,
     createBy:String,

@@ -233,20 +233,19 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
   var packageSum="";
   var optionServiceSum="";
   var guestSum="";
-
-  reqBody.roomTypes.forEach(element => {
-    roomTypeSum += `${element.roomType.roomTypeName}[${element.roomType.roomTypeCode} : ${element.qty}] | ` ;
+  reqBody.roomTypes.forEach((item,index) => {
+    if (typeof item.roomType !== "undefined") {
+      roomTypeSum += `Room ${index +1}:${item.roomType.roomType.roomTypeCode} - ${item.roomType.roomType.roomTypeName} | ` ;
+    }
+    if (typeof item.package !== "undefined") {
+    packageSum += `Room ${index +1}:${item.package.packageId.packageCode} - ${item.package.packageId.packageName} | ` ;
+    }
+    if (typeof item.optionService !== "undefined") {
+    optionServiceSum += `Room ${index +1}:${item.optionService.optionServiceCode} - ${item.optionService.optionServiceName} | ` ;
+    }
   });
 
-  reqBody.packages.forEach(element => {
-    packageSum += `${element.package.packageId.packageName}[${element.package.packageId.packageCode} : ${element.qty}] | ` ;
-  });
-  
-  reqBody.optionServices.forEach(element => {
-    optionServiceSum += `${element.optionServices.optionServiceCode}[${element.optionServices.optionServiceName} : ${element.qty}] | ` ;
-  });
-
-  guestSum=reqBody.adult.golfer.qty +reqBody.adult.nongolfer.qty+reqBody.adult.adult.qty+reqBody.adult.children.qty;
+  guestSum=`Golfer: ${reqBody.total.totalGuest.totalGolfer} | Non-golfer: ${reqBody.total.totalGuest.totalNonGolfer} | Adult: ${reqBody.total.totalGuest.totalAdult} | Children: ${reqBody.total.totalGuest.totalChildren}`;
 
   var template = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">
@@ -647,7 +646,7 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">NUMBER OF ROOM</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.totalRoom}</div>
+                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.total.totalRoom}</div>
                             </th>
                           </tr>
                           <tr class="row-border c" style="border-bottom: 1px solid #dee2e6; padding: 10px; text-align: left; vertical-align: top;">
@@ -661,7 +660,7 @@ function generateStaffHotelConfirm(reqBody, transactionCode) {
                               <div class="col-1 paragraph" style="border-right: 1px dashed #dee2e6; font-size: 12px; font-weight: bold; line-height: 1.7em; padding: 0 8px;">TOTAL :</div>
                             </th>
                             <th class="small-6 large-4 second columns" style="Margin: 0 auto; color: #0a0a0a; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: normal; line-height: 1.3; margin: 0 auto; padding: 0; padding-bottom: 16px; padding-left: 8px; padding-right: 8px; text-align: left; width: 177.33333px;">
-                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.totalPrice}</div>
+                              <div class="col-2 paragraph" style="font-size: 12px; line-height: 1.7em; padding: 0 8px;">${reqBody.total.totalPrice}</div>
                             </th>
                           </tr>
                         </tbody>

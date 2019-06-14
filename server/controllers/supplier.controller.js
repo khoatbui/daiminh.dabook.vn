@@ -1,4 +1,3 @@
-var db = require('../db')
 var Supplier = require('../models/supplier.model')
 var mongoose = require('mongoose');
 var moment =require('moment');
@@ -42,6 +41,7 @@ module.exports.insertSupplier = function (req, res) {
 };
 
 module.exports.updateSupplier = function (req, res) {
+    console.log(req.body);
     req.body.modifyDate=new Date();
     delete req.body.createBy;
     Supplier.updateOne({ _id: req.params._id }, { $set: req.body }, (err, supplier) => {
@@ -50,7 +50,6 @@ module.exports.updateSupplier = function (req, res) {
             res.status(500).send(err);
         } else {
             console.log(supplier);
-
             res.status(200).send(supplier);
         }
     });

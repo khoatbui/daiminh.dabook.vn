@@ -1,8 +1,8 @@
 var mongoose = require('mongoose')
 
 var roomTypeSchema = new mongoose.Schema({
-    supplierId: mongoose.Schema.Types.ObjectId,
-    hotelId: mongoose.Schema.Types.ObjectId,
+    supplierId: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier' },
+    hotelId: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' },
     roomTypeCode:String,
     roomTypeName:String,
     lang: String,

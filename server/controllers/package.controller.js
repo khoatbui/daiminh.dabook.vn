@@ -1,11 +1,10 @@
-var db = require('../db')
 var Package = require('../models/package.model')
 var mongoose = require('mongoose');
 var moment =require('moment');
 moment().format();
 
 module.exports.index = function (req, res) {
-    Package.find().then(function (package) {
+    Package.find().populate('supplierId').then(function (package) {
         res.send(package)
     })
 };

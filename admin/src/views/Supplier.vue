@@ -4,6 +4,13 @@
       <v-toolbar-title>SUPPLIER CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -12,6 +19,9 @@
           <v-card>
             <v-card-title class="pink white--text">
               <span class="headline">{{ formTitle }}</span>
+              <v-spacer></v-spacer>
+              <v-btn color="white darken-1" flat @click="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
             </v-card-title>
 
             <v-card-text>
@@ -28,6 +38,12 @@
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.supplierName" label="supplierName"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.markUpPlus" label="MarkupPlus"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.markUpPercent" label="MarkupPercent"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-select
@@ -51,16 +67,17 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="supplier" class="elevation-1">
+    <v-data-table :headers="headers" :items="supplier" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr class="ellip-text">
           <td class="justify-start px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
-          <td>{{ props.item._id }}</td>
           <td>{{ props.item.supplierCode }}</td>
           <td>{{ props.item.supplierName }}</td>
+          <td>{{ props.item.markUpPlus }}</td>
+          <td>{{ props.item.markUpPercent }}</td>
           <td>{{ props.item.lang }}</td>
           <td>{{ props.item.createBy }}</td>
           <td>{{ props.item.createDate }}</td>
@@ -69,11 +86,22 @@
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
+       <template v-slot:no-results>
+        <v-alert :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+        </v-alert>
+      </template>
     </v-data-table>
     <v-snackbar v-model="snackbar.snackbar">
       {{ snackbar.text }}
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
+    
+      <v-btn absolute dark fab bottom right small color="pink">
+        <download-excel :data="supplier" name= "supplier.xls">
+<i class="far fa-file-excel"></i>
+        </download-excel>
+      </v-btn>
   </div>
 </template>
 <script>
@@ -93,6 +121,7 @@ const AXIOS = axios.create({
 });
 export default {
   data: () => ({
+     search: '',
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
@@ -101,14 +130,12 @@ export default {
     headers: [
       { text: "Actions",align:"center", value: "name", sortable: false },
       {
-        text: "supplierId",
-        value: "supplierId"
-      },
-      {
         text: "supplierCode",
         value: "supplierCode"
       },
       { text: "supplierName", value: "supplierName" },
+      { text: "MarkupPlus", value: "markUpPlus" },
+      { text: "MarkupPercent", value: "markUpPercent" },
       { text: "Language", value: "lang" },
       { text: "Create By", value: "createBy" },
       { text: "Create Date", value: "createDate" }
@@ -125,6 +152,8 @@ export default {
       supplierCode: "",
       supplierName: "",
       lang: "EN",
+      markUpPlus:200000,
+      markUpPercent:0,
       createBy: "",
       modifyBy:""
     },
@@ -132,6 +161,8 @@ export default {
       supplierCode: "",
       supplierName: "",
       lang: "EN",
+       markUpPlus:200000,
+      markUpPercent:0,
       createBy: "",
             modifyBy:""
     },
@@ -181,7 +212,8 @@ export default {
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
-            this.$router.go();
+                       this.initialize();
+
           })
           .catch(function(error) {})
           .finally(function() {});
@@ -202,18 +234,17 @@ export default {
         if (this.editedIndex > -1) {
           AXIOS.post(apiIP + "/supplier/update/"+ this.editId, this.editedItem)
             .then(response => {
-              this.$router.go();
             })
             .catch(function(error) {})
             .finally(function() {});
         } else {
           AXIOS.post(apiIP + "/supplier/insert", this.editedItem)
             .then(response => {
-              this.$router.go();
             })
             .catch(function(error) {})
             .finally(function() {});
         }
+                    this.initialize();
         this.close();
       }
     }
@@ -227,5 +258,13 @@ export default {
   max-width: 50px !important;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.disabled {
+  pointer-events: none;
+  color: #bfcbd9;
+  cursor: not-allowed;
+  background-image: none;
+  background-color: #eef1f6;
+  border-color: #d1dbe5;
 }
 </style>

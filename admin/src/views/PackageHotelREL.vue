@@ -4,6 +4,13 @@
       <v-toolbar-title>HOTEL PACKAGE PRICE CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -12,6 +19,9 @@
           <v-card>
             <v-card-title class="pink white--text">
               <span class="headline">{{ formTitle }}</span>
+              <v-spacer></v-spacer>
+              <v-btn color="white darken-1" flat @click="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
             </v-card-title>
 
             <v-card-text>
@@ -27,6 +37,7 @@
                       label="Supplier"
                       v-bind:class="{ disabled: disableSelect }"
                       @input="changedSupplierCombobox"
+                      return-object
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
@@ -38,6 +49,7 @@
                       label="Hotel"
                       v-bind:class="{ disabled: disableSelect }"
                       @input="changedHotelCombobox"
+                      return-object
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
@@ -128,7 +140,31 @@
                       label="Mark up(%) | Example: 30 | Min : 3%"
                     ></v-text-field>
                   </v-flex>
-                   <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field
+                      required
+                      :rules="rule.less4PriceRule"
+                      v-model="editedItem.less4Price"
+                      label="Children less 4 year old Price"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field
+                      required
+                      :rules="rule.less12PriceRule"
+                      v-model="editedItem.less12Price"
+                      label="Children less 12 year old Price"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field
+                      required
+                      :rules="rule.more12PriceRule"
+                      v-model="editedItem.more12Price"
+                      label="More 12 year old Price"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.lang"
                       :items="language"
@@ -152,14 +188,13 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="packagesHotelREL" class="elevation-1">
+    <v-data-table :headers="headers" :items="packagesHotelREL" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr class="ellip-text">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
-          <td>{{ props.item._id }}</td>
           <td style="width:100px">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
@@ -195,6 +230,9 @@
           <td>{{ props.item.price }}</td>
           <td>{{ props.item.markUpPlus }}</td>
           <td>{{ props.item.markUpPercent }}</td>
+          <td>{{ props.item.less4Price }}</td>
+          <td>{{ props.item.less12Price }}</td>
+          <td>{{ props.item.more12Price }}</td>
           <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
@@ -220,16 +258,25 @@
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
+      <template v-slot:no-results>
+        <v-alert :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+        </v-alert>
+      </template>
     </v-data-table>
     <v-snackbar v-model="snackbar.snackbar">
       {{ snackbar.text }}
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
+      <v-btn absolute dark fab bottom right small color="pink">
+        <download-excel :data="packagesHotelREL" name= "markup.xls">
+<i class="far fa-file-excel"></i>
+        </download-excel>
+      </v-btn>
   </div>
 </template>
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
-console.log( process.env.VUE_APP_API_DEFAULT_MARKUP)
 import axios from "axios";
 import moment from "moment";
 const AXIOS = axios.create({
@@ -246,6 +293,7 @@ const AXIOS = axios.create({
 });
 export default {
   data: () => ({
+    search: '',
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
@@ -253,14 +301,16 @@ export default {
     dialog: false,
     headers: [
       { text: "Actions", sortable: false },
-      { text: "ID", value: "_id" },
-      { text: "Supplier", value: "supplierId" },
-      { text: "Hotel", value: "hotelId" },
-      { text: "Room Type", value: "roomTypeId" },
-      { text: "Package", value: "packageId" },
+      { text: "Supplier", value: "supplierId.supplierName" },
+      { text: "Hotel", value: "hotelId.hotelName" },
+      { text: "Room Type", value: "roomTypeId.roomTypeName" },
+      { text: "Package", value: "packageId.packageName" },
       { text: "Price", value: "price" },
       { text: "MarkUp(+)", value: "markUpPlus" },
       { text: "MarkUp(%)", value: "markUpPercent" },
+      { text: "Less 4", value: "less4Price" },
+      { text: "Less 12", value: "less12Price" },
+      { text: "More 12", value: "more12Price" },
       { text: "StartDate", value: "startDate" },
       { text: "EndDate", value: "endDate" },
       { text: "Language", value: "lang" },
@@ -273,22 +323,22 @@ export default {
     hotel: [],
     packages: [],
     packagesHotelREL: [],
-    rule:{
-    markUpPlusRule: [
-      // v => (v.toString().length > 0) || "Required field",
-      // v => /^\d+$/.test(v) || "Only accept number",
-      // v => parseInt(v) >= 50000 ||( "Minimum = 50.000 VND")
-    ],
-    markUpPercentRule: [
-      // v => v.toString().length > 0 || "Required field",
-      // v => /^$|^\d+$/.test(v) || "Only accept number",
-      // v => parseInt(v) >= 3 || "Minimum = 3%"
-    ],
-    priceRule: [
-      v => v.toString().length > 0 || "Required field",
-      v => /^\d+$/.test(v) || "Only accept number",
-      v => parseInt(v) >= 1 || "Minimum = 1"
-    ]
+    rule: {
+      markUpPlusRule: [
+        // v => (v.toString().length > 0) || "Required field",
+        // v => /^\d+$/.test(v) || "Only accept number",
+        // v => parseInt(v) >= 50000 ||( "Minimum = 50.000 VND")
+      ],
+      markUpPercentRule: [
+        // v => v.toString().length > 0 || "Required field",
+        // v => /^$|^\d+$/.test(v) || "Only accept number",
+        // v => parseInt(v) >= 3 || "Minimum = 3%"
+      ],
+      priceRule: [
+        v => v.toString().length > 0 || "Required field",
+        v => /^\d+$/.test(v) || "Only accept number",
+        v => parseInt(v) >= 1 || "Minimum = 1"
+      ]
     },
     language: [
       { langCode: "EN", langName: "English" },
@@ -308,6 +358,9 @@ export default {
       price: 10000000,
       markUpPercent: 10,
       markUpPlus: 50000,
+      less4Price: 10000000,
+      less12Price: 10000000,
+      more12Price: 10000000,
       lang: "EN",
       isUsed: true,
       createBy: "",
@@ -323,6 +376,9 @@ export default {
       price: 10000000,
       markUpPercent: 10,
       markUpPlus: 50000,
+      less4Price: 10000000,
+      less12Price: 10000000,
+      more12Price: 10000000,
       lang: "EN",
       isUsed: true,
       createBy: "",
@@ -356,7 +412,6 @@ export default {
     initialize() {
       AXIOS.get(apiIP + "/packagehotelrel/", { crossdomain: true })
         .then(response => {
-          console.log(response.data);
           this.packagesHotelREL = response.data;
         })
         .catch(function(error) {})
@@ -416,7 +471,7 @@ export default {
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
-            this.$router.go();
+                          this.initialize();
           })
           .catch(function(error) {})
           .finally(function() {});
@@ -432,10 +487,12 @@ export default {
     },
 
     save() {
-      console.log(this.editedItem);
       this.editedItem.modifyBy = this.user.userName;
       this.editedItem.createBy = this.user.userName;
-      if (this.editedItem.markUpPlus.toString().length <= 0 && this.editedItem.markUpPercent.toString().length <= 0) {
+      if (
+        this.editedItem.markUpPlus.toString().length <= 0 &&
+        this.editedItem.markUpPercent.toString().length <= 0
+      ) {
         this.editedItem.markUpPercent = process.env.VUE_APP_API_DEFAULT_MARKUP;
         // IMPORTANT
       }
@@ -446,34 +503,44 @@ export default {
             this.editedItem
           )
             .then(response => {
-              this.$router.go();
             })
             .catch(function(error) {})
             .finally(function() {});
         } else {
           AXIOS.post(apiIP + "/packagehotelrel/insert", this.editedItem)
             .then(response => {
-              this.$router.go();
             })
             .catch(function(error) {})
             .finally(function() {});
         }
+                      this.initialize();
         this.close();
       }
     },
 
     changedSupplierCombobox(event) {
       console.log(event);
-      console.log(this.editedItem);
-      AXIOS.get(apiIP + "/hotel/combobox/hotel/" + event, { crossdomain: true })
+      this.defaultItem.markUpPlus = event.markUpPlus;
+      this.defaultItem.markUpPercent = event.markUpPercent;
+      this.defaultItem.less4Price = event.less4Price;
+      this.defaultItem.less12Price = event.less12Price;
+      this.defaultItem.more12Price = event.more12Price;
+      this.editedItem.markUpPlus = event.markUpPlus;
+      this.editedItem.markUpPercent = event.markUpPercent;
+      this.editedItem.less4Price = event.less4Price;
+      this.editedItem.less12Price = event.less12Price;
+      this.editedItem.more12Price = event.more12Price;
+      console.log(this.defaultItem);
+      AXIOS.get(apiIP + "/hotel/combobox/hotel/" + event._id, {
+        crossdomain: true
+      })
         .then(response => {
           this.hotel = response.data;
-          console.log(response.data);
         })
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/package/combobox/package/" + event, {
+      AXIOS.get(apiIP + "/package/combobox/package/" + event._id, {
         crossdomain: true
       })
         .then(response => {
@@ -484,7 +551,7 @@ export default {
     },
 
     changedHotelCombobox(event) {
-      AXIOS.get(apiIP + "/roomtype/combobox/roomtype/" + event, {
+      AXIOS.get(apiIP + "/roomtype/combobox/roomtype/" + event._id, {
         crossdomain: true
       })
         .then(response => {

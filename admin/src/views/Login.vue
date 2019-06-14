@@ -20,7 +20,7 @@
             <v-layout row wrap fill-width align-center justify-center>
               <v-flex xs12>
                 <v-text-field
-                  v-model="userName"
+                  v-model="input.username"
                   label="UserName"
                   required
                 ></v-text-field>
@@ -28,7 +28,7 @@
 
               <v-flex xs12>
                 <v-text-field
-                  v-model="password"
+                  v-model="input.password"
                   label="Password"
                   required
                 ></v-text-field>
@@ -63,10 +63,14 @@ const AXIOS = axios.create({
   }
 });
 export default {
-  data: () => ({
-    userName:"",
-    password:""
-  }),
+  data() {
+            return {
+                input: {
+                    username: "",
+                    password: ""
+                }
+            }
+        },
 
   created() {
     this.initialize();
@@ -78,9 +82,8 @@ export default {
     },
 
     login() {
-      this.user.userName = this.userName;
-      console.log(this.user.userName);
-    }
+               
+            }
   }
 };
 </script>
