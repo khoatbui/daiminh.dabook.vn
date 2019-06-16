@@ -3,13 +3,16 @@ var Hotel = require('../models/hotels.model')
 var Supplier=require('../models/supplier.model')
 var mongoose = require('mongoose');
 module.exports.index =function(req,res){
-    Hotel.find().populate('supplierId').then(function(hotel){
+    res.setHeader('Cache-Control', 'private');
+    res.cookie('__session', "sessionCookie");
+    Hotel.find().populate('supplierId').populate('cityId').then(function(hotel){
         res.send(hotel)
     })
 };
 
 module.exports.getHotel=(req,res,next) => {
-    Hotel.find().populate('supplierId').then(function(hotel){
+    res.cookie('__session', "sessionCookie");
+    Hotel.find().populate('supplierId').populate('cityId').then(function(hotel){
         res.send(hotel)
     })
 };

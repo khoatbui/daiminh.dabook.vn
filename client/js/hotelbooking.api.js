@@ -20,6 +20,9 @@ var urlParams = new URLSearchParams(window.location.search);
 var app = new Vue({
     el: '#app',
     data: {
+        uiAction:{
+            showDetailRoomType:false
+        },
         bookingstep: {
             find: true,
             confirm: false,
@@ -88,7 +91,6 @@ var app = new Vue({
     },
     created() {
         this.initialize();
-        this.getHotelList(this.bookingrequest.supplier);
         // this.getOptionServiceBySupplierId();
     },
     methods: {
@@ -96,11 +98,26 @@ var app = new Vue({
             AXIOS.get(apiUrl + '/supplier', { crossdomain: true })
                 .then((response) => {
                     this.selection.suppliers = response.data;
-                    response.data.forEach(element => {
-                        if (element.isActive == true) {
-                            this.bookingrequest.supplier = element;
-                        }
-                    });
+                    if (urlParams.has('supplierCode')) {
+                        this.selection.suppliers.forEach(element => {
+                            if (element.supplierCode == urlParams.get('supplierCode')) {
+                                element.isActive = true;
+                                this.bookingrequest.supplier = element;
+                                this.getHotelList(this.bookingrequest.supplier);
+                            }
+                            else{
+                                element.isActive = false;
+                            }
+                        });
+                      }
+                      else{
+                        response.data.forEach(element => {
+                            if (element.isActive == true) {
+                                this.bookingrequest.supplier = element;
+                                this.getHotelList(this.bookingrequest.supplier);
+                            }
+                        });
+                      }
                 })
                 .catch((error) => {
                     console.log(error);

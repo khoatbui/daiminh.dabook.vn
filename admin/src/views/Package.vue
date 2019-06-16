@@ -82,7 +82,7 @@
     </v-toolbar>
     <v-data-table :headers="headers" :items="packages"  :search="search" class="elevation-1">
       <template v-slot:items="props">
-        <tr class="ellip-text">
+        <tr class="whitespace-nowrap">
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
@@ -294,5 +294,8 @@ export default {
   background-image: none;
   background-color: #eef1f6;
   border-color: #d1dbe5;
+}
+.whitespace-nowrap td{
+  white-space: nowrap;
 }
 </style>

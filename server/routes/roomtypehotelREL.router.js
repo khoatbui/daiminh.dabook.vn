@@ -5,10 +5,11 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var controller=require('../controllers/city.controller')
 var bodyParser = require('body-parser')
+var controller=require('../controllers/roomtype.controller')
 
 var router = express.Router()
+
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -18,9 +19,13 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
-router.delete('/:index', controller.deleteCity)
+router.delete('/:_id', controller.deleteRoomType)
 
-router.post('/insert', jsonParser,controller.insertCity)
+router.post('/insert', jsonParser, controller.insertRoomType)
 
-router.post('/update/:_id', jsonParser,controller.updateCity)
+router.post('/update/:_id', jsonParser, controller.updateRoomType)
+
+router.get('/combobox/roomtype/:index',controller.getRoomTypeByHotel)
+
+router.get('/combobox/roomtypebyhotelcode/:index',controller.getRoomTypeByHotelCode)
 module.exports = router

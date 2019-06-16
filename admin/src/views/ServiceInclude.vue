@@ -123,7 +123,7 @@
     </v-toolbar>
     <v-data-table :headers="headers" :items="tourlist" class="elevation-1">
       <template v-slot:items="props">
-        <tr class="ellip-text">
+        <tr class="whitespace-nowrap">
           <td>{{ props.item.destinationId }}</td>
           <td class="text-xs-right">{{ props.item.travelStyleId }}</td>
           <td class="text-xs-right">{{ props.item.cityId }}</td>
@@ -354,5 +354,16 @@ export default {
   max-width: 50px !important;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.disabled {
+  pointer-events: none;
+  color: #bfcbd9;
+  cursor: not-allowed;
+  background-image: none;
+  background-color: #eef1f6;
+  border-color: #d1dbe5;
+}
+.whitespace-nowrap td{
+  white-space: nowrap;
 }
 </style>

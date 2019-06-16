@@ -33,7 +33,15 @@
                       label="Supplier"
                     ></v-select>
                   </v-flex>
-
+ <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.cityId"
+                      :items="city"
+                      item-text="cityName"
+                      item-value="_id"
+                      label="City"
+                    ></v-select>
+                  </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
@@ -72,12 +80,13 @@
     </v-toolbar>
     <v-data-table :headers="headers" :items="hotel" :search="search" class="elevation-1">
       <template v-slot:items="props">
-        <tr class="ellip-text">
+        <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
           <td>{{ props.item.supplierId.supplierName }}</td>
+          <td>{{ props.item.cityId.cityName }}</td>
           <td>{{ props.item.hotelCode }}</td>
           <td>{{ props.item.hotelName }}</td>
           <td>{{ props.item.star }}</td>
@@ -133,6 +142,7 @@ export default {
     headers: [
       { text: "Actions", value: "name", sortable: false },
       { text: "Supplier", value: "supplierId.supplierName" },
+      { text: "City", value: "city.cityName" },
       { text: "hotelCode", value: "hotelCode" },
       { text: "HotelName", value: "hotelName" },
       { text: "Star", value: "star" },
@@ -145,12 +155,14 @@ export default {
       { langCode: "VI", langName: "VietNam" }
     ],
     supplier: [],
+    city: [],
     hotel: [],
     editedIndex: -1,
     disableSelect: false,
     editId: "",
     editedItem: {
       supplierId: "",
+      cityId: "",
       hotelName: "",
       star: "5",
       createBy: "",
@@ -159,6 +171,7 @@ export default {
     },
     defaultItem: {
       supplierId: "",
+      cityId: "",
       hotelName: "",
       star: "5",
       createBy: "",
@@ -198,6 +211,12 @@ export default {
       AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
         .then(response => {
           this.supplier = response.data;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+         AXIOS.get(apiIP + "/city/", { crossdomain: true })
+        .then(response => {
+          this.city = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -270,5 +289,8 @@ export default {
   background-image: none;
   background-color: #eef1f6;
   border-color: #d1dbe5;
+}
+.whitespace-nowrap td{
+  white-space: nowrap;
 }
 </style>

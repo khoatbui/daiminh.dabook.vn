@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const mongoose = require('mongoose');
@@ -8,6 +9,7 @@ const app = express()
 const port = process.env.PORT
 app.use(express.static('public'))
 app.use(express.static('uploads'))
+app.use(cookieParser())
 app.use(cors())
 
 const mainRoute = require('./routes/main.router')

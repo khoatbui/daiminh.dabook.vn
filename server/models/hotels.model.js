@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var hotelSchema = new mongoose.Schema({
     supplierId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Supplier' },
+    cityId:{ type: mongoose.Schema.Types.ObjectId, ref: 'City' },
     hotelCode: String,
     hotelName: String,
     star: Number,

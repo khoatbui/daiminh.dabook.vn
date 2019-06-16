@@ -58,7 +58,10 @@
     color: #FFF;
     outline: none;
 }
-
+.h-200{
+    height: 200px;
+    width: auto;
+}
 .h-300{
     height: 300px;
     width: auto;
@@ -689,14 +692,28 @@
     border-radius: 50%;
     line-height: 50px;
 }
-.preview-group:hover{
+.preview-group-roomType{
+    background-color: #FFF;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    line-height: 30px;
+}
+.preview-group:hover,.preview-group-roomType:hover{
     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 191, 232,0.4) !important;
 }
-.preview-group i{
+.preview-group i,.preview-group-roomType i{
     color: #111 !important;
     text-align: center;
-    font-size: 1.2rem;
     font-weight: bold;
+}
+.preview-group i{
+    font-size: 1.2rem;
+
+}
+.preview-group-roomType i{
+    font-size: 0.8rem;
+
 }
 .hotel-booking-confirm .status {
     height: 55px;

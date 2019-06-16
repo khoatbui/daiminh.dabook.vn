@@ -100,7 +100,7 @@
     <v-data-table :headers="headers" :items="optionService" :search="search" :loading="isLoadding" class="elevation-1">
           <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
       <template v-slot:items="props">
-        <tr class="ellip-text">
+        <tr class="whitespace-nowrap">
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
@@ -361,5 +361,8 @@ export default {
   background-image: none;
   background-color: #eef1f6;
   border-color: #d1dbe5;
+}
+.whitespace-nowrap td{
+  white-space: nowrap;
 }
 </style>
