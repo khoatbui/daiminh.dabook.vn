@@ -237,7 +237,7 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.roomtype.indexOf(item);
+      this.editedIndex = 100;
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
       delete this.editedItem._id;

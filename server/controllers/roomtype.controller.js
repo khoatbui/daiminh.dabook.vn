@@ -42,6 +42,7 @@ module.exports.insertRoomType = function (req, res) {
 };
 
 module.exports.updateRoomType = function (req, res) {
+    console.log(req.body);
     req.body.modifyDate=new Date();
     delete req.body.createBy;
     RoomType.updateOne({ _id: req.params._id }, { $set: req.body }, (err, roomtype) => {

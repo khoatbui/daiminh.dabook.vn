@@ -57,6 +57,18 @@
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
                       v-model="editedItem.maxGuest"
                       :items="maxGuests"
                       item-text="name"
@@ -76,27 +88,16 @@
                   <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.acreage" label="Acreage"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm12 md12>
                     <v-textarea
                       name="input-7-1"
                       label="Room Introduce"
                       v-model="editedItem.roomTypeIntro"
                     ></v-textarea>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.lang"
-                      :items="language"
-                      item-text="langName"
-                      item-value="langCode"
-                      label="Language"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
-                  </v-flex>
-                   <v-flex xs12 sm6 md4>
-                  <file-upload v-model="editedItem.carolImg" label="Carol Image" routerPath="http://localhost:3000/upload"></file-upload>
+                   <v-flex xs12 sm12 md12>
+                  <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                  <file-upload @getUploadFilesURL="editedItem.roomImages = $event" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload>
                    </v-flex>
                 </v-layout>
               </v-container>
@@ -157,7 +158,7 @@
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
-import FileUpload from '../components/FileUpload.vue'
+import FileUpload from '../components/FileUpload_V2.vue'
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -175,6 +176,7 @@ export default {
     FileUpload
   },
   data: () => ({
+  apiIP:apiIP,
     search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -244,7 +246,8 @@ export default {
       lang: "EN",
       isUsed: true,
       createBy: "",
-      modifyBy: ""
+      modifyBy: "",
+      roomImages:""
     },
     defaultItem: {
       roomTypeCode: "",
@@ -256,7 +259,8 @@ export default {
       lang: "EN",
       isUsed: true,
       createBy: "",
-      modifyBy: ""
+      modifyBy: "",
+            roomImages:""
     },
     snackbar: {
       snackbar: false,
@@ -305,7 +309,7 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.roomtype.indexOf(item);
+      this.editedIndex = 100;
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
       delete this.editedItem._id;
@@ -326,6 +330,7 @@ export default {
     },
 
     close() {
+      console.log(this.editedItem)
       this.dialog = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);

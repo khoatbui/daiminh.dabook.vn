@@ -310,7 +310,7 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.tourlist.indexOf(item);
+      this.editedIndex = 100;
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },

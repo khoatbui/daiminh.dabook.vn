@@ -188,7 +188,7 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="packagesHotelREL" :search="search" class="elevation-1">
+    <v-data-table :headers="headers" :items="itemsWithTotalPrice" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
@@ -201,6 +201,14 @@
                 <span v-on="on">{{ props.item.supplierId.supplierName }}</span>
               </template>
               <span>{{ props.item.supplierId.supplierName }}</span>
+            </v-tooltip>
+          </td>
+          <td>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <span v-on="on">{{ props.item.hotelId.hotelCode }}</span>
+              </template>
+              <span>{{ props.item.hotelId.hotelCode }}</span>
             </v-tooltip>
           </td>
           <td>
@@ -227,12 +235,13 @@
               <span>{{ props.item.packageId.packageName }}</span>
             </v-tooltip>
           </td>
-          <td>{{ props.item.price }}</td>
-          <td>{{ props.item.markUpPlus }}</td>
+          <td style="color:green;font-weight:bold">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.price)}}</td>
+          <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.markUpPlus)}}</td>
           <td>{{ props.item.markUpPercent }}</td>
-          <td>{{ props.item.less4Price }}</td>
-          <td>{{ props.item.less12Price }}</td>
-          <td>{{ props.item.more12Price }}</td>
+          <td style="color:red;font-weight:bold">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.totalPrice)  }}</td>
+          <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less4Price)}}</td>
+          <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less12Price)}}</td>
+          <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.more12Price)}}</td>
           <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
@@ -302,12 +311,14 @@ export default {
     headers: [
       { text: "Actions", sortable: false },
       { text: "Supplier", value: "supplierId.supplierName" },
+      { text: "HotelCode", value: "hotelId.hotelCode" },
       { text: "Hotel", value: "hotelId.hotelName" },
       { text: "Room Type", value: "roomTypeId.roomTypeName" },
       { text: "Package", value: "packageId.packageName" },
       { text: "Price", value: "price" },
       { text: "MarkUp(+)", value: "markUpPlus" },
       { text: "MarkUp(%)", value: "markUpPercent" },
+       { text: "TotalPrice", value: "totalPrice" },
       { text: "Less 4", value: "less4Price" },
       { text: "Less 12", value: "less12Price" },
       { text: "More 12", value: "more12Price" },
@@ -395,6 +406,13 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    itemsWithTotalPrice() {
+      // This creates a new empty object, copies the item into it,
+      // then calculates `fullAddress` and copies that entry into it
+      return this.packagesHotelREL.map((obj) => Object.assign({}, obj, {
+        totalPrice:obj.markUpPercent==0?( obj.price + obj.markUpPlus):(obj.markUpPlus!==0?(obj.price*obj.markUpPercent + obj.markUpPlus):obj.price*obj.markUpPercent)
+      }));
     }
   },
 
@@ -447,7 +465,8 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.packagesHotelREL.indexOf(item);
+      this.editedIndex = 100;
+      console.log(this.editedIndex);
       this.editedItem = Object.assign({}, item);
       this.editedItem.supplierId = item.supplierId._id;
       this.editedItem.hotelId = item.hotelId._id;

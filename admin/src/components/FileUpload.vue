@@ -1,61 +1,80 @@
 <template>
   <div class="file">
-    <form @submit.prevent="onSubmit" enctype="multipart/form-data">
+    <div>
       <label class="show-label">{{label}}:</label>
-      <div class="fields upload-component purple lighten-4">
-        <label class="upload-label purple lighten-4" for="file">{{message}}</label>
-        <input class="upload-input" id="file" type="file" ref="file" @change="onSelect">
-        <v-btn
-          @click="onSubmit"
-          fab
-          dark
-          color="primary"
-          class="submit-button"
-          style="width: 30px !important;
-  height: 30px !important;"
-        >
-          <i class="fas" v-bind:class="{ 'fa-check': isUpload,'fa-cloud-upload-alt': !isUpload }"></i>
-        </v-btn>
-      </div>
-    </form>
+    </div>
+    <div class="fields upload-component purple lighten-4">
+      <label class="upload-label purple lighten-4" for="file">{{message}}</label>
+      <input
+        class="upload-input"
+        id="file"
+        type="file"
+        ref="file"
+        multiple
+        @change="onSelect($event)"
+      >
+      <a href="#" type="button" class="upload-btn" @click="onSubmit($event) ;return false;">
+        <i class="fas" v-bind:class="{ 'fa-check': isUpload,'fa-cloud-upload-alt': !isUpload }"></i>
+      </a>
+    </div>
+    <v-carousel height="300">
+      <v-carousel-item
+        class="background-cove"
+        v-for="(item,index) in imgPaths"
+        :key="index"
+        :src="item"
+      ></v-carousel-item>
+    </v-carousel>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 export default {
-  props: ["routerPath","value","label"],
+  props: ["routerPath", "value", "label"],
   name: "FileUpload",
   data() {
     return {
       file: "",
       message: "Select...",
       path: "",
-      isUpload: false
+      isUpload: false,
+      imgPaths: []
     };
   },
   // "http://localhost:3000/upload"
   methods: {
-    onSelect() {
+    onSelect(event) {
+      this.file = [];
       this.isUpload = false;
-      const file = this.$refs.file.files[0];
-      this.file = file;
-      this.message = this.file.name;
+      this.file = event.target.files;
+      event.preventDefault;
     },
-    async onSubmit() {
-      const formData = new FormData();
-      formData.append("file", this.file);
+    onSubmit(event) {
+      var formData = new FormData();
+      for (var i = 0; i < this.file.length; i++) {
+        let file = this.file[i];
+        formData.append("file", file);
+      }
+      console.log(formData);
       try {
-        await axios
+        axios
           .post(this.routerPath, formData)
           .then(response => {
-            this.message = "Uploaded!!";
+            console.log(this.routerPath);
+            this.message = `Uploaded!!`;
             this.path = response.data.filepath;
+            this.imgPaths = response.data.filepath
+              .substring(0, response.data.filepath.length - 1)
+              .replace(/..\\admin\\public/g, "")
+              .replace(/\\/g, "/")
+              .split(";");
             this.isUpload = true;
-            this.$emit('input', this.path)
+            console.log(this.imgPaths);
+            event.preventDefault();
+            return false;
           })
-          .catch(function(error) {
-          })
+          .catch(function(error) {})
           .finally(function() {});
       } catch (error) {
         this.message = "Something went wrong!!";
@@ -66,9 +85,10 @@ export default {
 </script>
 
 <style>
-.file form{
+.file form {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .show-label {
   padding: 0px 4px;
@@ -90,8 +110,19 @@ export default {
 .upload-input {
   display: none;
 }
-.submit-butto {
+.upload-btn {
   width: 30px !important;
   height: 30px !important;
+  background: #1976d2 !important;
+  border: 1ps solid #1976d2 !important;
+  color: #fff !important;
+  border-radius: 50%;
+  margin: 10px;
+}
+.upload-btn i {
+  color: #fff !important;
+}
+.w-100 {
+  width: 100%;
 }
 </style>

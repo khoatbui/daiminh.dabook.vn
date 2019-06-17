@@ -196,7 +196,7 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.city.indexOf(item);
+      this.editedIndex = 100;
       this.editedItem = Object.assign({}, item);
       delete this.editedItem._id;
       this.editId = item._id;
