@@ -4,14 +4,8 @@
       <v-toolbar-title>HOTEL PACKAGE PRICE CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-      <v-dialog v-model="dialog" max-width="900px">
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+      <v-dialog v-model="dialog" max-width="960px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
         </template>
@@ -71,6 +65,18 @@
                       v-bind:class="{ disabled: disableSelect }"
                       label="Package"
                     ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-menu
@@ -165,18 +171,31 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.lang"
-                      :items="language"
-                      item-text="langName"
-                      item-value="langCode"
-                      label="Language"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                    <v-btn color="blue darken-1" dark @click="addNewPriceRange">Add</v-btn>
                   </v-flex>
                 </v-layout>
+                <v-flex xs12 sm12 md12 class="border-top">
+                  <v-data-table
+                    :headers="priceHeaders"
+                    :items="editedItem.priceRanges"
+                    class="elevation-1"
+                    width="100%"
+                  >
+                    <template v-slot:items="props">
+                      <td class="justify-center px-0">
+                        <v-icon small @click="deletepriceRangeItem(props.index)">delete</v-icon>
+                      </td>
+                      <td class="text-xs-right">{{ props.item.price }}</td>
+                      <td class="text-xs-right">{{ props.item.markUpPlus }}</td>
+                      <td class="text-xs-right">{{ props.item.markUpPercent }}</td>
+                      <td class="text-xs-right">{{ props.item.less4Price }}</td>
+                      <td class="text-xs-right">{{ props.item.less12Price }}</td>
+                      <td class="text-xs-right">{{ props.item.more12Price }}</td>
+                        <td class="text-xs-right">{{ props.item.startDate }}</td>
+                      <td class="text-xs-right">{{ props.item.endDate }}</td>
+                    </template>
+                  </v-data-table>
+                </v-flex>
               </v-container>
             </v-card-text>
             <v-card-actions>
@@ -188,7 +207,12 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="itemsWithTotalPrice" :search="search" class="elevation-1">
+    <v-data-table
+      :headers="headers"
+      :items="itemsWithTotalPrice"
+      :search="search"
+      class="elevation-1"
+    >
       <template v-slot:items="props">
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
@@ -235,10 +259,14 @@
               <span>{{ props.item.packageId.packageName }}</span>
             </v-tooltip>
           </td>
-          <td style="color:green;font-weight:bold">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.price)}}</td>
+          <td
+            style="color:green;font-weight:bold"
+          >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.price)}}</td>
           <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.markUpPlus)}}</td>
           <td>{{ props.item.markUpPercent }}</td>
-          <td style="color:red;font-weight:bold">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.totalPrice)  }}</td>
+          <td
+            style="color:red;font-weight:bold"
+          >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.totalPrice) }}</td>
           <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less4Price)}}</td>
           <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less12Price)}}</td>
           <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.more12Price)}}</td>
@@ -268,20 +296,22 @@
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
       <template v-slot:no-results>
-        <v-alert :value="true" color="error" icon="warning">
-          Your search for "{{ search }}" found no results.
-        </v-alert>
+        <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+        >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
     <v-snackbar v-model="snackbar.snackbar">
       {{ snackbar.text }}
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
-      <v-btn absolute dark fab bottom right small color="pink">
-        <download-excel :data="packagesHotelREL" name= "markup.xls">
-<i class="far fa-file-excel"></i>
-        </download-excel>
-      </v-btn>
+    <v-btn absolute dark fab bottom right small color="pink">
+      <download-excel :data="packagesHotelREL" name="markup.xls">
+        <i class="far fa-file-excel"></i>
+      </download-excel>
+    </v-btn>
   </div>
 </template>
 <script>
@@ -302,7 +332,7 @@ const AXIOS = axios.create({
 });
 export default {
   data: () => ({
-    search: '',
+    search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
@@ -318,7 +348,7 @@ export default {
       { text: "Price", value: "price" },
       { text: "MarkUp(+)", value: "markUpPlus" },
       { text: "MarkUp(%)", value: "markUpPercent" },
-       { text: "TotalPrice", value: "totalPrice" },
+      { text: "TotalPrice", value: "totalPrice" },
       { text: "Less 4", value: "less4Price" },
       { text: "Less 12", value: "less12Price" },
       { text: "More 12", value: "more12Price" },
@@ -329,6 +359,18 @@ export default {
       { text: "CreateBy", value: "createBy" },
       { text: "CreateDate", value: "createDate" }
     ],
+    priceHeaders: [
+      { text: "Actions", sortable: false },
+      { text: "Price", value: "price" },
+      { text: "MarkUp(+)", value: "markUpPlus" },
+      { text: "MarkUp(%)", value: "markUpPercent" },
+      { text: "Less 4", value: "less4Price" },
+      { text: "Less 12", value: "less12Price" },
+      { text: "More 12", value: "more12Price" },
+      { text: "StartDate", value: "startDate" },
+      { text: "EndDate", value: "endDate" }
+    ],
+    priceRange: [],
     roomtype: [],
     supplier: [],
     hotel: [],
@@ -372,6 +414,7 @@ export default {
       less4Price: 10000000,
       less12Price: 10000000,
       more12Price: 10000000,
+      priceRanges: [],
       lang: "EN",
       isUsed: true,
       createBy: "",
@@ -390,6 +433,7 @@ export default {
       less4Price: 10000000,
       less12Price: 10000000,
       more12Price: 10000000,
+      priceRanges: [],
       lang: "EN",
       isUsed: true,
       createBy: "",
@@ -410,9 +454,16 @@ export default {
     itemsWithTotalPrice() {
       // This creates a new empty object, copies the item into it,
       // then calculates `fullAddress` and copies that entry into it
-      return this.packagesHotelREL.map((obj) => Object.assign({}, obj, {
-        totalPrice:obj.markUpPercent==0?( obj.price + obj.markUpPlus):(obj.markUpPlus!==0?(obj.price*obj.markUpPercent + obj.markUpPlus):obj.price*obj.markUpPercent)
-      }));
+      return this.packagesHotelREL.map(obj =>
+        Object.assign({}, obj, {
+          totalPrice:
+            obj.markUpPercent == 0
+              ? obj.price + obj.markUpPlus
+              : obj.markUpPlus !== 0
+              ? obj.price * obj.markUpPercent + obj.markUpPlus
+              : obj.price * obj.markUpPercent
+        })
+      );
     }
   },
 
@@ -490,12 +541,14 @@ export default {
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
-                          this.initialize();
+            this.initialize();
           })
           .catch(function(error) {})
           .finally(function() {});
     },
-
+deletepriceRangeItem(item) {
+     this.editedItem.priceRanges.splice(item,1);
+    },
     close() {
       this.dialog = false;
       this.disableSelect = false;
@@ -521,18 +574,16 @@ export default {
             apiIP + "/packagehotelrel/update/" + this.editId,
             this.editedItem
           )
-            .then(response => {
-            })
+            .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
           AXIOS.post(apiIP + "/packagehotelrel/insert", this.editedItem)
-            .then(response => {
-            })
+            .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         }
-                      this.initialize();
+        this.initialize();
         this.close();
       }
     },
@@ -578,6 +629,19 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
+    },
+    addNewPriceRange() {
+      this.editedItem.priceRanges.push({
+        price: this.editedItem.price,
+        markUpPercent: this.editedItem.markUpPercent,
+        markUpPlus: this.editedItem.markUpPlus,
+        less4Price: this.editedItem.less4Price,
+        less12Price: this.editedItem.less12Price,
+        more12Price: this.editedItem.more12Price,
+        isUsed: this.editedItem.isUsed,
+        startDate: this.editedItem.startDate,
+        endDate: this.editedItem.endDate
+      });
     }
   }
 };
@@ -598,7 +662,10 @@ export default {
   background-color: #eef1f6;
   border-color: #d1dbe5;
 }
-.whitespace-nowrap td{
+.whitespace-nowrap td {
   white-space: nowrap;
+}
+.border-top {
+  border-top: 1ps solid #1976d2 !important;
 }
 </style>
