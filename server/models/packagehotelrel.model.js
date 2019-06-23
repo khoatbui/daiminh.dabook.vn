@@ -12,6 +12,7 @@ var pakageHotelRELSchema = new mongoose.Schema({
     lang: String,
     note: String,
     isUsed: Boolean,
+    isDefault: Boolean,
     startDate: Date,
     endDate: Date,
     markUpPlus: Number,

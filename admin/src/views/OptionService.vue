@@ -56,23 +56,6 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field
-                      required
-                      :rules="[() => editedItem.optionServiceCode.length > 0 || 'Required field']"
-                      v-model="editedItem.optionServiceCode"
-                      label="OptionServiceCode"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.optionServiceName" label="optionServiceName"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.note" label="Note"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.lang"
                       :items="language"
@@ -81,10 +64,56 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-text-field
+                      required
+                      :rules="[() => editedItem.optionServiceCode.length > 0 || 'Required field']"
+                      v-model="editedItem.optionServiceCode"
+                      label="OptionServiceCode"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-text-field v-model="editedItem.optionServiceName" label="optionServiceName"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-text-field v-model="editedItem.note" label="Note"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm3 md2 class="sub-add-component">
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
+                   <v-flex xs12 sm3 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addNewServiceList">Add</v-btn>
+                  </v-flex>
                 </v-layout>
+                 <v-flex xs12 sm12 md12 class="border-top">
+                  <v-data-table
+                    :headers="optionServiceHeaders"
+                    :items="editedItem.serviceList"
+                    class="elevation-1"
+                    width="100%"
+                  >
+                    <template v-slot:items="props">
+                      <td class="justify-center px-0">
+                        <v-icon small @click="deleteServiceItem(props.index)">delete</v-icon>
+                      </td>
+                      <td
+                        class="text-xs-right"
+                      >{{props.item.optionServiceCode }}</td>
+                      <td
+                        class="text-xs-right"
+                      >{{props.item.optionServiceName }}</td>
+                      <td
+                        class="text-xs-right"
+                        style="color:green;font-weight:bold"
+                      >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.price) }}</td>
+                      <td class="text-xs-right">{{ props.item.note }}</td>
+                      <td class="text-xs-right">{{props.item.isUsed}}</td>
+                    </template>
+                  </v-data-table>
+                </v-flex>
               </v-container>
             </v-card-text>
 
@@ -173,6 +202,15 @@ export default {
       { text: "CreateBy", value: "createBy" },
       { text: "CreateDate", value: "createDate" }
     ],
+    optionServiceHeaders: [
+      { text: "Actions", sortable: false },
+      { text: "optionServiceCode", value: "optionServiceCode" },
+      { text: "optionServiceName", value: "optionServiceName" },
+      { text: "Price", value: "price" },
+      { text: "Note", value: "note" },
+      { text: "Used", value: "isUsed" }
+    ],
+    priceRange: [],
     optionService: [],
     supplier: [],
     hotel: [],
@@ -193,6 +231,7 @@ export default {
       optionServiceCode: "",
       optionServiceName: "",
       price: 1000000,
+      serviceList:[],
       lang: "EN",
       note: "",
       isUsed: true,
@@ -206,6 +245,7 @@ export default {
       optionServiceCode: "",
       optionServiceName: "",
       price: 1000000,
+      serviceList:[],
       lang: "EN",
       note: "",
       isUsed: true,
@@ -266,7 +306,18 @@ export default {
         .finally(function() {});
         this.isLoadding=false;
     },
-
+addNewServiceList() {
+      this.editedItem.serviceList.push({
+        optionServiceCode:this.editedItem.optionServiceCode,
+        optionServiceName: this.editedItem.optionServiceName,
+        price: this.editedItem.price,
+        note: this.editedItem.note,
+        isUsed: this.editedItem.isUsed
+      });
+    },
+    deleteServiceItem(item) {
+      this.editedItem.serviceList.splice(item, 1);
+    },
     editItem(item) {
       this.editedIndex = 100;
       this.editedItem = Object.assign({}, item);
@@ -364,5 +415,8 @@ export default {
 }
 .whitespace-nowrap td{
   white-space: nowrap;
+}
+.sub-add-component {
+  background-color: rgb(205, 224, 243) !important;
 }
 </style>

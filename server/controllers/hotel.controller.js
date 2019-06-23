@@ -1,4 +1,3 @@
-var db = require('../db')
 var Hotel = require('../models/hotels.model')
 var Supplier=require('../models/supplier.model')
 var mongoose = require('mongoose');
@@ -55,16 +54,8 @@ module.exports.updateHotel=function (req, res) {
      });
 };
 
-module.exports.priceSearch=function (req, res) {
-    db.get('hotel')
-        .filter({ hotelCode: req.body.hotelCode })
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
-};
-
 module.exports.getHotelBySupplier=(req,res,next) => {
-    Hotel.find({supplierId:req.params.index}).then(function(hotel){
+    Hotel.find({supplierId:req.params.index,isUsed:true}).then(function(hotel){
         console.log(hotel);
         res.send(hotel)
     })
@@ -72,17 +63,17 @@ module.exports.getHotelBySupplier=(req,res,next) => {
 
 module.exports.getHotelBySupplierCode=(req,res,next) => {
     Supplier.findOne({supplierCode:req.params.index}).then(function(supp){
-        Hotel.find({supplierId:supp._id}).then(function(hotel){
+        Hotel.find({supplierId:supp._id,isUsed:true}).then(function(hotel){
             res.send(hotel)
         })
     })
 };
 
-module.exports.getRoomTypeBySupplier=(req,res,next) => {
-    res.send(db.get('roomType').filter({ supplierId: req.params.index }).value());
+module.exports.getPromoteHotelBySupplierCode=(req,res,next) => {
+    Supplier.findOne({supplierCode:req.params.index}).then(function(supp){
+        Hotel.find({supplierId:supp._id,isPromote:true}).then(function(hotel){
+            console.log(hotel);
+            res.send(hotel)
+        })
+    })
 };
-
-module.exports.getAdditionServiceBySupplier=(req,res,next) => {
-    res.send(db.get('optionService').filter({ supplierId: req.params.index }).value());
-};
-

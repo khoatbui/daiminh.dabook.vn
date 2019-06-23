@@ -63,6 +63,12 @@ module.exports.getOptionServiceBySupplierId=(req,res,next) => {
     })
 };
 
+module.exports.getOptionServiceBySupplierHotelRoomType=(req,res,next) => {
+    OptionService.findOne({supplierId:req.params.supplierId,hotelId:req.params.hotelId,roomTypeId:req.params.roomTypeId}).then(function(option){
+        console.log(option);
+        res.send(option)
+    })
+};
 
 module.exports.getOptionServiceBySupplierCode=(req,res,next) => {
     OptionService.find({supplierCode:req.params._id}).then(function(option){

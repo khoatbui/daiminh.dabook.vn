@@ -13,7 +13,7 @@
 =============================*/
 .widget-component{
     position: fixed;
-    bottom: 0px;
+    bottom: 70px;
     left: 20px;
     z-index: 1000;
 }
@@ -78,6 +78,13 @@
 }
 .form-check .form-check-label .circle .check {
     background-color: #019ee2 !important;
+}
+.font-07{
+    font-size:0.7rem;
+}
+.not-allowed {
+    pointer-events: auto! important;
+    cursor: not-allowed! important;
 }
 /* ===========================
     INDEX

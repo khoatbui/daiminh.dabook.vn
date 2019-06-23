@@ -9,7 +9,10 @@ var hotelSchema = new mongoose.Schema({
     createBy:String,
     createDate:Date,
     modifyBy:String,
-    modifyDate:Date
+    modifyDate:Date,
+    isUsed:Boolean,
+    isHot:Boolean,
+    isPromote:Boolean
 });
 var Hotel =mongoose.model('Hotel',hotelSchema,'hotel');
 

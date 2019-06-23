@@ -49,6 +49,7 @@
                       required
                       :rules="[() => editedItem.roomTypeCode.length > 0 || 'Required field']"
                       v-model="editedItem.roomTypeCode"
+                      v-bind:class="{ disabled: disableSelect }"
                       label="roomtypeCode"
                     ></v-text-field>
                   </v-flex>
@@ -74,6 +75,24 @@
                       item-text="name"
                       item-value="value"
                       label="Maximum Guest"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.maxLess4"
+                      :items="maxLess4s"
+                      item-text="name"
+                      item-value="value"
+                      label="Maximum Children (0 ~4)"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.maxLess12"
+                      :items="maxLess12s"
+                      item-text="name"
+                      item-value="value"
+                      label="Maximum Children (4~12)"
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
@@ -117,7 +136,7 @@
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="true">delete</v-icon>
           </td>
           <td>{{ props.item.supplierId.supplierName }}</td>
           <td>{{ props.item.hotelId.hotelName }}</td>
@@ -126,6 +145,8 @@
           <td>{{ props.item.lang }}</td>
           <td>{{ props.item.isUsed }}</td>
           <td>{{ props.item.maxGuest }}</td>
+          <td>{{ props.item.maxLess4 }}</td>
+          <td>{{ props.item.maxLess12 }}</td>
           <td>{{ props.item.bed }}</td>
           <td>{{ props.item.acreage }}</td>
           <td>{{ props.item.createBy }}</td>
@@ -195,6 +216,8 @@ export default {
       { text: "Language", value: "lang" },
       { text: "Used", value: "isUsed" },
       { text: "maxGuests", value: "maxGuest" },
+      { text: "maxLess4", value: "maxLess4" },
+      { text: "maxLess12", value: "maxLess12" },
       { text: "beds", value: "bed" },
       { text: "acreage", value: "acreage" },
       { text: "CreateBy", value: "createBy" },
@@ -205,6 +228,30 @@ export default {
     supplier: [],
     hotel: [],
     maxGuests: [
+      { value: 1, name: 1 },
+      { value: 2, name: 2 },
+      { value: 3, name: 3 },
+      { value: 4, name: 4 },
+      { value: 5, name: 5 },
+      { value: 6, name: 6 },
+      { value: 7, name: 7 },
+      { value: 8, name: 8 },
+      { value: 9, name: 9 },
+      { value: 10, name: 10 }
+    ],
+    maxLess4s: [
+      { value: 1, name: 1 },
+      { value: 2, name: 2 },
+      { value: 3, name: 3 },
+      { value: 4, name: 4 },
+      { value: 5, name: 5 },
+      { value: 6, name: 6 },
+      { value: 7, name: 7 },
+      { value: 8, name: 8 },
+      { value: 9, name: 9 },
+      { value: 10, name: 10 }
+    ],
+    maxLess12s: [
       { value: 1, name: 1 },
       { value: 2, name: 2 },
       { value: 3, name: 3 },
@@ -240,6 +287,8 @@ export default {
       roomTypeCode: "",
       roomTypeName: "",
       maxGuest: 2,
+       maxLess4: 2,
+        maxLess12: 2,
       roomTypeIntro: "",
       bed: 2,
       acreage: "",
@@ -247,12 +296,14 @@ export default {
       isUsed: true,
       createBy: "",
       modifyBy: "",
-      roomImages:""
+      roomImages:[]
     },
     defaultItem: {
       roomTypeCode: "",
       roomTypeName: "",
       maxGuest: 2,
+       maxLess4: 2,
+        maxLess12: 2,
       bed: 2,
       acreage: "",
       roomTypeIntro: "",
@@ -260,7 +311,7 @@ export default {
       isUsed: true,
       createBy: "",
       modifyBy: "",
-            roomImages:""
+            roomImages:[]
     },
     snackbar: {
       snackbar: false,

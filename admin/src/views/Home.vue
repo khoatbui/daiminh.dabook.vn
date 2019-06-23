@@ -3,7 +3,6 @@
     <v-container grid-list-xl text-xs-center>
       <v-layout row wrap>
         <v-flex xs10 offset-xs1>
-          <img class="center-img" alt="Vue logo" src="../assets/logo dabook.png">
         </v-flex>
       </v-layout>
     </v-container>

@@ -26,5 +26,7 @@ router.post('/update/:_id', jsonParser,controller.updateOptionService)
 
 router.get('/combobox/optionbysupplierid/:_id', jsonParser,controller.getOptionServiceBySupplierId)
 
+router.get('/combobox/optionbysupplierhotelroomtype/supplier/:supplierId/hotel/:hotelId/roomType/:roomTypeId', jsonParser,controller.getOptionServiceBySupplierHotelRoomType)
+
 router.get('/combobox/optionbysuppliercode/:_id', jsonParser,controller.getOptionServiceBySupplierCode)
 module.exports = router

@@ -6,6 +6,7 @@
 ==================================*/
 var express = require('express')
 var controller=require('../controllers/city.controller')
+var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
 var router = express.Router()
@@ -16,7 +17,7 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',controller.index)
+router.get('/',authMiddleware.requireLogin,controller.index)
 
 router.delete('/:index', controller.deleteCity)
 

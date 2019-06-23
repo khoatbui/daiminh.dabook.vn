@@ -10,6 +10,15 @@ var optionServiceSchema = new mongoose.Schema({
     lang: String,
     note:String,
     isUsed:Boolean,
+    serviceList: [{
+        optionServiceCode: String,
+        optionServiceName: String,
+        price:Number,
+        markUpPlus: Number,
+        markUpPercent:Number,
+        note:String,
+        isUsed: Boolean
+    }],
     createBy:String,
     createDate:Date,
     modifyBy:String,

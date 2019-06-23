@@ -16,38 +16,41 @@
           </v-container>
         </v-img>
         <v-card-title align-center justify-center>
-             <v-container>
+          <v-container>
             <v-layout row wrap fill-width align-center justify-center>
               <v-flex xs12>
-                <v-text-field
-                  v-model="input.username"
-                  label="UserName"
-                  required
-                ></v-text-field>
+                <v-text-field v-model="input.userEmail" label="Email" required></v-text-field>
               </v-flex>
 
               <v-flex xs12>
-                <v-text-field
-                  v-model="input.password"
-                  label="Password"
-                  required
-                ></v-text-field>
+                <v-text-field v-model="input.password" label="Password" required></v-text-field>
               </v-flex>
             </v-layout>
-             </v-container>
+          </v-container>
         </v-card-title>
         <v-card-actions>
-            <v-container>
-          <v-btn flat color="primary">Cancel</v-btn>
-          <v-btn color="primary" @click="login">Login</v-btn>
-            </v-container>
+          <v-container>
+            <v-btn flat color="primary">Cancel</v-btn>
+            <v-btn color="primary" @click="login">Login</v-btn>
+          </v-container>
         </v-card-actions>
       </v-card>
     </v-flex>
+    <v-snackbar
+      v-model="snackbar"
+      :bottom="true"
+      :multi-line="mode === 'multi-line'"
+      :right="true"
+      :timeout="timeout"
+      :vertical="mode === 'vertical'"
+    >
+      {{ input.message }}
+      <v-btn color="pink" flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-layout>
 </template>
 <script>
-var apiIP = process.env.VUE_APP_API_IPADDRESS
+var apiIP = process.env.VUE_APP_API_IPADDRESS;
 console.log(apiIP);
 import axios from "axios";
 const AXIOS = axios.create({
@@ -64,13 +67,20 @@ const AXIOS = axios.create({
 });
 export default {
   data() {
-            return {
-                input: {
-                    username: "",
-                    password: ""
-                }
-            }
-        },
+    return {
+      snackbar: false,
+      y: "top",
+      x: null,
+      mode: "",
+      timeout: 6000,
+      input: {
+        userEmail: "",
+        password: "",
+        status: false,
+        message: ""
+      }
+    };
+  },
 
   created() {
     this.initialize();
@@ -82,8 +92,26 @@ export default {
     },
 
     login() {
-               
-            }
+      AXIOS.post(apiIP + "/user/login", this.input)
+        .then(response => {
+          if (response.data.status == true) {
+            this.snackbar = true;
+            this.input.message = response.data.message;
+            this.input.status = response.data.status;
+            localStorage.loginStatus = true;
+            console.log("----------------");
+            console.log(document.cookies);
+            this.$router.go('/');
+          } else {
+            this.snackbar = true;
+            this.input.message = response.data.message;
+            this.input.status = response.data.status;
+            localStorage.loginStatus = false;
+          }
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+    }
   }
 };
 </script>

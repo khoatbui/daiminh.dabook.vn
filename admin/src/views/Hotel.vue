@@ -65,6 +65,15 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isHot" :label="`IsHot?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -83,7 +92,7 @@
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="true">delete</v-icon>
           </td>
           <td>{{ props.item.supplierId.supplierName }}</td>
           <td>{{ props.item.cityId.cityName }}</td>
@@ -167,7 +176,10 @@ export default {
       star: "5",
       createBy: "",
       modifyBy: "",
-      hotelCode: ""
+      hotelCode: "",
+      isUsed:true,
+      isHot:true,
+      isPromote:true
     },
     defaultItem: {
       supplierId: "",
@@ -176,7 +188,10 @@ export default {
       star: "5",
       createBy: "",
       modifyBy: "",
-      hotelCode: ""
+      hotelCode: "",
+      isUsed:true,
+      isHot:true,
+      isPromote:true
     },
     snackbar: {
       snackbar: false,

@@ -20,8 +20,8 @@ var urlParams = new URLSearchParams(window.location.search);
 var app = new Vue({
     el: '#app',
     data: {
-        uiAction:{
-            showDetailRoomType:false
+        uiAction: {
+            showDetailRoomType: false
         },
         bookingstep: {
             find: true,
@@ -49,16 +49,16 @@ var app = new Vue({
                 other: ""
             },
             orderCode: "",
-            total:{
+            total: {
                 totalPrice: 20000,
                 totalRoom: 0,
-                totalGuest:{
-                    totalGolfer:0,
-                    totalNonGolfer:0,
-                    totalAdult:0,
-                    totalChildren:0
+                totalGuest: {
+                    totalGolfer: 0,
+                    totalNonGolfer: 0,
+                    totalAdult: 0,
+                    totalChildren: 0
                 },
-                totalNight:0
+                totalNight: 0
             },
             time: {
                 checkin: moment().format('DD-MM-YYYY'),
@@ -105,22 +105,21 @@ var app = new Vue({
                                 this.bookingrequest.supplier = element;
                                 this.getHotelList(this.bookingrequest.supplier);
                             }
-                            else{
+                            else {
                                 element.isActive = false;
                             }
                         });
-                      }
-                      else{
+                    }
+                    else {
                         response.data.forEach(element => {
                             if (element.isActive == true) {
                                 this.bookingrequest.supplier = element;
                                 this.getHotelList(this.bookingrequest.supplier);
                             }
                         });
-                      }
+                    }
                 })
                 .catch((error) => {
-                    console.log(error);
                 })
                 .finally(() => {
                 });
@@ -141,8 +140,22 @@ var app = new Vue({
             this.getHotelList(this.bookingrequest.supplier);
             // this.getOptionServiceBySupplierId();
         },
+        changePackageGuestByFLC(item){
+            console.log(item);
+            if (item.selectedPackage.packageId.packageName.indexOf("2")!=-1) {
+                item.guest.golfer.qty=2;
+                item.guest.nongolfer.qty=0;
+
+            }
+            else if (item.selectedPackage.packageId.packageName.indexOf("1")!=-1) {
+                item.guest.golfer.qty=1;
+                item.guest.nongolfer.qty=1;
+
+            }
+            else{}
+        },
         getHotelList(sup) {
-            AXIOS.get(apiUrl + '/hotel/combobox/hotelbysuppliercode/' + sup.supplierCode, { crossdomain: true })
+            AXIOS.get(apiUrl + '/hotel/combobox/promotehotelbysuppliercode/' + sup.supplierCode, { crossdomain: true })
                 .then((response) => {
                     this.selection.hotels = response.data;
                     this.bookingrequest.hotel = response.data[0];
@@ -302,7 +315,6 @@ var app = new Vue({
         },
         savePerson() {
             this.bookingrequest.adult = JSON.parse(JSON.stringify(this.selection.adult));
-
         },
         closePerson() {
 
@@ -316,42 +328,61 @@ var app = new Vue({
         },
         saveRoomType() {
             this.selection.roomTypeSelect = [];
-            console.log(this.selection.roomTypes);
             this.selection.roomTypes.forEach(element => {
                 if (element.qty > 0) {
                     for (let index = 0; index < element.qty; index++) {
                         AXIOS.get(apiUrl + `/packagehotelrel/combobox/packagebyhotelroomtype/hotel/${this.bookingrequest.hotel._id}/roomType/${element.roomType._id}`, { crossdomain: true })
                             .then((response) => {
-                                AXIOS.get(apiUrl + '/optionservice/combobox/optionbysupplierid/' + this.bookingrequest.supplier._id, { crossdomain: true })
+                                var lowestPriceIndex=0;
+                                for (let index = 1; index < response.data.length; index++) {
+                                    if (response.data[index].isDefault==true) {
+                                        lowestPriceIndex=index;
+                                        break;
+                                    }
+                                    if (response.data[index].price<=response.data[index-1].price) {
+                                        lowestPriceIndex=index;
+                                    }
+                                    
+                                }
+                                if (lowestPriceIndex!==-1) {
+                                    response.data[lowestPriceIndex].isDefault=true;
+                                }
+                                AXIOS.get(apiUrl + `/optionservice/combobox/optionbysupplierhotelroomtype/supplier/${this.bookingrequest.supplier._id}/hotel/${this.bookingrequest.hotel._id}/roomType/${element.roomType._id}`, { crossdomain: true })
                                     .then((res) => {
-
                                         this.selection.roomTypeSelect.push({
                                             "roomType": JSON.parse(JSON.stringify(element)),
                                             "package": response.data,
                                             "optionService": res.data,
-                                            "guest":{
-                                                "adult":{
-                                                    name:"adult",
-                                                    qty:0},
-                                                "golfer":{
-                                                    name:"golfer",
-                                                    qty:0},
-                                                "nongolder":{
-                                                    name:"nongolder",
-                                                    qty:0},
-                                                "children":{
-                                                    "less4":{
-                                                        name:"less4",
-                                                        qty:0},
-                                                    "less12":{
-                                                        name:"less12",
-                                                        qty:0}
+                                            "guest": {
+                                                "adult": {
+                                                    name: "adult",
+                                                    qty: element.roomType.maxGuest
                                                 },
-                                                "totalGuest":0
-                                            }
+                                                "golfer": {
+                                                    name: "golfer",
+                                                    qty: response.data[lowestPriceIndex].packageId.packageName.indexOf("2")!=-1 ?2:1
+                                                },
+                                                "nongolfer": {
+                                                    name: "nongolfer",
+                                                    qty: response.data[lowestPriceIndex].packageId.packageName.indexOf("1")!=-1 ?1:0
+                                                },
+                                                "children": {
+                                                    "less4": {
+                                                        name: "less4",
+                                                        qty: 0
+                                                    },
+                                                    "less12": {
+                                                        name: "less12",
+                                                        qty: 0
+                                                    }
+                                                },
+                                                "totalGuest": 0
+                                            },
+                                            selectedPackage:response.data[lowestPriceIndex]
                                         })
                                     })
                                     .catch((error) => {
+
                                         console.log(error);
                                     })
                                     .finally(() => {
@@ -364,7 +395,7 @@ var app = new Vue({
                             });
                     }
                 }
-            });
+            }); 
         },
         closeRoomType() {
             this.selection.roomTypeSelect.forEach(element => {
@@ -380,21 +411,24 @@ var app = new Vue({
                 });
             }
         },
-        savePackageAdultOptionService(){
-            this.bookingrequest.roomTypes=[];
+        savePackageAdultOptionService() {
+
+            this.bookingrequest.roomTypes = [];
             this.selection.roomTypeSelect.forEach(element => {
                 this.bookingrequest.roomTypes.push({
-                    roomType:element.roomType,
-                    package:element.selectedPackage,
-                    optionService:element.selectedOptionService,
-                    guest:element.guest
+                    roomType: element.roomType,
+                    package: element.selectedPackage,
+                    optionService: element.selectedOptionService,
+                    guest: element.guest
                 })
             });
         },
         plusPackage(item) {
+
             item.qty++;
         },
         minusPackage(item) {
+
             item.qty--;
         },
         savePackage() {
@@ -406,6 +440,7 @@ var app = new Vue({
             this.getPackageByMultiHotel();
         },
         closePackage() {
+
             this.bookingrequest.packages.forEach(element => {
                 if (element.qty > 0) {
                     this.selection.packages.find(obj => {
@@ -426,6 +461,7 @@ var app = new Vue({
             item.qty--;
         },
         saveOptionService() {
+
             this.selection.optionServices.forEach(element => {
                 if (element.qty > 0) {
                     this.bookingrequest.optionServices.push(JSON.parse(JSON.stringify(element)))
@@ -433,6 +469,7 @@ var app = new Vue({
             });
         },
         closeOptionService() {
+
             this.bookingrequest.optionServices.forEach(element => {
                 if (element.qty > 0) {
                     this.selection.optionServices.find(obj => {
@@ -445,6 +482,94 @@ var app = new Vue({
                     element.qty = 0;
                 });
             }
+        },
+        priceCaculatebyRange(startTime, endTime, priceRange,children) {
+            var totalPrice = 0;
+            var detailPriceByRange = [];
+            var startSelectDate = moment(startTime, 'YYYY-MM-DD');
+            var endSelectDate = moment(endTime, 'YYYY-MM-DD');
+            console.log('=======================')
+            console.log(priceRange);
+            priceRange.forEach(element => {
+
+                var startDate = moment(element.startDate, 'YYYY-MM-DD');
+                var endDate = moment(element.endDate, 'YYYY-MM-DD');
+                if (startDate.isSameOrBefore(startSelectDate, 'days') && endDate.isSameOrAfter(startSelectDate, 'days')) {
+                    if (endDate.isSameOrBefore(endSelectDate, 'days')) {
+                        console.log('Dieu kien 1-------------')
+                        detailPriceByRange.push({
+                            start: startSelectDate,
+                            end: endDate,
+                            price: element,
+                            diff: endDate.diff(startSelectDate, 'days')
+                        })
+                    }
+                    else if (endDate.isSameOrAfter(endSelectDate, 'days')) {
+                        console.log('Dieu kien 2-------------')
+                        console.log(startDate)
+                        console.log(endDate)
+                        console.log(detailPriceByRange);
+                        detailPriceByRange.push({
+                            start: startSelectDate,
+                            end: endSelectDate,
+                            price: element,
+                            diff: endSelectDate.diff(startSelectDate, 'days')
+
+                        })
+                    }
+                    else if (endDate.isSameOrBefore(startSelectDate, 'days')) {
+
+                    }
+                }
+                else if (startDate.isSameOrAfter(startSelectDate, 'days') && startDate.isSameOrBefore(endSelectDate, 'days')) {
+                    if (endDate.isSameOrBefore(endSelectDate, 'days')) {
+                        console.log('Dieu kien 3-------------')
+                        detailPriceByRange.push({
+                            start: startDate,
+                            end: endDate,
+                            price: element,
+                            diff: endDate.diff(startDate, 'days')
+
+                        })
+                    }
+                    else if (endDate.isSameOrAfter(endSelectDate, 'days')) {
+                        console.log('Dieu kien 4-------------')
+                        detailPriceByRange.push({
+                            start: startDate,
+                            end: endSelectDate,
+                            price: element,
+                            diff: endSelectDate.diff(startDate, 'days')
+
+                        })
+                    }
+                    else if (endDate.isSameOrBefore(startSelectDate, 'days')) {
+
+                    }
+                }
+                else {
+
+                }
+            });
+            detailPriceByRange.forEach(element => {
+                if (element.price.markUpPercent !== 0) {
+                    totalPrice = totalPrice +
+                        element.diff * element.price.price * element.price.markUpPercent +
+                        element.price.markUpPlus +
+                        element.diff * children.less12.qty * element.price.less12Price +
+                        element.diff * children.less4.qty * element.price.less4Price
+                }
+                else {
+                    totalPrice = totalPrice +
+                        element.diff * element.price.price +
+                        element.price.markUpPlus +
+                        element.diff * children.less12.qty * element.price.less12Price +
+                        element.diff * children.less4.qty * element.price.less4Price
+                }
+
+            });
+            console.log('---------------------------');
+            console.log(detailPriceByRange);
+            return totalPrice;
         }
     },
     computed: {
@@ -455,12 +580,12 @@ var app = new Vue({
             var b = moment(this.bookingrequest.time.checkout, 'D-M-YYYY');
             var diffDays = b.diff(a, 'days');
             this.bookingrequest.roomTypes.forEach(element => {
-                if (typeof element.package !='undefined') {
-                total += element.package.price * diffDays;
+                if (typeof element.package != 'undefined') {
+                    total += this.priceCaculatebyRange(a, b, element.package.priceRanges, element.guest.children)
                 }
             });
             this.bookingrequest.roomTypes.forEach(element => {
-                if (typeof element.optionService !='undefined') {
+                if (typeof element.optionService != 'undefined') {
                     total += element.optionService.price;
                 }
             });
@@ -470,46 +595,47 @@ var app = new Vue({
             var a = moment(this.bookingrequest.time.checkin, 'D-M-YYYY');
             var b = moment(this.bookingrequest.time.checkout, 'D-M-YYYY');
             var diffDays = b.diff(a, 'days');
-            return this.bookingrequest.total.totalNight= diffDays;
+            return this.bookingrequest.total.totalNight = diffDays;
         },
         totalRoom: function () {
-           return this.bookingrequest.total.totalRoom= this.bookingrequest.roomTypes.length;
+            return this.bookingrequest.total.totalRoom = this.bookingrequest.roomTypes.length;
         },
-        totalGolfer:function(){
+        totalGolfer: function () {
             var total = 0;
-            if (this.bookingrequest.roomTypes.length>0) {
-            this.bookingrequest.roomTypes.forEach(element => {
-                total += element.guest.golfer.qty;
-            });
-        }
-            return this.bookingrequest.total.totalGuest.totalGolfer= total;
+            if (this.bookingrequest.roomTypes.length > 0) {
+                this.bookingrequest.roomTypes.forEach(element => {
+                    total += element.guest.golfer.qty;
+                });
+            }
+            return this.bookingrequest.total.totalGuest.totalGolfer = total;
         },
-        totalNonGolfer:function(){
+        totalNonGolfer: function () {
+
             var total = 0;
-            if (this.bookingrequest.roomTypes.length>0) {
-            this.bookingrequest.roomTypes.forEach(element => {
-                total += element.guest.nongolfer.qty;
-            });
-        }
-            return this.bookingrequest.total.totalGuest.totalNonGolfer= total;
+            if (this.bookingrequest.roomTypes.length > 0) {
+                this.bookingrequest.roomTypes.forEach(element => {
+                    total += element.guest.nongolfer.qty;
+                });
+            }
+            return this.bookingrequest.total.totalGuest.totalNonGolfer = total;
         },
-        totalAdult:function(){
+        totalAdult: function () {
             var total = 0;
-            if (this.bookingrequest.roomTypes.length>0) {
-            this.bookingrequest.roomTypes.forEach(element => {
-                total += element.guest.adult.qty;
-            });
-        }
-            return this.bookingrequest.total.totalGuest.totalAdult= total;
+            if (this.bookingrequest.roomTypes.length > 0) {
+                this.bookingrequest.roomTypes.forEach(element => {
+                    total += element.guest.adult.qty;
+                });
+            }
+            return this.bookingrequest.total.totalGuest.totalAdult = total;
         },
-        totalChildren:function(){
+        totalChildren: function () {
             var total = 0;
-            if (this.bookingrequest.roomTypes.length>0) {
-            this.bookingrequest.roomTypes.forEach(element => {
-                total += element.guest.children.less4.qty + element.guest.children.less12.qty;
-            });
-        }
-            return this.bookingrequest.total.totalGuest.totalChildren=total;
+            if (this.bookingrequest.roomTypes.length > 0) {
+                this.bookingrequest.roomTypes.forEach(element => {
+                    total += element.guest.children.less4.qty + element.guest.children.less12.qty;
+                });
+            }
+            return this.bookingrequest.total.totalGuest.totalChildren = total;
         }
     }
 })
@@ -553,8 +679,13 @@ $('.endtime').datetimepicker({
         horizontal: 'auto',
         vertical: 'bottom'
     },
+    minDate: moment(),
     defaultDate: moment(new Date()).add(1, 'days')
 });
 $(".starttime").on("dp.change", function (e) {
+    app.bookingrequest.time.checkin=moment(e.date).format('DD-MM-YYYY');
     $('.endtime').data("DateTimePicker").minDate(e.date);
-});  
+});
+$(".endtime").on("dp.change", function (e) {
+    app.bookingrequest.time.checkout=moment(e.date).format('DD-MM-YYYY');
+});

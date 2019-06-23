@@ -22,16 +22,12 @@ router.get('/combobox/hotel/:index',controller.getHotelBySupplier)
 
 router.get('/combobox/hotelbysuppliercode/:index',controller.getHotelBySupplierCode)
 
-router.get('/combobox/roomtype/:index',controller.getRoomTypeBySupplier)
-
-router.get('/combobox/addition-service/:index',controller.getAdditionServiceBySupplier)
+router.get('/combobox/promotehotelbysuppliercode/:index',controller.getPromoteHotelBySupplierCode)
 
 router.delete('/:_id',controller.deleteHotel)
 
 router.post('/insert', jsonParser,controller.insertHotel)
 
 router.post('/update/:_id', jsonParser, controller.updateHotel)
-
-router.post('/price-searching', jsonParser, controller.priceSearch)
 
 module.exports = router

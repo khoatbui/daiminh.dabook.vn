@@ -6,6 +6,8 @@ var roomTypeSchema = new mongoose.Schema({
     roomTypeCode:String,
     roomTypeName:String,
     maxGuest: Number,
+    maxLess4: Number,
+    maxLess12: Number,
     roomTypeIntro: String,
     bed: Number,
     acreage:String,
