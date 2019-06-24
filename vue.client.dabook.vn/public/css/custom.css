@@ -1,5 +1,6 @@
 body{
   font-size: 0.7rem !important;
+  color:rgb(72,72,72) !important;
 }
 input::-webkit-input-placeholder,input::-moz-placeholder,input:-ms-input-placeholder,input:-moz-placeholder { /* Firefox 18- */
   font-size: 0.5rem !important;
@@ -8,6 +9,16 @@ input:focus,input:active{
   border:none!important;
   outline: none !important;
 }
+/* ======================
+    GENERAL
+=========================*/
+.shadow-box{
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px !important;
+}
+
+/* ======================
+    GENERAL
+=========================*/
 .bg-cus-primary{
     background-image: linear-gradient(to bottom, #004d7a, #006b96, #00899e, #00a691, #00bf72) !important;
     color: #FFFFFF !important;
@@ -29,6 +40,9 @@ input:focus,input:active{
     #56ccf2
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+/* ======================
+    GENERAL
+=========================*/
 .main-logo {
   height: 50px;
   color: #ffffff;
