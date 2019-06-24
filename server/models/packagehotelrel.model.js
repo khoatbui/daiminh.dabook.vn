@@ -27,6 +27,13 @@ var pakageHotelRELSchema = new mongoose.Schema({
         startDate: Date,
         endDate: Date, isUsed: Boolean
     }],
+    optionServices: [{
+        optionPrice: Number,
+        optionServiceCode: String,
+        optionServiceName: String,
+        optionNote: String,
+        isUsed: Boolean
+    }],
     maxAdult: Number,
     createBy: String,
     createDate: Date,

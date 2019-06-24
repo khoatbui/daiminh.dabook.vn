@@ -240,6 +240,7 @@ export default {
       { value: 10, name: 10 }
     ],
     maxLess4s: [
+      { value: 0, name: 0 },
       { value: 1, name: 1 },
       { value: 2, name: 2 },
       { value: 3, name: 3 },
@@ -252,6 +253,7 @@ export default {
       { value: 10, name: 10 }
     ],
     maxLess12s: [
+            { value: 0, name: 0 },
       { value: 1, name: 1 },
       { value: 2, name: 2 },
       { value: 3, name: 3 },
@@ -287,8 +289,8 @@ export default {
       roomTypeCode: "",
       roomTypeName: "",
       maxGuest: 2,
-       maxLess4: 2,
-        maxLess12: 2,
+       maxLess4: 0,
+        maxLess12: 0,
       roomTypeIntro: "",
       bed: 2,
       acreage: "",

@@ -178,6 +178,7 @@
                     <v-btn color="red darken-4" dark @click="deleteAllOldPriceRange">Delete Price</v-btn>
                   </v-flex>
                 </v-layout>
+                <v-layout>
                 <v-flex xs12 sm12 md12 class="border-top">
                   <v-data-table
                     :headers="priceHeaders"
@@ -215,6 +216,66 @@
                     </template>
                   </v-data-table>
                 </v-flex>
+                </v-layout>
+                <v-layout wrap>
+                 <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-text-field
+                      required
+                      v-model="editedItem.optionService.optionServiceCode"
+                      label="Option Service Code"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-text-field
+                      required
+                      v-model="editedItem.optionService.optionServiceName"
+                      label="Option Service Name"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-text-field
+                      v-model="editedItem.optionService.optionPrice"
+                      label="Service Price"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-text-field
+                      v-model="editedItem.optionService.optionNote"
+                      label="Note"
+                    ></v-text-field>
+                  </v-flex>
+                   <v-flex xs12 sm6 md4 class="sub-add-component">
+                      <v-checkbox v-model="editedItem.optionService.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addNewOptionPriceRange">Add</v-btn>
+                    <v-btn color="red darken-4" dark @click="deleteAllOldOptionPriceRange">Delete Price</v-btn>
+                  </v-flex>
+                </v-layout>
+                <v-layout>
+                <v-flex xs12 sm12 md12 class="border-top">
+                  <v-data-table
+                    :headers="optionPriceHeaders"
+                    :items="editedItem.optionServices"
+                    class="elevation-1"
+                    width="100%"
+                  >
+                    <template v-slot:items="props">
+                      <td class="justify-center px-0">
+                        <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
+                      </td>
+                      <td class="text-xs-right">{{props.item.optionServiceCode}}</td>
+                      <td class="text-xs-right">{{props.item.optionServiceName}}</td>
+                      <td
+                        class="text-xs-right"
+                        style="color:green;font-weight:bold"
+                      >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.optionPrice) }}</td>
+                      <td class="text-xs-right">{{ props.item.isUsed }}</td>
+                      <td class="text-xs-right">{{ props.item.optionNote }}</td>
+                    </template>
+                  </v-data-table>
+                </v-flex>
+                </v-layout>
               </v-container>
             </v-card-text>
             <v-card-actions>
@@ -627,6 +688,14 @@ export default {
       { text: "StartDate", value: "startDate" },
       { text: "EndDate", value: "endDate" }
     ],
+    optionPriceHeaders:[
+      { text: "Actions", sortable: false },
+      { text: "OptionServiceCode", value: "optionServiceCode" },
+      { text: "OptionServiceName", value: "optionServiceName" },
+      { text: "Price", value: "optionPrice" },
+      { text: "IsUsed", value: "isUsed" },
+      { text: "Note", value: "optionNote" }
+    ],
     priceRange: [],
     roomtype: [],
     supplier: [],
@@ -676,6 +745,14 @@ export default {
       less12Price: 10000000,
       more12Price: 10000000,
       priceRanges: [],
+      optionService:{
+        optionPrice:50000,
+        optionServiceCode:"",
+        optionServiceName:"",
+        optionNote:"",
+        isUsed:true
+      },
+      optionServices:[],
       lang: "EN",
       isUsed: true,
       isDefault: false,
@@ -696,6 +773,14 @@ export default {
       less12Price: 10000000,
       more12Price: 10000000,
       priceRanges: [],
+       optionService:{
+        optionPrice:50000,
+        optionServiceCode:"",
+        optionServiceName:"",
+        optionNote:"",
+        isUsed:true
+      },
+      optionServices:[],
       lang: "EN",
       isUsed: true,
       isDefault: false,
@@ -841,18 +926,25 @@ export default {
 
     editItem(item) {
       this.editedIndex = 100;
-      console.log(this.editedIndex);
+      console.log(this.editedItem);
       this.editedItem = Object.assign({}, item);
       this.editedItem.supplierId = item.supplierId._id;
       this.editedItem.hotelId = item.hotelId._id;
       this.editedItem.roomTypeId = item.roomTypeId._id;
       this.editedItem.packageId = item.packageId._id;
-      this.editedItem.startDate = moment(item.startDate)
-        .utc()
+      this.editedItem.startDate = moment(item.startDate).utc()
         .format("YYYY-MM-DD");
       this.editedItem.endDate = moment(item.endDate)
         .utc()
         .format("YYYY-MM-DD");
+      this.editedItem.optionService={
+        optionPrice:50000,
+        optionServiceCode:"",
+        optionServiceName:"",
+        optionNote:"",
+        isUsed:true
+      };
+        
       this.disableSelect = true;
       this.dialog = true;
       delete this.editedItem._id;
@@ -869,15 +961,6 @@ export default {
           })
           .catch(function(error) {})
           .finally(function() {});
-    },
-    deletepriceRangeItem(item) {
-      this.editedItem.priceRanges.splice(item, 1);
-    },
-    deleteAllOldPriceRange() {
-      var r = confirm("Are you sure you want to delete all price?");
-      if (r == true) {
-        this.editedItem.priceRanges = [];
-      }
     },
     close() {
       this.dialog = false;
@@ -994,6 +1077,34 @@ export default {
         startDate: this.editedItem.startDate,
         endDate: this.editedItem.endDate
       });
+    },
+    addNewOptionPriceRange() {
+      this.editedItem.optionServices.push({
+        optionPrice: this.editedItem.optionService.optionPrice,
+        optionServiceCode: this.editedItem.optionService.optionServiceCode,
+        optionServiceName: this.editedItem.optionService.optionServiceName,
+        optionNote: this.editedItem.optionService.optionNote,
+        isUsed:this.editedItem.optionService.isUsed
+      });
+    },
+    
+    deletepriceRangeItem(item) {
+      this.editedItem.priceRanges.splice(item, 1);
+    },
+     deleteOptionServiceItem(item) {
+      this.editedItem.optionServices.splice(item, 1);
+    },
+    deleteAllOldOptionPriceRange() {
+      var r = confirm("Are you sure you want to delete all option service?");
+      if (r == true) {
+        this.editedItem.optionServices = [];
+      }
+    },
+    deleteAllOldPriceRange() {
+      var r = confirm("Are you sure you want to delete all option service?");
+      if (r == true) {
+        this.editedItem.priceRanges = [];
+      }
     },
     loadCalendarPrice(item) {
       this.selectedItemLoadDetail = item;
