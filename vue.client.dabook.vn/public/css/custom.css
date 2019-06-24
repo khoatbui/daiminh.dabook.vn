@@ -1,0 +1,35 @@
+body{
+  font-size: 0.7rem !important;
+}
+input::-webkit-input-placeholder,input::-moz-placeholder,input:-ms-input-placeholder,input:-moz-placeholder { /* Firefox 18- */
+  font-size: 0.5rem !important;
+}
+input:focus,input:active{
+  border:none!important;
+  outline: none !important;
+}
+.bg-cus-primary{
+    background-image: linear-gradient(to bottom, #004d7a, #006b96, #00899e, #00a691, #00bf72) !important;
+    color: #FFFFFF !important;
+    border:none;
+}
+.btn-round-50{
+    border-radius: 50px !important;
+}
+.bg-main{
+  background: #56ccf2; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #2f80ed,
+    #56ccf2
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #2f80ed,
+    #56ccf2
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.main-logo {
+  height: 50px;
+  color: #ffffff;
+}
