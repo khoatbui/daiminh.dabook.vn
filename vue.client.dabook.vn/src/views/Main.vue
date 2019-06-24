@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="col-12 pt-2">
-            <button class="btn btn-primary w-100">Search</button>
+            <button class="btn btn-primary w-100 font-weight-bold">Search</button>
           </div>
         </div>
 
@@ -207,7 +207,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Datetime from "@/components/Datetime.vue"; // @ is an alias to /src
+import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
 import Navbar from "@/components/Navbar.vue";
 
 @Component({
