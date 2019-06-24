@@ -15,7 +15,10 @@ input:focus,input:active{
 .shadow-box{
   box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px !important;
 }
-
+.border-radius-10{
+  border-radius: 10px !important;
+  overflow: hidden;
+}
 /* ======================
     GENERAL
 =========================*/

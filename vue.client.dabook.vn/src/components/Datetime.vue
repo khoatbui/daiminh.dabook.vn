@@ -2,20 +2,19 @@
   <HotelDatePicker DatePickerID="01" :minNights="minNights" :maxNights="maxNights"/>
 </template>
 <script>
-import axios from "axios";
-import HotelDatePicker from "vue-hotel-datepicker";
+import axios from 'axios'
+import HotelDatePicker from 'vue-hotel-datepicker'
 export default {
   components: {
     HotelDatePicker
   },
   methods: {},
-  data: function() {
+  data: function () {
     return {
-      minNights: 2,
-      maxNights: 30
-    };
+      minNights: 1
+    }
   }
-};
+}
 </script>
 <style lang="scss">
 .datepicker__wrapper {

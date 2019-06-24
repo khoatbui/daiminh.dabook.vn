@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="row main-section p-0 d-flex align-items-start justify-content-center w-100 m-0">
-      <div class="col-12">
+      <div class="col-12 pb-4">
         <div class="row p-2 pb-4">
           <div class="col-12">
             <div class="form-group text-left">
@@ -45,6 +45,7 @@
             <button class="btn btn-primary w-100">Search</button>
           </div>
         </div>
+
         <div class="row pb-4 top-destination">
           <div class="col-12 text-left">
             <h6 class="pl-2">
@@ -110,6 +111,94 @@
             </div>
           </div>
         </div>
+
+        <div class="row pb-4">
+          <div class="col-12 text-left">
+            <h6 class="pl-2">
+              <b>Introduce DaiMinh Adventure</b>
+            </h6>
+          </div>
+          <div class="col-12 scroll-ngang">
+            <div class="card m-2 text-white text-left border-radius-10">
+              <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
+              <div class="card-img-overlay">
+                <h6 class="card-title text-uppercase">Let's build every thing you wish!</h6>
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">We can build almost tour style you wish.</p>
+                <a href="#">
+                  <span>Learn more</span>
+                  <font-awesome-icon class="ml-1" icon="chevron-right"/>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pb-4 hot-destination">
+          <div class="col-12 text-left">
+            <h6 class="pl-2">
+              <b>Recommended for you</b>
+            </h6>
+          </div>
+          <div class="col-12 scroll-ngang">
+            <div class="card m-2 text-white d-inline-block shadow-box">
+              <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-uppercase">Paris!</h5>
+                <h6 class="card-title">$80.95</h6>
+              </div>
+            </div>
+            <div class="card m-2 text-white d-inline-block shadow-box">
+              <img class="card-img" src="img/topdestination/phuquoc_2.jpg" alt="Card image cap">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-uppercase">Paris!</h5>
+                <h6 class="card-title">$80.95</h6>
+              </div>
+            </div>
+            <div class="card m-2 text-white d-inline-block shadow-box">
+              <img class="card-img" src="img/topdestination/phuquoc_3.jpg" alt="Card image cap">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-uppercase">Paris!</h5>
+                <h6 class="card-title">$80.95</h6>
+              </div>
+            </div>
+            <div class="card m-2 text-white d-inline-block shadow-box">
+              <img class="card-img" src="img/topdestination/quynhon_1.jpg" alt="Card image cap">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-uppercase">Paris!</h5>
+                <h6 class="card-title">$80.95</h6>
+              </div>
+            </div>
+            <div class="card m-2 text-white d-inline-block shadow-box">
+              <img class="card-img" src="img/topdestination/quynhon_2.jpg" alt="Card image cap">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-uppercase">Paris!</h5>
+                <h6 class="card-title">$80.95</h6>
+              </div>
+            </div>
+            <div class="card m-2 text-white d-inline-block shadow-box">
+              <img class="card-img" src="img/topdestination/quynhon_3.jpg" alt="Card image cap">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-uppercase">Paris!</h5>
+                <h6 class="card-title">$80.95</h6>
+              </div>
+            </div>
+            <div class="card m-2 text-white d-inline-block shadow-box">
+              <img class="card-img" src="img/topdestination/sapa.jpg" alt="Card image cap">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-uppercase">Paris!</h5>
+                <h6 class="card-title">$80.95</h6>
+              </div>
+            </div>
+            <div class="card m-2 text-white d-inline-block shadow-box">
+              <img class="card-img" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-uppercase">Paris!</h5>
+                <h6 class="card-title">$80.95</h6>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <Navbar></Navbar>
@@ -154,5 +243,26 @@ export default class Main extends Vue {}
   width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.card-img-overlay > h6 {
+  font-size: 0.8rem;
+}
+.card-img-overlay > h5 {
+  font-size: 1.1rem;
+}
+.card-img-overlay > a,
+.card-img-overlay > a:active,
+.card-img-overlay > a:hover,
+.card-img-overlay > a:visited {
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.hot-destination .card-img{
+  height: 100px;
+  width: 140px;
 }
 </style>
