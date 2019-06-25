@@ -49,6 +49,16 @@ input:focus,input:active{
 .text-sm{
   font-size: 0.8rem;
 }
+.scroll-ngang {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.scroll-ngang::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
 /* ======================
     GENERAL
 =========================*/
