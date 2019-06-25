@@ -170,5 +170,6 @@ export default {
     margin: 0 !important;
     padding: 0 !important;
     height: 100vh;
+    padding-bottom: 40px !important;
 }
 </style>
