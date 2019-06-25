@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="search-component">
     <!-- Button trigger modal -->
     <button
       type="button"
@@ -161,5 +161,14 @@ export default {
 }
 .btn-sm-round svg {
   margin: 0 !important;
+}
+.search-component .modal-dialog{
+  margin: 0 !important;
+}
+.search-component .modal-content{
+  width: 100vw;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh;
 }
 </style>
