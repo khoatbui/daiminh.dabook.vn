@@ -77,4 +77,18 @@ input:read-only {
   background-color: white !important;
   color: #2c3e50;
 }
+.prev.available,.next.available{
+  background-color: #007bff !important;
+  color:#FFFFFF!important;
+}
+.prev.available>span,.next.available>span{
+  color:#FFFFFF !important;
+  border-color:#FFFFFF !important;
+}
+.start-date,.start-date.in-range,.in-range.end-date{
+  background-color: #049DD9 !important;
+}
+.in-range{
+  background-color: rgba(4, 157, 217,0.6) !important;
+}
 </style>

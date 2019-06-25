@@ -2,13 +2,13 @@
   OVERIDE
 =======================*/
 .form-control:focus {
-  border:1px solid #ced4da !important;
+  border:1px solid #007bff !important;
   outline: 0;
   -webkit-box-shadow:  none !important;
   box-shadow: none !important;
 }
 body{
-  font-size: 0.7rem !important;
+  /* font-size: 0.7rem !important; */
   color:rgb(72,72,72) !important;
 }
 input::-webkit-input-placeholder,input::-moz-placeholder,input:-ms-input-placeholder,input:-moz-placeholder { /* Firefox 18- */
@@ -41,6 +41,9 @@ input:focus,input:active{
   border-top-right-radius: 100px !important;
   border-bottom-right-radius: 100px !important;
   overflow: hidden;
+}
+.text-sm{
+  font-size: 0.8rem;
 }
 /* ======================
     GENERAL

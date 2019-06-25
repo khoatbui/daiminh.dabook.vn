@@ -17,9 +17,9 @@
           >
         </div>
       </div>
-      <div class="col-12 d-flex flex-row justify-content-center align-items-center">
+      <div class="col-12 d-flex flex-row justify-content-start align-items-center">
            <Datetime id="icheckinout" radius="border-radius-100" placeholder="Check-in/out"></Datetime>
-           <input class="form-control border-radius-100"  type="text"  name="guestfilter"  value  readonly="true"  placeholder="Guest">
+           <GuestSelect></GuestSelect>
       </div>
     </div>
     <Navbar></Navbar>
@@ -30,11 +30,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
 import Navbar from "@/components/Navbar.vue";
+import GuestSelect from "@/components/GuestSelect.vue";
 
 @Component({
   components: {
     Datetime,
-    Navbar
+    Navbar,
+    GuestSelect
   }
 })
 export default class Promotion extends Vue {}

@@ -54,6 +54,5 @@ export default {
 }
 .nav-item span {
   font-size: 0.8rem;
-  font-weight: bold;
 }
 </style>
