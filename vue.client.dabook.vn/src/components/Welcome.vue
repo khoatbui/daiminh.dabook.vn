@@ -24,23 +24,23 @@
         <div class="row promotion">
           <div class="col-12 scroll-ngang">
             <div class="card m-2 text-white d-inline-block shadow-box">
-              <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
+              <img src="img/promotion/flc.jpg" class="card-img cover-img" alt="...">
               <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">FLC!</h5>
+                <h5 class="card-title text-uppercase m-0">FLC</h5>
+                <h6 class="card-title">$80.95</h6>
+              </div>
+            </div>
+            <div class="card m-2 text-white d-inline-block shadow-box">
+              <img src="img/promotion/vinpearl.jpg" class="card-img" alt="...">
+              <div class="card-img-overlay">
+                <h5 class="card-title text-uppercase  m-0">VIN</h5>
                 <h6 class="card-title">$80.95</h6>
               </div>
             </div>
             <div class="card m-2 text-white d-inline-block shadow-box">
               <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
               <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">VIN!</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">SUN!</h5>
+                <h5 class="card-title text-uppercase  m-0">SUN</h5>
                 <h6 class="card-title">$80.95</h6>
               </div>
             </div>
@@ -102,5 +102,21 @@ export default {
   width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.promotion .card-img-overlay{
+   background: rgb(5, 25, 55); /* Fallback color */
+  background: rgba(5, 25, 55, 0.5); /* Black background with 0.5 opacity */
+}
+.cover-img{
+  position: relative;
+}
+.cover-img::before,.cover-img::after{
+  z-index: 10;
+  content: " ";
+  position:absolute;
+  top:0;
+  left: 0;
+  background: #111;
+    opacity: 1;
 }
 </style>
