@@ -49,7 +49,7 @@ export default {
 .nav-icon-fa,
 .nav-item span {
   font-size: 1.2rem;
-  font-weight: 20;
+  font-weight: bolder;
   color: #224e6a;
 }
 .nav-item span {

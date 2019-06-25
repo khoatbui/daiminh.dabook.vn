@@ -21,24 +21,17 @@
       <div class="col-12">
         <div class="row promotion">
           <div class="col-12 scroll-ngang">
-            <div class="card m-2 text-white d-inline-block shadow-box">
+            <div class="card m-2 text-white d-inline-block shadow-box border-radius-10">
               <img src="img/promotion/flc.jpg" class="card-img cover-img" alt="...">
               <div class="card-img-overlay">
                 <h5 class="card-title text-uppercase m-0">FLC</h5>
                 <h6 class="card-title">$80.95</h6>
               </div>
             </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
+            <div class="card m-2 text-white d-inline-block shadow-box border-radius-10">
               <img src="img/promotion/vinpearl.jpg" class="card-img" alt="...">
               <div class="card-img-overlay">
                 <h5 class="card-title text-uppercase  m-0">VIN</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase  m-0">SUN</h5>
                 <h6 class="card-title">$80.95</h6>
               </div>
             </div>

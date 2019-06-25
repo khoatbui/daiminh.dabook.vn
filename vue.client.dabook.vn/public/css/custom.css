@@ -24,6 +24,10 @@ input:focus,input:active{
 .shadow-box{
   box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px !important;
 }
+.border-radius-5{
+  border-radius: 5px !important;
+  overflow: hidden;
+}
 .border-radius-10{
   border-radius: 10px !important;
   overflow: hidden;
@@ -75,4 +79,7 @@ input:focus,input:active{
 .main-logo {
   height: 50px;
   color: #ffffff;
+}
+.bottom-page{
+  margin-bottom: 100px !important;
 }

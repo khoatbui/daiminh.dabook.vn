@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid main h-100 p-0 m-0 promotion-container">
-    <div class="row w-100 p-0 m-0 pb-3 border-bottom">
-      <div class="col-12 p-3">
+    <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section">
+      <div class="col-12 p-2">
         <div class="input-group border-radius-100 w-100 search">
           <div class="input-group-prepend">
             <span class="input-group-text border-left-radius-100" id="basic-addon1">
@@ -17,10 +17,104 @@
           >
         </div>
       </div>
-      <div class="col-12 d-flex flex-row justify-content-start align-items-center">
-           <Datetime id="icheckinout" radius="border-radius-100" placeholder="Check-in/out"></Datetime>
+      <div class="col-12 px-2 d-flex flex-row justify-content-between align-items-center">
+           <Datetime id="icheckinout" radius="border-radius-100" placeholder="Dates"></Datetime>
            <GuestSelect></GuestSelect>
       </div>
+    </div>
+    <div class="data-section">
+    <div class="row w-100 p-0 mx-0 bottom-page">
+      <div class="col-12 p-1 m-0">
+        <div class="m-2 text-left">
+          <h4><b>Ha Long, Quang Ninh</b></h4>
+        </div>
+      </div>
+      <div class="col-6 p-1 m-0">
+        <div class="card m-2 d-inline-block border-0">
+              <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
+              <div class="card-body text-left p-1">
+                <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
+                <p class="card-text font-weight-bolder p-0 m-0 ">FLC HaLong Golf Resort.</p>
+                <p class="card-text text-sm p-0 m-0">$156 per night</p>
+                <p class="card-text text-sm">
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                </p>
+              </div>
+            </div>
+      </div>
+      <div class="col-6 p-1 m-0">
+        <div class="card m-2 d-inline-block border-0">
+              <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
+              <div class="card-body text-left p-1">
+                <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
+                <p class="card-text font-weight-bolder p-0 m-0 ">FLC HaLong Golf Resort.</p>
+                <p class="card-text text-sm p-0 m-0">$156 per night</p>
+                <p class="card-text text-sm">
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                </p>
+              </div>
+            </div>
+      </div>
+      <div class="col-6 p-1 m-0">
+        <div class="card m-2 d-inline-block border-0">
+              <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
+              <div class="card-body text-left p-1">
+                <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
+                <p class="card-text font-weight-bolder p-0 m-0 ">FLC HaLong Golf Resort.</p>
+                <p class="card-text text-sm p-0 m-0">$156 per night</p>
+                <p class="card-text text-sm">
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                </p>
+              </div>
+            </div>
+      </div>
+      <div class="col-6 p-1 m-0">
+        <div class="card m-2 d-inline-block border-0">
+              <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
+              <div class="card-body text-left p-1">
+                <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
+                <p class="card-text font-weight-bolder p-0 m-0 ">FLC HaLong Golf Resort.</p>
+                <p class="card-text text-sm p-0 m-0">$156 per night</p>
+                <p class="card-text text-sm">
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                </p>
+              </div>
+            </div>
+      </div>
+      <div class="col-6 p-1 m-0">
+        <div class="card m-2 d-inline-block border-0">
+              <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
+              <div class="card-body text-left p-1">
+                <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
+                <p class="card-text font-weight-bolder p-0 m-0 ">FLC HaLong Golf Resort.</p>
+                <p class="card-text text-sm p-0 m-0">$156 per night</p>
+                <p class="card-text text-sm">
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                  <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                </p>
+              </div>
+            </div>
+      </div>
+      <div class="col-12 p-1 m-0">
+        <div class="m-2">
+        <button class="btn btn-primary w-100">Show all(2016+)</button>
+        </div>
+      </div>
+    </div>
     </div>
     <Navbar></Navbar>
   </div>
@@ -92,10 +186,17 @@ export default class Promotion extends Vue {}
     background-color: #FFF;
     border-right: none;
 }
+/* ========SEARCH SECTION======== */
+.search-section{
+}
 .search input{
     border-left: none;
 }
 .search input:focus{
     border-left: none !important;
+}
+/* ========DATA SECTION=========== */
+.data-section{
+  margin-top: 130px !important;
 }
 </style>
