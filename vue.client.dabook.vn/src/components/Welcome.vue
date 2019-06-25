@@ -6,18 +6,18 @@
       >
         <img src="img/main_logo_text.png" class="main-logo">
       </div>
-      <div class="col-6 text-right">
+      <div class="col-6 text-right p-1">
         <b-button
           variant="primary"
           class="btn-round-50 pl-4 pr-4 w-75"
           @click="redirectMain"
         >Let's go</b-button>
       </div>
-      <div class="col-6 text-left">
+      <div class="col-6 text-left p-1">
         <b-button
           variant="primary"
           class="btn-round-50 pl-4 pr-4 w-75"
-          @click="redirectMain"
+          @click="redirectPromotion"
         >Promotion</b-button>
       </div>
       <div class="col-12">

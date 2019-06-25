@@ -1,3 +1,12 @@
+/* =================
+  OVERIDE
+=======================*/
+.form-control:focus {
+  border:1px solid #ced4da !important;
+  outline: 0;
+  -webkit-box-shadow:  none !important;
+  box-shadow: none !important;
+}
 body{
   font-size: 0.7rem !important;
   color:rgb(72,72,72) !important;
@@ -17,6 +26,20 @@ input:focus,input:active{
 }
 .border-radius-10{
   border-radius: 10px !important;
+  overflow: hidden;
+}
+.border-radius-100{
+  border-radius: 100px !important;
+  overflow: hidden;
+}
+.border-left-radius-100{
+  border-top-left-radius: 100px !important;
+  border-bottom-left-radius: 100px !important;
+  overflow: hidden;
+}
+.border-right-radius-100{
+  border-top-right-radius: 100px !important;
+  border-bottom-right-radius: 100px !important;
   overflow: hidden;
 }
 /* ======================

@@ -18,10 +18,10 @@
           </div>
           <div class="col-12">
             <div class="form-group text-left">
-              <label for="exampleInputPassword1">
+              <label for="icheckinout">
                 <b>CHECK-IN CHECK-OUT</b>
               </label>
-              <Datetime id="exampleInputPassword1"></Datetime>
+              <Datetime id="icheckinout"></Datetime>
             </div>
           </div>
           <div class="col-12">
