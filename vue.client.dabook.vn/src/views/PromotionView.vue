@@ -188,6 +188,7 @@ export default class Promotion extends Vue {}
 }
 /* ========SEARCH SECTION======== */
 .search-section{
+  z-index: 1000000000000 !important;
 }
 .search input{
     border-left: none;
