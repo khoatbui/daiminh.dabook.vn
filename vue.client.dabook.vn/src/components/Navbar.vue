@@ -2,7 +2,7 @@
 <template>
   <div class="d-flex justify-content-center align-items-center border-top w-100 fixed-bottom p-0 m-0 bg-white">
     <nav class="navbar w-75 navbar-light bg-white mx-auto">
-      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
+      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="/">
         <img class="nav-icon" src="img/main_logo_only_color.png" alt>
         <span>Home</span>
       </a>
