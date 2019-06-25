@@ -12,6 +12,7 @@ var pakageHotelRELSchema = new mongoose.Schema({
     lang: String,
     note: String,
     isUsed: Boolean,
+    isAllDays:Boolean,
     isDefault: Boolean,
     startDate: Date,
     endDate: Date,
@@ -25,7 +26,15 @@ var pakageHotelRELSchema = new mongoose.Schema({
         less12Price: Number,
         more12Price: Number,
         startDate: Date,
-        endDate: Date, isUsed: Boolean
+        endDate: Date, 
+        isUsed: Boolean,
+        isAllDays:Boolean,
+        days:[{
+            selected:Boolean,
+            dayCode:Number,
+            shortDay:String,
+            day:String,
+        }]
     }],
     optionServices: [{
         optionPrice: Number,

@@ -81,7 +81,7 @@
                   <v-flex xs6 sm3 md2>
                     <v-checkbox v-model="editedItem.isDefault" :label="`IsDefault?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-menu
                       v-model="menu1"
                       :close-on-content-click="false"
@@ -104,7 +104,7 @@
                       <v-date-picker v-model="editedItem.startDate" @input="menu1 = false"></v-date-picker>
                     </v-menu>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-menu
                       v-model="menu2"
                       :close-on-content-click="false"
@@ -127,7 +127,7 @@
                       <v-date-picker v-model="editedItem.endDate" @input="menu2 = false"></v-date-picker>
                     </v-menu>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field
                       required
                       :rules="rule.priceRule"
@@ -135,21 +135,21 @@
                       label="Base Price"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field
                       required
                       v-model="editedItem.markUpPlus"
                       label="Mark up (+) | Example: 50000 | Min 50000"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field
                       required
                       v-model="editedItem.markUpPercent"
                       label="Mark up(%) | Example: 30 | Min : 3%"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field
                       required
                       :rules="rule.less4PriceRule"
@@ -157,7 +157,7 @@
                       label="Children less 4 year old Price"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field
                       required
                       :rules="rule.less12PriceRule"
@@ -165,7 +165,7 @@
                       label="Children less 12 year old Price"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field
                       required
                       :rules="rule.more12PriceRule"
@@ -173,52 +173,58 @@
                       label="More 12 year old Price"
                     ></v-text-field>
                   </v-flex>
+                  <v-flex xs4 sm2 md1 class="sub-add-component" v-for="(day,index) in days">
+                    <v-checkbox :value="day" v-model="editedItem.days" :label="day.shortDay" :disabled="editedItem.isAllDays"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs4 sm2 md1 class="sub-add-component">
+                    <v-switch :value="editedItem.isAllDays"  v-model="editedItem.isAllDays" :label="`ALL DAYS`"></v-switch>
+                  </v-flex>
                   <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-btn color="blue darken-1" dark @click="addNewPriceRange">Add</v-btn>
                     <v-btn color="red darken-4" dark @click="deleteAllOldPriceRange">Delete Price</v-btn>
                   </v-flex>
                 </v-layout>
                 <v-layout>
-                <v-flex xs12 sm12 md12 class="border-top">
-                  <v-data-table
-                    :headers="priceHeaders"
-                    :items="itemsWithTotalPriceEdit"
-                    class="elevation-1"
-                    width="100%"
-                  >
-                    <template v-slot:items="props">
-                      <td class="justify-center px-0">
-                        <v-icon small @click="deletepriceRangeItem(props.index)">delete</v-icon>
-                      </td>
-                      <td
-                        class="text-xs-right"
-                        style="color:green;font-weight:bold"
-                      >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.price) }}</td>
-                      <td
-                        class="text-xs-right"
-                      >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.markUpPlus) }}</td>
-                      <td class="text-xs-right">{{ props.item.markUpPercent }}</td>
-                      <td
-                        class="text-xs-right"
-                        style="color:red;font-weight:bold"
-                      >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.totalPrice) }}</td>
-                      <td
-                        class="text-xs-right"
-                      >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less4Price) }}</td>
-                      <td
-                        class="text-xs-right"
-                      >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less12Price) }}</td>
-                      <td
-                        class="text-xs-right"
-                      >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.more12Price) }}</td>
-                      <td class="text-xs-right">{{props.item.startDate.substring(0, 10)}}</td>
-                      <td class="text-xs-right">{{props.item.endDate.substring(0, 10)}}</td>
-                    </template>
-                  </v-data-table>
-                </v-flex>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="priceHeaders"
+                      :items="itemsWithTotalPriceEdit"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deletepriceRangeItem(props.index)">delete</v-icon>
+                        </td>
+                        <td
+                          class="text-xs-right"
+                          style="color:green;font-weight:bold"
+                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.price) }}</td>
+                        <td
+                          class="text-xs-right"
+                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.markUpPlus) }}</td>
+                        <td class="text-xs-right">{{ props.item.markUpPercent }}</td>
+                        <td
+                          class="text-xs-right"
+                          style="color:red;font-weight:bold"
+                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.totalPrice) }}</td>
+                        <td
+                          class="text-xs-right"
+                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less4Price) }}</td>
+                        <td
+                          class="text-xs-right"
+                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less12Price) }}</td>
+                        <td
+                          class="text-xs-right"
+                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.more12Price) }}</td>
+                        <td class="text-xs-right">{{props.item.startDate.substring(0, 10)}}</td>
+                        <td class="text-xs-right">{{props.item.endDate.substring(0, 10)}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
                 </v-layout>
                 <v-layout wrap>
-                 <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-text-field
                       required
                       v-model="editedItem.optionService.optionServiceCode"
@@ -239,42 +245,43 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4 class="sub-add-component">
-                    <v-text-field
-                      v-model="editedItem.optionService.optionNote"
-                      label="Note"
-                    ></v-text-field>
+                    <v-text-field v-model="editedItem.optionService.optionNote" label="Note"></v-text-field>
                   </v-flex>
-                   <v-flex xs12 sm6 md4 class="sub-add-component">
-                      <v-checkbox v-model="editedItem.optionService.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-checkbox v-model="editedItem.optionService.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
                   <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-btn color="blue darken-1" dark @click="addNewOptionPriceRange">Add</v-btn>
-                    <v-btn color="red darken-4" dark @click="deleteAllOldOptionPriceRange">Delete Price</v-btn>
+                    <v-btn
+                      color="red darken-4"
+                      dark
+                      @click="deleteAllOldOptionPriceRange"
+                    >Delete Price</v-btn>
                   </v-flex>
                 </v-layout>
                 <v-layout>
-                <v-flex xs12 sm12 md12 class="border-top">
-                  <v-data-table
-                    :headers="optionPriceHeaders"
-                    :items="editedItem.optionServices"
-                    class="elevation-1"
-                    width="100%"
-                  >
-                    <template v-slot:items="props">
-                      <td class="justify-center px-0">
-                        <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
-                      </td>
-                      <td class="text-xs-right">{{props.item.optionServiceCode}}</td>
-                      <td class="text-xs-right">{{props.item.optionServiceName}}</td>
-                      <td
-                        class="text-xs-right"
-                        style="color:green;font-weight:bold"
-                      >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.optionPrice) }}</td>
-                      <td class="text-xs-right">{{ props.item.isUsed }}</td>
-                      <td class="text-xs-right">{{ props.item.optionNote }}</td>
-                    </template>
-                  </v-data-table>
-                </v-flex>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="optionPriceHeaders"
+                      :items="editedItem.optionServices"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
+                        </td>
+                        <td class="text-xs-right">{{props.item.optionServiceCode}}</td>
+                        <td class="text-xs-right">{{props.item.optionServiceName}}</td>
+                        <td
+                          class="text-xs-right"
+                          style="color:green;font-weight:bold"
+                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.optionPrice) }}</td>
+                        <td class="text-xs-right">{{ props.item.isUsed }}</td>
+                        <td class="text-xs-right">{{ props.item.optionNote }}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -648,6 +655,15 @@ export default {
         roomTypeName: ""
       }
     },
+    days: [
+      { selected: false, dayCode: 1, shortDay: "Hai", day: "Mondays" },
+      { selected: false, dayCode: 2, shortDay: "Ba", day: "Tuesdays" },
+      { selected: false, dayCode: 3, shortDay: "Bon", day: "Wednesdays" },
+      { selected: false, dayCode: 4, shortDay: "Nam", day: "Thursdays" },
+      { selected: false, dayCode: 5, shortDay: "Sau", day: "Fridays" },
+      { selected: false, dayCode: 6, shortDay: "Bay", day: "Saturdays" },
+      { selected: false, dayCode: 7, shortDay: "CN", day: "Sundays" }
+    ],
     search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -688,7 +704,7 @@ export default {
       { text: "StartDate", value: "startDate" },
       { text: "EndDate", value: "endDate" }
     ],
-    optionPriceHeaders:[
+    optionPriceHeaders: [
       { text: "Actions", sortable: false },
       { text: "OptionServiceCode", value: "optionServiceCode" },
       { text: "OptionServiceName", value: "optionServiceName" },
@@ -740,19 +756,21 @@ export default {
       packageId: "",
       price: 10000000,
       markUpPercent: 10,
+      isAllDays:true,
+      days: [],
       markUpPlus: 50000,
       less4Price: 10000000,
       less12Price: 10000000,
       more12Price: 10000000,
       priceRanges: [],
-      optionService:{
-        optionPrice:50000,
-        optionServiceCode:"",
-        optionServiceName:"",
-        optionNote:"",
-        isUsed:true
+      optionService: {
+        optionPrice: 50000,
+        optionServiceCode: "",
+        optionServiceName: "",
+        optionNote: "",
+        isUsed: true
       },
-      optionServices:[],
+      optionServices: [],
       lang: "EN",
       isUsed: true,
       isDefault: false,
@@ -766,6 +784,8 @@ export default {
       hotelId: "",
       roomTypeId: "",
       packageId: "",
+      isAllDays:true,
+      days: [],
       price: 10000000,
       markUpPercent: 10,
       markUpPlus: 50000,
@@ -773,14 +793,14 @@ export default {
       less12Price: 10000000,
       more12Price: 10000000,
       priceRanges: [],
-       optionService:{
-        optionPrice:50000,
-        optionServiceCode:"",
-        optionServiceName:"",
-        optionNote:"",
-        isUsed:true
+      optionService: {
+        optionPrice: 50000,
+        optionServiceCode: "",
+        optionServiceName: "",
+        optionNote: "",
+        isUsed: true
       },
-      optionServices:[],
+      optionServices: [],
       lang: "EN",
       isUsed: true,
       isDefault: false,
@@ -796,7 +816,6 @@ export default {
   }),
 
   computed: {
-    // convert the list of events into a map of lists keyed by date
     eventsMap() {
       const map = {};
       this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e));
@@ -932,19 +951,20 @@ export default {
       this.editedItem.hotelId = item.hotelId._id;
       this.editedItem.roomTypeId = item.roomTypeId._id;
       this.editedItem.packageId = item.packageId._id;
-      this.editedItem.startDate = moment(item.startDate).utc()
+      this.editedItem.startDate = moment(item.startDate)
+        .utc()
         .format("YYYY-MM-DD");
       this.editedItem.endDate = moment(item.endDate)
         .utc()
         .format("YYYY-MM-DD");
-      this.editedItem.optionService={
-        optionPrice:50000,
-        optionServiceCode:"",
-        optionServiceName:"",
-        optionNote:"",
-        isUsed:true
+      this.editedItem.optionService = {
+        optionPrice: 50000,
+        optionServiceCode: "",
+        optionServiceName: "",
+        optionNote: "",
+        isUsed: true
       };
-        
+      this.editedItem.days=[];
       this.disableSelect = true;
       this.dialog = true;
       delete this.editedItem._id;
@@ -1066,6 +1086,9 @@ export default {
       console.log(this.filterByCombo.roomTypeId);
     },
     addNewPriceRange() {
+     if (this.editedItem.isAllDays==true) {
+       this.editedItem.days=[];
+     }
       this.editedItem.priceRanges.push({
         price: this.editedItem.price,
         markUpPercent: this.editedItem.markUpPercent,
@@ -1075,8 +1098,11 @@ export default {
         more12Price: this.editedItem.more12Price,
         isUsed: this.editedItem.isUsed,
         startDate: this.editedItem.startDate,
-        endDate: this.editedItem.endDate
+        endDate: this.editedItem.endDate,
+        days: this.editedItem.days.slice(),
+        isAllDays:this.editedItem.isAllDays
       });
+      console.log(this.editedItem.priceRanges);
     },
     addNewOptionPriceRange() {
       this.editedItem.optionServices.push({
@@ -1084,14 +1110,14 @@ export default {
         optionServiceCode: this.editedItem.optionService.optionServiceCode,
         optionServiceName: this.editedItem.optionService.optionServiceName,
         optionNote: this.editedItem.optionService.optionNote,
-        isUsed:this.editedItem.optionService.isUsed
+        isUsed: this.editedItem.optionService.isUsed
       });
     },
-    
+
     deletepriceRangeItem(item) {
       this.editedItem.priceRanges.splice(item, 1);
     },
-     deleteOptionServiceItem(item) {
+    deleteOptionServiceItem(item) {
       this.editedItem.optionServices.splice(item, 1);
     },
     deleteAllOldOptionPriceRange() {
