@@ -64,6 +64,7 @@ export default {
   width: fit-content !important;
 }
 .daterangepicker {
+  position: fixed !important;
   top: 0px !important;
   left: 0px !important;
   width: 100%;
