@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="confirm-component">
     <!-- Button trigger modal -->
@@ -55,10 +56,10 @@
                 </div>
                 <div class="col-12">
                   <div class="form-group text-left">
-                    <label for="iwhere">
+                    <label for="iguest">
                       <span class="text-sm">Guest</span>
                     </label>
-                    <input type="email" class="form-control" id="iwhere" placeholder="Guest">
+                    <GuestSelectDropDown id="iguest"></GuestSelectDropDown>
                   </div>
                 </div>
                 <div class="col-12">
@@ -139,10 +140,12 @@
 </template>
 <script>
 import axios from "axios";
-import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
+import Datetime from "@/components/Datetime2.vue";
+import GuestSelectDropDown from "@/components/GuestSelectDropDown.vue";
 export default {
   components: {
-    Datetime
+    Datetime,
+    GuestSelectDropDown
   },
   props: ["id", "radius", "placeholder"],
   name: "ConfirmBooking",
