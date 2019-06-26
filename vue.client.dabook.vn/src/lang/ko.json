@@ -1,4 +1,15 @@
 {
-  "bnextstep": "Next step",
-  "home":"집"
-  }
+  "na_home": "집",
+  "na_destination": "목적지",
+  "na_travelstyle": "여행 스타일",
+  "na_travelservice": "여행 서비스",
+  "na_mice": "MICE",
+  "na_fit": "FIT",
+  "na_privacypolicy": "개인 정보 정책",
+  "na_termofus": "우리 임기",
+  "na_aboutus": "우리에 대해",
+  "na_help": "도움",
+  "na_signup": "가입",
+  "na_login": "로그인",
+  "bt_nextstep": "다음 단계"
+}

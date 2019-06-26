@@ -21,9 +21,11 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header px-4">
+          <div class="modal-header p-4">
             <a href="/">
-              <h5 class="modal-title" id="exampleModalLabel">{{ $t('home') }}</h5>
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <img class="main-nav-logo" src="img/main_logo_only_color.png" alt="">
+              </h5>
             </a>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -32,47 +34,42 @@
           <div class="modal-body px-4">
             <div class="container-fluid">
               <div class="row py-2 justify-content-start align-items-center">
+                <div class="col-12 px-0 py-2 text-left">
+                  <a href="/">{{$t("na_destination")}}</a>
+                </div>
+                <div class="col-12 px-0 py-2 text-left">
+                  <a href="/">{{$t("na_travelstyle")}}</a>
+                </div>
+                <div class="col-12 px-0 py-2 text-left">
+                  <a href="/">{{$t("na_travelservice")}}</a>
+                </div>
+                <div class="col-12 px-0 py-2 text-left">
+                  <a href="/">{{$t("na_mice")}}</a>
+                </div>
                 <div class="col-12 px-0 py-2 border-bottom text-left">
-                  <a href="/">Home</a>
+                  <a href="/">{{$t("na_fit")}}</a>
                 </div>
               </div>
               <div class="row py-2 justify-content-start align-items-center">
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">Destination</a>
+                  <a href="/">{{$t("na_privacypolicy")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">Travel Style</a>
-                </div>
-                <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">Travel Service</a>
-                </div>
-                <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">MICE</a>
+                  <a href="/">{{$t("na_termofus")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 border-bottom text-left">
-                  <a href="/">FIT</a>
+                  <a href="/">{{$t("na_aboutus")}}</a>
                 </div>
               </div>
               <div class="row py-2 justify-content-start align-items-center">
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">Private Policy</a>
+                  <a href="/">{{$t("na_help")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">Term of us</a>
+                  <a href="/">{{$t("na_signup")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 border-bottom text-left">
-                  <a href="/">About us</a>
-                </div>
-              </div>
-              <div class="row py-2 justify-content-start align-items-center">
-                <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">Help</a>
-                </div>
-                <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">Signup</a>
-                </div>
-                <div class="col-12 px-0 py-2 border-bottom text-left">
-                  <a href="/">Login</a>
+                  <a href="/">{{$t("na_login")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 d-flex justify-content-start align-items-center">
                   <span class="btn-lang shadow-sm mr-1" @click="changeLocale('vi')">
@@ -147,7 +144,7 @@ export default {
   width: 100vw;
   margin: 0 !important;
   padding: 0 !important;
-  height: 100vh;
+  height: auto !important;
   padding-bottom: 40px !important;
 }
 .main-navbar-component {
@@ -175,5 +172,10 @@ export default {
      height: 30px;
   width: 30px;
   border-radius: 50%;
+}
+.main-nav-logo{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 </style>

@@ -1,4 +1,15 @@
 {
-    "bnextstep": "Next step",
-    "home":"Home"
-  }
+  "na_home": "Home",
+  "na_destination": "Destination",
+  "na_travelstyle": "Travel style",
+  "na_travelservice": "Travel Service",
+  "na_mice": "MICE",
+  "na_fit": "FIT",
+  "na_privacypolicy": "Privacy Policy",
+  "na_termofus": "Term of us",
+  "na_aboutus": "About us",
+  "na_help": "Help",
+  "na_signup": "Register",
+  "na_login": "Login",
+  "bt_nextstep": "Next step"
+}

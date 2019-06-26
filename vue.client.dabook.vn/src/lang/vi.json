@@ -1,4 +1,15 @@
 {
-  "bnextstep": "Buoc tiep theo",
-  "home":"Trang chu"
-  }
+  "na_home": "Trang chủ",
+  "na_destination": "Điểm đến",
+  "na_travelstyle": "Du lịch style",
+  "na_travelservice": "Dịch vụ du lịch",
+  "na_mice": "MICE",
+  "na_fit": "FIT",
+  "na_privacypolicy": "Private Policy",
+  "na_termofus": "Term of us",
+  "na_aboutus": "About us",
+  "na_help": "Trợ giúp",
+  "na_signup": "Đăng kí",
+  "na_login": "Đăng nhập",
+  "bt_nextstep": "Buoc tiep theo"
+}
