@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid main h-100 p-0 m-0 promotion-container">
+  <div class="container-fluid main h-100 p-0 m-0 promotion-container  text-sm">
     <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section">
       <div class="col-12 p-2">
         <div class="input-group border-radius-100 w-100 search">
@@ -36,12 +36,14 @@
               <div class="card-body text-left p-1">
                 <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
                 <p class="card-text font-weight-bolder p-0 m-0 ">FLC HaLong Golf Resort.</p>
-                <p class="card-text text-sm p-0 m-0">$156 per night</p>
-                <p class="card-text text-sm">
+                <p class="p-0 m-0 d-flex justify-content-between">
+                <span class="card-text text-sm">$156 per night</span>
+                <span class="card-text text-sm">
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                </span>
                 </p>
               </div>
             </div>
@@ -52,12 +54,14 @@
               <div class="card-body text-left p-1">
                 <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
                 <p class="card-text font-weight-bolder p-0 m-0 ">FLC HaLong Golf Resort.</p>
-                <p class="card-text text-sm p-0 m-0">$156 per night</p>
-                <p class="card-text text-sm">
+                <p class="p-0 m-0 d-flex justify-content-between">
+                <span class="card-text text-sm">$156 per night</span>
+                <span class="card-text text-sm">
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                </span>
                 </p>
               </div>
             </div>
@@ -68,12 +72,14 @@
               <div class="card-body text-left p-1">
                 <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
                 <p class="card-text font-weight-bolder p-0 m-0 ">FLC HaLong Golf Resort.</p>
-                <p class="card-text text-sm p-0 m-0">$156 per night</p>
-                <p class="card-text text-sm">
+                <p class="p-0 m-0 d-flex justify-content-between">
+                <span class="card-text text-sm">$156 per night</span>
+                <span class="card-text text-sm">
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                </span>
                 </p>
               </div>
             </div>
@@ -84,12 +90,14 @@
               <div class="card-body text-left p-1">
                 <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
                 <p class="card-text font-weight-bolder p-0 m-0 ">FLC HaLong Golf Resort.</p>
-                <p class="card-text text-sm p-0 m-0">$156 per night</p>
-                <p class="card-text text-sm">
+                <p class="p-0 m-0 d-flex justify-content-between">
+                <span class="card-text text-sm">$156 per night</span>
+                <span class="card-text text-sm">
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+                </span>
                 </p>
               </div>
             </div>

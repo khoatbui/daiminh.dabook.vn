@@ -6,14 +6,14 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret,faCoffee,faSearchLocation,faChevronRight,faChevronLeft,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft} from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret,faCoffee,faSearchLocation,faChevronRight,faChevronLeft,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel} from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faUserCircle as farUserCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-library.add(faUserSecret,faCoffee,faSearchLocation,farUserCircle,faChevronRight,faChevronLeft,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft)
+library.add(faUserSecret,faCoffee,faSearchLocation,farUserCircle,faChevronRight,faChevronLeft,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid main h-100 p-0 m-0 bg-main">
+  <div class="container-fluid main h-100 p-0 m-0 bg-main text-sm">
     <div class="row w-100">
       <div class="col-12">
         <img src="img/main_logo_only.png" class="main-logo m-4">
@@ -11,7 +11,7 @@
           <div class="col-12">
             <div class="form-group text-left">
               <label for="iwhere">
-                <b>WHERE</b>
+                <span class="text-sm">Where</span>
               </label>
               <input type="email" class="form-control" id="iwhere" placeholder="Any where">
             </div>
@@ -19,7 +19,7 @@
           <div class="col-12">
             <div class="form-group text-left">
               <label for="icheckinout">
-                <b>CHECK-IN CHECK-OUT</b>
+                <span class="text-sm">Check-in/out</span>
               </label>
               <Datetime id="icheckinout"></Datetime>
             </div>
@@ -27,7 +27,7 @@
           <div class="col-12">
             <div class="form-group text-left">
               <label for="iadult">
-                <b>ADULTS - CHILDREN</b>
+                <span class="text-sm">Adults - Children</span>
               </label>
               <div class="input-group">
                 <input type="email" class="form-control" id="iadult" placeholder="adult">

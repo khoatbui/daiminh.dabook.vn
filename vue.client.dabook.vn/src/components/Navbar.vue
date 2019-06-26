@@ -10,8 +10,16 @@
         class="nav-item active d-flex flex-column justify-content-center align-items-center"
         href="#"
       >
-        <font-awesome-icon class="nav-icon-fa" icon="search-location"/>
-        <span>Search</span>
+        <font-awesome-icon class="nav-icon-fa" icon="hotel"/>
+        <span>Hotel</span>
+      </a>
+      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
+        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'car']"/>
+        <span>Car</span>
+      </a>
+      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
+        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'umbrella-beach']"/>
+        <span>Tour</span>
       </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
         <font-awesome-icon class="nav-icon-fa" :icon="['far', 'user-circle']"/>

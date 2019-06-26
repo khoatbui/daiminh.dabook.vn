@@ -5,7 +5,7 @@
       type="button"
       class="form-control btn btn-primary border-radius-100 guest-setting"
       data-toggle="modal"
-      data-target="#exampleModal"
+      data-target="#exampleModal" @click="changeZIndex"
     >Guests</button>
 
     <!-- Modal -->
@@ -128,7 +128,12 @@ export default {
   props: ["id", "radius", "placeholder"],
   name: "GuestSelect",
   created() {},
-  methods: {},
+  methods: {
+     changeZIndex:function(){
+         $('.search-section-modal').addClass('z-index-10001').removeClass('z-index-10000');
+          $('.action-section-modal').addClass('z-index-10000').removeClass('z-index-10001');
+      }
+  },
   data: function() {
     return {};
   }

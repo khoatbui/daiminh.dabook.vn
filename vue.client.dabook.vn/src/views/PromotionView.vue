@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid main h-100 p-0 m-0 promotion-container">
+  <div class="container-fluid main h-100 p-0 m-0 promotion-container  text-sm">
     <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section">
       <div class="col-12 p-2">
         <div class="input-group border-radius-100 w-100 search">

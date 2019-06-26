@@ -2,7 +2,7 @@
   <div>
     <input
       :id="id"
-      class="form-control dates-setting"
+      class="form-control dates-setting w-100"
       type="text"
       name="datefilter"
       value
@@ -57,11 +57,11 @@ export default {
 </script>
 <style lang="scss">
 .dates-setting {
-  width: fit-content !important;
+  width: 100% !important;
 }
 .dates-setting.form-control {
   min-width: 100px !important;
-  width: fit-content !important;
+  width: 100% !important;
 }
 .daterangepicker {
   position: fixed !important;
