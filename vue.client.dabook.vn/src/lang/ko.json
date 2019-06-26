@@ -11,5 +11,10 @@
   "na_help": "도움",
   "na_signup": "가입",
   "na_login": "로그인",
+  "nav_home":"집",
+  "nav_hotel":"호텔",
+  "nav_car":"차",
+  "nav_tour":"순회 공연",
+  "nav_login":"로그인",
   "bt_nextstep": "다음 단계"
 }

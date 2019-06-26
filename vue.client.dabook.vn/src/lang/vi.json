@@ -11,5 +11,10 @@
   "na_help": "Trợ giúp",
   "na_signup": "Đăng kí",
   "na_login": "Đăng nhập",
+  "nav_home":"Trang chủ",
+  "nav_hotel":"Khách sạn",
+  "nav_car":"Xe",
+  "nav_tour":"Tour",
+  "nav_login":"Đăng nhập",
   "bt_nextstep": "Buoc tiep theo"
 }

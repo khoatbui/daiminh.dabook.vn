@@ -11,5 +11,10 @@
   "na_help": "Help",
   "na_signup": "Register",
   "na_login": "Login",
+  "nav_home":"Home",
+  "nav_hotel":"Hotel",
+  "nav_car":"Car",
+  "nav_tour":"Tour",
+  "nav_login":"Login",
   "bt_nextstep": "Next step"
 }

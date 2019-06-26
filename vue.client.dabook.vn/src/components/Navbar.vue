@@ -1,29 +1,29 @@
 //src/components/Navbar.vue
 <template>
   <div class="d-flex justify-content-center align-items-center border-top w-100 fixed-bottom p-0 m-0 bg-white">
-    <nav class="navbar w-75 navbar-light bg-white mx-auto">
-      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="/">
+    <nav class="navbar w-100 mx-4 my-2 navbar-light bg-white mx-auto">
+      <a class="nav-item d-flex flex-column justify-content-around align-items-center" href="/">
         <img class="nav-icon" src="img/main_logo_only_color.png" alt>
-        <span>Home</span>
+        <span>{{$t("nav_home")}}</span>
       </a>
       <a
         class="nav-item active d-flex flex-column justify-content-center align-items-center"
         href="#"
       >
         <font-awesome-icon class="nav-icon-fa" icon="hotel"/>
-        <span>Hotel</span>
+        <span>{{$t("nav_hotel")}}</span>
       </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
         <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'car']"/>
-        <span>Car</span>
+        <span>{{$t("nav_car")}}</span>
       </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
         <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'umbrella-beach']"/>
-        <span>Tour</span>
+        <span>{{$t("nav_tour")}}</span>
       </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
         <font-awesome-icon class="nav-icon-fa" :icon="['far', 'user-circle']"/>
-        <span>Login</span>
+        <span>{{$t("nav_login")}}</span>
       </a>
     </nav>
   </div>
