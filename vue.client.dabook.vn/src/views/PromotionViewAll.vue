@@ -2,10 +2,15 @@
   <div class="container-fluid main h-100 p-0 m-0 promotion-container  text-sm">
     <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section">
       <div class="col-12 p-2">
+        <div class="row">
+          <div class="col-2 d-flex justify-content-center align-items-center">
+           <MainNavBar></MainNavBar>
+          </div>
+          <div class="col-10">
         <div class="input-group border-radius-100 w-100 search">
           <div class="input-group-prepend">
             <span class="input-group-text border-left-radius-100" id="basic-addon1">
-                <a href="#"><font-awesome-icon class="ml-1" icon="chevron-left"/></a>
+                <a href="#" @click="naviBack"><font-awesome-icon class="ml-1" icon="chevron-left"/></a>
             </span>
           </div>
           <input
@@ -15,6 +20,8 @@
             aria-label="Username"
             aria-describedby="basic-addon1"
           >
+        </div>
+          </div>
         </div>
       </div>
       <div class="col-12 px-2 d-flex flex-row justify-content-between align-items-center scroll-ngang">
@@ -152,6 +159,7 @@ import Navbar from "@/components/Navbar.vue";
 import GuestSelect from "@/components/GuestSelect.vue";
 import FilterHotel from "@/components/FilterHotel.vue";
 import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
+import MainNavBar from "@/components/MainNavBar.vue";
 
 @Component({
   components: {
@@ -159,10 +167,15 @@ import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
     Navbar,
     GuestSelect,
     FilterHotel,
-    CustomerBookedAlert
+    CustomerBookedAlert,
+    MainNavBar
   }
 })
-export default class Promotion extends Vue {}
+export default class Promotion extends Vue {
+    naviBack(){
+    this.$router.go(-1);
+  }
+}
 </script>
 <style >
 .main-section {

@@ -8,7 +8,7 @@
       data-toggle="modal"
       data-target="#confirmModal"
       @click="changeZIndex"
-    >Next step</button>
+    >{{ $t('bnextstep') }}</button>
 
     <!-- Modal -->
     <div
