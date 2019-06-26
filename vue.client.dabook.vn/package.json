@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/lang/**/*.json'",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
@@ -23,7 +24,9 @@
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
+    "vue-cli": "^2.9.6",
     "vue-hotel-datepicker": "^2.6.4",
+    "vue-i18n": "^8.11.2",
     "vue-property-decorator": "^8.1.0",
     "vue-router": "^3.0.3",
     "vuelendar": "^1.0.0",
@@ -32,8 +35,10 @@
   "devDependencies": {
     "@babel/polyfill": "^7.4.4",
     "@fortawesome/fontawesome-free": "^5.9.0",
+    "@kazupon/vue-i18n-loader": "^0.3.0",
     "@types/chai": "^4.1.0",
     "@types/mocha": "^5.2.4",
+    "@types/webpack": "^4.4.0",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-e2e-cypress": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
@@ -57,6 +62,7 @@
     "sass-loader": "^7.1.0",
     "typescript": "^3.4.3",
     "vue-cli-plugin-bootstrap-vue": "^0.4.0",
+    "vue-cli-plugin-i18n": "^0.6.0",
     "vue-template-compiler": "^2.6.10"
   }
 }

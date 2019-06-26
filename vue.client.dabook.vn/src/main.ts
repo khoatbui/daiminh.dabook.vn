@@ -12,14 +12,17 @@ import { faUserCircle as farUserCircle } from '@fortawesome/free-regular-svg-ico
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import i18n from './i18n'
 
 library.add(faUserSecret,faCoffee,faSearchLocation,farUserCircle,faChevronRight,faChevronLeft,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel)
+
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
 new Vue({
+  i18n,
   router,
   store,
   render: h => h(App)
