@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Main from './views/Main.vue'
 import PromotionView from './views/PromotionView.vue'
 import PromotionViewAll from './views/PromotionViewAll.vue'
+import PromotionViewDetail from './views/PromotionViewDetail.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/promotionall',
       name: 'promotionall',
       component:PromotionViewAll
+    },
+    {
+      path: '/promotiondetail',
+      name: 'promotiondetail',
+      component:PromotionViewDetail
     }
   ]
 })

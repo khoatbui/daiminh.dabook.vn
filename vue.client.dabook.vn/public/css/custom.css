@@ -46,8 +46,24 @@ input:focus,input:active{
   border-bottom-right-radius: 100px !important;
   overflow: hidden;
 }
+.border-radius-none{
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-radius: none !important;
+}
+.text-md{
+  font-size: 1rem;
+}
+.text-smd{
+  font-size: 0.9rem;
+}
 .text-sm{
   font-size: 0.8rem;
+}
+.text-lg{
+  font-size: 1.2rem;
 }
 .scroll-ngang {
   width: 100%;
@@ -58,6 +74,12 @@ input:focus,input:active{
 .scroll-ngang::-webkit-scrollbar {
   width: 0px;
   background: transparent;
+}
+.z-index-10000{
+  z-index: 10000 !important;
+}
+.z-index-10001{
+  z-index: 10001 !important;
 }
 /* ======================
     GENERAL

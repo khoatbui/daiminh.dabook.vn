@@ -10,8 +10,16 @@
         class="nav-item active d-flex flex-column justify-content-center align-items-center"
         href="#"
       >
-        <font-awesome-icon class="nav-icon-fa" icon="search-location"/>
-        <span>Search</span>
+        <font-awesome-icon class="nav-icon-fa" icon="hotel"/>
+        <span>Hotel</span>
+      </a>
+      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
+        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'car']"/>
+        <span>Car</span>
+      </a>
+      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
+        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'umbrella-beach']"/>
+        <span>Tour</span>
       </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="#">
         <font-awesome-icon class="nav-icon-fa" :icon="['far', 'user-circle']"/>
@@ -39,18 +47,18 @@ export default {
 .nav-item:hover > span,
 .nav-icon-fa:hover,
 .nav-item span:hover {
-  color: #007bff;
+  color: #FF5A5F;
   text-decoration: none;
 }
 .nav-item.active > .nav-icon-fa,
 .nav-item.active > span {
-  color: #007bff;
+  color: #FF5A5F;
 }
 .nav-icon-fa,
 .nav-item span {
   font-size: 1.2rem;
   font-weight: bolder;
-  color: #224e6a;
+  color: #767676;
 }
 .nav-item span {
   font-size: 0.8rem;
