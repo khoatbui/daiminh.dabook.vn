@@ -5,81 +5,60 @@
       type="button"
       class="form-control btn btn-primary border-radius-100 guest-setting"
       data-toggle="modal"
-      data-target="#exampleModal" @click="changeZIndex"
+      data-target="#hotelFilterModal" @click="changeZIndex"
     >Filter</button>
 
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="hotelFilterModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="hotelFilterModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Select filter</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+          <div class="modal-header  d-flex align-items-center">
+            <h5 class="modal-title" id="hotelFilterModalLabel">Select filter</h5>
+             <button
+              type="button"
+              class="close border-radius-100 shadow close-btn mx-1 text-sm"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <font-awesome-icon icon="times"/>
             </button>
           </div>
           <div class="modal-body">
             <div class="container-fluid">
-              <div class="row p-2 justify-content-start align-items-center">
-                <div class="col-7 pl-0 text-left">
-                  <p class="m-0">Adults</p>
+              <div class="row p-2 pb-4 justify-content-start align-items-center border-bottom">
+                <div class="col-12">
+                  <h6 class="text-left mb-0 font-weight-bolder">Price range</h6>
+                  <p class="text-sm text-left">Khoảng giá trung bình là 800.000 đ / per night</p>
                 </div>
-                <div class="col-1 p-0 m-0">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  >
-                    <font-awesome-icon class="ml-1" icon="minus"/>
-                  </button>
-                </div>
-                <div class="col-3 m-0">
-                  <input type="text" class="form-control" readonly placeholder="10">
-                </div>
-                <div class="col-1 p-0 m-0">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  >
-                    <font-awesome-icon class="ml-1" icon="plus"/>
-                  </button>
+                <div class="col-12 pt-4">
+                  <vue-slider v-model="filter.price" :tooltip="'always'" :max="30000000"  :tooltip-formatter="filter.priceformat"></vue-slider>
                 </div>
               </div>
-              <div class="row p-2 justify-content-start align-items-center">
-                <div class="col-7 pl-0 text-left">
-                  <p class="m-0">Children</p>
-                  <p class="m-0 text-sm">Ages 4-12</p>
+             <div class="row p-2 pb-4 justify-content-start align-items-center border-bottom">
+                <div class="col-12">
+                  <h6 class="text-left mb-0 font-weight-bolder">Number of guest</h6>
+                  <p class="text-sm text-left mb-1">Số người trong phòng</p>
                 </div>
-                <div class="col-1 p-0 m-0">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  >
-                    <font-awesome-icon class="ml-1" icon="minus"/>
-                  </button>
-                </div>
-                <div class="col-3 m-0">
-                  <input type="text" class="form-control" readonly placeholder="10">
-                </div>
-                <div class="col-1 p-0 m-0">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  >
-                    <font-awesome-icon class="ml-1" icon="plus"/>
-                  </button>
+                <div class="col-12">
+                  <GuestSelectDropDown></GuestSelectDropDown>
                 </div>
               </div>
-              <div class="row p-2 justify-content-start align-items-center">
-                <div class="col-7 pl-0 text-left">
-                  <p class="m-0">Children</p>
-                  <p class="m-0 text-sm">Ages 4-12</p>
+              <div class="row p-2 pb-4 justify-content-start align-items-center border-bottom">
+                <div class="col-12">
+                  <h6 class="text-left mb-0 font-weight-bolder">Number of beds</h6>
+                  <p class="text-sm text-left mb-1">Số giường trong phòng</p>
+                </div>
+                <div class="col-12">
+                  <div class="row px-3">
+                    <div class="col-6 pl-0 text-left">
+                  <p class="m-0">Beds</p>
                 </div>
                 <div class="col-1 p-0 m-0">
                   <button
@@ -89,7 +68,7 @@
                     <font-awesome-icon class="ml-1" icon="minus"/>
                   </button>
                 </div>
-                <div class="col-3 m-0">
+                <div class="col-4 m-0">
                   <input type="text" class="form-control" readonly placeholder="10">
                 </div>
                 <div class="col-1 p-0 m-0">
@@ -99,6 +78,8 @@
                   >
                     <font-awesome-icon class="ml-1" icon="plus"/>
                   </button>
+                </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -115,16 +96,15 @@
       </div>
     </div>
   </div>
-  <!-- <div class="dropdown-pa">
-    <input class="form-control border-radius-100 guest-setting"  type="text"  name="guestfilter"  value  readonly="true"  placeholder="Guest">
-    <div class="dropdown-component">
-        <h6>Please select</h6>
-    </div>
-  </div>-->
 </template>
 <script>
 import axios from "axios";
+import GuestSelectDropDown from "@/components/GuestSelectDropDown.vue";
+
 export default {
+  components:{
+GuestSelectDropDown
+  },
   props: ["id", "radius", "placeholder"],
   name: "FilterHotel",
   created() {},
@@ -135,7 +115,12 @@ export default {
       }
   },
   data: function() {
-    return {};
+    return {
+      filter:{
+        'price':[5000000,20000000],
+        priceformat: v => {return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(v)}
+      }
+    };
   }
 };
 </script>

@@ -1,28 +1,33 @@
 <template>
-  <div class="search-component">
+  <div class="guest-component">
     <!-- Button trigger modal -->
     <button
       type="button"
       class="form-control btn btn-primary border-radius-100 guest-setting"
       data-toggle="modal"
-      data-target="#exampleModal" @click="changeZIndex"
+      data-target="#guestSelectModal" @click="changeZIndex"
     >Guests</button>
 
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="guestSelectModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="guestSelectModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Select guest</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+          <div class="modal-header d-flex align-items-center">
+            <h5 class="modal-title" id="guestSelectModalLabel">Select guest</h5>
+             <button
+              type="button"
+              class="close border-radius-100 shadow close-btn mx-1 text-sm"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <font-awesome-icon icon="times"/>
             </button>
           </div>
           <div class="modal-body">
@@ -167,10 +172,10 @@ export default {
 .btn-sm-round svg {
   margin: 0 !important;
 }
-.search-component .modal-dialog{
+.guest-component .modal-dialog{
   margin: 0 !important;
 }
-.search-component .modal-content{
+.guest-component .modal-content{
   width: 100vw;
     margin: 0 !important;
     padding: 0 !important;

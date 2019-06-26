@@ -21,14 +21,19 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header p-4">
+          <div class="modal-header p-4 d-flex align-items-center">
             <a href="/">
               <h5 class="modal-title" id="exampleModalLabel">
                   <img class="main-nav-logo" src="img/main_logo_only_color.png" alt="">
               </h5>
             </a>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+            <button
+              type="button"
+              class="close border-radius-100 shadow close-btn mx-1 text-sm"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <font-awesome-icon icon="times"/>
             </button>
           </div>
           <div class="modal-body px-4">

@@ -1,0 +1,1 @@
+https://nightcatsama.github.io/vue-slider-component/#/api/props

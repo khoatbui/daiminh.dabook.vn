@@ -47,18 +47,18 @@ export default {
 .nav-item:hover > span,
 .nav-icon-fa:hover,
 .nav-item span:hover {
-  color: #FF5A5F;
+  color: #dc3545;
   text-decoration: none;
 }
 .nav-item.active > .nav-icon-fa,
 .nav-item.active > span {
-  color: #FF5A5F;
+  color: #dc3545;
 }
 .nav-icon-fa,
 .nav-item span {
   font-size: 1.2rem;
   font-weight: bolder;
-  color: #767676;
+  color: #374B66;
 }
 .nav-item span {
   font-size: 0.8rem;

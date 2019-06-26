@@ -13,7 +13,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import i18n from './i18n'
+import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/default.css'
 
+Vue.component('VueSlider', VueSlider)
 library.add(faAlignLeft,faUserSecret,faCoffee,faSearchLocation,farUserCircle,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel)
 
 

@@ -9,7 +9,7 @@
 }
 body{
   /* font-size: 0.7rem !important; */
-  color:rgb(72,72,72) !important;
+  color:#374B66 !important;
 }
 input::-webkit-input-placeholder,input::-moz-placeholder,input:-ms-input-placeholder,input:-moz-placeholder { /* Firefox 18- */
   font-size: 0.5rem !important;
@@ -104,6 +104,15 @@ input:focus,input:active{
     #2f80ed,
     #56ccf2
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.close-btn {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+}
+.close-btn svg {
+  font-size: 1rem;
 }
 /* ======================
     GENERAL
