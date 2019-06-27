@@ -84,32 +84,59 @@
         <button class="btn btn-primary w-100" @click="redirectToPromotionAll">Show all(326+)</button>
       </div>
     </div>
+        <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
 import HotelService from "@/api/HotelService";
 import PackageService from "@/api/PackageService";
+import LoadingComponent from "@/components/LoadingComponent.vue";
+
 export default {
+  components: {
+    LoadingComponent
+  },
   name: "HotelPromotionSection",
   props: ["current"],
   data() {
     return {
       packagelist: [],
       pageNumber: 0,
-      size: 10
+      size: 10,
+      isLoadding: false
     };
   },
   created() {
+    if (this.$route.query.supplier != undefined) {
+      this.initialWithSupplier(this.$route.query.supplier);
+    }
+    else{
     this.initial();
+    }
   },
   methods: {
+    changeLoadingState(state) {
+      this.isLoadding = state;
+    },
     redirectToPromotionAll() {
-      this.$router.push({ path: "promotionall" });
+      if (this.$route.query.supplier != undefined) {
+      this.$router.push({ path: `promotionall?supplier=${this.$route.query.supplier}` });
+      }
+      else{
+    this.$router.push({ path: "promotionall" });
+    }
     },
     async initial() {
+      this.changeLoadingState(true);
       var response = await PackageService.getAllPackagePromotion();
       this.packagelist = response.data;
-      console.log(response.data);
+      this.changeLoadingState(false);
+    },
+    async initialWithSupplier(supplierId) {
+      this.changeLoadingState(true);
+      var response = await PackageService.getPromotePackageBySupplier(supplierId);
+      this.packagelist = response.data;
+      this.changeLoadingState(false);
     },
     nextPage() {
       if (this.pageNumber + 1 == this.pageCount) {

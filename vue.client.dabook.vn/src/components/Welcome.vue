@@ -28,18 +28,22 @@
         <div class="row promotion">
           <div class="col-12 scroll-ngang">
             <div class="card m-2 text-white d-inline-block shadow-box border-radius-10">
+              <a v-bind:href="`/promotion?supplier=${promoteSupplierList[0]._id}`">
               <img src="img/promotion/flc.jpg" class="card-img cover-img" alt="...">
               <div class="card-img-overlay">
                 <h5 class="card-title text-uppercase m-0">FLC</h5>
                 <h6 class="card-title">$80.95</h6>
               </div>
+              </a>
             </div>
             <div class="card m-2 text-white d-inline-block shadow-box border-radius-10">
+              <a v-bind:href="`/promotion?supplier=${promoteSupplierList[1]._id}`">
               <img src="img/promotion/vinpearl.jpg" class="card-img" alt="...">
               <div class="card-img-overlay">
                 <h5 class="card-title text-uppercase m-0">VIN</h5>
                 <h6 class="card-title">$80.95</h6>
               </div>
+              </a>
             </div>
           </div>
         </div>
@@ -50,10 +54,15 @@
 <script>
 import axios from "axios";
 import i18n from '@/i18n';
-
+import SupplierService from "@/api/SupplierService";
 export default {
   data() {
-    return {};
+    return {
+      promoteSupplierList:[{_id:""},{_id:""}]
+    };
+  },
+  mounted() {
+    this.initial();
   },
   methods: {
     redirectMain: function() {
@@ -65,7 +74,12 @@ export default {
     changeLocale(locale) {
       i18n.locale = locale;
       this.$router.push({ path: "main" });
-  }
+  },
+  async initial() {
+      var response = await SupplierService.getAllPromoteSupplier();
+      this.promoteSupplierList = response.data;
+      console.log(this.promoteSupplierList[0]._id);
+    }
   }
 };
 </script>
@@ -105,6 +119,9 @@ export default {
   width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.promotion a{
+  color:#FFF !important;
 }
 .promotion .card-img-overlay {
   background: rgb(5, 25, 55); /* Fallback color */

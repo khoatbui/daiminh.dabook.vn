@@ -1,10 +1,14 @@
 import Api from '@/api/Api'
 
 var hotelservice = {
-  getPackageBySupplier (params) {
-    return Api().get('hotel/gethotelbysupplier/' + params.id)
+  getPromotePackageBySupplier (params) {
+    console.log(params)
+    return Api().get('packagehotelrel/m/getallpromotepackagebysupplier/' + params)
   },
-
+  getAllPackageBySupplier (params) {
+    console.log(params)
+    return Api().get('packagehotelrel/m/getallpackagebysupplier/' + params)
+  },
   getAllPackagePromotion () {
     return Api().get('packagehotelrel/m/getallpromotionpackage/')
   },

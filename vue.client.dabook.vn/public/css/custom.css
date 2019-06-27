@@ -89,6 +89,12 @@ a:hover,a,a:active,a:visited,a:focus{
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
+.center-page{
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
 /* ======================
     GENERAL
 =========================*/
