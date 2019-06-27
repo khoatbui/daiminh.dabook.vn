@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid main h-100 p-0 m-0 bg-main text-sm">
-    <div class="row w-100">
+    <div class="row w-100 row w-100 m-0 p-0">
       <div class="col-12">
         <img src="img/main_logo_only.png" class="main-logo m-4">
       </div>
