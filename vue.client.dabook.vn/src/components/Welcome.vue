@@ -4,7 +4,7 @@
       <div
         class="col-12 align-self-stretch bg-primary top-brand d-flex justify-content-center align-items-center"
       >
-        <img src="img/main_logo_text.png" class="main-logo">
+        <img src="img/main_logo_full.png" class="main-logo">
       </div>
       <div class="col-6 text-right p-1">
         <button
