@@ -59,7 +59,7 @@
                     <label for="iguest">
                       <span class="text-sm">Guest</span>
                     </label>
-                    <GuestSelectDropDown id="iguest"></GuestSelectDropDown>
+                    <GuestSelectDropDown v-bind:id="'confirm-guest'"></GuestSelectDropDown>
                   </div>
                 </div>
                 <div class="col-12">

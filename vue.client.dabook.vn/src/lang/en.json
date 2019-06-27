@@ -15,6 +15,6 @@
   "nav_hotel":"Hotel",
   "nav_car":"Car",
   "nav_tour":"Tour",
-  "nav_login":"Login",
+  "nav_history": "Deals",
   "bt_nextstep": "Next step"
 }

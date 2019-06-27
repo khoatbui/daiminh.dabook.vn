@@ -10,7 +10,7 @@
     <font-awesome-icon class="ml-1 float-right" icon="chevron-down"/>
     </button>
 
-    <div class="dropdown-menu dropdown-menu-center guest-dropdown-menu">
+    <div class="dropdown-menu dropdown-menu-center guest-dropdown-menu" :class="`${id}-dropdown-menu`">
       <div class="container">
         <div class="row m-1">
           <div class="col-12">
@@ -86,10 +86,11 @@ export default {
   },
   methods: {
     initiation() {
+      var id=this.id;
         $(function() {
       $(".btn-dropdown-guest").on("click", function(event) {
-        console.log("a");
-        $(".guest-dropdown-menu").toggleClass("show");
+        console.log(`.${id}-dropdown-menu`);
+        $(`.${id}-dropdown-menu`).toggleClass("show");
       });
       $(".guest-dropdown-menu.dropdown-menu.mega-dropdown-menu").on(
         "click",

@@ -5,6 +5,13 @@ import Main from './views/Main.vue'
 import PromotionView from './views/PromotionView.vue'
 import PromotionViewAll from './views/PromotionViewAll.vue'
 import PromotionViewDetail from './views/PromotionViewDetail.vue'
+import TourView from './views/TourView.vue'
+import TourViewAll from './views/TourViewAll.vue'
+import TourViewDetail from './views/TourViewDetail.vue'
+import CarView from './views/CarView.vue'
+import CarViewAll from './views/CarViewAll.vue'
+import CarViewDetail from './views/CarViewDetail.vue'
+import HistoryChecking from './views/HistoryChecking.vue'
 
 Vue.use(Router)
 
@@ -36,6 +43,41 @@ export default new Router({
       path: '/promotiondetail',
       name: 'promotiondetail',
       component:PromotionViewDetail
+    },
+    {
+      path: '/car',
+      name: 'car',
+      component:CarView
+    },
+    {
+      path: '/carall',
+      name: 'carall',
+      component:CarViewAll
+    },
+    {
+      path: '/cardetail',
+      name: 'cardetail',
+      component:CarViewDetail
+    },
+    {
+      path: '/tour',
+      name: 'tour',
+      component:TourView
+    },
+    {
+      path: '/tourall',
+      name: 'tourall',
+      component:TourViewAll
+    },
+    {
+      path: '/tourdetail',
+      name: 'tourdetail',
+      component:TourViewDetail
+    },
+    {
+      path: '/historychecking',
+      name: 'historychecking',
+      component:HistoryChecking
     }
   ]
 })

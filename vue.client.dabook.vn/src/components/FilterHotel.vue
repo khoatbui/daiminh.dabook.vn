@@ -47,7 +47,7 @@
                   <p class="text-sm text-left mb-1">Số người trong phòng</p>
                 </div>
                 <div class="col-12">
-                  <GuestSelectDropDown></GuestSelectDropDown>
+                  <GuestSelectDropDown v-bind:id="'filter-guest'"></GuestSelectDropDown>
                 </div>
               </div>
               <div class="row p-2 pb-4 justify-content-start align-items-center border-bottom">

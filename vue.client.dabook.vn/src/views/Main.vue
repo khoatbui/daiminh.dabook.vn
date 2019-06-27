@@ -201,7 +201,7 @@
         </div>
       </div>
     </div>
-    <Navbar></Navbar>
+    <Navbar v-bind:current="'main'"></Navbar>
   </div>
 </template>
 

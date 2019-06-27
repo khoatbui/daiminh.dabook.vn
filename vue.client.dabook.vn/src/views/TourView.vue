@@ -132,7 +132,7 @@
         </div>
       </div>
     </div>
-    <Navbar v-bind:current="'hotel'"></Navbar>
+    <Navbar v-bind:current="'tour'"></Navbar>
   </div>
 </template>
 
