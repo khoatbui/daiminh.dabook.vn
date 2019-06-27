@@ -307,7 +307,7 @@ export default {
     GuestSelectDropDown,
     StepComponent
   },
-  props: ["id", "radius", "placeholder"],
+  props: ["id", "radius", "placeholder","packagedata"],
   name: "ConfirmBooking",
   created() {},
   methods: {
@@ -319,7 +319,9 @@ export default {
         .addClass("z-index-10001")
         .removeClass("z-index-10000");
     },
-    nextToRequestStep() {},
+    nextToRequestStep() {
+      console.log(this.packagedata);
+    },
       nextToResultStep() {}
   },
   data: function() {

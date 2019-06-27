@@ -15,84 +15,7 @@
       </div>
     </div>
     <div class="data-section pb-4">
-      <div class="row w-100 p-0 mx-0">
-        <div class="col-12 p-0 m-0">
-          <div class="card d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-none"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            >
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 text-left">
-            <h4>
-              <b>FLC Halong Bay Golf & Resort</b>
-            </h4>
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 d-flex justify-content-between align-items-center">
-            <span>HaLong</span>
-            <img class="hotel-owner-avatar shadow" src="img/hotel/hotel-owner/vinpearl.jpg" alt>
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0 text-left">
-          <div class="m-2 pb-4 border-bottom">
-            <h6 class="font-weight-bolder">Deluxury Room, moutant view</h6>
-            <div>
-              <span class="text-sm">1 guest - 1 bed - 1 bath</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row w-100 p-0 mx-0">
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 text-left">
-            <p
-              class="text-sm"
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus perferendis tempore a cupiditate mollitia nostrum doloremque deserunt ut numquam sapiente tenetur optio in nihil ducimus ab illum modi, aliquam dolorum?</p>
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0 text-left">
-          <div class="m-2 pb-4 border-bottom">
-            <p class="text-sm">Contact host</p>
-          </div>
-        </div>
-      </div>
-      <div class="row w-100 p-0 mx-0">
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 text-left pb-4 border-bottom">
-            <h6 class="font-weight-bolder">Room Info</h6>
-            <div class="w-100 d-flex justify-content-between align-items-center flex-wrap">
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="bed"/>1kingbed
-              </span>
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="wifi"/>Wifi
-              </span>
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="swimming-pool"/>Swimming pool
-              </span>
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="swimming-pool"/>Swimming pool
-              </span>
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="swimming-pool"/>Swimming pool
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row w-100 p-0 mx-0">
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 text-left pb-4 border-bottom">
-            <h6 class="font-weight-bolder">Avaibility</h6>
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0"></div>
-      </div>
+     <HotelDetailSection @commitdata="packageinfo = $event"></HotelDetailSection>
     </div>
     <div class="relate-section">
       <div class="row w-100 p-0 mx-0 bottom-page">
@@ -219,18 +142,15 @@
       <div class="row w-100 p-0 mx-0 fixed-bottom border-top py-4 bg-white action-section-modal z-index-10001">
         <div class="col-6 text-left">
           <div>
-            <span class="font-weight-bolder">800.000 đ</span>
+            <span class="font-weight-bolder">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(packageinfo.package.price)}}</span>
             <span class="text-sm">/ per night</span>
           </div>
           <p class="card-text text-sm">
-            <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-            <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-            <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-            <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+            <font-awesome-icon class="ml-1 text-primary" icon="star" v-for="star in packageinfo.package.hotelId.star"/>
           </p>
         </div>
         <div class="col-6">
-          <ConfirmBooking></ConfirmBooking>
+          <ConfirmBooking v-bind:packagedata="packageinfo"></ConfirmBooking>
         </div>
       </div>
     </div>
@@ -249,7 +169,7 @@ import FilterHotel from "@/components/FilterHotel.vue";
 import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
 import ConfirmBooking from "@/components/ConfirmBooking.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
-
+import HotelDetailSection from "@/components/HotelDetailSection.vue"
 
 @Component({
   components: {
@@ -260,10 +180,21 @@ import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
     CustomerBookedAlert,
     DatetimeAutoShow,
     ConfirmBooking,
-    LocationSearchComponent
+    LocationSearchComponent,
+    HotelDetailSection
   }
 })
-export default class Promotion extends Vue {}
+export default class Promotion extends Vue {
+  packageinfo:Object={
+    city:{},
+    package:{
+      price:0,
+      hotelId:{
+        star:0
+      }
+    }
+  }
+}
 </script>
 <style >
 .main-section {

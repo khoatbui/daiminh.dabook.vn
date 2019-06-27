@@ -16,6 +16,10 @@ var hotelservice = {
   getAllPackage () {
     console.log()
     return Api().get('packagehotelrel/m/getallpackage/')
+  },
+  getPackageDetail (params) {
+    console.log(params)
+    return Api().get('packagehotelrel/m/getpackagedetail/' + params)
   }
 }
 
