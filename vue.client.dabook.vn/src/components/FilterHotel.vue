@@ -57,10 +57,10 @@
                 </div>
                 <div class="col-12">
                   <div class="row px-3">
-                    <div class="col-6 pl-0 text-left">
-                  <p class="m-0">Beds</p>
+                    <div class="col-6 pl-0 text-left d-flex align-items-center">
+                  <p class="m-0 ">Beds</p>
                 </div>
-                <div class="col-1 p-0 m-0">
+                <div class="col-1 p-0 m-0 d-flex align-items-center">
                   <button
                     type="button"
                     class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
@@ -68,10 +68,10 @@
                     <font-awesome-icon class="ml-1" icon="minus"/>
                   </button>
                 </div>
-                <div class="col-4 m-0">
+                <div class="col-4 m-0 d-flex align-items-center">
                   <input type="text" class="form-control" readonly placeholder="10">
                 </div>
-                <div class="col-1 p-0 m-0">
+                <div class="col-1 p-0 m-0 d-flex align-items-center">
                   <button
                     type="button"
                     class="btn btn-sm btn-primary border-radius-100 btn-sm-round"

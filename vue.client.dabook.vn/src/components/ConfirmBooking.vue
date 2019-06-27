@@ -210,9 +210,13 @@
                   </div>
                 </div>
                 <div class="col-12 p-0 mt-4">
-                  <button type="button" class="btn btn-danger w-100"  @click="nextToResultStep"
+                  <button
+                    type="button"
+                    class="btn btn-danger w-100"
+                    @click="nextToResultStep"
                     data-toggle="modal"
-                    data-target="#resultModal">Request</button>
+                    data-target="#resultModal"
+                  >Request</button>
                 </div>
               </div>
             </div>
@@ -260,17 +264,23 @@
               <div class="row p-2 justify-content-start align-items-center">
                 <div class="col-12">
                   <div class="ticket-result">
-                    <img class="ticket-bg" src="img/hotel/ticketbg.png" alt="">
-                    <input class="ticket-code" type="text" value="FCD1505303">
-                    <h4><span class="badge badge-primary ticket-status">Status : In process</span></h4>
-                    <span class="ticket-owner">Bui Van Khoat</span>
+                    <img class="ticket-bg" src="img/hotel/ticketbg.png" alt>
+                    <div
+                      class="absolute-group d-flex align-items-stretch flex-column justify-content-center"
+                    >
+                      <span class="ticket-owner">Bui Van Khoat</span>
+                      <input class="ticket-code" type="text" value="FCD1505303">
+                      <h4 class="p-1">
+                        <span class="badge badge-primary ticket-status">Status : In process</span>
+                      </h4>
+                    </div>
                   </div>
                 </div>
                 <div class="col-12">
                   <p class="text-sm mb-0 text-left text-danger">Note</p>
-                  <p class="text-sm text-left">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat commodi dolore voluptates quisquam itaque quo error debitis sapiente natus nostrum, eos, quaerat quasi esse repellat, praesentium quod sequi illo facilis.
-                  </p>
+                  <p
+                    class="text-sm text-left"
+                  >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat commodi dolore voluptates quisquam itaque quo error debitis sapiente natus nostrum, eos, quaerat quasi esse repellat, praesentium quod sequi illo facilis.</p>
                 </div>
                 <div class="col-12 text-left">
                   <a href="#" class="text-sm">Show more</a>
@@ -309,7 +319,8 @@ export default {
         .addClass("z-index-10001")
         .removeClass("z-index-10000");
     },
-    nextToRequestStep() {}
+    nextToRequestStep() {},
+      nextToResultStep() {}
   },
   data: function() {
     return {};
@@ -317,7 +328,8 @@ export default {
 };
 </script>
 <style lang="scss">
-#confirmModal,#requestModal {
+#confirmModal,
+#requestModal {
   background-color: #ffffff !important;
 }
 .guest-setting {
@@ -357,40 +369,35 @@ export default {
   height: 100vh;
   padding-bottom: 40px !important;
 }
-.ticket-bg{
+.ticket-bg {
   width: 100%;
   height: auto;
 }
-.ticket-result{
+.ticket-result {
   position: relative;
   width: auto;
-  margin:2px;
+  margin: 2px;
 }
-.ticket-code{
+.absolute-group {
   position: absolute;
-    top: 50px;
-    left: -15px;
-    -webkit-transform: rotate(180deg);
-    transform: rotate(270deg);
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+}
+.ticket-code {
     min-width: 100px;
     width: 100px;
-    background-color: #374B66;
+    background-color: #2B5364;
     border: none;
-    color: #FFF;
+    color: #fff;
     font-weight: bold;
+    -webkit-transform: translate(10px, 10px) rotate(270deg);
+    transform: translate( -10%) rotate(270deg);
 }
-.ticket-status{
-      position: absolute;
-    bottom: 50px;
-    right: 0;
-    transform: translate(-20%, 50%);
-}
-.ticket-owner{
-   position: absolute;
-    top: 50px;
-    right: 0;
-    transform: translate(-50%, -50%);
-    color:#FFF;
-    font-size: 1.3rem;
+.ticket-owner {
+  color: #fff;
+  font-size: 1.3rem;
 }
 </style>

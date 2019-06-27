@@ -18,6 +18,9 @@ input:focus,input:active{
   border:none!important;
   outline: none !important;
 }
+a:hover,a,a:active,a:visited,a:focus{
+  color: #374B66 ;
+}
 /* ======================
     GENERAL
 =========================*/

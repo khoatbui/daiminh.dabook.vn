@@ -165,11 +165,11 @@ export default {
   text-align: left;
 }
 .btn-lang {
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
   padding:0 !important;
-  line-height: 40px;
+  line-height: 30px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -179,8 +179,8 @@ export default {
   border-radius: 50%;
 }
 .main-nav-logo{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 </style>

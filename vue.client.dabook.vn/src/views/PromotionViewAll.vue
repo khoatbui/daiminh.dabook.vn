@@ -39,6 +39,7 @@
       </div>
       <div class="col-12 p-1 m-0">
         <div class="card m-2 d-inline-block border-0">
+          <a href="/promotiondetail">
               <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
               <div class="card-body text-left p-1">
                 <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
@@ -53,10 +54,12 @@
                 </span>
                 </p>
               </div>
+              </a>
             </div>
       </div>
       <div class="col-12 p-1 m-0">
         <div class="card m-2 d-inline-block border-0">
+            <a href="/promotiondetail">
               <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
               <div class="card-body text-left p-1">
                 <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
@@ -71,10 +74,12 @@
                 </span>
                 </p>
               </div>
+            </a>
             </div>
       </div>
       <div class="col-12 p-1 m-0">
         <div class="card m-2 d-inline-block border-0">
+            <a href="/promotiondetail">
               <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
               <div class="card-body text-left p-1">
                 <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
@@ -89,10 +94,12 @@
                 </span>
                 </p>
               </div>
+            </a>
             </div>
       </div>
       <div class="col-12 p-1 m-0">
         <div class="card m-2 d-inline-block border-0">
+            <a href="/promotiondetail">
               <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
               <div class="card-body text-left p-1">
                 <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
@@ -107,10 +114,12 @@
                 </span>
                 </p>
               </div>
+            </a>
             </div>
       </div>
       <div class="col-12 p-1 m-0">
         <div class="card m-2 d-inline-block border-0">
+            <a href="/promotiondetail">
               <img class="card-img-top border-radius-5" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
               <div class="card-body text-left p-1">
                 <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
@@ -123,6 +132,7 @@
                   <font-awesome-icon class="ml-1 text-primary" icon="star"/>
                 </p>
               </div>
+            </a>
             </div>
       </div>
       <div class="col-12 p-1 pt-4 m-0">
