@@ -6,8 +6,11 @@
           <div class="col-2 d-flex justify-content-center align-items-center">
             <MainNavBar></MainNavBar>
           </div>
-          <div class="col-10">
+          <div class="col-8">
             <LocationSearchComponent></LocationSearchComponent>
+          </div>
+          <div class="col-2">
+            <LanguageComponent></LanguageComponent>
           </div>
         </div>
       </div>
@@ -143,6 +146,7 @@ import Navbar from "@/components/Navbar.vue";
 import GuestSelect from "@/components/GuestSelect.vue";
 import MainNavBar from "@/components/MainNavBar.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
+import LanguageComponent from "@/components/LanguageComponent.vue"
 
 
 @Component({
@@ -151,7 +155,8 @@ import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
     Navbar,
     GuestSelect,
     MainNavBar,
-    LocationSearchComponent
+    LocationSearchComponent,
+    LanguageComponent
   }
 })
 export default class Promotion extends Vue {

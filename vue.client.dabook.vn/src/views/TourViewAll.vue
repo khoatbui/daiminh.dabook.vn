@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="container-fluid main h-100 p-0 m-0 promotion-container text-sm">
     <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section">
@@ -6,8 +7,11 @@
           <div class="col-2 d-flex justify-content-center align-items-center">
             <MainNavBar></MainNavBar>
           </div>
-          <div class="col-10">
+          <div class="col-8">
             <LocationSearchComponent></LocationSearchComponent>
+          </div>
+          <div class="col-2">
+            <LanguageComponent></LanguageComponent>
           </div>
         </div>
       </div>
@@ -180,14 +184,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
-import Navbar from "@/components/Navbar.vue";
-import GuestSelect from "@/components/GuestSelect.vue";
-import FilterHotel from "@/components/FilterHotel.vue";
-import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
-import MainNavBar from "@/components/MainNavBar.vue";
-import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
+import { Component, Vue } from "vue-property-decorator"
+import Datetime from "@/components/Datetime2.vue" // @ is an alias to /src
+import Navbar from "@/components/Navbar.vue"
+import GuestSelect from "@/components/GuestSelect.vue"
+import FilterHotel from "@/components/FilterHotel.vue"
+import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue"
+import MainNavBar from "@/components/MainNavBar.vue"
+import LocationSearchComponent from "@/components/LocationSearchComponent.vue"
+import LanguageComponent from "@/components/LanguageComponent.vue"
 
 @Component({
   components: {
@@ -197,7 +202,8 @@ import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
     FilterHotel,
     CustomerBookedAlert,
     MainNavBar,
-    LocationSearchComponent
+    LocationSearchComponent,
+    LanguageComponent
   }
 })
 export default class Promotion extends Vue {}

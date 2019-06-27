@@ -19,7 +19,7 @@ input:focus,input:active{
   outline: none !important;
 }
 a:hover,a,a:active,a:visited,a:focus{
-  color: #374B66 ;
+  color: #374B66 !important;
 }
 /* ======================
     GENERAL
@@ -83,6 +83,11 @@ a:hover,a,a:active,a:visited,a:focus{
 }
 .z-index-10001{
   z-index: 10001 !important;
+}
+.hidden-outof-text{
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 /* ======================
     GENERAL

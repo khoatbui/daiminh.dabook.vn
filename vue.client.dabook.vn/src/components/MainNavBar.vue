@@ -165,17 +165,17 @@ export default {
   text-align: left;
 }
 .btn-lang {
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
   padding:0 !important;
-  line-height: 30px;
+  line-height: 20px;
   overflow: hidden;
   cursor: pointer;
 }
 .btn-lang img{
-     height: 30px;
-  width: 30px;
+     height: 20px;
+  width: 20px;
   border-radius: 50%;
 }
 .main-nav-logo{

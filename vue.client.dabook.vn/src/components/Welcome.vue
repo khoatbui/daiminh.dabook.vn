@@ -7,16 +7,22 @@
         <img src="img/main_logo_full.png" class="main-logo">
       </div>
       <div class="col-6 text-right p-1">
-        <button
-          class="btn btn-primary btn-round-50 pl-4 pr-4 w-75"
-          @click="redirectMain"
-        >Let's go</button>
+        <div class="btn-group welcome-langauge-button">
+          <button
+            class="btn w-50 border-left-radius-100" @click="changeLocale('vi')">
+            <img src="img/language/vietnam.png" alt="Language">
+          </button>
+          <button class="btn w-50">
+            <img src="img/language/south-korea.png" alt="Language" @click="changeLocale('ko')">
+          </button>
+          <button
+            class="btn w-50 border-right-radius-100">
+            <img src="img/language/united-kingdom.png" alt="Language" @click="changeLocale('en')">
+          </button>
+        </div>
       </div>
       <div class="col-6 text-left p-1">
-        <button
-          class="btn btn-primary btn-round-50 pl-4 pr-4 w-75"
-          @click="redirectPromotion"
-        >Promotion</button>
+        <button class="btn btn-primary btn-round-50 pl-4 pr-4 w-75" @click="redirectPromotion">Promotion</button>
       </div>
       <div class="col-12">
         <div class="row promotion">
@@ -31,7 +37,7 @@
             <div class="card m-2 text-white d-inline-block shadow-box border-radius-10">
               <img src="img/promotion/vinpearl.jpg" class="card-img" alt="...">
               <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase  m-0">VIN</h5>
+                <h5 class="card-title text-uppercase m-0">VIN</h5>
                 <h6 class="card-title">$80.95</h6>
               </div>
             </div>
@@ -43,6 +49,8 @@
 </template>
 <script>
 import axios from "axios";
+import i18n from '@/i18n';
+
 export default {
   data() {
     return {};
@@ -53,7 +61,11 @@ export default {
     },
     redirectPromotion: function() {
       this.$router.push({ path: "promotion" });
-    }
+    },
+    changeLocale(locale) {
+      i18n.locale = locale;
+      this.$router.push({ path: "main" });
+  }
   }
 };
 </script>
@@ -94,20 +106,26 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.promotion .card-img-overlay{
-   background: rgb(5, 25, 55); /* Fallback color */
+.promotion .card-img-overlay {
+  background: rgb(5, 25, 55); /* Fallback color */
   background: rgba(5, 25, 55, 0.5); /* Black background with 0.5 opacity */
 }
-.cover-img{
+.cover-img {
   position: relative;
 }
-.cover-img::before,.cover-img::after{
+.cover-img::before,
+.cover-img::after {
   z-index: 10;
   content: " ";
-  position:absolute;
-  top:0;
+  position: absolute;
+  top: 0;
   left: 0;
   background: #111;
-    opacity: 1;
+  opacity: 1;
+}
+.welcome-langauge-button img{
+  width: 20px;
+  height: 20px;
+  border-radius:50%;
 }
 </style>
