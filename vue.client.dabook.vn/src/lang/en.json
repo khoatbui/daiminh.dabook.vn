@@ -11,10 +11,43 @@
   "na_help": "Help",
   "na_signup": "Register",
   "na_login": "Login",
+
   "nav_home":"Home",
   "nav_hotel":"Hotel",
   "nav_car":"Car",
   "nav_tour":"Tour",
-  "nav_history": "Deals",
-  "bt_nextstep": "Next step"
+  "nav_deals": "Deals",
+
+  "btn_nextstep": "Next step",
+  "btn_showall":"Show all",
+  "btn_showmore":"Show more",
+  "btn_next":"Next",
+  "btn_back":"Back",
+  "btn_select":"Select",
+  "btn_confirm":"Confirm",
+  "btn_request":"Request",
+  "btn_copyticket":"Copy Ticket Code & Close",
+
+  "we_promotion":"Promotion",
+  "main_toptour":"Top tours",
+"main_topdestination":"Top destination",
+
+  "label_package":"Package",
+  "label_promotionpackage":"Promotion Package",
+  "label_adults":"Adults ",
+  "label_children":"Children(2 ~12)",
+  "label_infant":"Infant(0 ~2)",
+  "label_recommentfoyou":"Recommended for you",
+  "label_where":"Where",
+  "label_anywhere":"Any where",
+  "label_deals":"Deals",
+  "label_hotedeals":"Hot Deals",
+
+  "search_search":"Search",
+  "search_date":"Date",
+  "search_date_checkin":"Check in  Date",
+  "search_date_checkout":"Check out Date",
+  "search_guest":"Guests ",
+  "search_guest_numberofguest":"Number of guest "
+
 }

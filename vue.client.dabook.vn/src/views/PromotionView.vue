@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="col-12 px-2 d-flex flex-row justify-content-between align-items-center">
-        <Datetime id="icheckinout" radius="border-radius-100" placeholder="Dates"></Datetime>
+        <Datetime id="icheckinout" radius="border-radius-100" :placeholder="$t('search_date')"></Datetime>
         <GuestSelect></GuestSelect>
       </div>
     </div>

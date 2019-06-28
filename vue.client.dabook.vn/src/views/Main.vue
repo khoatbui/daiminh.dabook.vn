@@ -2,7 +2,9 @@
   <div class="container-fluid main h-100 p-0 m-0 bg-main text-sm">
     <div class="row w-100 row w-100 m-0 p-0">
       <div class="col-12">
-        <img src="img/main_logo_only.png" class="main-logo m-4">
+        <a href="/">
+        <img src="img/main_logo_only.png" class="main-logo m-2">
+        </a>
       </div>
     </div>
     <div class="row main-section p-0 d-flex align-items-start justify-content-center w-100 m-0">
@@ -46,6 +48,96 @@
           </div>
         </div>
 
+        <div class="row pb-4 top-city-destination">
+          <div class="col-12 text-left">
+            <h6 class="pl-2">
+              <b>Top City Destination</b>
+            </h6>
+          </div>
+          <div class="col-12 scroll-ngang">
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/phuquoc_1.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Ho Chi Minh</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/phuquoc_2.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Ha Noi</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/phuquoc_3.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Danang</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/quynhon_1.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Phu Quoc</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/quynhon_2.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Hoi An</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/quynhon_3.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Quang Binh</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/sapa.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Sapa.</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/sapa_2.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Ha Long.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="row pb-4 top-destination">
           <div class="col-12 text-left">
             <h6 class="pl-2">
@@ -56,56 +148,56 @@
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/phuquoc_1.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text font-weight-bolder">Destination</p>
+                <p class="card-text mb-0 font-weight-bolder">Destination</p>
                 <p class="card-text">Top destination in the world</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/phuquoc_2.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text font-weight-bolder">Travel Style</p>
+                <p class="card-text mb-0 font-weight-bolder">Travel Style</p>
                 <p class="card-text">Top destination in the world</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/phuquoc_3.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text font-weight-bolder">Travel Service.</p>
+                <p class="card-text mb-0 font-weight-bolder">Travel Service.</p>
                 <p class="card-text">Top destination in the world</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/quynhon_1.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text font-weight-bolder">MICE.</p>
+                <p class="card-text mb-0 font-weight-bolder">MICE.</p>
                 <p class="card-text">Top destination in the world</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/quynhon_2.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text font-weight-bolder">FIT.</p>
+                <p class="card-text mb-0 font-weight-bolder">FIT.</p>
                 <p class="card-text">Top destination in the world</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/quynhon_3.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text font-weight-bolder">About us.</p>
+                <p class="card-text mb-0 font-weight-bolder">About us.</p>
                 <p class="card-text">Top destination in the world</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/sapa.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text font-weight-bolder">Top Tours.</p>
+                <p class="card-text mb-0 font-weight-bolder">Top Tours.</p>
                 <p class="card-text">Top destination in the world</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text font-weight-bolder">Top Destination.</p>
+                <p class="card-text mb-0 font-weight-bolder">Top Destination.</p>
                 <p class="card-text">Top destination in the world</p>
               </div>
             </div>
@@ -123,7 +215,7 @@
               <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
               <div class="card-img-overlay">
                 <h6 class="card-title text-uppercase">Let's build every thing you wish!</h6>
-                <h5 class="card-title">Card title</h5>
+                <h5 class="card-title">Inform us</h5>
                 <p class="card-text">We can build almost tour style you wish.</p>
                 <a href="#">
                   <span>Learn more</span>
@@ -261,8 +353,14 @@ export default class Main extends Vue {}
   cursor: pointer;
 }
 
-.hot-destination .card-img{
+.hot-destination .card-img {
   height: 100px;
   width: 140px;
+}
+
+/* CITY DESTINAITON */
+.top-city-destination .card-img-top {
+  height: 80px !important;
+  width: 80px !important;
 }
 </style>

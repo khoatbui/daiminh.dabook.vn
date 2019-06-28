@@ -23,7 +23,7 @@
       </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="/historychecking" v-bind:class="{'active':current=='history'}">
         <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'barcode']"/>
-        <span>{{$t("nav_history")}}</span>
+        <span>{{$t("nav_deals")}}</span>
       </a>
     </nav>
   </div>

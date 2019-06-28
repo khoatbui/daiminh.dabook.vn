@@ -6,7 +6,7 @@
       class="form-control btn btn-primary border-radius-100 guest-setting"
       data-toggle="modal"
       data-target="#guestSelectModal" @click="changeZIndex"
-    >Guests</button>
+    >{{$t("search_guest")}}</button>
 
     <!-- Modal -->
     <div
@@ -34,7 +34,7 @@
             <div class="container-fluid">
               <div class="row p-2 justify-content-start align-items-center">
                 <div class="col-7 pl-0 text-left">
-                  <p class="m-0">Adults</p>
+                  <p class="m-0">{{$t("label_adults")}}</p>
                 </div>
                 <div class="col-1 p-0 m-0">
                   <button
@@ -58,7 +58,7 @@
               </div>
               <div class="row p-2 justify-content-start align-items-center">
                 <div class="col-7 pl-0 text-left">
-                  <p class="m-0">Children</p>
+                  <p class="m-0">{{$t("label_children")}}</p>
                   <p class="m-0 text-sm">Ages 4-12</p>
                 </div>
                 <div class="col-1 p-0 m-0">
@@ -83,7 +83,7 @@
               </div>
               <div class="row p-2 justify-content-start align-items-center">
                 <div class="col-7 pl-0 text-left">
-                  <p class="m-0">Children</p>
+                  <p class="m-0">{{$t("label_infant")}}</p>
                   <p class="m-0 text-sm">Ages 4-12</p>
                 </div>
                 <div class="col-1 p-0 m-0">
@@ -120,12 +120,6 @@
       </div>
     </div>
   </div>
-  <!-- <div class="dropdown-pa">
-    <input class="form-control border-radius-100 guest-setting"  type="text"  name="guestfilter"  value  readonly="true"  placeholder="Guest">
-    <div class="dropdown-component">
-        <h6>Please select</h6>
-    </div>
-  </div>-->
 </template>
 <script>
 import axios from "axios";

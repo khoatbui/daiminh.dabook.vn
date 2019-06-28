@@ -10,7 +10,7 @@
     <input
       type="text"
       class="form-control border-right-radius-100"
-      placeholder="Search"
+      v-bind:placeholder="$t('search_search')"
       aria-label="Username"
       aria-describedby="basic-addon1"
     >

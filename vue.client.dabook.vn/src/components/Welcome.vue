@@ -47,7 +47,9 @@
                       <div class="col-8 p-0 m-0 d-flex align-items-center justify-content-center">
                         <div class="card-body p-0 m-0 text-white">
                           <h5 class="card-title text-uppercase m-0 text-smd">FLC Golf Resort</h5>
-                          <h6 class="card-title"><span class="text-sm">from</span> $80.95</h6>
+                          <h6 class="card-title m-0 ">
+                            <span class="text-sm">from</span> $80.95
+                          </h6>
                         </div>
                       </div>
                     </div>
@@ -68,7 +70,9 @@
                       <div class="col-8 p-0 m-0 d-flex align-items-center justify-content-center">
                         <div class="card-body p-0 m-0 text-white">
                           <h5 class="card-title text-uppercase m-0 text-smd">VinPearl Hotel & Resort</h5>
-                          <h6 class="card-title"><span class="text-sm">from</span> $80.95</h6>
+                          <h6 class="card-title m-0 ">
+                            <span class="text-sm">from</span> $80.95
+                          </h6>
                         </div>
                       </div>
                     </div>

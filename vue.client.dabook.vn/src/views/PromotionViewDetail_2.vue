@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid main h-100 p-0 m-0 promotion-container">
     <div class="search-section">
-      <div class="row w-100 p-0 m-0 border-bottom fixed-top bg-white search-section-modal z-index-10000">
+      <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section-modal z-index-10000">
         <div class="col-12 p-2">
         <div class="row">
           <div class="col-2 d-flex justify-content-center align-items-center">
@@ -25,8 +25,7 @@
       </div>
     </div>
     <div class="data-section pb-4">
-     <HotelDetailSection @commitdata="onChildClick"></HotelDetailSection>
-      <router-view></router-view>
+     <HotelDetailSection @commitdata="data.packageinfo = $event"></HotelDetailSection>
     </div>
     <div class="relate-section">
       <div class="row w-100 p-0 mx-0 bottom-page">
@@ -149,6 +148,22 @@
         </div>
       </div>
     </div>
+    <div class="action-section">
+      <div class="row w-100 p-0 mx-0 fixed-bottom border-top py-4 bg-white action-section-modal z-index-10001">
+        <div class="col-6 text-left">
+          <div>
+            <span class="font-weight-bolder">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.packageinfo.package.price)}}</span>
+            <span class="text-sm">/ per night</span>
+          </div>
+          <p class="card-text text-sm">
+            <font-awesome-icon class="ml-1 text-primary" icon="star" v-for="star in data.packageinfo.package.hotelId.star"/>
+          </p>
+        </div>
+        <div class="col-6">
+          <ConfirmBooking v-bind:packagedata="data"></ConfirmBooking>
+        </div>
+      </div>
+    </div>
     <div class="general-section">
     </div>
   </div>
@@ -197,13 +212,6 @@ export default class Promotion extends Vue {
     userSelectInfo:{
 
     }
-  }
-
-  onChildClick(value){
-    this.data.packageinfo=value;
-    console.log(this.data.packageinfo);
-    this.$router.push(`/promotiondetail/confirm/${ this.data.packageinfo.package._id}`)
-    console.log(`/promotiondetail/confirm/${ this.data.packageinfo.package._id}`);
   }
 }
 </script>
@@ -304,5 +312,12 @@ export default class Promotion extends Vue {
   border-radius: 100px;
   line-height: 30px !important;
   padding: 0;
+}
+.hotel-owner-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  background-color: #ffffff;
+  border: 1px solid #007bff;
 }
 </style>

@@ -1,6 +1,14 @@
 /* eslint-disable */
 <template>
   <div class="confirm-component">
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-danger w-100"
+      data-toggle="modal"
+      data-target="#confirmModal"
+      @click="changeZIndex"
+    >{{ $t('btn_nextstep') }}</button>
 
     <!--Confirm Modal -->
     <div
@@ -293,6 +301,7 @@ import axios from "axios";
 import Datetime from "@/components/Datetime2.vue";
 import GuestSelectDropDown from "@/components/GuestSelectDropDown.vue";
 import StepComponent from "@/components/StepComponent.vue";
+
 export default {
   components: {
     Datetime,
@@ -301,11 +310,18 @@ export default {
   },
   props: ["id","packagedata"],
   name: "ConfirmBooking",
-  mounted() {
-        console.log(document.getElementById('confirmModal'));
-    document.getElementById('confirmModal').classList.add('show');
+  created() {
+    console.log('confirm page');
   },
   methods: {
+    changeZIndex: function() {
+      $(".search-section-modal")
+        .addClass("z-index-10000")
+        .removeClass("z-index-10001");
+      $(".action-section-modal")
+        .addClass("z-index-10001")
+        .removeClass("z-index-10000");
+    },
     nextToRequestStep() {
       console.log(this.packagedata);
     },
