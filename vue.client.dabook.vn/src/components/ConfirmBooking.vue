@@ -24,7 +24,7 @@
           <div class="modal-header d-flex align-items-center border-bottom">
             <div class="text-left">
               <h5 class="modal-title" id="confirmModalLabel">
-                <span class="font-weight-bolder text-lg">800.000 đ</span>
+                <span class="font-weight-bolder text-lg">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(packagedata.packageinfo.package.price)}}</span>
                 <span class="text-sm">/ per night</span>
               </h5>
               <p class="text-sm">
@@ -75,7 +75,7 @@
                     <div class="col-12 border-bottom p-2">
                       <div class="d-flex justify-content-between align-items-center">
                         <span>
-                          800.000 đ x
+                          {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(packagedata.packageinfo.package.price)}} x
                           <span class="text-sm">3 night</span>
                         </span>
                         <span>2.400.000 đ</span>
@@ -150,7 +150,7 @@
               <div class="col-12 w-100 d-flex justify-content-between align-items-center">
                 <div class="text-left">
                   <h5 class="modal-title" id="requestModalLabel">
-                    <span class="font-weight-bolder text-lg">800.000 đ</span>
+                    <span class="font-weight-bolder text-lg">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(packagedata.packageinfo.package.price)}}</span>
                     <span class="text-sm">/ per night</span>
                   </h5>
                   <p class="text-sm">
@@ -307,7 +307,7 @@ export default {
     GuestSelectDropDown,
     StepComponent
   },
-  props: ["id", "radius", "placeholder","packagedata"],
+  props: ["id","packagedata"],
   name: "ConfirmBooking",
   created() {},
   methods: {

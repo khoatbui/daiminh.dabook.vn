@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="data-section pb-4">
-     <HotelDetailSection @commitdata="packageinfo = $event"></HotelDetailSection>
+     <HotelDetailSection @commitdata="data.packageinfo = $event"></HotelDetailSection>
     </div>
     <div class="relate-section">
       <div class="row w-100 p-0 mx-0 bottom-page">
@@ -142,15 +142,15 @@
       <div class="row w-100 p-0 mx-0 fixed-bottom border-top py-4 bg-white action-section-modal z-index-10001">
         <div class="col-6 text-left">
           <div>
-            <span class="font-weight-bolder">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(packageinfo.package.price)}}</span>
+            <span class="font-weight-bolder">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.packageinfo.package.price)}}</span>
             <span class="text-sm">/ per night</span>
           </div>
           <p class="card-text text-sm">
-            <font-awesome-icon class="ml-1 text-primary" icon="star" v-for="star in packageinfo.package.hotelId.star"/>
+            <font-awesome-icon class="ml-1 text-primary" icon="star" v-for="star in data.packageinfo.package.hotelId.star"/>
           </p>
         </div>
         <div class="col-6">
-          <ConfirmBooking v-bind:packagedata="packageinfo"></ConfirmBooking>
+          <ConfirmBooking v-bind:packagedata="data"></ConfirmBooking>
         </div>
       </div>
     </div>
@@ -185,13 +185,18 @@ import HotelDetailSection from "@/components/HotelDetailSection.vue"
   }
 })
 export default class Promotion extends Vue {
-  packageinfo:Object={
+
+  data:Object={
+    packageinfo:{
     city:{},
     package:{
       price:0,
       hotelId:{
         star:0
-      }
+      }}
+    },
+    userSelectInfo:{
+
     }
   }
 }
