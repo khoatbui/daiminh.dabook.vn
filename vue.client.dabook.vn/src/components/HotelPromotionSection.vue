@@ -10,7 +10,7 @@
     </div>
     <div class="col-6 p-1 m-0" v-for="item in paginatedData">
       <div class="card w-100 p-2 d-inline-block border-0">
-        <a v-bind:href="`/promotiondetail?packagehotelRELId=${item._id}`">
+        <a v-bind:href="`/promotiondetail?packagehotelrelid=${item._id}`">
           <img
             class="card-img-top border-radius-5"
             src="img/topdestination/sapa_2.jpg"

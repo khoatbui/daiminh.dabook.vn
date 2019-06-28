@@ -12,7 +12,8 @@ import CarView from './views/CarView.vue'
 import CarViewAll from './views/CarViewAll.vue'
 import CarViewDetail from './views/CarViewDetail.vue'
 import HistoryChecking from './views/HistoryChecking.vue'
-import ConfirmBooking from '@/components/ConfirmBooking.vue'
+import HotelConfirmBooking from '@/components/HotelConfirmBooking.vue'
+import HotelRequestBooking from '@/components/HotelRequestBooking.vue'
 import HotelDetailSection from '@/components/HotelDetailSection.vue'
 
 Vue.use(Router)
@@ -47,11 +48,18 @@ export default new Router({
       component:PromotionViewDetail,
       children: [
         {
-          path: '/promotiondetail/confirm/:_id',
-          component: ConfirmBooking
+          path: 'confirm',
+          name: 'promotiondetailconfirm',
+          component: HotelConfirmBooking
         },
         {
-          path: '/promotiondetail/:id',
+          path: 'request',
+          name: 'promotiondetailrequest',
+          component: HotelRequestBooking
+        },
+        {
+          path: '',
+          name: 'promotiondetailsection',
           component: HotelDetailSection
         }
       ]

@@ -247,7 +247,6 @@ import Navbar from "@/components/Navbar.vue";
 import GuestSelect from "@/components/GuestSelect.vue";
 import FilterHotel from "@/components/FilterHotel.vue";
 import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
-import ConfirmBooking from "@/components/ConfirmBooking.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 
 
@@ -259,7 +258,6 @@ import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
     FilterHotel,
     CustomerBookedAlert,
     DatetimeAutoShow,
-    ConfirmBooking,
     LocationSearchComponent
   }
 })

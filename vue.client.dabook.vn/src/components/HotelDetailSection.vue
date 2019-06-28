@@ -107,17 +107,11 @@
             </p>
           </div>
           <div class="col-6">
-            <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="btn btn-danger w-100"
-              data-toggle="modal"
-              data-target="#confirmModal"
-              @click="changeZIndex"
-            >{{ $t('btn_nextstep') }}</button>
+            <button type="button" class="btn btn-danger w-100" @click="redirectToConfirm">{{ $t('btn_nextstep') }}</button>
           </div>
         </div>
       </div>
+              <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
     </div>
   </div>
 </template>
@@ -160,20 +154,11 @@ export default {
     };
   },
   created() {
-    this.initial(this.$route.query.packagehotelRELId);
+    this.initial(this.$route.query.packagehotelrelid);
   },
   methods: {
-    changeZIndex: function() {
-      $(".search-section-modal")
-        .addClass("z-index-10000")
-        .removeClass("z-index-10001");
-      $(".action-section-modal")
-        .addClass("z-index-10001")
-        .removeClass("z-index-10000");
-      this.$emit("commitdata", {
-        package: this.packagedetail,
-        city: this.city
-      });
+    redirectToConfirm: function() {
+      this.$router.push(`/promotiondetail/confirm?packagehotelrelid=${this.$route.query.packagehotelrelid}`)
     },
     changeLoadingState(state) {
       this.isLoadding = state;

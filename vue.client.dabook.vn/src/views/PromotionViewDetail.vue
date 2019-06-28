@@ -25,7 +25,6 @@
       </div>
     </div>
     <div class="data-section pb-4">
-     <HotelDetailSection @commitdata="onChildClick"></HotelDetailSection>
       <router-view></router-view>
     </div>
     <div class="relate-section">
@@ -162,9 +161,7 @@ import Navbar from "@/components/Navbar.vue";
 import GuestSelect from "@/components/GuestSelect.vue";
 import FilterHotel from "@/components/FilterHotel.vue";
 import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
-import ConfirmBooking from "@/components/ConfirmBooking.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
-import HotelDetailSection from "@/components/HotelDetailSection.vue"
 import MainNavBar from "@/components/MainNavBar.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
 
@@ -176,9 +173,7 @@ import LanguageComponent from "@/components/LanguageComponent.vue";
     FilterHotel,
     CustomerBookedAlert,
     DatetimeAutoShow,
-    ConfirmBooking,
     LocationSearchComponent,
-    HotelDetailSection,
     MainNavBar,
     LanguageComponent
   }
@@ -197,13 +192,6 @@ export default class Promotion extends Vue {
     userSelectInfo:{
 
     }
-  }
-
-  onChildClick(value){
-    this.data.packageinfo=value;
-    console.log(this.data.packageinfo);
-    this.$router.push(`/promotiondetail/confirm/${ this.data.packageinfo.package._id}`)
-    console.log(`/promotiondetail/confirm/${ this.data.packageinfo.package._id}`);
   }
 }
 </script>

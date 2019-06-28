@@ -177,7 +177,6 @@ import Navbar from "@/components/Navbar.vue";
 import GuestSelect from "@/components/GuestSelect.vue";
 import FilterHotel from "@/components/FilterHotel.vue";
 import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
-import ConfirmBooking from "@/components/ConfirmBooking.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import HotelDetailSection from "@/components/HotelDetailSection.vue"
 import MainNavBar from "@/components/MainNavBar.vue";
@@ -191,7 +190,6 @@ import LanguageComponent from "@/components/LanguageComponent.vue";
     FilterHotel,
     CustomerBookedAlert,
     DatetimeAutoShow,
-    ConfirmBooking,
     LocationSearchComponent,
     HotelDetailSection,
     MainNavBar,
