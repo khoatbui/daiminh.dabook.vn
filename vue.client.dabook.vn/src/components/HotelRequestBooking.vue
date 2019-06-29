@@ -2,7 +2,7 @@
 <template>
   <div class="hotel-request-component w-100 p-2">
     <div class="container m-0 p-0 w-100">
-      <div class="row d-flex align-items-center border-bottom p-2">
+      <div class="row d-flex align-items-center border-bottom p-2 m-0">
         <div class="col-12 d-flex justify-content-between align-items-center">
           <div class="text-left">
             <h5>
@@ -18,54 +18,58 @@
               <font-awesome-icon class="ml-1 text-primary" icon="star"/>
             </p>
           </div>
-          <button type="button" class="close border-radius-100 shadow close-btn mx-1 text-sm" @click="backStep">
+          <button
+            type="button"
+            class="close border-radius-100 shadow close-btn mx-1 text-sm"
+            @click="backStep"
+          >
             <font-awesome-icon icon="times"/>
           </button>
         </div>
       </div>
-          <div class="row p-4 justify-content-start align-items-center">
-            <div class="col-12">
-              <div class="form-group text-left">
-                <label for="ifullname">
-                  <span class="text-sm">Full name</span>
-                </label>
-                <input type="text" class="form-control" id="ifullname" placeholder="Option">
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group text-left">
-                <label for="iemail">
-                  <span class="text-sm">Email</span>
-                </label>
-                <input type="email" class="form-control" id="iemail" placeholder="Option">
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group text-left">
-                <label for="iphone">
-                  <span class="text-sm">Phone</span>
-                </label>
-                <input type="tel" class="form-control" id="iphone" placeholder="Option">
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-group text-left">
-                <label for="imessage">
-                  <span class="text-sm">Message</span>
-                </label>
-                <textarea class="form-control" id="imessage" rows="3"></textarea>
-              </div>
-            </div>
-            <div class="col-12 p-0 mt-4">
-              <button
-                type="button"
-                class="btn btn-danger w-100"
-                @click="nextToResultStep"
-                data-toggle="modal"
-                data-target="#resultModal"
-              >{{$t('btn_request')}}</button>
-            </div>
+      <div class="row p-4 justify-content-start align-items-center m-0">
+        <div class="col-12">
+          <div class="form-group text-left">
+            <label for="ifullname">
+              <span class="text-sm">Full name</span>
+            </label>
+            <input type="text" class="form-control" id="ifullname" placeholder="Option">
           </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group text-left">
+            <label for="iemail">
+              <span class="text-sm">Email</span>
+            </label>
+            <input type="email" class="form-control" id="iemail" placeholder="Option">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group text-left">
+            <label for="iphone">
+              <span class="text-sm">Phone</span>
+            </label>
+            <input type="tel" class="form-control" id="iphone" placeholder="Option">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group text-left">
+            <label for="imessage">
+              <span class="text-sm">Message</span>
+            </label>
+            <textarea class="form-control" id="imessage" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="col-12 p-0 mt-4">
+          <button
+            type="button"
+            class="btn btn-danger w-100"
+            @click="nextToResultStep"
+            data-toggle="modal"
+            data-target="#resultModal"
+          >{{$t('btn_request')}}</button>
+        </div>
+      </div>
     </div>
 
     <!-- Confirm Modal -->
@@ -137,7 +141,7 @@
         </div>
       </div>
     </div>
-            <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+    <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -156,8 +160,8 @@ export default {
   props: ["id", "packagedata"],
   name: "HotelRequestBooking",
   mounted() {
-this.initial(this.$route.query.packagehotelrelid);
-},
+    this.initial(this.$route.query.packagehotelrelid);
+  },
   methods: {
     backStep() {
       this.$router.go(-1);
@@ -239,15 +243,16 @@ this.initial(this.$route.query.packagehotelrelid);
   background-color: #fff !important;
   top: 0 !important;
   left: 0 !important;
-  padding:0 !important;
+  padding: 0 !important;
   width: 100vw;
   height: 100vh;
   padding-bottom: 40px !important;
 }
-#resultModal .modal-dialog,#resultModal .modal-content{
-    width:100% !important;
-    height:100% !important;
-    margin:0 !important;
+#resultModal .modal-dialog,
+#resultModal .modal-content {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
 }
 .ticket-bg {
   width: 100%;

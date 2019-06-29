@@ -2,7 +2,7 @@
 <template>
   <div class="hotel-confirm-component p-2">
     <div class="container m-0 p-0 w-100">
-      <div class="row d-flex align-items-center border-bottom p-2">
+      <div class="row d-flex align-items-center border-bottom p-2 m-0">
         <div class="col-12 d-flex justify-content-between align-items-center">
           <div class="text-left">
             <h5>
@@ -23,7 +23,7 @@
           </button>
         </div>
       </div>
-      <div class="row p-4 justify-content-start align-items-center">
+      <div class="row p-4 justify-content-start align-items-center m-0">
         <div class="col-12">
           <div class="form-group text-left">
             <label for="icheckinout">
@@ -98,7 +98,7 @@
           >{{$t('btn_confirm')}}</button>
         </div>
       </div>
-      <div class="row px-2">
+      <div class="row px-2 m-0">
         <div class="col-12">
           <div class="text-sm text-left">
             <span class="text-danger">Note :</span>
