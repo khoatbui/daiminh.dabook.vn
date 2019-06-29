@@ -111,7 +111,7 @@
               <div class="row p-2 justify-content-start align-items-center">
                 <div class="col-12">
                   <div class="ticket-result">
-                    <img class="ticket-bg" src="img/hotel/ticketbg.png" alt>
+                    <img class="ticket-bg" src="/img/hotel/ticketbg.png" alt>
                     <div
                       class="absolute-group d-flex align-items-stretch flex-column justify-content-center"
                     >

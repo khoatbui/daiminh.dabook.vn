@@ -28,20 +28,20 @@ export default {
       lang: {
         langlist: [
           {
-            img: "img/language/vietnam.png",
+            img: "/img/language/vietnam.png",
             langcode: "vi"
           },
           {
-            img: "img/language/south-korea.png",
+            img: "/img/language/south-korea.png",
             langcode: "ko"
           },
           {
-            img: "img/language/united-kingdom.png",
+            img: "/img/language/united-kingdom.png",
             langcode: "en"
           }
         ],
         currentlang: {
-          img: "img/language/united-kingdom.png",
+          img: "/img/language/united-kingdom.png",
           langcode: "en"
         }
       }
