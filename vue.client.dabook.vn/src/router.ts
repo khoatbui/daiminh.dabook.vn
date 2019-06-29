@@ -55,7 +55,8 @@ export default new Router({
         {
           path: 'request',
           name: 'promotiondetailrequest',
-          component: HotelRequestBooking
+          component: HotelRequestBooking,
+          props: true
         },
         {
           path: '',

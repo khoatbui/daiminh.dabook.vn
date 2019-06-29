@@ -5,7 +5,7 @@
       class="form-control dates-setting w-100"
       type="text"
       name="datefilter"
-      value
+      :value="selectDate"
       readonly="true"
       :placeholder="placeholder"
       v-bind:class="radius"
@@ -15,13 +15,18 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["id","radius","placeholder"],
+  props: ["id", "radius", "placeholder", "startdate", "enddate"],
   name: "DateTime",
   created() {
     this.initialize();
+  },computed: {
+    selectDate () {
+	    return this.$store.state.selectDate.startDate + " => " + this.$store.state.selectDate.endDate;
+    }
   },
   methods: {
     initialize: function() {
+      var me = this;
       $(function() {
         $('input[name="datefilter"]').daterangepicker({
           autoUpdateInput: false,
@@ -35,10 +40,14 @@ export default {
           picker
         ) {
           $(this).val(
-            picker.startDate.format("MM/DD/YYYY") +
-              " - " +
-              picker.endDate.format("MM/DD/YYYY")
+            picker.startDate.format("YYYY-MM-DD") +
+              " => " +
+              picker.endDate.format("YYYY-MM-DD")
           );
+          me.$store.commit('selectDate',{
+            startDate: picker.startDate.format("YYYY-MM-DD"),
+            endDate: picker.endDate.format("YYYY-MM-DD")
+          });
         });
 
         $('input[name="datefilter"]').on("cancel.daterangepicker", function(
@@ -85,18 +94,22 @@ input:read-only {
   background-color: white !important;
   color: #2c3e50;
 }
-.prev.available,.next.available{
+.prev.available,
+.next.available {
   background-color: #007bff !important;
-  color:#FFFFFF!important;
+  color: #ffffff !important;
 }
-.prev.available>span,.next.available>span{
-  color:#FFFFFF !important;
-  border-color:#FFFFFF !important;
+.prev.available > span,
+.next.available > span {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
 }
-.start-date,.start-date.in-range,.in-range.end-date{
-  background-color: #049DD9 !important;
+.start-date,
+.start-date.in-range,
+.in-range.end-date {
+  background-color: #049dd9 !important;
 }
-.in-range{
-  background-color: rgba(4, 157, 217,0.6) !important;
+.in-range {
+  background-color: rgba(4, 157, 217, 0.6) !important;
 }
 </style>

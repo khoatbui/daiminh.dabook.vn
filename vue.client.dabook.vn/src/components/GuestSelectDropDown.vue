@@ -25,8 +25,8 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="minusPerson(data.adult)"
-                  :disabled="data.adult.qty==0"
+                  @click="minusPersonByVuex('minusAdult')"
+                  :disabled="adult==0"
                 >
                   <font-awesome-icon class="ml-1" icon="minus"/>
                 </button>
@@ -35,7 +35,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  v-bind:value="data.adult.qty"
+                  v-bind:value="adult"
                   readonly
                   placeholder="10"
                 >
@@ -44,8 +44,8 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="plusPerson(data.adult)"
-                  :disabled="data.adult.qty==maxguest"
+                  @click="plusPersonByVuex('plusAdult')"
+                  :disabled="adult==maxguest"
                 >
                   <font-awesome-icon class="ml-1" icon="plus"/>
                 </button>
@@ -60,8 +60,8 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="minusPerson(data.children.less12)"
-                  :disabled="data.children.less12.qty==0"
+                  @click="minusPersonByVuex('minusChildLess12')"
+                  :disabled="less12==0"
                 >
                   <font-awesome-icon class="ml-1" icon="minus"/>
                 </button>
@@ -71,7 +71,7 @@
                   type="text"
                   class="form-control"
                   readonly
-                  v-bind:value="data.children.less12.qty"
+                  v-bind:value="less12"
                   placeholder="10"
                 >
               </div>
@@ -79,7 +79,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="plusPerson(data.children.less12)"
+                  @click="plusPersonByVuex('plusChildLess12')"
                 >
                   <font-awesome-icon class="ml-1" icon="plus"/>
                 </button>
@@ -88,14 +88,14 @@
             <div class="row p-2 justify-content-start align-items-center">
               <div class="col-6 pl-0 text-left">
                 <p class="m-0">Children</p>
-                <p class="m-0 text-sm">Ages 4-12</p>
+                <p class="m-0 text-sm">Ages 0~4</p>
               </div>
               <div class="col-1 p-0 m-0">
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="minusPerson(data.children.less4)"
-                  :disabled="data.children.less4.qty==0"
+                  @click="minusPersonByVuex('minusChildLess4')"
+                  :disabled="less4==0"
                 >
                   <font-awesome-icon class="ml-1" icon="minus"/>
                 </button>
@@ -104,7 +104,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  v-bind:value="data.children.less4.qty"
+                  v-bind:value="less4"
                   readonly
                   placeholder="10"
                 >
@@ -113,7 +113,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="plusPerson(data.children.less4)"
+                  @click="plusPersonByVuex('plusChildLess4')"
                 >
                   <font-awesome-icon class="ml-1" icon="plus"/>
                 </button>
@@ -133,6 +133,17 @@ export default {
   created() {
     this.initiation();
   },
+  computed: {
+    adult () {
+	    return this.$store.state.selectedHotel.guest.adult.qty
+    },
+    less4(){
+      return this.$store.state.selectedHotel.guest.children.less4.qty
+    },
+    less12(){
+      return this.$store.state.selectedHotel.guest.children.less12.qty
+    }
+  },
   methods: {
     initiation() {
       var id = this.id;
@@ -150,19 +161,18 @@ export default {
         $(document).mouseup(function(e) {
           if (
             !$(".guestselect-component").is(e.target) && // if the target of the click isn't the container...
-            $(".guestselect-component").has(e.target).length === 0
+            $(".guestselect-component").has(e.target).length === 0 && $(`.${id}-dropdown-menu`).hasClass('show')
           ) {
-            // ... nor a descendant of the container
             $(`.${id}-dropdown-menu`).toggleClass("show");
           }
         });
       });
     },
-    plusPerson(perItem) {
-      perItem.qty++;
+    plusPersonByVuex(plusTarget) {
+      this.$store.commit(plusTarget)
     },
-    minusPerson(perItem) {
-      perItem.qty--;
+    minusPersonByVuex(minusTarget) {
+      this.$store.commit(minusTarget)
     }
   },
   data: function() {

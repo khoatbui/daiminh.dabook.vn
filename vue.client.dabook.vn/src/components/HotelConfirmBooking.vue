@@ -33,7 +33,7 @@
             <label for="icheckinout">
               <span class="text-sm">Date</span>
             </label>
-            <Datetime id="icheckinout"></Datetime>
+            <Datetime id="icheckinout" v-bind:startdate="selectTime.starDate" v-bind:enddate="selectTime.endDate"></Datetime>
           </div>
         </div>
         <div class="col-12">
@@ -41,7 +41,11 @@
             <label for="iguest">
               <span class="text-sm">Guest</span>
             </label>
-            <GuestSelectDropDown v-bind:id="'confirm-guest'" v-bind:data="guest" v-bind:maxguest="packagedetail.roomTypeId.maxGuest"></GuestSelectDropDown>
+            <GuestSelectDropDown
+              v-bind:id="'confirm-guest'"
+              v-bind:data="guest"
+              v-bind:maxguest="packagedetail.roomTypeId.maxGuest"
+            ></GuestSelectDropDown>
           </div>
         </div>
         <div class="col-12">
@@ -130,6 +134,11 @@ export default {
   },
   props: ["id"],
   name: "HotelConfirmBooking",
+  computed:{
+    selectedHotel(){
+      return this.$router.state.selectedHotel;
+    }
+  },
   mounted() {
     this.initial(this.$route.query.packagehotelrelid);
   },
@@ -174,6 +183,10 @@ export default {
           }
         }
       },
+      selectTime:{
+        startDate:moment().format('DD-MM-YYYY'),
+        endDate:moment(new Date()).add(1, 'days').format('DD-MM-YYYY')
+      },
       isLoadding: false
     };
   },
@@ -182,9 +195,8 @@ export default {
       this.$router.go(-1);
     },
     redirectToRequest: function() {
-      this.$router.push(
-        `/promotiondetail/request?packagehotelrelid=${this.packagedetail._id}`
-      );
+      this.$router.push({
+        path:`/promotiondetail/request?packagehotelrelid=${this.packagedetail._id}`});
     },
     changeLoadingState(state) {
       this.isLoadding = state;
@@ -197,8 +209,6 @@ export default {
         response.data.hotelId.cityId
       );
       this.city = cityresponse.data;
-      console.log("package-detail");
-      console.log(this.packagedetail);
       this.changeLoadingState(false);
     }
   }

@@ -157,19 +157,18 @@ export default {
     GuestSelectDropDown,
     LoadingComponent
   },
-  props: ["id", "packagedata"],
+  props: ["id", "packagedata",'authorName','enddate'],
   name: "HotelRequestBooking",
   mounted() {
     this.initial(this.$route.query.packagehotelrelid);
     $(window).on("popstate", function(e) {
       var state = e.originalEvent.state;
       if (state !== null) {
-        console.log( $("#resultModal"));
         $(".modal-backdrop.fade").remove();
         $('body').removeClass('modal-open');
       }
     });
-  },
+      },
   methods: {
     backStep() {
       this.$router.go(-1);
@@ -182,8 +181,6 @@ export default {
       this.changeLoadingState(true);
       var response = await PackageService.getPackageDetail(id);
       this.packagedetail = response.data;
-      console.log("package-detail");
-      console.log(this.packagedetail);
       this.changeLoadingState(false);
     }
   },

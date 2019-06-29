@@ -167,12 +167,13 @@ export default {
     async initial(id) {
       this.changeLoadingState(true);
       var response = await PackageService.getPackageDetail(id);
+      this.$store.dispatch('updateselectedHotelDetailAction',response.data)
+      console.log(this.$store.state.selectedHotel);
       this.packagedetail = response.data;
       var cityresponse = await CityService.getCityDetailById(
         response.data.hotelId.cityId
       );
       this.city = cityresponse.data;
-      console.log(this.packagedetail);
       this.changeLoadingState(false);
     }
   },
