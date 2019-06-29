@@ -30,4 +30,12 @@ router.post('/insert', jsonParser,controller.insertHotel)
 
 router.post('/update/:_id', jsonParser, controller.updateHotel)
 
+// MOBILE
+
+router.get('/m/getlisthotelpromotion',controller.getmListHotelWithPromotion)
+
+router.get('/m/getlisthotel',controller.getmListHotel)
+
+router.get('/m/getlisthotelpromotebysuppliercode/:_id',controller.getmListHotelPromotionBySupplier)
+
 module.exports = router

@@ -77,3 +77,23 @@ module.exports.getPromoteHotelBySupplierCode=(req,res,next) => {
         })
     })
 };
+
+
+module.exports.getmListHotelWithPromotion=(req,res,next) => {
+    Hotel.find({isPromote:true,isUsed:true}).then(function(hotel){
+        console.log(hotel);
+        res.send(hotel)
+    })
+};
+module.exports.getmListHotel=(req,res,next) => {
+    Hotel.find({isUsed:true}).then(function(hotel){
+        console.log(hotel);
+        res.send(hotel)
+    })
+};
+module.exports.getmListHotelPromotionBySupplier=(req,res,next) => {
+    Hotel.find({supplierId:req.params._id,isUsed:true}).then(function(hotel){
+        console.log(hotel);
+        res.send(hotel)
+    })
+};

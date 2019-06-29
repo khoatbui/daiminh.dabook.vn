@@ -36,4 +36,17 @@ router.post('/combobox/packagebymultihotelroomtype',jsonParser,controller.getPac
 
 router.post('/combobox/packagebysinglehotelroomtype',jsonParser,controller.getPackageBySingleHotelRoomType)
 
+
+// MOBILE
+
+router.get('/m/getallpackage',controller.getmAllPackage)
+
+router.get('/m/getallpromotionpackage',controller.getmAllPromotionPackage)
+
+router.get('/m/getpackagedetail/:_id', controller.getmPackageDetail)
+
+router.get('/m/getallpromotepackagebysupplier/:_id',controller.getmAllPromotePackageBySupplier)
+
+router.get('/m/getallpackagebysupplier/:_id',controller.getmAllPackageBySupplier)
+
 module.exports = router

@@ -43,11 +43,20 @@ var pakageHotelRELSchema = new mongoose.Schema({
         optionNote: String,
         isUsed: Boolean
     }],
+    utilities:{
+        isWifi:Boolean,
+        isTivi:Boolean,
+        isSwim:Boolean,
+        isGym:Boolean,
+        isKitchen:Boolean,
+        isDry:Boolean
+      },
     maxAdult: Number,
     createBy: String,
     createDate: Date,
     modifyBy: String,
-    modifyDate: Date
+    modifyDate: Date,
+    isPromote:Boolean
 });
 var PackageHotelREL = mongoose.model('PackageHotelREL', pakageHotelRELSchema, 'packageHotelREL');
 

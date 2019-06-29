@@ -19,6 +19,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',authMiddleware.requireLogin,controller.index)
 
+router.get('/m/getcitybyid/:_id',controller.getmCityById)
+
 router.delete('/:index', controller.deleteCity)
 
 router.post('/insert', jsonParser,controller.insertCity)

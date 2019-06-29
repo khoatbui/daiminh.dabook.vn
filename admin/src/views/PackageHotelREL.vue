@@ -22,7 +22,7 @@
               <v-subheader>KEY</v-subheader>
               <v-container grid-list-xl>
                 <v-layout wrap>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-select
                       v-model="editedItem.supplierId"
                       :items="supplier"
@@ -34,7 +34,7 @@
                       return-object
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-select
                       v-model="editedItem.hotelId"
                       :items="hotel"
@@ -46,7 +46,7 @@
                       return-object
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-select
                       v-model="editedItem.roomTypeId"
                       :items="roomtype"
@@ -56,7 +56,7 @@
                       label="Room Type"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-select
                       v-model="editedItem.packageId"
                       :items="packages"
@@ -66,7 +66,8 @@
                       label="Package"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                    <v-layout wrap>
+                  <v-flex xs12 sm6 md2>
                     <v-select
                       v-model="editedItem.lang"
                       :items="language"
@@ -78,10 +79,32 @@
                   <v-flex xs6 sm3 md2>
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs6 sm3 md2>
+                  <v-flex xs6 sm3 md2 class="service-add-component">
                     <v-checkbox v-model="editedItem.isDefault" :label="`IsDefault?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                  <v-flex xs6 sm3 md2 class="service-add-component">
+                    <v-checkbox v-model="editedItem.isPromote" :label="`IsPromote?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="service-add-component">
+                    <v-checkbox v-model="editedItem.utilities.isWifi" :label="`Wifi?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="service-add-component">
+                    <v-checkbox v-model="editedItem.utilities.isTivi" :label="`Tivi?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="service-add-component">
+                    <v-checkbox v-model="editedItem.utilities.isSwim" :label="`Swimming Poor?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="service-add-component">
+                    <v-checkbox v-model="editedItem.utilities.isGym" :label="`Gym?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="service-add-component">
+                    <v-checkbox v-model="editedItem.utilities.isKitchen" :label="`Kitchen?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs6 sm3 md2 class="service-add-component">
+                    <v-checkbox v-model="editedItem.utilities.isDry" :label="`DryService?`"></v-checkbox>
+                  </v-flex>
+                    </v-layout>
+                  <v-flex xs12 sm6 md3  class="sub-add-component">
                     <v-menu
                       v-model="menu1"
                       :close-on-content-click="false"
@@ -174,10 +197,19 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs4 sm2 md1 class="sub-add-component" v-for="(day,index) in days">
-                    <v-checkbox :value="day" v-model="editedItem.days" :label="day.shortDay" :disabled="editedItem.isAllDays"></v-checkbox>
+                    <v-checkbox
+                      :value="day"
+                      v-model="editedItem.days"
+                      :label="day.shortDay"
+                      :disabled="editedItem.isAllDays"
+                    ></v-checkbox>
                   </v-flex>
                   <v-flex xs4 sm2 md1 class="sub-add-component">
-                    <v-switch :value="editedItem.isAllDays"  v-model="editedItem.isAllDays" :label="`ALL DAYS`"></v-switch>
+                    <v-switch
+                      :value="editedItem.isAllDays"
+                      v-model="editedItem.isAllDays"
+                      :label="`ALL DAYS`"
+                    ></v-switch>
                   </v-flex>
                   <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-btn color="blue darken-1" dark @click="addNewPriceRange">Add</v-btn>
@@ -756,7 +788,7 @@ export default {
       packageId: "",
       price: 10000000,
       markUpPercent: 10,
-      isAllDays:true,
+      isAllDays: true,
       days: [],
       markUpPlus: 50000,
       less4Price: 10000000,
@@ -770,10 +802,19 @@ export default {
         optionNote: "",
         isUsed: true
       },
+      utilities:{
+        isWifi:true,
+        isTivi:true,
+        isSwim:false,
+        isGym:false,
+        isKitchen:false,
+        isDry:true
+      },
       optionServices: [],
       lang: "EN",
       isUsed: true,
       isDefault: false,
+      isPromote: false,
       createBy: "",
       modifyBy: "",
       startDate: moment(new Date()).format("YYYY-MM-DD"),
@@ -784,7 +825,7 @@ export default {
       hotelId: "",
       roomTypeId: "",
       packageId: "",
-      isAllDays:true,
+      isAllDays: true,
       days: [],
       price: 10000000,
       markUpPercent: 10,
@@ -800,10 +841,19 @@ export default {
         optionNote: "",
         isUsed: true
       },
+      utilities:{
+        isWifi:true,
+        isTivi:true,
+        isSwim:false,
+        isGym:false,
+        isKitchen:false,
+        isDry:true
+      },
       optionServices: [],
       lang: "EN",
       isUsed: true,
       isDefault: false,
+      isPromote: false,
       createBy: "",
       modifyBy: "",
       startDate: moment(new Date()).format("YYYY-MM-DD"),
@@ -964,7 +1014,7 @@ export default {
         optionNote: "",
         isUsed: true
       };
-      this.editedItem.days=[];
+      this.editedItem.days = [];
       this.disableSelect = true;
       this.dialog = true;
       delete this.editedItem._id;
@@ -995,8 +1045,10 @@ export default {
       this.editedItem.modifyBy = this.user.userName;
       this.editedItem.createBy = this.user.userName;
       if (
-        this.editedItem.markUpPlus.toString().length <= 0 &&
-        this.editedItem.markUpPercent.toString().length <= 0
+        (this.editedItem.markUpPlus == "" ||
+          this.editedItem.markUpPlus.toString().length <= 0) &&
+        (this.editedItem.markUpPercent == "" ||
+          this.editedItem.markUpPercent.toString().length <= 0)
       ) {
         this.editedItem.markUpPercent = process.env.VUE_APP_API_DEFAULT_MARKUP;
         // IMPORTANT
@@ -1086,9 +1138,9 @@ export default {
       console.log(this.filterByCombo.roomTypeId);
     },
     addNewPriceRange() {
-     if (this.editedItem.isAllDays==true) {
-       this.editedItem.days=[];
-     }
+      if (this.editedItem.isAllDays == true) {
+        this.editedItem.days = [];
+      }
       this.editedItem.priceRanges.push({
         price: this.editedItem.price,
         markUpPercent: this.editedItem.markUpPercent,
@@ -1100,7 +1152,7 @@ export default {
         startDate: this.editedItem.startDate,
         endDate: this.editedItem.endDate,
         days: this.editedItem.days.slice(),
-        isAllDays:this.editedItem.isAllDays
+        isAllDays: this.editedItem.isAllDays
       });
       console.log(this.editedItem.priceRanges);
     },
@@ -1210,6 +1262,9 @@ export default {
 }
 .sub-add-component {
   background-color: rgb(205, 224, 243) !important;
+}
+.service-add-component{
+background-color: rgba(229, 57, 53,0.2) !important;
 }
 .flex-table {
   display: flex;

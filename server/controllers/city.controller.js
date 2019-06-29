@@ -7,8 +7,8 @@ module.exports.index =function(req,res){
     })
 };
 
-module.exports.getCity=(req,res,next) => {
-    City.find().then(function(city){
+module.exports.getmCityById=(req,res,next) => {
+    City.findOne({"_id":req.params._id}).then(function(city){
         res.send(city)
     })
 };

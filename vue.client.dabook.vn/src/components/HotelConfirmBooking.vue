@@ -8,8 +8,8 @@
             <h5>
               <span
                 class="font-weight-bolder text-lg"
-              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(packagedetail.packageId.price)}}</span>
-              <span class="text-sm">/ per night</span>
+              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.price)}}</span>
+              <span class="text-sm">/ {{selectedHotel.priceByTime.diffTime}} night</span>
             </h5>
             <p class="text-sm">
               <font-awesome-icon class="ml-1 text-primary" icon="star"/>
@@ -33,7 +33,7 @@
             <label for="icheckinout">
               <span class="text-sm">Date</span>
             </label>
-            <Datetime id="icheckinout" v-bind:startdate="selectTime.starDate" v-bind:enddate="selectTime.endDate"></Datetime>
+            <Datetime id="icheckinout" v-bind:startdate="selectTime.starDate" v-bind:enddate="selectTime.endDate" v-bind:cachotelprice="true"></Datetime>
           </div>
         </div>
         <div class="col-12">
@@ -61,21 +61,20 @@
             <div class="col-12 border-bottom p-2">
               <div class="d-flex justify-content-between align-items-center">
                 <span>
-                  {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(packagedetail.packageId.price)}} x
+                  {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.avgPrice / selectedHotel.priceByTime.diffTime)}} x
                   <span
                     class="text-sm"
-                  >3 night</span>
+                  >{{selectedHotel.priceByTime.diffTime}} night</span>
                 </span>
-                <span>2.400.000 đ</span>
+                <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.avgPrice)}}</span>
               </div>
             </div>
             <div class="col-12 border-bottom p-2">
               <div class="d-flex justify-content-between align-items-center">
                 <span>
-                  Phụ thu trẻ em x
-                  <span class="text-sm">3 children</span>
+                  Phụ thu trẻ em
                 </span>
-                <span>2.400.000 đ</span>
+                <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.avgChild)}}</span>
               </div>
             </div>
             <div class="col-12 border-bottom p-2">
@@ -87,13 +86,13 @@
             <div class="col-12 border-bottom p-2">
               <div class="d-flex justify-content-between align-items-center text-success">
                 <span>Discount</span>
-                <span>- 2.400.000 đ</span>
+                <span>- 0 đ</span>
               </div>
             </div>
             <div class="col-12 p-2">
               <div class="d-flex justify-content-between align-items-center font-weight-bolder">
                 <span>Total</span>
-                <span>2.400.000 đ</span>
+                <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.price)}}</span>
               </div>
             </div>
           </div>
@@ -136,7 +135,7 @@ export default {
   name: "HotelConfirmBooking",
   computed:{
     selectedHotel(){
-      return this.$router.state.selectedHotel;
+      return this.$store.state.selectedHotel;
     }
   },
   mounted() {

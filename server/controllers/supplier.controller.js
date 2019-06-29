@@ -8,8 +8,8 @@ module.exports.index = function (req, res) {
     })
 };
 
-module.exports.getSupplier = (req, res, next) => {
-    Supplier.find().then(function (supplier) {
+module.exports.getPromoteSupplier = (req, res, next) => {
+    Supplier.find({"isPromote":true}).then(function (supplier) {
         res.send(supplier)
     })
 };

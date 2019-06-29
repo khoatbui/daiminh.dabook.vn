@@ -15,12 +15,15 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["id", "radius", "placeholder", "startdate", "enddate"],
+  props: ["id", "radius", "placeholder", "startdate", "enddate","cachotelprice"],
   name: "DateTime",
   created() {
     this.initialize();
   },computed: {
     selectDate () {
+      if (this.cachotelprice==true) {
+        this.$store.commit('updateSelectedPriceByTime');
+      }
 	    return this.$store.state.selectDate.startDate + " => " + this.$store.state.selectDate.endDate;
     }
   },

@@ -5,6 +5,7 @@ var supplierSchema = new mongoose.Schema({
     supplierName: String,
     markUpPlus:Number,
     markUpPercent:Number,
+    isPromote:Boolean,
     lang: String,
     isActive:Boolean,
     createBy:String,

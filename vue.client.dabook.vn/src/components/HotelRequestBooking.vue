@@ -8,8 +8,8 @@
             <h5>
               <span
                 class="font-weight-bolder text-lg"
-              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(packagedetail.packageId.price)}}</span>
-              <span class="text-sm">/ per night</span>
+              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.price)}}</span>
+              <span class="text-sm">/ {{selectedHotel.priceByTime.diffTime}} night</span>
             </h5>
             <p class="text-sm">
               <font-awesome-icon class="ml-1 text-primary" icon="star"/>
@@ -33,7 +33,13 @@
             <label for="ifullname">
               <span class="text-sm">Full name</span>
             </label>
-            <input type="text" class="form-control" id="ifullname" placeholder="Option">
+            <input
+              type="text"
+              class="form-control"
+              id="ifullname"
+              placeholder="Your name"
+              v-bind="customerInfo.fullName"
+            >
           </div>
         </div>
         <div class="col-12">
@@ -41,7 +47,13 @@
             <label for="iemail">
               <span class="text-sm">Email</span>
             </label>
-            <input type="email" class="form-control" id="iemail" placeholder="Option">
+            <input
+              type="email"
+              class="form-control"
+              id="iemail"
+              placeholder="your@email.com"
+              v-bind="customerInfo.email"
+            >
           </div>
         </div>
         <div class="col-12">
@@ -49,7 +61,13 @@
             <label for="iphone">
               <span class="text-sm">Phone</span>
             </label>
-            <input type="tel" class="form-control" id="iphone" placeholder="Option">
+            <input
+              type="tel"
+              class="form-control"
+              id="iphone"
+              placeholder="+8498868686"
+              v-bind="customerInfo.phone"
+            >
           </div>
         </div>
         <div class="col-12">
@@ -57,7 +75,13 @@
             <label for="imessage">
               <span class="text-sm">Message</span>
             </label>
-            <textarea class="form-control" id="imessage" rows="3"></textarea>
+            <textarea
+              class="form-control"
+              id="imessage"
+              rows="3"
+              placeholder="Other request"
+              v-bind="customerInfo.question"
+            ></textarea>
           </div>
         </div>
         <div class="col-12 p-0 mt-4">
@@ -115,10 +139,10 @@
                     <div
                       class="absolute-group d-flex align-items-stretch flex-column justify-content-center"
                     >
-                      <span class="ticket-owner">Bui Van Khoat</span>
-                      <input class="ticket-code" type="text" value="FCD1505303">
+                      <span class="ticket-owner">{{customerInfo.fullName}}</span>
+                      <input class="ticket-code" type="text" :value="requestResult.orderCode">
                       <h4 class="p-1">
-                        <span class="badge badge-primary ticket-status">Status : In process</span>
+                        <span class="badge badge-primary ticket-status">Status : {{requestResult.requestStatus}}</span>
                       </h4>
                     </div>
                   </div>
@@ -127,7 +151,11 @@
                   <p class="text-sm mb-0 text-left text-danger">Note</p>
                   <p
                     class="text-sm text-left"
-                  >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat commodi dolore voluptates quisquam itaque quo error debitis sapiente natus nostrum, eos, quaerat quasi esse repellat, praesentium quod sequi illo facilis.</p>
+                  >Cam on quy khach da su dung dich vu cua chung toi. Nhan vien cua chung toi da tiep nhan yeu cau, va se phan hoi lai
+                  trong vong {{requestResult.feedbackTime}} tieng.</p>
+                   <p class="text-sm text-left">
+                     Trong truong hop quy khach can ho tro gap, vui long lien he tong dai 19001562 hoac 0936376420 de duoc ho tro. Xin cam on
+                   </p>
                 </div>
                 <div class="col-12 text-left">
                   <a href="#" class="text-sm">Show more</a>
@@ -159,8 +187,15 @@ export default {
   },
   props: ["id", "packagedata",'authorName','enddate'],
   name: "HotelRequestBooking",
+    computed:{
+    selectedHotel(){
+      return this.$store.state.selectedHotel;
+    },
+    customer(){
+      return this.$store.state.customer;
+    }
+  },
   mounted() {
-    this.initial(this.$route.query.packagehotelrelid);
     $(window).on("popstate", function(e) {
       var state = e.originalEvent.state;
       if (state !== null) {
@@ -173,42 +208,43 @@ export default {
     backStep() {
       this.$router.go(-1);
     },
-    nextToResultStep() {},
     changeLoadingState(state) {
       this.isLoadding = state;
     },
-    async initial(id) {
+    async nextToResultStep() {
       this.changeLoadingState(true);
-      var response = await PackageService.getPackageDetail(id);
-      this.packagedetail = response.data;
-      this.changeLoadingState(false);
+      this.$store.commit('updateCustomerInfo',this.customerInfo);
+      var parrams={
+        selectedDate:this.$store.state.selectedDate,
+        customer:this.$store.state.customer,
+        orderInfo:{
+          guest:{},
+          package:{},
+          priceByTime:{}
+        }
+      }
+      var response = await PackageService.postRequestHotel(parrams);
+      this.requestResult=response.data;
+      this.changeLoadingState(true);
+    },
+    changeLoadingState(state) {
+      this.isLoadding = state;
     }
   },
   data: function() {
     return {
-      packagedetail: {
-        hotelId: {
-          hotelName: ""
-        },
-        roomTypeId: {
-          roomTypeName: "",
-          bed: 0,
-          bath: 0,
-          maxGuest: 0
-        },
-        packageId: {
-          note: ""
-        },
-        utilities: {
-          isWifi: false,
-          isTivi: false,
-          isSwim: false,
-          isGym: false,
-          isKitchen: false,
-          isDry: false
-        }
+      customerInfo:{
+        fullName:"",
+        email:"",
+        phone:"",
+        question:""
       },
-      isLoadding: false
+      isLoadding:false,
+      requestResult:{
+        orderCode:"",
+        feedbackTime:"",
+        requestStatus:""
+      }
     };
   }
 };

@@ -18,6 +18,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getpromotesupplier',controller.getPromoteSupplier)
+
 router.delete('/:_id', controller.deleteSupplier)
 
 router.post('/insert',jsonParser, controller.insertSupplier)
