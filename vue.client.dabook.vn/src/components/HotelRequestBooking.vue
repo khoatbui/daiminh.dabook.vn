@@ -161,6 +161,14 @@ export default {
   name: "HotelRequestBooking",
   mounted() {
     this.initial(this.$route.query.packagehotelrelid);
+    $(window).on("popstate", function(e) {
+      var state = e.originalEvent.state;
+      if (state !== null) {
+        console.log( $("#resultModal"));
+        $(".modal-backdrop.fade").remove();
+        $('body').removeClass('modal-open');
+      }
+    });
   },
   methods: {
     backStep() {

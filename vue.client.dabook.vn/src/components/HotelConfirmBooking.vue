@@ -18,7 +18,11 @@
               <font-awesome-icon class="ml-1 text-primary" icon="star"/>
             </p>
           </div>
-          <button type="button" class="close border-radius-100 shadow close-btn mx-1 text-sm" @click="backStep">
+          <button
+            type="button"
+            class="close border-radius-100 shadow close-btn mx-1 text-sm"
+            @click="backStep"
+          >
             <font-awesome-icon icon="times"/>
           </button>
         </div>
@@ -37,7 +41,7 @@
             <label for="iguest">
               <span class="text-sm">Guest</span>
             </label>
-            <GuestSelectDropDown v-bind:id="'confirm-guest'"></GuestSelectDropDown>
+            <GuestSelectDropDown v-bind:id="'confirm-guest'" v-bind:data="guest" v-bind:maxguest="packagedetail.roomTypeId.maxGuest"></GuestSelectDropDown>
           </div>
         </div>
         <div class="col-12">
@@ -107,7 +111,7 @@
         </div>
       </div>
     </div>
-            <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+    <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -154,11 +158,27 @@ export default {
         }
       },
       city: {},
+      guest: {
+        adult: {
+          name: "adult",
+          qty: 0
+        },
+        children: {
+          less4: {
+            name: "less4",
+            qty: 0
+          },
+          less12: {
+            name: "less12",
+            qty: 0
+          }
+        }
+      },
       isLoadding: false
     };
   },
   methods: {
-     backStep() {
+    backStep() {
       this.$router.go(-1);
     },
     redirectToRequest: function() {
@@ -221,7 +241,8 @@ export default {
   left: 0 !important;
   width: 100vw;
   padding: 0 !important;
-  height: 100vh;
+  min-height: 100vh !important;
+  height: auto !important;
   padding-bottom: 40px !important;
 }
 </style>

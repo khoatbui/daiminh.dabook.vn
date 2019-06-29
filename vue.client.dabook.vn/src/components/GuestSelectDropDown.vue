@@ -7,10 +7,13 @@
       aria-haspopup="true"
       aria-expanded="false"
     >
-    <font-awesome-icon class="ml-1 float-right" icon="chevron-down"/>
+      <font-awesome-icon class="ml-1 float-right" icon="chevron-down"/>
     </button>
 
-    <div class="dropdown-menu dropdown-menu-center guest-dropdown-menu" :class="`${id}-dropdown-menu`">
+    <div
+      class="dropdown-menu dropdown-menu-center guest-dropdown-menu"
+      :class="`${id}-dropdown-menu`"
+    >
       <div class="container">
         <div class="row m-1">
           <div class="col-12">
@@ -19,15 +22,31 @@
                 <p class="m-0">Adults</p>
               </div>
               <div class="col-1 p-0 m-0">
-                <button type="button" class="btn btn-sm btn-primary border-radius-100 btn-sm-round">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
+                  @click="minusPerson(data.adult)"
+                  :disabled="data.adult.qty==0"
+                >
                   <font-awesome-icon class="ml-1" icon="minus"/>
                 </button>
               </div>
               <div class="col-4 m-0 pr-1">
-                <input type="text" class="form-control" readonly placeholder="10">
+                <input
+                  type="text"
+                  class="form-control"
+                  v-bind:value="data.adult.qty"
+                  readonly
+                  placeholder="10"
+                >
               </div>
               <div class="col-1 p-0 m-0">
-                <button type="button" class="btn btn-sm btn-primary border-radius-100 btn-sm-round">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
+                  @click="plusPerson(data.adult)"
+                  :disabled="data.adult.qty==maxguest"
+                >
                   <font-awesome-icon class="ml-1" icon="plus"/>
                 </button>
               </div>
@@ -38,15 +57,30 @@
                 <p class="m-0 text-sm">Ages 4-12</p>
               </div>
               <div class="col-1 p-0 m-0">
-                <button type="button" class="btn btn-sm btn-primary border-radius-100 btn-sm-round">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
+                  @click="minusPerson(data.children.less12)"
+                  :disabled="data.children.less12.qty==0"
+                >
                   <font-awesome-icon class="ml-1" icon="minus"/>
                 </button>
               </div>
               <div class="col-4 m-0 pr-1">
-                <input type="text" class="form-control" readonly placeholder="10">
+                <input
+                  type="text"
+                  class="form-control"
+                  readonly
+                  v-bind:value="data.children.less12.qty"
+                  placeholder="10"
+                >
               </div>
               <div class="col-1 p-0 m-0">
-                <button type="button" class="btn btn-sm btn-primary border-radius-100 btn-sm-round">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
+                  @click="plusPerson(data.children.less12)"
+                >
                   <font-awesome-icon class="ml-1" icon="plus"/>
                 </button>
               </div>
@@ -57,15 +91,30 @@
                 <p class="m-0 text-sm">Ages 4-12</p>
               </div>
               <div class="col-1 p-0 m-0">
-                <button type="button" class="btn btn-sm btn-primary border-radius-100 btn-sm-round">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
+                  @click="minusPerson(data.children.less4)"
+                  :disabled="data.children.less4.qty==0"
+                >
                   <font-awesome-icon class="ml-1" icon="minus"/>
                 </button>
               </div>
               <div class="col-4 m-0 pr-1">
-                <input type="text" class="form-control" readonly placeholder="10">
+                <input
+                  type="text"
+                  class="form-control"
+                  v-bind:value="data.children.less4.qty"
+                  readonly
+                  placeholder="10"
+                >
               </div>
               <div class="col-1 p-0 m-0">
-                <button type="button" class="btn btn-sm btn-primary border-radius-100 btn-sm-round">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
+                  @click="plusPerson(data.children.less4)"
+                >
                   <font-awesome-icon class="ml-1" icon="plus"/>
                 </button>
               </div>
@@ -79,27 +128,42 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["id", "radius", "placeholder"],
+  props: ["id", "radius", "placeholder", "data", "maxguest", "maxchildren"],
   name: "GuestSelectDropdown",
   created() {
-     this.initiation();
+    this.initiation();
   },
   methods: {
     initiation() {
-      var id=this.id;
-        $(function() {
-      $(".btn-dropdown-guest").on("click", function(event) {
-        console.log(`.${id}-dropdown-menu`);
-        $(`.${id}-dropdown-menu`).toggleClass("show");
+      var id = this.id;
+      $(function() {
+        $(".btn-dropdown-guest").on("click", function(event) {
+          $(`.${id}-dropdown-menu`).toggleClass("show");
+        });
+        $(".guest-dropdown-menu.dropdown-menu.mega-dropdown-menu").on(
+          "click",
+          function(event) {
+            event.stopPropagation();
+          }
+        );
+
+        $(document).mouseup(function(e) {
+          if (
+            !$(".guestselect-component").is(e.target) && // if the target of the click isn't the container...
+            $(".guestselect-component").has(e.target).length === 0
+          ) {
+            // ... nor a descendant of the container
+            $(`.${id}-dropdown-menu`).toggleClass("show");
+          }
+        });
       });
-      $(".guest-dropdown-menu.dropdown-menu.mega-dropdown-menu").on(
-        "click",
-        function(event) {
-          event.stopPropagation();
-        }
-      );
-     });
-  }
+    },
+    plusPerson(perItem) {
+      perItem.qty++;
+    },
+    minusPerson(perItem) {
+      perItem.qty--;
+    }
   },
   data: function() {
     return {};

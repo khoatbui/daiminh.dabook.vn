@@ -10,6 +10,7 @@ import { faUserSecret,faCoffee,faSearchLocation,faChevronRight,faChevronLeft,faC
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faUserCircle as farUserCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import 'jquery'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import i18n from './i18n'

@@ -1,6 +1,5 @@
 //src/components/Navbar.vue
 <template>
-  <div class="hotel-detail-section">
     <div class="hotel-detail-section">
       <div class="row w-100 p-0 mx-0">
         <div class="col-12 p-0 m-0">
@@ -113,7 +112,6 @@
       </div>
               <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
     </div>
-  </div>
 </template>
 <script>
 import HotelService from "@/api/HotelService";
@@ -181,7 +179,7 @@ export default {
   computed: {}
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .hotel-owner-avatar {
   width: 40px;
   height: 40px;
