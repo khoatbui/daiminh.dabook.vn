@@ -141,13 +141,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
-import Navbar from "@/components/Navbar.vue";
-import GuestSelect from "@/components/GuestSelect.vue";
-import MainNavBar from "@/components/MainNavBar.vue";
-import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
-import LanguageComponent from "@/components/LanguageComponent.vue"
+import { Component, Vue } from 'vue-property-decorator'
+import Datetime from '@/components/Datetime2.vue' // @ is an alias to /src
+import Navbar from '@/components/Navbar.vue'
+import GuestSelect from '@/components/GuestSelect.vue'
+import MainNavBar from '@/components/MainNavBar.vue'
+import LocationSearchComponent from '@/components/LocationSearchComponent.vue'
+import LanguageComponent from '@/components/LanguageComponent.vue'
 
 
 @Component({

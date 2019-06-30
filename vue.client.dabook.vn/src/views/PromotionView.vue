@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="container-fluid main h-100 p-0 m-0 promotion-container text-sm">
     <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section">

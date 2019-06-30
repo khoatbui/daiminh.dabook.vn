@@ -211,7 +211,7 @@ export default {
     changeLoadingState(state) {
       this.isLoadding = state;
     },
-    async nextToResultStep() {
+    nextToResultStep() {
       this.changeLoadingState(true);
       this.$store.commit('updateCustomerInfo',this.customerInfo);
       var parrams={
@@ -223,7 +223,7 @@ export default {
           priceByTime:{}
         }
       }
-      var response = await PackageService.postRequestHotel(parrams);
+      var response = PackageService.postRequestHotel(parrams);
       this.requestResult=response.data;
       this.changeLoadingState(true);
     },

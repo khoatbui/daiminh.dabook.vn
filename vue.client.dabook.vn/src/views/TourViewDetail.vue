@@ -240,16 +240,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
-import DatetimeAutoShow from "@/components/DatetimeAutoShow.vue";
-import Navbar from "@/components/Navbar.vue";
-import GuestSelect from "@/components/GuestSelect.vue";
-import FilterHotel from "@/components/FilterHotel.vue";
-import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
-import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
-
-
+import { Component, Vue } from 'vue-property-decorator'
+import Datetime from '@/components/Datetime2.vue'
+import DatetimeAutoShow from '@/components/DatetimeAutoShow.vue'
+import Navbar from '@/components/Navbar.vue'
+import GuestSelect from '@/components/GuestSelect.vue'
+import FilterHotel from '@/components/FilterHotel.vue'
+import CustomerBookedAlert from '@/components/CustomerBookedAlert.vue'
+import LocationSearchComponent from '@/components/LocationSearchComponent.vue'
 @Component({
   components: {
     Datetime,
