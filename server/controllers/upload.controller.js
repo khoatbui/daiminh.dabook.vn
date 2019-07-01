@@ -12,8 +12,8 @@ module.exports.uploadRoomTypeImg=async (req, res) => {
         var result=[];
        console.log(req.files)
        req.files.forEach(element => {
-  moveFile(element.path, './uploads/roomType');
-        result.push({'fileName':element.filename,'filePath':`${process.env.ROOMTYPE_IMG_PATH}/${element.filename}`,'destination':element.destination})
+  moveFile(element.path, './upload/hotel/roomtype');
+        result.push({'fileName':element.filename,'filePath':`img/hotel/roomtype/${element.filename}`,'destination':element.destination})
     });
     res.json({'files':result});
     } catch (err) {

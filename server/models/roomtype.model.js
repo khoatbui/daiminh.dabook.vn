@@ -17,7 +17,7 @@ var roomTypeSchema = new mongoose.Schema({
     createDate:Date,
     modifyBy:String,
     modifyDate:Date,
-    roomImages:[{fileName:String,filePath:String,destination:String}]
+    roomImages:[{fileName:String,filePath:String,destination:String,size:Number}]
 });
 var RoomType =mongoose.model('RoomType',roomTypeSchema,'roomType');
 

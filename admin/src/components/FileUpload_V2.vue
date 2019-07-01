@@ -13,6 +13,7 @@
               Uploading {{ fileCount }} files...
             </p>
         </div>
+        <v-btn color="blue darken-1" dark @click="save">Upload</v-btn>
       </form>
       <!--SUCCESS-->
       <div v-if="isSuccess">
@@ -51,7 +52,8 @@
         uploadedFiles: [],
         uploadError: null,
         currentStatus: null,
-        uploadFieldName: 'photos'
+        uploadFieldName: 'photos',
+        formData:[]
       }
     },
     computed: {
@@ -75,11 +77,11 @@
         this.uploadedFiles = [];
         this.uploadError = null;
       },
-      save(formData) {
+      save() {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
-        upload(this.routerPath,formData)
+        upload(this.routerPath,this.formData)
           .then(x => {
             console.log(x);
             this.uploadedFiles = x.files
@@ -105,7 +107,7 @@
           });
 
         // save it
-        this.save(formData);
+        this.formData= formData;
       },
       sendDataToParent(fileArray){
         this.$emit('getUploadFilesURL', fileArray)
