@@ -16,7 +16,7 @@
   "nav_hotel":"Hotel",
   "nav_car":"Car",
   "nav_tour":"Tour",
-  "nav_deals": "Deals",
+  "nav_cart": "Carts",
 
   "btn_nextstep": "Next step",
   "btn_showall":"Show all",
@@ -48,6 +48,7 @@
   "search_date_checkin":"Check in  Date",
   "search_date_checkout":"Check out Date",
   "search_guest":"Guests ",
-  "search_guest_numberofguest":"Number of guest "
+  "search_guest_numberofguest":"Number of guest ",
+  "search_hissearch":"History search"
 
 }

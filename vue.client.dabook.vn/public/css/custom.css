@@ -79,6 +79,12 @@ a:hover,a,a:active,a:visited,a:focus{
 .text-lg{
   font-size: 1.2rem;
 }
+.text-sl{
+  font-size: 2rem;
+}
+.text-ssl{
+  font-size: 4rem !important;
+}
 .scroll-ngang {
   width: 100%;
   overflow: hidden;
@@ -151,4 +157,10 @@ a:hover,a,a:active,a:visited,a:focus{
 }
 .bottom-page{
   margin-bottom: 100px !important;
+}
+
+/* CITY DESTINAITON */
+.top-city-destination .card-img-top {
+  height: 80px !important;
+  width: 80px !important;
 }

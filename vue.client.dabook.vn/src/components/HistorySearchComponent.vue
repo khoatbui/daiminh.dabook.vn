@@ -10,7 +10,7 @@
     <input
       type="text"
       class="form-control border-right-radius-100"
-      v-bind:placeholder="$t('search_search')"
+      v-bind:placeholder="$t('search_hissearch')"
       aria-label="Username"
       aria-describedby="basic-addon1"
     >
@@ -21,7 +21,7 @@ import axios from "axios";
 
 export default {
   props: ["id", "radius", "placeholder"],
-  name: "LocationSearchComponent",
+  name: "HistorySearchComponent",
   created() {},
   methods: {
     naviBack() {

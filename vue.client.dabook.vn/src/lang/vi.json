@@ -16,7 +16,7 @@
   "nav_hotel":"Khách sạn",
   "nav_car":"Xe",
   "nav_tour":"Tua",
-  "nav_deals": "Deals",
+  "nav_cart": "Giỏ hàng",
 
   "btn_nextstep": "Tiếp",
   "btn_showall":"Hiển thị tất cả",
@@ -48,5 +48,7 @@
   "search_date_checkin":"Bắt đầu",
   "search_date_checkout":"Kết thúc",
   "search_guest":"Khách ",
-  "search_guest_numberofguest":"Số lượng khách"
+  "search_guest_numberofguest":"Số lượng khách",
+  "search_hissearch":"Tìm kiếm lịch sử order"
+
 }

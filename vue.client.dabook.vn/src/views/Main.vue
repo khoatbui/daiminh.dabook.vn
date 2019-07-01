@@ -357,10 +357,4 @@ export default class Main extends Vue {}
   height: 100px;
   width: 140px;
 }
-
-/* CITY DESTINAITON */
-.top-city-destination .card-img-top {
-  height: 80px !important;
-  width: 80px !important;
-}
 </style>

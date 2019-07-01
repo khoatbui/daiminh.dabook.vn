@@ -22,8 +22,8 @@
         <span>{{$t("nav_tour")}}</span>
       </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="/historychecking" v-bind:class="{'active':current=='history'}">
-        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'barcode']"/>
-        <span>{{$t("nav_deals")}}</span>
+        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'cart-plus']"/>
+        <span>{{$t("nav_cart")}}</span>
       </a>
     </nav>
   </div>

@@ -16,7 +16,7 @@
   "nav_hotel":"호텔",
   "nav_car":"렌트카",
   "nav_tour":"투어",
-  "nav_deals": "특가",
+  "nav_cart": "특가",
 
   "btn_nextstep": "다음 단계",
   "btn_showall":"모두 보기",
@@ -48,5 +48,7 @@
   "search_date_checkin":"체크인 날짜",
   "search_date_checkout":"체크아웃 날짜",
   "search_guest":"인원",
-  "search_guest_numberofguest":"인원수"
+  "search_guest_numberofguest":"인원수",
+  "search_hissearch":"History search"
+
 }
