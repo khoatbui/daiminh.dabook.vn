@@ -47,7 +47,7 @@ export default {
               " => " +
               picker.endDate.format("YYYY-MM-DD")
           );
-          me.$store.commit('selectDate',{
+          me.$store.dispatch('updateSelectDate',{
             startDate: picker.startDate.format("YYYY-MM-DD"),
             endDate: picker.endDate.format("YYYY-MM-DD")
           });

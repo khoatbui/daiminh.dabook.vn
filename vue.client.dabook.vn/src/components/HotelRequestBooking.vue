@@ -8,14 +8,14 @@
             <h5>
               <span
                 class="font-weight-bolder text-lg"
-              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.price)}}</span>
+              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.totalPrice)}}</span>
               <span class="text-sm">/ {{selectedHotel.priceByTime.diffTime}} night</span>
             </h5>
             <p class="text-sm">
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+              <font-awesome-icon class="ml-1 text-primary" icon="star" />
+              <font-awesome-icon class="ml-1 text-primary" icon="star" />
+              <font-awesome-icon class="ml-1 text-primary" icon="star" />
+              <font-awesome-icon class="ml-1 text-primary" icon="star" />
             </p>
           </div>
           <button
@@ -23,7 +23,7 @@
             class="close border-radius-100 shadow close-btn mx-1 text-sm"
             @click="backStep"
           >
-            <font-awesome-icon icon="times"/>
+            <font-awesome-icon icon="times" />
           </button>
         </div>
       </div>
@@ -38,8 +38,8 @@
               class="form-control"
               id="ifullname"
               placeholder="Your name"
-              v-bind="customerInfo.fullName"
-            >
+              v-model="customerInfo.fullName"
+            />
           </div>
         </div>
         <div class="col-12">
@@ -52,8 +52,8 @@
               class="form-control"
               id="iemail"
               placeholder="your@email.com"
-              v-bind="customerInfo.email"
-            >
+              v-model="customerInfo.email"
+            />
           </div>
         </div>
         <div class="col-12">
@@ -66,8 +66,8 @@
               class="form-control"
               id="iphone"
               placeholder="+8498868686"
-              v-bind="customerInfo.phone"
-            >
+              v-model="customerInfo.phone"
+            />
           </div>
         </div>
         <div class="col-12">
@@ -80,7 +80,7 @@
               id="imessage"
               rows="3"
               placeholder="Other request"
-              v-bind="customerInfo.question"
+              v-model="customerInfo.question"
             ></textarea>
           </div>
         </div>
@@ -92,6 +92,9 @@
             data-toggle="modal"
             data-target="#resultModal"
           >{{$t('btn_request')}}</button>
+        </div>
+        <div class="col-12 px-2">
+          <p class="text-sm">Ban khong can thanh toan ngay. Chung toi se lien he lai</p>
         </div>
       </div>
     </div>
@@ -122,7 +125,7 @@
                   data-dismiss="modal"
                   aria-label="Close"
                 >
-                  <font-awesome-icon icon="times"/>
+                  <font-awesome-icon icon="times" />
                 </button>
               </div>
               <div class="col-12">
@@ -135,27 +138,29 @@
               <div class="row p-2 justify-content-start align-items-center">
                 <div class="col-12">
                   <div class="ticket-result">
-                    <img class="ticket-bg" src="/img/hotel/ticketbg.png" alt>
+                    <img class="ticket-bg" src="/img/hotel/ticketbg.png" alt />
                     <div
                       class="absolute-group d-flex align-items-stretch flex-column justify-content-center"
                     >
                       <span class="ticket-owner">{{customerInfo.fullName}}</span>
-                      <input class="ticket-code" type="text" :value="requestResult.orderCode">
+                      <input class="ticket-code" type="text" :value="requestResult.orderCode" />
                       <h4 class="p-1">
-                        <span class="badge badge-primary ticket-status">Status : {{requestResult.requestStatus}}</span>
+                        <span
+                          class="badge badge-primary ticket-status"
+                        >Status : {{requestResult.requestStatus}}</span>
                       </h4>
                     </div>
                   </div>
                 </div>
                 <div class="col-12">
                   <p class="text-sm mb-0 text-left text-danger">Note</p>
+                  <p class="text-sm text-left">
+                    Cam on quy khach da su dung dich vu cua chung toi. Nhan vien cua chung toi da tiep nhan yeu cau, va se phan hoi lai
+                    trong vong {{requestResult.feedbackTime}} tieng.
+                  </p>
                   <p
                     class="text-sm text-left"
-                  >Cam on quy khach da su dung dich vu cua chung toi. Nhan vien cua chung toi da tiep nhan yeu cau, va se phan hoi lai
-                  trong vong {{requestResult.feedbackTime}} tieng.</p>
-                   <p class="text-sm text-left">
-                     Trong truong hop quy khach can ho tro gap, vui long lien he tong dai 19001562 hoac 0936376420 de duoc ho tro. Xin cam on
-                   </p>
+                  >Trong truong hop quy khach can ho tro gap, vui long lien he tong dai 19001562 hoac 0936376420 de duoc ho tro. Xin cam on</p>
                 </div>
                 <div class="col-12 text-left">
                   <a href="#" class="text-sm">Show more</a>
@@ -185,13 +190,13 @@ export default {
     GuestSelectDropDown,
     LoadingComponent
   },
-  props: ["id", "packagedata",'authorName','enddate'],
+  props: ["id", "packagedata", "authorName", "enddate"],
   name: "HotelRequestBooking",
-    computed:{
-    selectedHotel(){
+  computed: {
+    selectedHotel() {
       return this.$store.state.selectedHotel;
     },
-    customer(){
+    customer() {
       return this.$store.state.customer;
     }
   },
@@ -200,10 +205,10 @@ export default {
       var state = e.originalEvent.state;
       if (state !== null) {
         $(".modal-backdrop.fade").remove();
-        $('body').removeClass('modal-open');
+        $("body").removeClass("modal-open");
       }
     });
-      },
+  },
   methods: {
     backStep() {
       this.$router.go(-1);
@@ -211,20 +216,43 @@ export default {
     changeLoadingState(state) {
       this.isLoadding = state;
     },
-    nextToResultStep() {
+    async nextToResultStep() {
       this.changeLoadingState(true);
-      this.$store.commit('updateCustomerInfo',this.customerInfo);
-      var parrams={
-        selectedDate:this.$store.state.selectedDate,
-        customer:this.$store.state.customer,
-        orderInfo:{
-          guest:{},
-          package:{},
-          priceByTime:{}
-        }
-      }
-      var response = PackageService.postRequestHotel(parrams);
-      this.requestResult=response.data;
+      console.log(this.customerInfo);
+      this.$store.commit("updateCustomerInfo", this.customerInfo);
+      var parrams = {
+        selectedDate: this.$store.state.selectDate,
+        customer: this.$store.state.customer,
+        orderInfo: {
+          guest: this.$store.state.selectedHotel.guest,
+          package: {},
+          priceByTime: {}
+        },
+        hotel: {
+          _id: this.$store.state.selectedHotel.package.hotelId._id,
+          hotelCode: this.$store.state.selectedHotel.package.hotelId.hotelCode,
+          hotelName: this.$store.state.selectedHotel.package.hotelId.hotelName
+        },
+        package: {
+          _id: this.$store.state.selectedHotel.package.packageId._id,
+          packageCode: this.$store.state.selectedHotel.package.packageId
+            .packageCode,
+          packageName: this.$store.state.selectedHotel.package.packageId
+            .packageName
+        },
+        roomType: {
+          _id: this.$store.state.selectedHotel.package.roomTypeId._id,
+          roomTypeCode: this.$store.state.selectedHotel.package.roomTypeId
+            .roomTypeCode,
+          roomTypeName: this.$store.state.selectedHotel.package.roomTypeId
+            .roomTypeName
+        },
+        optionService: this.$store.state.selectedHotel.selectOptionService,
+        totalPrice: this.$store.state.selectedHotel.totalPrice
+      };
+      var response = await PackageService.postRequestHotel(parrams);
+      this.requestResult = response.data;
+      console.log(this.requestResult);
       this.changeLoadingState(true);
     },
     changeLoadingState(state) {
@@ -233,17 +261,17 @@ export default {
   },
   data: function() {
     return {
-      customerInfo:{
-        fullName:"",
-        email:"",
-        phone:"",
-        question:""
+      customerInfo: {
+        fullName: "",
+        email: "",
+        phone: "",
+        question: ""
       },
-      isLoadding:false,
-      requestResult:{
-        orderCode:"",
-        feedbackTime:"",
-        requestStatus:""
+      isLoadding: false,
+      requestResult: {
+        orderCode: "",
+        feedbackTime: "",
+        requestStatus: ""
       }
     };
   }
