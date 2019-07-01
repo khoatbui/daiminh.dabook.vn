@@ -126,6 +126,9 @@ export default {
     },
     changeLoadingState(state) {
       this.isLoadding = state;
+    },
+    searchHistory(){
+        
     }
   },
   data: function() {
