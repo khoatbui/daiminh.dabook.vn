@@ -225,8 +225,13 @@ export default {
         customer: this.$store.state.customer,
         orderInfo: {
           guest: this.$store.state.selectedHotel.guest,
-          package: {},
-          priceByTime: {}
+          package: this.$store.state.selectedHotel.package,
+          priceByTime: this.$store.state.selectedHotel.priceByTime
+        },
+        supplier:{
+           _id: this.$store.state.selectedHotel.package.supplierId._id,
+          supplierCode: this.$store.state.selectedHotel.package.supplierId.supplierCode,
+          supplierName: this.$store.state.selectedHotel.package.supplierId.supplierName
         },
         hotel: {
           _id: this.$store.state.selectedHotel.package.hotelId._id,

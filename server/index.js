@@ -29,6 +29,7 @@ const optionServiceRoute = require('./routes/optionservice.router')
 const packageHotelRELRouter = require('./routes/packagehotelREL.router')
 const paymentsRouter = require('./routes/payments.router')
 const userRouter = require('./routes/auth.router')
+const hotelOrderRouter=require('./routes/hotelorder.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -51,6 +52,7 @@ app.use('/optionservice',optionServiceRoute);
 app.use('/packagehotelrel',packageHotelRELRouter);
 app.use('/payments',paymentsRouter);
 app.use('/user',userRouter)
+app.use('/hotelorder',hotelOrderRouter)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

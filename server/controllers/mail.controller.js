@@ -1,5 +1,6 @@
 require('dotenv').config();
 var Mail = require('../models/mail.model')
+var HotelOrder=require('../models/hotelorder.model')
 var mongoose = require('mongoose');
 var moment = require('moment');
 var nodemailer = require('nodemailer')
@@ -135,7 +136,7 @@ module.exports.sendMobileHotelBookingEmail = function (req, res) {
 
   const outputCustomer = generateMobileCustomerHotelConfirm(req.body, transactionCode);
   const outputStaff = generateMobileStaffHotelConfirm(req.body, transactionCode);
-
+  createMobileOrder(req.body,transactionCode,moment().add(timeStaffReply(), 'hours'));
   let Cusinfo = transporter.sendMail({
     from: `"daiminh.dabook.vn" <${emailInfo.emailId}>`,
     to: req.body.customer.email,
@@ -228,7 +229,44 @@ module.exports.sendCarBookingEmail = function (req, res) {
 };
 
 
-
+function createMobileOrder(req,transactionCode,replyTime){
+  console.log(req);
+var data={
+  transactionCode:transactionCode,
+  selectedDate: req.selectedDate,
+  customer: req.customer,
+  guest: {
+    adult: req.orderInfo.guest.adult.qty,
+    less4: req.orderInfo.guest.children.less4.qty,
+    less12: req.orderInfo.guest.children.less4.qty,
+    golfer: req.orderInfo.guest.golfer.golfer.qty,
+    nongolfer: req.orderInfo.guest.golfer.nongolfer.qty,
+  },
+  supplier:req.supplier,
+  hotel: req.hotel,
+  package:req.package,
+  roomType:req.roomType,
+  optionService:req.optionService,
+  price:{
+      packagePrice:req.orderInfo.priceByTime.price,
+      optionServicePrice:req.optionService.totalPrice,
+      childPrice:req.orderInfo.priceByTime.avgChild,
+      totalPrice:req.totalPrice
+  },
+  status:'CUS_REQUEST',
+  replyTime:replyTime
+}
+HotelOrder.create(data, function (err, order) {
+    if (err) {
+      console.log(err);
+      return err;
+    }
+    else {
+      console.log(order);
+      return order;
+    }
+  })
+}
 function uniqeNumber() {
   if (current.currentDate == moment().get('date')) {
     current.currentCode++;

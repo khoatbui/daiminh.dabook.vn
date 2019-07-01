@@ -5,7 +5,10 @@
       <div class="col-12">
         <div class="input-group mb-1 input-group-lg">
           <div class="input-group-prepend">
-            <span class="input-group-text bg-white text-danger text-smd" id="basic-addon1">BOOKING ID</span>
+            <span
+              class="input-group-text bg-white text-danger text-smd"
+              id="basic-addon1"
+            >BOOKING CODE</span>
           </div>
           <input
             type="text"
@@ -13,29 +16,30 @@
             placeholder="..."
             aria-label="Username"
             aria-describedby="basic-addon1"
-            v-model="historySearch"
+            v-model="input.transationCode"
           />
         </div>
       </div>
       <div class="col-12">
         <div class="input-group mb-1 input-group-lg">
           <div class="input-group-prepend">
-            <span class="input-group-text bg-white text-danger text-smd" id="basic-addon1">Phone (+84)</span>
+            <span
+              class="input-group-text bg-white text-danger text-smd"
+              id="basic-addon1"
+            >Phone/email</span>
           </div>
           <input
             type="text"
             class="form-control text-smd"
-           placeholder="..."
+            placeholder="..."
             aria-label="Username"
             aria-describedby="basic-addon1"
-            v-model="historySearch"
+            v-model="input.phoneEmail"
           />
         </div>
       </div>
       <div class="col-12 pt-3">
-          <button class="btn btn-danger w-100" @click="searchHistory">
-              SUBMIT
-          </button>
+        <button class="btn btn-danger w-100" @click="searchHistory">SUBMIT</button>
       </div>
     </div>
     <div
@@ -79,7 +83,7 @@
     >
       <div class="col-12">
         <font-awesome-icon class="nav-icon-fa text-danger text-ssl" icon="clock" />
-        <h6 class="text-center text-danger pt-2">Data not found</h6>
+        <h6 class="text-center text-danger pt-2">{{requestResult.message}}</h6>
       </div>
     </div>
     <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
@@ -87,7 +91,7 @@
 </template>
 <script>
 import axios from "axios";
-import PackageService from "@/api/PackageService";
+import OrderService from "@/api/OrderService";
 import Datetime from "@/components/Datetime2.vue";
 import GuestSelectDropDown from "@/components/GuestSelectDropDown.vue";
 import LoadingComponent from "@/components/LoadingComponent.vue";
@@ -127,20 +131,60 @@ export default {
     changeLoadingState(state) {
       this.isLoadding = state;
     },
-    searchHistory(){
-
+    async searchHistory() {
+      var result = await OrderService.getHistoryByTransCode(
+        this.input.transationCode
+      );
+      if (result.data != undefined && result.data != "") {
+        if (
+          result.data.customer.phone.toUpperCase() == this.input.phoneEmail.toUpperCase() ||
+          result.data.customer.email.toUpperCase() == this.input.phoneEmail.toUpperCase()
+        ) {
+          console.log(result.data)
+          this.requestResult = {
+            isFound: true,
+            fullName: result.data.customer.fullName,
+            orderCode: result.data.transactionCode,
+            feedbackTime: result.data.replyTime,
+            requestStatus: result.data.status
+          };
+        } else {
+          this.requestResult = {
+            isFound: false,
+            fullName: "",
+            orderCode: "",
+            feedbackTime: "",
+            requestStatus: "",
+            message: "Phone or email not matching"
+          };
+        }
+      } else {
+        this.requestResult = {
+          isFound: false,
+          fullName: "",
+          orderCode: "",
+          feedbackTime: "",
+          requestStatus: "",
+          message: "BookingCode not found"
+        };
+      }
     }
   },
   data: function() {
     return {
-        isSearch:false,
+      isSearch: false,
       isLoadding: false,
       requestResult: {
-        isFound:undefined,
+        isFound: undefined,
         fullName: "",
         orderCode: "",
         feedbackTime: "",
-        requestStatus: ""
+        requestStatus: "",
+        message: ""
+      },
+      input: {
+        transactionCode: "",
+        phoneEmail: ""
       }
     };
   }
