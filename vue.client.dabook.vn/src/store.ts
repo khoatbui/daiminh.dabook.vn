@@ -61,6 +61,10 @@ export default new Vuex.Store({
       email:'',
       phone:'',
       question:''
+    },
+    search:{
+      historySearch:"",
+      locationSearch:""
     }
   },
   mutations: {
@@ -188,6 +192,9 @@ export default new Vuex.Store({
     },
     updateTotalPrice(state){
       state.selectedHotel.totalPrice=state.selectedHotel.selectOptionService.totalPrice + state.selectedHotel.priceByTime.price;
+    },
+    updateHistorySearch(state,payload){
+      state.search.historySearch=payload;
     }
   },
   actions: {

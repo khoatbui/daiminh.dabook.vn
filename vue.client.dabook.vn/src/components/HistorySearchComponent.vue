@@ -1,19 +1,8 @@
 <template>
   <div class="input-group border-radius-100 w-100 search">
-    <div class="input-group-prepend">
-      <span class="input-group-text border-left-radius-100" id="basic-addon1">
-        <a @click="naviBack">
-          <font-awesome-icon class="ml-1 text-danger" icon="arrow-left"/>
-        </a>
-      </span>
-    </div>
-    <input
-      type="text"
-      class="form-control border-right-radius-100"
-      v-bind:placeholder="$t('search_hissearch')"
-      aria-label="Username"
-      aria-describedby="basic-addon1"
-    >
+      <span class="p-2"><a @click="naviBack">
+          <font-awesome-icon class="mx-2 text-danger" icon="arrow-left"/>
+        </a>Manager/Cancel Booking</span>    
   </div>
 </template>
 <script>
@@ -30,6 +19,11 @@ export default {
   },
   data: function() {
     return {};
+  },
+  computed:{
+    historySearch(){
+      return this.$store.state.search.historySearch;
+    }
   }
 };
 </script>

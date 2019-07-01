@@ -1,48 +1,87 @@
 /* eslint-disable */
 <template>
-  <div class="result-request-component w-100 p-2">
-      <div class="row w-100 m-0 p-2 justify-content-start align-items-center" v-if="requestResult.isFound">
-        <div class="col-12">
-          <div class="ticket-result">
-            <img class="ticket-bg" src="/img/hotel/ticketbg.png" alt />
-            <div
-              class="absolute-group d-flex align-items-stretch flex-column justify-content-center"
-            >
-              <span class="ticket-owner">{{requestResult.fullName}}</span>
-              <input class="ticket-code" type="text" :value="requestResult.orderCode" />
-              <h4 class="p-1">
-                <span
-                  class="badge badge-primary ticket-status"
-                >Status : {{requestResult.requestStatus}}</span>
-              </h4>
-            </div>
+  <div class="result-request-component w-100 p-2 vh-100">
+    <div class="row w-100 m-0 p-2">
+      <div class="col-12">
+        <div class="input-group mb-1 input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text bg-white text-danger text-md" id="basic-addon1">BOOKING ID</span>
           </div>
-        </div>
-        <div class="col-12">
-          <p class="text-sm mb-0 text-left text-danger">Note</p>
-          <p class="text-sm text-left">
-            Cam on quy khach da su dung dich vu cua chung toi. Nhan vien cua chung toi da tiep nhan yeu cau, va se phan hoi lai
-            trong vong {{requestResult.feedbackTime}} tieng.
-          </p>
-          <p
-            class="text-sm text-left"
-          >Trong truong hop quy khach can ho tro gap, vui long lien he tong dai 19001562 hoac 0936376420 de duoc ho tro. Xin cam on</p>
-        </div>
-        <div class="col-12 text-left">
-          <a href="#" class="text-sm">Show more</a>
-        </div>
-        <div class="col-12">
-          <button type="button" class="btn btn-danger w-100">{{$t('btn_copyticket')}}</button>
+          <input
+            type="text"
+            class="form-control text-md"
+            placeholder="..."
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            v-model="historySearch"
+          />
         </div>
       </div>
-      <div class="row w-100 m-0 p-0 justify-content-start align-items-start vh-100" v-if="!requestResult.isFound">
-          <div class="col-12">
-              <font-awesome-icon class="nav-icon-fa text-danger text-ssl" icon="clock"/>
-              <h6 class="text-center text-danger pt-2">
-                  Please input you booking code
-              </h6>
+      <div class="col-12">
+        <div class="input-group mb-1 input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text bg-white text-danger text-md" id="basic-addon1">Phone (+84)</span>
           </div>
+          <input
+            type="text"
+            class="form-control text-md"
+           placeholder="..."
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            v-model="historySearch"
+          />
+        </div>
       </div>
+      <div class="col-12 pt-3">
+          <button class="btn btn-danger w-100" @click="searchHistory">
+              SUBMIT
+          </button>
+      </div>
+    </div>
+    <div
+      class="row w-100 m-0 p-2 justify-content-start align-items-center"
+      v-if="requestResult.isFound"
+    >
+      <div class="col-12">
+        <div class="ticket-result">
+          <img class="ticket-bg" src="/img/hotel/ticketbg.png" alt />
+          <div class="absolute-group d-flex align-items-stretch flex-column justify-content-center">
+            <span class="ticket-owner">{{requestResult.fullName}}</span>
+            <input class="ticket-code" type="text" :value="requestResult.orderCode" />
+            <h4 class="p-1">
+              <span
+                class="badge badge-primary ticket-status"
+              >Status : {{requestResult.requestStatus}}</span>
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <p class="text-sm mb-0 text-left text-danger">Note</p>
+        <p class="text-sm text-left">
+          Cam on quy khach da su dung dich vu cua chung toi. Nhan vien cua chung toi da tiep nhan yeu cau, va se phan hoi lai
+          trong vong {{requestResult.feedbackTime}} tieng.
+        </p>
+        <p
+          class="text-sm text-left"
+        >Trong truong hop quy khach can ho tro gap, vui long lien he tong dai 19001562 hoac 0936376420 de duoc ho tro. Xin cam on</p>
+      </div>
+      <div class="col-12 text-left">
+        <a href="#" class="text-sm">Show more</a>
+      </div>
+      <div class="col-12">
+        <button type="button" class="btn btn-danger w-100">{{$t('btn_copyticket')}}</button>
+      </div>
+    </div>
+    <div
+      class="row w-100 m-0 p-0 justify-content-start align-items-start vh-100"
+      v-if="requestResult.isFound==false"
+    >
+      <div class="col-12">
+        <font-awesome-icon class="nav-icon-fa text-danger text-ssl" icon="clock" />
+        <h6 class="text-center text-danger pt-2">Data not found</h6>
+      </div>
+    </div>
     <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
   </div>
 </template>
@@ -91,10 +130,11 @@ export default {
   },
   data: function() {
     return {
+        isSearch:false,
       isLoadding: false,
       requestResult: {
-        isFound:false,
-        fullName:"",
+        isFound:undefined,
+        fullName: "",
         orderCode: "",
         feedbackTime: "",
         requestStatus: ""
@@ -180,7 +220,7 @@ export default {
   color: #fff;
   font-size: 1.3rem;
 }
-.vh-100{
-    height: 100vh !important;
+.vh-100 {
+  height: 100vh !important;
 }
 </style>
