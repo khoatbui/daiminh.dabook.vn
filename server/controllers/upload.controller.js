@@ -12,9 +12,11 @@ module.exports.uploadRoomTypeImg=async (req, res) => {
         var result=[];
        console.log(req.files)
        req.files.forEach(element => {
-  moveFile(element.path, './upload/hotel/roomtype');
+  moveFile(element.path, '../daiminh.dabook.vn/img/hotel/roomtype');
+  moveFile(element.path, '../m.daiminh.dabook.vn/img/hotel/roomtype');
         result.push({'fileName':element.filename,'filePath':`img/hotel/roomtype/${element.filename}`,'destination':element.destination})
     });
+    console.log(result);
     res.json({'files':result});
     } catch (err) {
         console.log(err);
@@ -27,7 +29,9 @@ var moveFile = (file, dir2)=>{
     //include the fs, path modules
     var fs = require('fs');
     var path = require('path');
-  
+    if (!fs.existsSync(dir2)){
+        fs.mkdirSync(dir2);
+    }
     //gets file name and adds it to dir2
     var f = path.basename(file);
     var dest = path.resolve(dir2, f);

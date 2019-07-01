@@ -41,7 +41,7 @@ const uploadHotelImg = multer({ storage: hotelStorage })
 
 // ROOMTYPE IMAGE
 var roomTypeUpload = multer.diskStorage({
-    destination: `./uploads`,
+    destination: `./uploads/hotel/roomtype`,
     filename: function (req, file, cb) {
         cb(null,moment().format("YYYYMMDDHHMM") + file.originalname)
   }
@@ -51,8 +51,8 @@ const upload = multer({storage:roomTypeUpload});
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-router.post('/hotel-image',uploadHotelImg.single('file'),controller.uploadHotelImage)
+router.post('/hotel',uploadHotelImg.single('file'),controller.uploadHotelImage)
 
-router.post('/room-type-image', upload.array('photos', 12), controller.uploadRoomTypeImg)
+router.post('/hotel/roomtype', upload.array('photos', 12), controller.uploadRoomTypeImg)
 
 module.exports = router
