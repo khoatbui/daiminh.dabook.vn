@@ -1,4 +1,3 @@
-import 'es6-promise/auto'
 import moment from 'moment'
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -22,6 +21,16 @@ export default new Vuex.Store({
             name: 'less12',
             qty: 0
           }
+        },
+        golfer:{
+          golfer:{
+            name:'golfer',
+            qty:0
+          },
+          nongolfer:{
+            name:'nongolfer',
+            qty:0
+          }
         }
       },
       package: {
@@ -36,14 +45,19 @@ export default new Vuex.Store({
         smallPrice: 0,
         avgPrice: 0,
         avgChild: 0
-      }
+      },
+      selectOptionService:{
+        selectedOption:[],
+        totalPrice:0
+      },
+      totalPrice:0
     },
     selectDate: {
       startDate: moment().format('YYYY-MM-DD'),
       endDate: moment(new Date()).add(1, 'days').format('YYYY-MM-DD')
     },
     customer:{
-      fullname:'',
+      fullName:'',
       email:'',
       phone:'',
       question:''
@@ -51,22 +65,22 @@ export default new Vuex.Store({
   },
   mutations: {
     plusAdult (state) {
-      state.selectedHotel.guest.adult.qty++
+      state.selectedHotel.guest.adult.qty=state.selectedHotel.guest.adult.qty+1
     },
     minusAdult (state) {
-      state.selectedHotel.guest.adult.qty--
+      state.selectedHotel.guest.adult.qty=state.selectedHotel.guest.adult.qty-1
     },
     plusChildLess4 (state) {
-      state.selectedHotel.guest.children.less4.qty++
+      state.selectedHotel.guest.children.less4.qty=state.selectedHotel.guest.children.less4.qty+1
     },
     minusChildLess4 (state) {
-      state.selectedHotel.guest.children.less4.qty--
+      state.selectedHotel.guest.children.less4.qty=state.selectedHotel.guest.children.less4.qty-1
     },
     plusChildLess12 (state) {
-      state.selectedHotel.guest.children.less12.qty++
+      state.selectedHotel.guest.children.less12.qty=state.selectedHotel.guest.children.less12.qty+1
     },
     minusChildLess12 (state) {
-      state.selectedHotel.guest.children.less12.qty--
+      state.selectedHotel.guest.children.less12.qty=state.selectedHotel.guest.children.less12.qty-1
     },
     selectDate (state, payload) {
       state.selectDate.startDate = payload.startDate
@@ -168,12 +182,34 @@ export default new Vuex.Store({
     },
     updateCustomerInfo(state,payload){
       state.customer=payload;
+    },
+    updateSelectOptionService(state,payload){
+      state.selectedHotel.selectOptionService=payload;
+    },
+    updateTotalPrice(state){
+      state.selectedHotel.totalPrice=state.selectedHotel.selectOptionService.totalPrice + state.selectedHotel.priceByTime.price;
     }
   },
   actions: {
     updateselectedHotelDetailAction ({ commit }, selectedHotelpackage) {
       commit('updateselectedHotelDetail', selectedHotelpackage)
       commit('updateSelectedPriceByTime')
+      commit('updateTotalPrice')
+    },
+    updateSelectOptionService({commit},selectedOptionService){
+      commit('updateSelectOptionService',selectedOptionService)
+      commit('updateSelectedPriceByTime')
+      commit('updateTotalPrice')
+    },
+    updateSelectDate({commit},selectDate){
+      commit('selectDate',selectDate)
+      commit('updateSelectedPriceByTime')
+      commit('updateTotalPrice')
+    },
+    updateGuest({commit},action){
+      commit(action)
+      commit('updateSelectedPriceByTime')
+      commit('updateTotalPrice')
     }
   }
 })

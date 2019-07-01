@@ -12,6 +12,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.post('/hotel-booking', jsonParser,controller.sendHotelBookingEmail )
 
+router.post('/m/hotel-booking',jsonParser,controller.sendMobileHotelBookingEmail)
+
 router.post('/tour-booking', jsonParser,controller.sendTourBookingEmail)
 
 router.post('/car-booking', jsonParser, )
