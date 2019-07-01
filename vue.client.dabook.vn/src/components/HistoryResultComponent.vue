@@ -5,11 +5,11 @@
       <div class="col-12">
         <div class="input-group mb-1 input-group-lg">
           <div class="input-group-prepend">
-            <span class="input-group-text bg-white text-danger text-md" id="basic-addon1">BOOKING ID</span>
+            <span class="input-group-text bg-white text-danger text-smd" id="basic-addon1">BOOKING ID</span>
           </div>
           <input
             type="text"
-            class="form-control text-md"
+            class="form-control text-smd"
             placeholder="..."
             aria-label="Username"
             aria-describedby="basic-addon1"
@@ -20,11 +20,11 @@
       <div class="col-12">
         <div class="input-group mb-1 input-group-lg">
           <div class="input-group-prepend">
-            <span class="input-group-text bg-white text-danger text-md" id="basic-addon1">Phone (+84)</span>
+            <span class="input-group-text bg-white text-danger text-smd" id="basic-addon1">Phone (+84)</span>
           </div>
           <input
             type="text"
-            class="form-control text-md"
+            class="form-control text-smd"
            placeholder="..."
             aria-label="Username"
             aria-describedby="basic-addon1"
@@ -128,7 +128,7 @@ export default {
       this.isLoadding = state;
     },
     searchHistory(){
-        
+
     }
   },
   data: function() {
