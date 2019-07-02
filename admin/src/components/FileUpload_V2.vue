@@ -21,9 +21,9 @@
         <p>
           <a href="javascript:void(0)" @click="reset()">Upload again</a>
         </p>
-        <ul class="list-unstyled img-list">
+        <ul class="list-unstyled img-list scroll-ngang">
           <li v-for="item in uploadedFiles">
-            <img :src="`../m.daiminh.dabook.vn/${item.filePath}`" class="img-responsive img-thumbnail" :alt="item.originalName">
+            <img :src="`http://mdaiminh.dabook.vn/${item.filePath}`" class="img-responsive img-thumbnail" :alt="item.originalName">
           </li>
         </ul>
       </div>
@@ -150,18 +150,27 @@
     text-align: center;
     padding: 50px 0;
   }
-  .img-list {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-}
 .img-list li{
-  width: 30px; 
-  height: 30xp;
+  height: 150px;
+  min-height: 150px;
+  widows: auto;
+  padding:10px;
+}
+.img-list li img{
+  height: 100%;
+  width: auto;
 }
 .img-list img{
   width: 100%; 
   height: auto;
+}
+.scroll-ngang {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.scroll-ngang li{
+  display:inline-block;
 }
 </style>

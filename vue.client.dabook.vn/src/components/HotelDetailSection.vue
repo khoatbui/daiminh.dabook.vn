@@ -3,12 +3,48 @@
   <div class="hotel-detail-section">
     <div class="row w-100 p-0 mx-0">
       <div class="col-12 p-0 m-0">
-        <div class="card d-inline-block border-0">
-          <img
-            class="card-img-top border-radius-none"
-            src="img/topdestination/sapa_2.jpg"
-            alt="Card image cap"
-          />
+        <div class="card d-inline-block border-0 w-100">
+            <div id="carousel-img" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li
+                data-target="#carousel-img"
+                v-for="(subitem,index) in packagedetail.roomTypeId.roomImages"
+                v-bind:class="{'active':index==0}"
+                v-bind:data-slide-to="index"
+              ></li>
+            </ol>
+            <div class="carousel-inner default-bg h-200">
+              <div
+                class="carousel-item"
+                v-for="(subitem,index) in packagedetail.roomTypeId.roomImages"
+                v-bind:class="{'active':index==0}"
+              >
+                <img
+                  v-bind:src="packagedetail.roomTypeId.roomImages.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
+                  class="d-block card-img-top"
+                  alt="..."
+                />
+              </div>
+            </div>
+            <a
+              class="carousel-control-prev"
+              href="#carousel-img"
+              role="button"
+              data-slide="prev"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a
+              class="carousel-control-next"
+              href="#carousel-img"
+              role="button"
+              data-slide="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
         </div>
       </div>
       <div class="col-12 px-3 m-0">
@@ -233,5 +269,11 @@ export default {
   border-radius: 100px;
   background-color: #ffffff;
   border: 1px solid #007bff;
+}
+.hotel-detail-section .h-200 {
+  height: 200px !important;
+  overflow: hidden;
+  min-height: 200px !important;
+  max-height: 200px;
 }
 </style>

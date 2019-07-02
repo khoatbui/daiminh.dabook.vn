@@ -1,6 +1,6 @@
 //src/components/Navbar.vue
 <template>
-  <div class="row w-100 p-0 mx-0 bottom-page">
+  <div class="row w-100 p-0 mx-0 bottom-page hotel-all-section">
     <div class="col-12 p-1 m-0">
       <div class="m-2 text-left">
         <h4>
@@ -8,14 +8,50 @@
         </h4>
       </div>
     </div>
-    <div class="col-12 p-1 m-0" v-for="item in paginatedData">
+    <div class="col-12 p-1 m-0" v-for="(item,i) in paginatedData">
       <div class="card w-100 p-2 d-inline-block border-0">
         <a v-bind:href="`/promotiondetail?packagehotelrelid=${item._id}`">
-          <img
-            class="card-img-top border-radius-5"
-            src="img/topdestination/sapa_2.jpg"
-            alt="Card image cap"
-          >
+          <div v-bind:id="`carousel-img-${i}`" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li
+                v-bind:data-target="`#carousel-img-${i}`"
+                v-for="(subitem,index) in item.roomTypeId.roomImages"
+                v-bind:class="{'active':index==0}"
+                v-bind:data-slide-to="index"
+              ></li>
+            </ol>
+            <div class="carousel-inner border-radius-5 default-bg h-200">
+              <div
+                class="carousel-item border-radius-5"
+                v-for="(subitem,index) in item.roomTypeId.roomImages"
+                v-bind:class="{'active':index==0}"
+              >
+                <img
+                  v-bind:src="item.roomTypeId.roomImages.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
+                  class="d-block border-radius-5"
+                  alt="..."
+                />
+              </div>
+            </div>
+            <a
+              class="carousel-control-prev"
+              v-bind:href="`#carousel-img-${i}`"
+              role="button"
+              data-slide="prev"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a
+              class="carousel-control-next"
+              v-bind:href="`#carousel-img-${i}`"
+              role="button"
+              data-slide="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
           <div class="card-body w-100 text-left p-1">
             <p class="card-text text-uppercase p-0 m-0 text-sm hidden-outof-text">
               <span class="w-50 hidden-outof-text">{{item.packageId.packageName}}</span>
@@ -52,7 +88,7 @@
                 @click="prevPage"
                 :disabled="pageNumber == 0"
               >
-                <font-awesome-icon class="text-primary" icon="angle-double-left"/>
+                <font-awesome-icon class="text-primary" icon="angle-double-left" />
               </a>
             </li>
             <li class="page-item">
@@ -75,7 +111,7 @@
                 @click="nextPage"
                 :disabled="pageNumber >= pageCount -1"
               >
-                <font-awesome-icon class="text-primary" icon="angle-double-right"/>
+                <font-awesome-icon class="text-primary" icon="angle-double-right" />
               </a>
             </li>
           </ul>
@@ -159,5 +195,20 @@ export default {
 <style lang="scss">
 .page-item.active .page-link {
   color: #fff !important;
+}
+.hotel-all-section .h-200 {
+  height: 200px !important;
+  overflow: hidden;
+  min-height: 200px !important;
+  max-height: 200px;
+}
+.hotel-all-section .carousel-item {
+  height: 100%;
+  width: 100%;
+}
+.hotel-all-section .carousel-item img {
+  height: 100% !important;
+  min-height: 100% !important;
+  min-width: 100% !important;
 }
 </style>
