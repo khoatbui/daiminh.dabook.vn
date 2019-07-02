@@ -118,6 +118,9 @@
                   <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                   <file-upload @getUploadFilesURL="editedItem.roomImages = $event" v-bind:routerPath="apiIP+'/upload/hotel/roomtype'"></file-upload>
                    </v-flex>
+                   <v-flex>
+                     
+                   </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
