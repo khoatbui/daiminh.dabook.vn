@@ -15,44 +15,42 @@ moment().format();
 var router = express.Router()
 
 
-// ROOMTYPE IMAGE
-var roomTypeStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, process.env.ROOMTYPE_IMG_PATH)
-    },
-    filename: function (req, file, cb) {
-        cb(null,moment().format("YYYYMMDDHHMM") + file.originalname)
-  }
+// SUPPLIER IMAGE
+var supplierUpload = multer.diskStorage({
+  destination: `./uploads/hotel/supplier`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
 })
-const uploadRoomTypeImg = multer({ storage: roomTypeStorage });
+const uploadSupplier = multer({storage:supplierUpload});
 
 
 // HOTEL IMAGE
-var hotelStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-      cb(null, './uploads')
-  },
+var hotelUpload = multer.diskStorage({
+  destination: `./uploads/hotel/hotel`,
   filename: function (req, file, cb) {
-      cb(null, file.originalname)
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
 }
 })
-const uploadHotelImg = multer({ storage: hotelStorage })
+const uploadHotel = multer({storage:hotelUpload});
 
 
 // ROOMTYPE IMAGE
 var roomTypeUpload = multer.diskStorage({
     destination: `./uploads/hotel/roomtype`,
     filename: function (req, file, cb) {
-        cb(null,moment().format("YYYYMMDDHHMM") + file.originalname)
+        cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
   }
 })
-const upload = multer({storage:roomTypeUpload});
+const uploadRoomType = multer({storage:roomTypeUpload});
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-router.post('/hotel',uploadHotelImg.single('file'),controller.uploadHotelImage)
+router.post('/hotel/supplier',uploadSupplier.array('photos', 12),controller.uploadSupplierImg)
 
-router.post('/hotel/roomtype', upload.array('photos', 12), controller.uploadRoomTypeImg)
+router.post('/hotel/hotel',uploadHotel.array('photos', 12),controller.uploadHotelImg)
+
+router.post('/hotel/roomtype', uploadRoomType.array('photos', 12), controller.uploadRoomTypeImg)
 
 module.exports = router

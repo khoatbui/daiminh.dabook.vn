@@ -54,6 +54,28 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
+                  
+                  <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImg = $event"
+                      v-bind:routerPath="apiIP+'/upload/hotel/supplier'"
+                    ></file-upload>
+                  </v-flex>
+                   <v-flex xs12 sm12 md12>
+                    <h2>Old images.</h2>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="scroll-ngang">
+                    <img
+                      class="room-img"
+                      v-for="(item,i) in editedItem.supplierImages"
+                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
+                      alt
+                    />
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -107,6 +129,7 @@
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS
 import axios from "axios";
+import FileUpload from "../components/FileUpload.vue";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -120,7 +143,12 @@ const AXIOS = axios.create({
   }
 });
 export default {
+  components: {
+    FileUpload
+  },
   data: () => ({
+     apiIP: apiIP,
+     uploadImg: [],
      search: '',
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -155,7 +183,9 @@ export default {
       markUpPlus:200000,
       markUpPercent:0,
       createBy: "",
-      modifyBy:""
+      modifyBy:"",
+      supplierImages: [],
+      removeImage:[]
     },
     defaultItem: {
       supplierCode: "",
@@ -164,7 +194,9 @@ export default {
        markUpPlus:200000,
       markUpPercent:0,
       createBy: "",
-            modifyBy:""
+            modifyBy:"",
+      supplierImages: [],
+      removeImage:[]
     },
     snackbar: {
       snackbar: false,
@@ -228,6 +260,12 @@ export default {
     },
 
     save() {
+       if (this.uploadImg.length > 0) {
+        console.log(this.editedItem.supplierImages);
+        this.editedItem.removeImage=this.editedItem.supplierImages;
+        this.editedItem.supplierImages = this.uploadImg;
+        console.log(this.editedItem.removeImage);
+      }
        this.editedItem.modifyBy = this.user.userName;
       this.editedItem.createBy = this.user.userName;
       if (this.$refs.form.validate()) {

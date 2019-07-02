@@ -1,5 +1,6 @@
 var Hotel = require('../models/hotels.model')
 var Supplier=require('../models/supplier.model')
+var UploadController=require('../controllers/upload.controller')
 var mongoose = require('mongoose');
 module.exports.index =function(req,res){
     res.setHeader('Cache-Control', 'private');
@@ -43,6 +44,7 @@ module.exports.insertHotel= function (req, res) {
 module.exports.updateHotel=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
+    UploadController.removeImage(req.body.removeImage);
         Hotel.updateOne({ _id: req.params._id },{$set:req.body},(err, hotel) =>{
         if(err) {
             console.log(err);

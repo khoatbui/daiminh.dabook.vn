@@ -1,19 +1,10 @@
 require('dotenv').config();
 
-
-module.exports.uploadHotelImage =function(req,res){
-    console.log(`Upload success ${req.file.path}`);
-    res.json({'filepath':req.file.path});
-};
-
-
 module.exports.uploadRoomTypeImg=async (req, res) => {
     try {
         var result=[];
        console.log(req.files)
        req.files.forEach(element => {
-//   moveFile(element.path, '../daiminh.dabook.vn/img/hotel/roomtype');
-//   moveFile(element.path, '../m.daiminh.dabook.vn/img/hotel/roomtype');
     copyFile(element.path, '../daiminh.dabook.vn/img/hotel/roomtype');
     copyFile(element.path, '../m.daiminh.dabook.vn/img/hotel/roomtype');
         result.push({'fileName':element.filename,'filePath':`img/hotel/roomtype/${element.filename}`,'destination':element.destination})
@@ -25,7 +16,38 @@ module.exports.uploadRoomTypeImg=async (req, res) => {
         res.sendStatus(400);
     }
 }
-
+module.exports.uploadHotelImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/hotel/hotel');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/hotel/hotel');
+      result.push({'fileName':element.filename,'filePath':`img/hotel/hotel/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
+module.exports.uploadSupplierImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/hotel/supplier');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/hotel/supplier');
+      result.push({'fileName':element.filename,'filePath':`img/hotel/supplier/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 //moves the $file to $dir2
 var moveFile = (file, dir2)=>{
     //include the fs, path modules

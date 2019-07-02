@@ -74,6 +74,24 @@
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
                   </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImg = $event"
+                      v-bind:routerPath="apiIP+'/upload/hotel/hotel'"
+                    ></file-upload>
+                  </v-flex>
+                   <v-flex xs12 sm12 md12>
+                    <h2>Old images.</h2>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="scroll-ngang">
+                    <img
+                      class="room-img"
+                      v-for="(item,i) in editedItem.hotelImages"
+                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
+                      alt
+                    />
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -128,6 +146,7 @@
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
+import FileUpload from "../components/FileUpload.vue";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -141,9 +160,14 @@ const AXIOS = axios.create({
   }
 });
 export default {
+  components: {
+    FileUpload
+  },
   data: () => ({
+    apiIP: apiIP,
     search: "",
     valid: true,
+    uploadImg: [],
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
@@ -179,7 +203,9 @@ export default {
       hotelCode: "",
       isUsed:true,
       isHot:true,
-      isPromote:true
+      isPromote:true,
+      hotelImages: [],
+      removeImage:[]
     },
     defaultItem: {
       supplierId: "",
@@ -191,7 +217,9 @@ export default {
       hotelCode: "",
       isUsed:true,
       isHot:true,
-      isPromote:true
+      isPromote:true,
+      hotelImages: [],
+      removeImage:[]
     },
     snackbar: {
       snackbar: false,
@@ -268,6 +296,12 @@ export default {
     },
 
     save() {
+       if (this.uploadImg.length > 0) {
+        console.log(this.editedItem.hotelImages);
+        this.editedItem.removeImage=this.editedItem.hotelImages;
+        this.editedItem.hotelImages = this.uploadImg;
+        console.log(this.editedItem.removeImage);
+      }
       this.editedItem.modifyBy = this.user.userName;
       this.editedItem.createBy = this.user.userName;
       if (this.$refs.form.validate()) {
@@ -285,6 +319,8 @@ export default {
         this.initialize();
         this.close();
       }
+       this.uploadImg=[];
+      this.editedItem.removeImage=[];
     }
   }
 };
@@ -307,5 +343,14 @@ export default {
 }
 .whitespace-nowrap td{
   white-space: nowrap;
+}
+.scroll-ngang {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.scroll-ngang li {
+  display: inline-block;
 }
 </style>

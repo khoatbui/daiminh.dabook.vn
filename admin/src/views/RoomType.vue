@@ -193,7 +193,7 @@
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
-import FileUpload from "../components/FileUpload_V2.vue";
+import FileUpload from "../components/FileUpload.vue";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
