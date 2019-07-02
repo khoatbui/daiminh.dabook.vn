@@ -13,7 +13,7 @@
         <a v-bind:href="`/promotiondetail?packagehotelrelid=${item._id}`">
           <img
             class="card-img-top border-radius-5"
-            src="img/topdestination/sapa_2.jpg"
+            v-bind:src="item.roomTypeId.roomImages.length>0?item.roomTypeId.roomImages[0].filePath:'img/hotel/roomtype/default.jpg'"
             alt="Card image cap"
           >
           <div class="card-body w-100 text-left p-1">

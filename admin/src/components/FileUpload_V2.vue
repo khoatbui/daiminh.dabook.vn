@@ -23,7 +23,7 @@
         </p>
         <ul class="list-unstyled img-list">
           <li v-for="item in uploadedFiles">
-            <img :src="item.filePath" class="img-responsive img-thumbnail" :alt="item.originalName">
+            <img :src="`../m.daiminh.dabook.vn/${item.filePath}`" class="img-responsive img-thumbnail" :alt="item.originalName">
           </li>
         </ul>
       </div>
