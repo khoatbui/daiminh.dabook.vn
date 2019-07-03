@@ -14,6 +14,14 @@
       aria-label="Username"
       aria-describedby="basic-addon1"
     >
+    <ul class="dropdown-menu" style="width:100%">
+        <li v-for="suggestion in matches"
+            v-bind:class="{'active': isActive($index)}"
+            @click="suggestionClick($index)"
+        >
+            <a href="#">{{ suggestion }}</a>
+        </li>
+    </ul>
   </div>
 </template>
 <script>

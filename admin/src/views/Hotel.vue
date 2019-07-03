@@ -33,7 +33,7 @@
                       label="Supplier"
                     ></v-select>
                   </v-flex>
- <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.cityId"
                       :items="city"
@@ -65,6 +65,9 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
+                   <v-flex xs12 sm12 md12>
+                    <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
+                  </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
@@ -81,7 +84,7 @@
                       v-bind:routerPath="apiIP+'/upload/hotel/hotel'"
                     ></file-upload>
                   </v-flex>
-                   <v-flex xs12 sm12 md12>
+                  <v-flex xs12 sm12 md12>
                     <h2>Old images.</h2>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="scroll-ngang">
@@ -136,11 +139,11 @@
       {{ snackbar.text }}
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
-      <v-btn absolute dark fab bottom right small color="pink">
-        <download-excel :data="hotel" name= "hotel.xls">
-<i class="far fa-file-excel"></i>
-        </download-excel>
-      </v-btn>
+    <v-btn absolute dark fab bottom right small color="pink">
+      <download-excel :data="hotel" name="hotel.xls">
+        <i class="far fa-file-excel"></i>
+      </download-excel>
+    </v-btn>
   </div>
 </template>
 <script>
@@ -201,11 +204,12 @@ export default {
       createBy: "",
       modifyBy: "",
       hotelCode: "",
-      isUsed:true,
-      isHot:true,
-      isPromote:true,
+      keyword:"",
+      isUsed: true,
+      isHot: true,
+      isPromote: true,
       hotelImages: [],
-      removeImage:[]
+      removeImage: []
     },
     defaultItem: {
       supplierId: "",
@@ -215,11 +219,12 @@ export default {
       createBy: "",
       modifyBy: "",
       hotelCode: "",
-      isUsed:true,
-      isHot:true,
-      isPromote:true,
+      keyword:"",
+      isUsed: true,
+      isHot: true,
+      isPromote: true,
       hotelImages: [],
-      removeImage:[]
+      removeImage: []
     },
     snackbar: {
       snackbar: false,
@@ -247,6 +252,7 @@ export default {
     initialize() {
       AXIOS.get(apiIP + "/hotel/", { crossdomain: true })
         .then(response => {
+          console.log(this.city);
           this.hotel = response.data;
         })
         .catch(function(error) {})
@@ -257,9 +263,10 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-         AXIOS.get(apiIP + "/city/", { crossdomain: true })
+      AXIOS.get(apiIP + "/city/", { crossdomain: true })
         .then(response => {
           this.city = response.data;
+                    console.log(this.city);
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -296,9 +303,9 @@ export default {
     },
 
     save() {
-       if (this.uploadImg.length > 0) {
+      if (this.uploadImg.length > 0) {
         console.log(this.editedItem.hotelImages);
-        this.editedItem.removeImage=this.editedItem.hotelImages;
+        this.editedItem.removeImage = this.editedItem.hotelImages;
         this.editedItem.hotelImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
@@ -319,8 +326,8 @@ export default {
         this.initialize();
         this.close();
       }
-       this.uploadImg=[];
-      this.editedItem.removeImage=[];
+      this.uploadImg = [];
+      this.editedItem.removeImage = [];
     }
   }
 };
@@ -341,7 +348,7 @@ export default {
   background-color: #eef1f6;
   border-color: #d1dbe5;
 }
-.whitespace-nowrap td{
+.whitespace-nowrap td {
   white-space: nowrap;
 }
 .scroll-ngang {
