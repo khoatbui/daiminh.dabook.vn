@@ -159,6 +159,11 @@ export default {
         end = start + this.size;
       return this.packagelist.slice(start, end);
     }
+  },
+  mounted() {
+    this.$root.$on('userSearchActivity', () => {
+       this.packagelist=this.$store.state.search.searchResult;
+    })
   }
 };
 </script>
