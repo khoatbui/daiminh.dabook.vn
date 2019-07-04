@@ -174,7 +174,7 @@
         </div>
       </div>
     </div>
-    <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+    <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -213,11 +213,8 @@ export default {
     backStep() {
       this.$router.go(-1);
     },
-    changeLoadingState(state) {
-      this.isLoadding = state;
-    },
     async nextToResultStep() {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       console.log(this.customerInfo);
       this.$store.commit("updateCustomerInfo", this.customerInfo);
       var parrams = {
@@ -258,10 +255,7 @@ export default {
       var response = await PackageService.postRequestHotel(parrams);
       this.requestResult = response.data;
       console.log(this.requestResult);
-      this.changeLoadingState(true);
-    },
-    changeLoadingState(state) {
-      this.isLoadding = state;
+      this.$store.commit('showHideLoading',true);
     }
   },
   data: function() {

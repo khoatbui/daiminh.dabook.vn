@@ -120,7 +120,7 @@
         </div>
       </div>
     </div>
-    <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+    <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -208,18 +208,15 @@ export default {
         path: `/promotiondetail/request?packagehotelrelid=${this.packagedetail._id}`
       });
     },
-    changeLoadingState(state) {
-      this.isLoadding = state;
-    },
     async initial(id) {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getPackageDetail(id);
       this.packagedetail = response.data;
       var cityresponse = await CityService.getCityDetailById(
         response.data.hotelId.cityId
       );
       this.city = cityresponse.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     }
   }
 };
