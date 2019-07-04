@@ -3,7 +3,7 @@
     <span class="back-icon" @click="naviBack">
     <font-awesome-icon class="text-danger" icon="arrow-left"/>
     </span>
-    <vue-bootstrap-typeahead v-model="query" :data="data" :placeholder="$t('search_search')"/>
+    <vue-bootstrap-typeahead v-model="query" :data="data" :placeholder="$t('search_search')" @hit="search" @input="searchEnter($event)"/>
     <span class="search-icon" @click="search">
     <font-awesome-icon class="text-danger" icon="search"/>
     </span>
@@ -25,6 +25,7 @@ export default {
       this.$router.go(-1);
     },
     async search(){
+      console.log('Viet');
       this.$store.commit('showHideLoading',true);
       var response=[];
       if (this.searchtype=='ALL') {
@@ -52,6 +53,12 @@ export default {
       this.$store.commit('asignSearchResult',response.data);
       this.$root.$emit('userSearchActivity')
        this.$store.commit('showHideLoading',false);
+    },
+    searchEnter(e){
+      console.log(e);
+      if (e.key === 13) {
+        search();
+      }
     }
   },
   data: function() {
