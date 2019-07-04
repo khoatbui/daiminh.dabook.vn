@@ -63,8 +63,10 @@ export default new Vuex.Store({
       question:''
     },
     search:{
+      isSearch:false,
       historySearch:"",
-      locationSearch:""
+      locationSearch:"",
+      searchResult:[]
     }
   },
   mutations: {
@@ -195,6 +197,9 @@ export default new Vuex.Store({
     },
     updateHistorySearch(state,payload){
       state.search.historySearch=payload;
+    },
+    asignSearchResult(state,payload){
+      state.search.searchResult=payload;
     }
   },
   actions: {

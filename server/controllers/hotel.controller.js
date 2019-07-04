@@ -99,3 +99,16 @@ module.exports.getmListHotelPromotionBySupplier=(req,res,next) => {
         res.send(hotel)
     })
 };
+
+module.exports.getmPromotionHotelBySearch=(req,res,next) => {
+    Hotel.find({isPromote:true,isUsed:true,keyword: { $regex: req.body.keyword, $options: 'i' }}).then(function(hotel){
+        console.log(hotel);
+        res.send(hotel)
+    })
+};
+module.exports.getmHotelBySearch=(req,res,next) => {
+    Hotel.find({isUsed:true,keyword: { $regex: req.body.keyword, $options: 'i' }}).then(function(hotel){
+        console.log(hotel);
+        res.send(hotel)
+    })
+};

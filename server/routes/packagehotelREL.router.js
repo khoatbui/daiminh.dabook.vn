@@ -49,4 +49,7 @@ router.get('/m/getallpromotepackagebysupplier/:_id',controller.getmAllPromotePac
 
 router.get('/m/getallpackagebysupplier/:_id',controller.getmAllPackageBySupplier)
 
+router.post('/m/postpackagebysearch', jsonParser,controller.getmAllPackageBySearch)
+router.post('/m/postpromotionpackagebysearch', jsonParser,controller.getmAllPromotionPackageBySearch)
+
 module.exports = router

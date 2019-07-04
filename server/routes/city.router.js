@@ -17,7 +17,7 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',authMiddleware.requireLogin,controller.index)
+router.get('/',controller.index)
 
 router.get('/m/getcitybyid/:_id',controller.getmCityById)
 

@@ -113,3 +113,55 @@ module.exports.getmPackageDetail = (req, res, next) => {
         res.send(pac)
     })
 };
+
+module.exports.getmAllPackageBySearch = (req, res, next) => {
+    console.log(req.body.keyword);
+    PackageHotelREL.find({"isUsed":true}).populate('packageId').populate('hotelId').populate('roomTypeId').populate('supplierId').then(function (pac) {
+        var result=pac.filter(item =>{ 
+            return item.hotelId.keyword.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+            item.hotelId.hotelName.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+            item.hotelId.hotelCode.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+            item.packageId.packageName.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.packageId.packageCode.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.supplierId.supplierName.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.supplierId.supplierCode.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.roomTypeId.roomTypeName.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.roomTypeId.roomTypeCode.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1
+    })
+        res.send(result)
+    })
+    // PackageHotelREL.find({ $or:[
+    //     {"isUsed":true,"hotelId.keyword": { $regex: req.body.keyword, $options: 'i' }},
+    //     {"isUsed":true,"hotelId.hotelName": { $regex: req.body.keyword, $options: 'i' }},
+    //     {"isUsed":true,"hotelId.hotelCode": { $regex: req.body.keyword, $options: 'i' }},
+    //     {"isUsed":true,"packageId.packageName": { $regex: req.body.keyword, $options: 'i' }},
+    //     {"isUsed":true,"packageId.packageCode": { $regex: req.body.keyword, $options: 'i' }},
+    //     {"isUsed":true,"supplierId.supplierName": { $regex: req.body.keyword, $options: 'i' }},
+    //     {"isUsed":true,"supplierId.supplierCode": { $regex: req.body.keyword, $options: 'i' }},
+    //     {"isUsed":true,"roomTypeId.roomTypeName": { $regex: req.body.keyword, $options: 'i' }},
+    //     {"isUsed":true,"roomTypeId.roomTypeCode": { $regex: req.body.keyword, $options: 'i' }}
+    // ]}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+    //     res.send(pac)
+    // })
+};
+
+module.exports.getmAllPromotionPackageBySearch = (req, res, next) => {
+    PackageHotelREL.find({"isUsed":true,"isPromote":true}).populate('packageId').populate('hotelId').populate('roomTypeId').populate('supplierId').then(function (pac) {
+        var result=pac.filter(item =>{ 
+            return item.hotelId.keyword.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+            item.hotelId.hotelName.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+            item.hotelId.hotelCode.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+            item.packageId.packageName.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.packageId.packageCode.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.supplierId.supplierName.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.supplierId.supplierCode.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.roomTypeId.roomTypeName.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1 ||
+        item.roomTypeId.roomTypeCode.toLowerCase().indexOf(req.body.keyword.toLowerCase())> -1
+    })
+        res.send(result)
+    })
+};
+
+function checkHotel(age) {
+    return item.hotelId.hotelName.toLowerCase().indexOf(req.body.keyword.toLowerCase())
+  }

@@ -8,7 +8,7 @@
             <MainNavBar></MainNavBar>
           </div>
           <div class="col-8">
-            <LocationSearchComponent></LocationSearchComponent>
+            <LocationSearchComponent v-bind:searchtype="'HOTEL'"></LocationSearchComponent>
           </div>
           <div class="col-2">
             <LanguageComponent></LanguageComponent>
@@ -55,7 +55,9 @@ import HotelAllSection from "@/components/HotelAllSection.vue";
     HotelAllSection
   }
 })
-export default class Promotion extends Vue {}
+export default class Promotion extends Vue {
+
+}
 </script>
 <style >
 .main-section {

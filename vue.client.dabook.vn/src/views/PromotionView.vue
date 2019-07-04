@@ -8,7 +8,7 @@
             <MainNavBar></MainNavBar>
           </div>
           <div class="col-8">
-            <LocationSearchComponent></LocationSearchComponent>
+            <LocationSearchComponent v-bind:searchtype="'PROMOTION_HOTEL'"></LocationSearchComponent>
           </div>
           <div class="col-2">
             <LanguageComponent></LanguageComponent>

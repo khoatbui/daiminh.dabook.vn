@@ -12,19 +12,44 @@
 <script>
 import axios from "axios";
 import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
+import SearchService from "@/api/SearchService";
 export default {
   components: {
     VueBootstrapTypeahead
   },
-  props: ["id", "radius", "placeholder"],
+  props: ["id", "radius", "placeholder","searchtype"],
   name: "LocationSearchComponent",
   created() {},
   methods: {
     naviBack() {
       this.$router.go(-1);
     },
-    search(){
-
+    async search(){
+      var response=[];
+      if (this.searchtype=='ALL') {
+        response=await SearchService.getHotelBySearch(this.query)
+      }
+      else if (this.searchtype=='HOTEL') {
+        response=await SearchService.getHotelBySearch(this.query)
+      }
+      else if(this.searchtype=='PROMOTION_HOTEL') {
+        response=await SearchService.getPromotionHotelBySearch(this.query)
+      }
+      else if(this.searchtype=='CAR') {
+        response=await SearchService.getHotelBySearch(this.query)
+      }
+      else if(this.searchtype=='TOUR') {
+        response=await SearchService.getHotelBySearch(this.query)
+      }
+      else if(this.searchtype=='PROMOTION_TOUR') {
+        response=await SearchService.getHotelBySearch(this.query)
+      }
+      else{
+        response=await SearchService.getAllBySearch(this.query)
+      }
+              console.log(response);
+      this.$store.commit('asignSearchResult',response.data);
+      this.$root.$emit('userSearchActivity')
     }
   },
   data: function() {
