@@ -84,7 +84,7 @@
         <button class="btn btn-primary w-100" @click="redirectToPromotionAll">{{$t('btn_showall')}}(326+)</button>
       </div>
     </div>
-        <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+        <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -115,9 +115,6 @@ export default {
     }
   },
   methods: {
-    changeLoadingState(state) {
-      this.isLoadding = state;
-    },
     redirectToPromotionAll() {
       if (this.$route.query.supplier != undefined) {
       this.$router.push({ path: `promotionall?supplier=${this.$route.query.supplier}` });
@@ -127,16 +124,16 @@ export default {
     }
     },
     async initial() {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getAllPackagePromotion();
       this.packagelist = response.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     },
     async initialWithSupplier(supplierId) {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getPromotePackageBySupplier(supplierId);
       this.packagelist = response.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     },
     nextPage() {
       if (this.pageNumber + 1 == this.pageCount) {

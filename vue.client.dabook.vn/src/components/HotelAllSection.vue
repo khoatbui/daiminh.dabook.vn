@@ -118,7 +118,7 @@
         </nav>
       </div>
     </div>
-    <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+    <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -136,7 +136,6 @@ export default {
       packagelist: [],
       pageNumber: 0,
       size: 10,
-      isLoadding: false
     };
   },
   created() {
@@ -147,23 +146,20 @@ export default {
     }
   },
   methods: {
-    changeLoadingState(state) {
-      this.isLoadding = state;
-    },
     redirectToPromotionAll() {
       this.$router.push({ path: "promotionall" });
     },
     async initial() {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getAllPackage();
       this.packagelist = response.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     },
     async initialWithSupplier(supplierId) {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getAllPackageBySupplier(supplierId);
       this.packagelist = response.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     },
     nextPage() {
       if (this.pageNumber + 1 == this.pageCount) {

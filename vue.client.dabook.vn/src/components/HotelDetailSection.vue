@@ -151,7 +151,7 @@
         </div>
       </div>
     </div>
-    <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+    <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -190,7 +190,6 @@ export default {
         }
       },
       city: {},
-      isLoadding: false
     };
   },
   created() {
@@ -202,14 +201,11 @@ export default {
         `/promotiondetail/confirm?packagehotelrelid=${this.$route.query.packagehotelrelid}`
       );
     },
-    changeLoadingState(state) {
-      this.isLoadding = state;
-    },
     redirectToPromotionAll() {
       this.$router.push({ path: "promotionall" });
     },
     async initial(id) {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getPackageDetail(id);
       this.$store.dispatch("updateselectedHotelDetailAction", response.data);
       console.log(response.data);
@@ -218,7 +214,7 @@ export default {
         response.data.hotelId.cityId
       );
       this.city = cityresponse.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
       this.componentLoaded = true;
     }
   },

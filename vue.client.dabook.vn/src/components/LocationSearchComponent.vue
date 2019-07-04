@@ -25,6 +25,7 @@ export default {
       this.$router.go(-1);
     },
     async search(){
+      this.$store.commit('showHideLoading',true);
       var response=[];
       if (this.searchtype=='ALL') {
         response=await SearchService.getHotelBySearch(this.query)
@@ -50,6 +51,7 @@ export default {
               console.log(response);
       this.$store.commit('asignSearchResult',response.data);
       this.$root.$emit('userSearchActivity')
+       this.$store.commit('showHideLoading',false);
     }
   },
   data: function() {

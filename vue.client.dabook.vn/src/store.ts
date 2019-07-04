@@ -2,6 +2,7 @@ import moment from 'moment'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { start } from 'repl';
+import { pathToFileURL } from 'url';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -67,6 +68,9 @@ export default new Vuex.Store({
       historySearch:"",
       locationSearch:"",
       searchResult:[]
+    },
+    loading:{
+      isShow:false
     }
   },
   mutations: {
@@ -200,6 +204,9 @@ export default new Vuex.Store({
     },
     asignSearchResult(state,payload){
       state.search.searchResult=payload;
+    },
+    showHideLoading(state,payload){
+      state.loading.isShow=payload;
     }
   },
   actions: {
