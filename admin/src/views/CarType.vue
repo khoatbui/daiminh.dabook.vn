@@ -290,9 +290,9 @@ export default {
 
     save() {
       if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.roomImages);
-        this.editedItem.removeImage=this.editedItem.roomImages;
-        this.editedItem.roomImages = this.uploadImg;
+        console.log(this.editedItem.carImages);
+        this.editedItem.removeImage=this.editedItem.carImages;
+        this.editedItem.carImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
       this.editedItem.modifyBy = this.user.userName;
