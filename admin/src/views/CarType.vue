@@ -81,7 +81,7 @@
                   <v-flex xs12 sm12 md12 class="scroll-ngang">
                     <img
                       class="room-img"
-                      v-for="(item,i) in editedItem.roomImages"
+                      v-for="(item,i) in editedItem.carImages"
                       v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
                       alt
                     />
