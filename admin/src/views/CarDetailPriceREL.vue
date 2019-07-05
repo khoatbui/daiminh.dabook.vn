@@ -36,187 +36,101 @@
                   </v-flex>
                   <v-flex xs12 sm6 md3>
                     <v-select
-                      v-model="editedItem.hotelId"
+                      v-model="editedItem.carTransTypeId"
                       :items="hotel"
                       item-text="hotelName"
                       item-value="_id"
-                      label="Hotel"
+                      label="Loại hình thuê"
                       v-bind:class="{ disabled: disableSelect }"
                       @input="changedHotelCombobox"
                       return-object
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md3>
-                    <v-select
-                      v-model="editedItem.roomTypeId"
-                      :items="roomtype"
-                      item-text="roomTypeName"
-                      item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
-                      label="Room Type"
-                    ></v-select>
+                    <v-text-field
+                      required
+                      :rules="rule.tripCode"
+                      v-model="editedItem.tripCode"
+                      label="Trip Code"
+                    ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md3>
-                    <v-select
-                      v-model="editedItem.packageId"
-                      :items="packages"
-                      item-text="packageName"
-                      item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
-                      label="Package"
-                    ></v-select>
+                   <v-flex xs12 sm6 md3>
+                    <v-text-field
+                      required
+                      :rules="rule.tripName"
+                      v-model="editedItem.tripName"
+                      label="Trip Name"
+                    ></v-text-field>
                   </v-flex>
-                  <v-layout wrap>
-                    <v-flex xs12 sm6 md2>
-                      <v-select
-                        v-model="editedItem.lang"
-                        :items="language"
-                        item-text="langName"
-                        item-value="langCode"
-                        label="Language"
-                      ></v-select>
-                    </v-flex>
+                   <v-flex xs12 sm6 md3>
+                    <v-text-field
+                      v-model="editedItem.fromLocation"
+                      label="From"
+                    ></v-text-field>
+                  </v-flex>
+                   <v-flex xs12 sm6 md3>
+                    <v-text-field
+                      v-model="editedItem.toLocation"
+                      label="To"
+                    ></v-text-field>
+                  </v-flex>
+                   <v-flex xs12 sm6 md3>
+                    <v-text-field
+                      v-model="editedItem.kmTotal"
+                      label="Total Kilomet"
+                    ></v-text-field>
+                  </v-flex>
+                   <v-flex xs12 sm6 md3>
+                    <v-text-field
+                      v-model="editedItem.nightTotal"
+                      label="Total Night"
+                    ></v-text-field>
+                  </v-flex>
                     <v-flex xs6 sm3 md2>
                       <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                     </v-flex>
-                    <v-flex xs6 sm3 md2 class="service-add-component">
-                      <v-checkbox v-model="editedItem.isDefault" :label="`IsDefault?`"></v-checkbox>
-                    </v-flex>
-                    <v-flex xs6 sm3 md2 class="service-add-component">
-                      <v-checkbox v-model="editedItem.isPromote" :label="`IsPromote?`"></v-checkbox>
-                    </v-flex>
-                    <v-flex xs6 sm3 md2 class="service-add-component">
-                      <v-checkbox v-model="editedItem.utilities.isWifi" :label="`Wifi?`"></v-checkbox>
-                    </v-flex>
-                    <v-flex xs6 sm3 md2 class="service-add-component">
-                      <v-checkbox v-model="editedItem.utilities.isTivi" :label="`Tivi?`"></v-checkbox>
-                    </v-flex>
-                    <v-flex xs6 sm3 md2 class="service-add-component">
-                      <v-checkbox v-model="editedItem.utilities.isSwim" :label="`Swimming Poor?`"></v-checkbox>
-                    </v-flex>
-                    <v-flex xs6 sm3 md2 class="service-add-component">
-                      <v-checkbox v-model="editedItem.utilities.isGym" :label="`Gym?`"></v-checkbox>
-                    </v-flex>
-                    <v-flex xs6 sm3 md2 class="service-add-component">
-                      <v-checkbox v-model="editedItem.utilities.isKitchen" :label="`Kitchen?`"></v-checkbox>
-                    </v-flex>
-                    <v-flex xs6 sm3 md2 class="service-add-component">
-                      <v-checkbox v-model="editedItem.utilities.isDry" :label="`DryService?`"></v-checkbox>
-                    </v-flex>
                   </v-layout>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
-                    <v-menu
-                      v-model="menu1"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      lazy
-                      transition="scale-transition"
-                      offset-y
-                      full-width
-                      min-width="290px"
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="editedItem.startDate"
-                          label="StartDate"
-                          prepend-icon="event"
-                          readonly
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker v-model="editedItem.startDate" @input="menu1 = false"></v-date-picker>
-                    </v-menu>
+                  <v-layout>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                     <v-select
+                      v-model="editedItem.carTypeId"
+                      :items="hotel"
+                      item-text="hotelName"
+                      item-value="_id"
+                      label="Loại xe"
+                      return-object
+                    ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
-                    <v-menu
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      lazy
-                      transition="scale-transition"
-                      offset-y
-                      full-width
-                      min-width="290px"
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="editedItem.endDate"
-                          label="EndDate"
-                          prepend-icon="event"
-                          readonly
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker v-model="editedItem.endDate" @input="menu2 = false"></v-date-picker>
-                    </v-menu>
-                  </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-text-field
                       required
-                      :rules="rule.priceRule"
                       v-model="editedItem.price"
-                      label="Base Price"
+                      label="Price /km"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-text-field
                       required
                       v-model="editedItem.markUpPlus"
                       label="Mark up (+) | Example: 50000 | Min 50000"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-text-field
                       required
                       v-model="editedItem.markUpPercent"
                       label="Mark up(%) | Example: 30 | Min : 3%"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
-                    <v-text-field
-                      required
-                      :rules="rule.less4PriceRule"
-                      v-model="editedItem.less4Price"
-                      label="Children less 4 year old Price"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
-                    <v-text-field
-                      required
-                      :rules="rule.less12PriceRule"
-                      v-model="editedItem.less12Price"
-                      label="Children less 12 year old Price"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
-                    <v-text-field
-                      required
-                      :rules="rule.more12PriceRule"
-                      v-model="editedItem.more12Price"
-                      label="More 12 year old Price"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs4 sm2 md1 class="sub-add-component" v-for="(day,index) in days">
-                    <v-checkbox
-                      :value="day"
-                      v-model="editedItem.days"
-                      :label="day.shortDay"
-                      :disabled="editedItem.isAllDays"
-                    ></v-checkbox>
-                  </v-flex>
-                  <v-flex xs4 sm2 md1 class="sub-add-component">
-                    <v-switch
-                      :value="editedItem.isAllDays"
-                      v-model="editedItem.isAllDays"
-                      :label="`ALL DAYS`"
-                    ></v-switch>
+                  <v-flex xs4 sm2 md4 class="sub-add-component">
+                    <v-checkbox v-model="editedItem.isPriceUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
                   <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-btn color="blue darken-1" dark @click="addNewPriceRange">Add</v-btn>
                     <v-btn color="red darken-4" dark @click="deleteAllOldPriceRange">Delete Price</v-btn>
                   </v-flex>
                 </v-layout>
-                <v-layout>
+                <v-layout wrap>
                   <v-flex xs12 sm12 md12 class="border-top">
                     <v-data-table
                       :headers="priceHeaders"
@@ -228,6 +142,7 @@
                         <td class="justify-center px-0">
                           <v-icon small @click="deletepriceRangeItem(props.index)">delete</v-icon>
                         </td>
+                        <td class="text-xs-right">{{props.item.carTypeId.carTypeName}}</td>
                         <td
                           class="text-xs-right"
                           style="color:green;font-weight:bold"
@@ -240,17 +155,8 @@
                           class="text-xs-right"
                           style="color:red;font-weight:bold"
                         >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.totalPrice) }}</td>
-                        <td
-                          class="text-xs-right"
-                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less4Price) }}</td>
-                        <td
-                          class="text-xs-right"
-                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less12Price) }}</td>
-                        <td
-                          class="text-xs-right"
-                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.more12Price) }}</td>
-                        <td class="text-xs-right">{{props.item.startDate.substring(0, 10)}}</td>
-                        <td class="text-xs-right">{{props.item.endDate.substring(0, 10)}}</td>
+                        
+                        <td class="text-xs-right">{{props.item.isUsed}}</td>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -328,159 +234,14 @@
           </v-card>
         </v-form>
       </v-dialog>
-      <v-dialog v-model="dialogPrice" max-width="1200">
-        <v-card>
-          <v-card-title
-            class="headline pink white--text"
-          >[{{selectedItemLoadDetail.hotelId.hotelCode }}] {{selectedItemLoadDetail.hotelId.hotelName}} ==> {{selectedItemLoadDetail.roomTypeId.roomTypeName}}</v-card-title>
-
-          <v-card-text>
-            <v-layout wrap>
-              <v-flex sm4 xs12 class="text-sm-left text-xs-center">
-                <v-btn dark fab small color="blue dark-1" @click="$refs.calendar.prev()">
-                  <i class="fas fa-chevron-left"></i>
-                </v-btn>
-              </v-flex>
-              <v-flex sm4 xs12>
-                <v-menu
-                  ref="startMenu"
-                  v-model="startMenu"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  :return-value.sync="start"
-                  transition="scale-transition"
-                  min-width="290px"
-                  lazy
-                  offset-y
-                  full-width
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      v-model="start"
-                      label="Start Date"
-                      prepend-icon="event"
-                      readonly
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker v-model="start" no-title scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="startMenu = false">Cancel</v-btn>
-                    <v-btn flat color="primary" @click="$refs.startMenu.save(start)">OK</v-btn>
-                  </v-date-picker>
-                </v-menu>
-              </v-flex>
-              <v-flex sm4 xs12 class="text-sm-right text-xs-center">
-                <v-btn dark fab small color="blue dark-1" @click="$refs.calendar.next()">
-                  <i class="fas fa-chevron-right"></i>
-                </v-btn>
-              </v-flex>
-              <v-flex xs12 class="mb-3">
-                <v-sheet height="400">
-                  <v-calendar
-                    ref="calendar"
-                    v-model="start"
-                    :type="type"
-                    :end="end"
-                    :start="start"
-                    color="primary"
-                  >
-                    <template v-slot:day="{ date }">
-                      <template v-for="event in eventsMap[date]">
-                        <v-menu :key="event.title" v-model="event.open" full-width offset-x>
-                          <template v-slot:activator="{ on }">
-                            <div
-                              v-if="!event.time"
-                              v-ripple
-                              class="my-event"
-                              v-bind:class="{'my-event-odd':event.color,'my-event-even':!event.color }"
-                              v-on="on"
-                              v-html="new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(event.title)"
-                            ></div>
-                          </template>
-                          <v-card color="grey lighten-4" width="350px" flat>
-                            <v-toolbar color="primary" dark>
-                              <v-btn icon>
-                                <v-icon>edit</v-icon>
-                              </v-btn>
-                              <v-toolbar-title
-                                v-html="new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(event.details.price)"
-                              ></v-toolbar-title>
-                              <v-spacer></v-spacer>
-                              <v-btn icon>
-                                <v-icon>favorite</v-icon>
-                              </v-btn>
-                              <v-btn icon>
-                                <v-icon>more_vert</v-icon>
-                              </v-btn>
-                            </v-toolbar>
-                            <v-card-title primary-title>
-                              <v-list style="width:100%">
-                                <v-list-tile-content>
-                                  <v-list-tile-title class="flex-table">
-                                    <b class="mr-4">PRICE</b>
-                                    <span
-                                      v-html="new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(event.details.price)"
-                                    ></span>
-                                  </v-list-tile-title>
-                                  <v-list-tile-title class="flex-table">
-                                    <b class="mr-4">MARKUP-PLUS(+)</b>
-                                    <span
-                                      v-html="new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(event.details.markUpPlus)"
-                                    ></span>
-                                  </v-list-tile-title>
-                                  <v-list-tile-title class="flex-table">
-                                    <b class="mr-4">MARKUP_PERCENT(%)</b>
-                                    <span v-html="event.details.markUpPercent"></span>
-                                  </v-list-tile-title>
-                                  <v-list-tile-title class="flex-table">
-                                    <b class="mr-4">CHILDREN(0~4)</b>
-                                    <span
-                                      v-html="new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(event.details.less4Price)"
-                                    ></span>
-                                  </v-list-tile-title>
-                                  <v-list-tile-title class="flex-table">
-                                    <b class="mr-4">CHILDREN(4~12)</b>
-                                    <span
-                                      v-html="new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(event.details.less12Price)"
-                                    ></span>
-                                  </v-list-tile-title>
-                                  <v-list-tile-title class="flex-table">
-                                    <b class="mr-4">GUEST(>12)</b>
-                                    <span
-                                      v-html="new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(event.details.more12Price)"
-                                    ></span>
-                                  </v-list-tile-title>
-                                </v-list-tile-content>
-                              </v-list>
-                            </v-card-title>
-                            <v-card-actions>
-                              <v-btn flat color="secondary">Cancel</v-btn>
-                            </v-card-actions>
-                          </v-card>
-                        </v-menu>
-                      </template>
-                    </template>
-                  </v-calendar>
-                </v-sheet>
-              </v-flex>
-            </v-layout>
-          </v-card-text>
-
-          <v-card-actions class="mt-4">
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat="flat" @click="dialogPrice = false">Close</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-toolbar>
     <v-container fluid grid-list-xl pl-0 pr-0>
       <v-card>
         <v-layout pl-2 pr-2>
           <v-flex xs12 sm6 md3 p-2>
             <v-select
-              v-model="filterByCombo.supplierId"
-              :items="supplierFilter"
+              v-model="filterByCombo.carSupplierId"
+              :items="carSupplierFilter"
               item-text="supplierName"
               item-value="_id"
               label="Supplier"
@@ -490,32 +251,22 @@
           </v-flex>
           <v-flex xs12 sm6 md3 p-2>
             <v-select
-              v-model="filterByCombo.hotelId"
-              :items="hotelFilter"
-              item-text="hotelName"
+              v-model="filterByCombo.carTransTypeId"
+              :items="carTransTypeFilter"
+              item-text="carTransTypeName"
               item-value="_id"
-              label="Hotel"
+              label="Trans Type"
               @input="changedHotelCombobox"
               return-object
             ></v-select>
           </v-flex>
           <v-flex xs12 sm6 md3 p-2>
             <v-select
-              v-model="filterByCombo.roomTypeId"
-              :items="roomtypeFilter"
-              item-text="roomTypeName"
+              v-model="filterByCombo.carTypeId"
+              :items="carTypeFilter"
+              item-text="carTypeName"
               item-value="_id"
-              label="Room Type"
-              return-object
-            ></v-select>
-          </v-flex>
-          <v-flex xs12 sm6 md3 p-2>
-            <v-select
-              v-model="filterByCombo.packageId"
-              :items="packagesFilter"
-              item-text="packageName"
-              item-value="_id"
-              label="Package"
+              label="Car Type"
               return-object
             ></v-select>
           </v-flex>
@@ -690,15 +441,6 @@ export default {
         roomTypeName: ""
       }
     },
-    days: [
-      { selected: false, dayCode: 1, shortDay: "Hai", day: "Mondays" },
-      { selected: false, dayCode: 2, shortDay: "Ba", day: "Tuesdays" },
-      { selected: false, dayCode: 3, shortDay: "Bon", day: "Wednesdays" },
-      { selected: false, dayCode: 4, shortDay: "Nam", day: "Thursdays" },
-      { selected: false, dayCode: 5, shortDay: "Sau", day: "Fridays" },
-      { selected: false, dayCode: 6, shortDay: "Bay", day: "Saturdays" },
-      { selected: false, dayCode: 7, shortDay: "CN", day: "Sundays" }
-    ],
     search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -709,19 +451,13 @@ export default {
     headers: [
       { text: "Actions", sortable: false },
       { text: "Supplier", value: "supplierId.supplierName" },
-      { text: "HotelCode", value: "hotelId.hotelCode" },
-      { text: "Hotel", value: "hotelId.hotelName" },
-      { text: "Room Type", value: "roomTypeId.roomTypeName" },
-      { text: "Package", value: "packageId.packageName" },
-      { text: "Price", value: "price" },
-      { text: "MarkUp(+)", value: "markUpPlus" },
-      { text: "MarkUp(%)", value: "markUpPercent" },
-      { text: "TotalPrice", value: "totalPrice" },
-      { text: "Less 4", value: "less4Price" },
-      { text: "Less 12", value: "less12Price" },
-      { text: "More 12", value: "more12Price" },
-      { text: "StartDate", value: "startDate" },
-      { text: "EndDate", value: "endDate" },
+      { text: "CarTransCode", value: "carTransTypeId.transTypeCode" },
+      { text: "TripCode", value: "tripCode" },
+      { text: "TripName", value: "tripName" },
+      { text: "From", value: "fromLocation" },
+      { text: "To", value: "toLocation" },
+      { text: "Total Km", value: "kmTotal" },
+      { text: "Total Night", value: "nightTotal" },
       { text: "Language", value: "lang" },
       { text: "Used", value: "isUsed" },
       { text: "CreateBy", value: "createBy" },
@@ -729,15 +465,11 @@ export default {
     ],
     priceHeaders: [
       { text: "Actions", sortable: false },
+       { text: "CarType", value: "carTypeId.carTypeName" },
       { text: "Price", value: "price" },
       { text: "MarkUp(+)", value: "markUpPlus" },
       { text: "MarkUp(%)", value: "markUpPercent" },
-      { text: "Total Price", value: "totalPrice" },
-      { text: "Less 4", value: "less4Price" },
-      { text: "Less 12", value: "less12Price" },
-      { text: "More 12", value: "more12Price" },
-      { text: "StartDate", value: "startDate" },
-      { text: "EndDate", value: "endDate" }
+      { text: "Total Price", value: "totalPrice" }
     ],
     optionPriceHeaders: [
       { text: "Actions", sortable: false },
@@ -748,14 +480,12 @@ export default {
       { text: "Note", value: "optionNote" }
     ],
     priceRange: [],
-    roomtype: [],
-    supplier: [],
-    hotel: [],
-    packages: [],
-    roomtypeFilter: [],
-    supplierFilter: [],
-    hotelFilter: [],
-    packagesFilter: [],
+    carType: [],
+    carSupplier: [],
+    carTransType: [],
+    carTypeFilter: [],
+    carSupplierFilter: [],
+    carTransTypeFilter: [],
     packagesHotelREL: [],
     rule: {
       markUpPlusRule: [
@@ -938,18 +668,18 @@ export default {
       return moment();
     },
     initialize() {
-      AXIOS.get(apiIP + "/packagehotelrel/", { crossdomain: true })
+      AXIOS.get(apiIP + "/cardetailprice/", { crossdomain: true })
         .then(response => {
           this.packagesHotelREL = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/carsupplier/", { crossdomain: true })
         .then(response => {
-          this.supplier = response.data;
-          this.supplierFilter = response.data;
-          this.supplierFilter.unshift({
+          this.carSupplier = response.data;
+          this.carSupplierFilter = response.data;
+          this.carSupplierFilter.unshift({
             supplierCode: "ALL",
             supplierName: "ALL",
             supplierId: -1
@@ -958,40 +688,27 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/hotel/", { crossdomain: true })
+      AXIOS.get(apiIP + "/cartranstype/", { crossdomain: true })
         .then(response => {
-          this.hotel = response.data;
-          this.hotelFilter = response.data;
-          this.hotelFilter.unshift({
-            hotelCode: "ALL",
-            hotelName: "ALL",
-            hotelId: -1
+          this.carTransType = response.data;
+          this.carTransTypeFilter = response.data;
+          this.carTransTypeFilter.unshift({
+            carTransTypeCode: "ALL",
+            carTransTypeName: "ALL",
+            carTransTypeId: -1
           });
         })
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/roomtype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/cartype/", { crossdomain: true })
         .then(response => {
-          this.roomtype = response.data;
-          this.roomtypeFilter = response.data;
-          this.roomtypeFilter.unshift({
-            roomTypeCode: "ALL",
-            roomTypeName: "ALL",
-            roomTypeId: -1
-          });
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-
-      AXIOS.get(apiIP + "/package/", { crossdomain: true })
-        .then(response => {
-          this.packages = response.data;
-          this.packagesFilter = response.data;
-          this.packagesFilter.unshift({
-            packageCode: "ALL",
-            packageName: "ALL",
-            packageId: -1
+          this.carType = response.data;
+          this.carTypeFilter = response.data;
+          this.carTypeFilter.unshift({
+            carTypeCode: "ALL",
+            carTypeName: "ALL",
+            carTypeId: -1
           });
         })
         .catch(function(error) {})

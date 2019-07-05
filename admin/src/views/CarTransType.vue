@@ -24,37 +24,16 @@
               <v-container grid-list-xl>
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.supplierId"
-                      :items="supplier"
-                      item-text="supplierName"
-                      item-value="_id"
-                      label="Supplier"
-                      v-bind:class="{ disabled: disableSelect }"
-                      @input="changedSupplierCombobox"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.hotelId"
-                      :items="hotel"
-                      item-text="hotelName"
-                      item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
-                      label="Hotel"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
-                      :rules="[() => editedItem.roomTypeCode.length > 0 || 'Required field']"
-                      v-model="editedItem.roomTypeCode"
+                      :rules="[() => editedItem.carTransTypeCode.length > 0 || 'Required field']"
+                      v-model="editedItem.carTransTypeCode"
                       v-bind:class="{ disabled: disableSelect }"
-                      label="roomtypeCode"
+                      label="carTransTypeCode"
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.roomTypeName" label="roomtypeName"></v-text-field>
+                    <v-text-field v-model="editedItem.carTransTypeName" label="carTransTypeName"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-select
@@ -68,57 +47,18 @@
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.maxGuest"
-                      :items="maxGuests"
-                      item-text="name"
-                      item-value="value"
-                      label="Maximum Guest"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.maxLess4"
-                      :items="maxLess4s"
-                      item-text="name"
-                      item-value="value"
-                      label="Maximum Children (0 ~4)"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.maxLess12"
-                      :items="maxLess12s"
-                      item-text="name"
-                      item-value="value"
-                      label="Maximum Children (4~12)"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.bed"
-                      :items="beds"
-                      item-text="name"
-                      item-value="value"
-                      label="Bed Qty"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.acreage" label="Acreage"></v-text-field>
-                  </v-flex>
                   <v-flex xs12 sm12 md12>
                     <v-textarea
                       name="input-7-1"
                       label="Room Introduce"
-                      v-model="editedItem.roomTypeIntro"
+                      v-model="editedItem.carTransTypeIntro"
                     ></v-textarea>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
-                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <!-- <file-upload v-model="editedItem.carTransTypeImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
-                      v-bind:routerPath="apiIP+'/upload/hotel/roomtype'"
+                      v-bind:routerPath="apiIP+'/upload/hotel/carTransType'"
                     ></file-upload>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
@@ -127,7 +67,7 @@
                   <v-flex xs12 sm12 md12 class="scroll-ngang">
                     <img
                       class="room-img"
-                      v-for="(item,i) in editedItem.roomImages"
+                      v-for="(item,i) in editedItem.carTransTypeImages"
                       v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
                       alt
                     />
@@ -145,27 +85,20 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="roomtype" :search="search" class="elevation-1">
+    <v-data-table :headers="headers" :items="carTransType" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)" :disabled="true">delete</v-icon>
           </td>
-          <td>{{ props.item.supplierId.supplierName }}</td>
-          <td>{{ props.item.hotelId.hotelName }}</td>
-          <td>{{ props.item.roomTypeCode }}</td>
-          <td>{{ props.item.roomTypeName }}</td>
+          <td>{{ props.item.carTransTypeCode }}</td>
+          <td>{{ props.item.carTransTypeName }}</td>
           <td>{{ props.item.lang }}</td>
           <td>{{ props.item.isUsed }}</td>
-          <td>{{ props.item.maxGuest }}</td>
-          <td>{{ props.item.maxLess4 }}</td>
-          <td>{{ props.item.maxLess12 }}</td>
-          <td>{{ props.item.bed }}</td>
-          <td>{{ props.item.acreage }}</td>
           <td>{{ props.item.createBy }}</td>
           <td>{{ props.item.createDate }}</td>
-          <td>{{ props.item.roomTypeIntro }}</td>
+          <td>{{ props.item.carTransTypeIntro }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -184,7 +117,7 @@
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
     <v-btn absolute dark fab bottom right small color="pink">
-      <download-excel :data="roomtype" name="roomtype.xls">
+      <download-excel :data="carTransType" name="carTransType.xls">
         <i class="far fa-file-excel"></i>
       </download-excel>
     </v-btn>
@@ -221,77 +154,18 @@ export default {
     dialog: false,
     headers: [
       { text: "Actions", sortable: false },
-      { text: "Supplier", value: "supplierId.supplierName" },
-      { text: "Hotel", value: "hotelId.hotelName" },
       {
         text: "Room Type Code",
-        value: "roomTypeCode"
+        value: "carTransTypeCode"
       },
-      { text: "Room Type Name", value: "roomTypeName" },
+      { text: "Room Type Name", value: "carTransTypeName" },
       { text: "Language", value: "lang" },
       { text: "Used", value: "isUsed" },
-      { text: "maxGuests", value: "maxGuest" },
-      { text: "maxLess4", value: "maxLess4" },
-      { text: "maxLess12", value: "maxLess12" },
-      { text: "beds", value: "bed" },
-      { text: "acreage", value: "acreage" },
       { text: "CreateBy", value: "createBy" },
       { text: "CreateDate", value: "createDate" },
-      { text: "roomTypeIntro", value: "roomTypeIntro" }
+      { text: "CarTransTypeIntro", value: "carTransTypeIntro" }
     ],
-    roomtype: [],
-    supplier: [],
-    hotel: [],
-    maxGuests: [
-      { value: 1, name: 1 },
-      { value: 2, name: 2 },
-      { value: 3, name: 3 },
-      { value: 4, name: 4 },
-      { value: 5, name: 5 },
-      { value: 6, name: 6 },
-      { value: 7, name: 7 },
-      { value: 8, name: 8 },
-      { value: 9, name: 9 },
-      { value: 10, name: 10 }
-    ],
-    maxLess4s: [
-      { value: 0, name: 0 },
-      { value: 1, name: 1 },
-      { value: 2, name: 2 },
-      { value: 3, name: 3 },
-      { value: 4, name: 4 },
-      { value: 5, name: 5 },
-      { value: 6, name: 6 },
-      { value: 7, name: 7 },
-      { value: 8, name: 8 },
-      { value: 9, name: 9 },
-      { value: 10, name: 10 }
-    ],
-    maxLess12s: [
-      { value: 0, name: 0 },
-      { value: 1, name: 1 },
-      { value: 2, name: 2 },
-      { value: 3, name: 3 },
-      { value: 4, name: 4 },
-      { value: 5, name: 5 },
-      { value: 6, name: 6 },
-      { value: 7, name: 7 },
-      { value: 8, name: 8 },
-      { value: 9, name: 9 },
-      { value: 10, name: 10 }
-    ],
-    beds: [
-      { value: 1, name: 1 },
-      { value: 2, name: 2 },
-      { value: 3, name: 3 },
-      { value: 4, name: 4 },
-      { value: 5, name: 5 },
-      { value: 6, name: 6 },
-      { value: 7, name: 7 },
-      { value: 8, name: 8 },
-      { value: 9, name: 9 },
-      { value: 10, name: 10 }
-    ],
+    carTransType: [],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
@@ -301,35 +175,25 @@ export default {
     editId: "",
     disableSelect: false,
     editedItem: {
-      roomTypeCode: "",
-      roomTypeName: "",
-      maxGuest: 2,
-      maxLess4: 0,
-      maxLess12: 0,
-      roomTypeIntro: "",
-      bed: 2,
-      acreage: "",
+      carTransTypeCode: "",
+      carTransTypeName: "",
+      carTransTypeIntro: "",
       lang: "EN",
       isUsed: true,
       createBy: "",
       modifyBy: "",
-      roomImages: [],
+      carTransTypeImages: [],
       removeImage:[]
     },
     defaultItem: {
-      roomTypeCode: "",
-      roomTypeName: "",
-      maxGuest: 2,
-      maxLess4: 2,
-      maxLess12: 2,
-      bed: 2,
-      acreage: "",
-      roomTypeIntro: "",
+      carTransTypeCode: "",
+      carTransTypeName: "",
+      carTransTypeIntro: "",
       lang: "EN",
       isUsed: true,
       createBy: "",
       modifyBy: "",
-      roomImages: [],
+      carTransTypeImages: [],
       removeImage:[]
     },
     snackbar: {
@@ -356,23 +220,9 @@ export default {
 
   methods: {
     initialize() {
-      AXIOS.get(apiIP + "/roomtype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/cartranstype/", { crossdomain: true })
         .then(response => {
-          this.roomtype = response.data;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-
-      AXIOS.get(apiIP + "/hotel/", { crossdomain: true })
-        .then(response => {
-          this.hotel = response.data;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-
-      AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
-        .then(response => {
-          this.supplier = response.data;
+          this.carTransType = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -390,7 +240,7 @@ export default {
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/roomtype/" + item._id)
+        AXIOS.delete(apiIP + "/cartranstype/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
@@ -411,9 +261,9 @@ export default {
 
     save() {
       if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.roomImages);
-        this.editedItem.removeImage=this.editedItem.roomImages;
-        this.editedItem.roomImages = this.uploadImg;
+        console.log(this.editedItem.carTransTypeImages);
+        this.editedItem.removeImage=this.editedItem.carTransTypeImages;
+        this.editedItem.carTransTypeImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
       this.editedItem.modifyBy = this.user.userName;
@@ -421,12 +271,12 @@ export default {
       console.log(this.editedItem);
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/roomtype/update/" + this.editId, this.editedItem)
+          AXIOS.post(apiIP + "/cartranstype/update/" + this.editId, this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/roomtype/insert", this.editedItem)
+          AXIOS.post(apiIP + "/cartranstype/insert", this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
@@ -436,17 +286,6 @@ export default {
       }
       this.uploadImg=[];
       this.editedItem.removeImage=[];
-    },
-
-    changedSupplierCombobox(event) {
-      AXIOS.get(apiIP + "/hotel/combobox/hotel/" + event, { crossdomain: true })
-        .then(response => {
-          console.log(response.data);
-
-          this.hotel = response.data;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
     }
   }
 };
