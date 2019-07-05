@@ -25,7 +25,7 @@
                   <v-flex xs12 sm6 md3>
                     <v-select
                       v-model="editedItem.supplierId"
-                      :items="supplier"
+                      :items="carSupplier"
                       item-text="supplierName"
                       item-value="_id"
                       label="Supplier"
@@ -37,19 +37,18 @@
                   <v-flex xs12 sm6 md3>
                     <v-select
                       v-model="editedItem.carTransTypeId"
-                      :items="hotel"
-                      item-text="hotelName"
+                      :items="carTransType"
+                      item-text="carTransTypeName"
                       item-value="_id"
                       label="Loại hình thuê"
                       v-bind:class="{ disabled: disableSelect }"
-                      @input="changedHotelCombobox"
+                      @input="changedCarTransCombobox"
                       return-object
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md3>
                     <v-text-field
                       required
-                      :rules="rule.tripCode"
                       v-model="editedItem.tripCode"
                       label="Trip Code"
                     ></v-text-field>
@@ -57,7 +56,6 @@
                    <v-flex xs12 sm6 md3>
                     <v-text-field
                       required
-                      :rules="rule.tripName"
                       v-model="editedItem.tripName"
                       label="Trip Name"
                     ></v-text-field>
@@ -94,8 +92,8 @@
                   <v-flex xs12 sm6 md4 class="sub-add-component">
                      <v-select
                       v-model="editedItem.carTypeId"
-                      :items="hotel"
-                      item-text="hotelName"
+                      :items="carType"
+                      item-text="carTypeName"
                       item-value="_id"
                       label="Loại xe"
                       return-object
@@ -217,7 +215,7 @@
                         <td
                           class="text-xs-right"
                           style="color:green;font-weight:bold"
-                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.optionPrice) }}</td>
+                        >{{new Int.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.optionPrice) }}</td>
                         <td class="text-xs-right">{{ props.item.isUsed }}</td>
                         <td class="text-xs-right">{{ props.item.optionNote }}</td>
                       </template>
@@ -256,7 +254,6 @@
               item-text="carTransTypeName"
               item-value="_id"
               label="Trans Type"
-              @input="changedHotelCombobox"
               return-object
             ></v-select>
           </v-flex>
@@ -276,8 +273,7 @@
 
     <v-data-table
       :headers="headers"
-      :items="itemsWithTotalPrice"
-      :search="search"
+      :items="cardetailprice"
       class="elevation-1"
     >
       <template v-slot:items="props">
@@ -297,65 +293,57 @@
           <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <span v-on="on">{{ props.item.hotelId.hotelCode }}</span>
+                <span v-on="on">{{ props.item.carTransTypeId.carTransTypeName }}</span>
               </template>
-              <span>{{ props.item.hotelId.hotelCode }}</span>
+              <span>{{ props.item.carTransTypeId.carTransTypeName }}</span>
             </v-tooltip>
           </td>
           <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <span v-on="on">{{ props.item.hotelId.hotelName }}</span>
+                <span v-on="on">{{ props.item.tripCode}}</span>
               </template>
-              <span>{{ props.item.hotelId.hotelName }}</span>
+              <span>{{ props.item.tripCode}}</span>
             </v-tooltip>
           </td>
           <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <span v-on="on">{{ props.item.roomTypeId.roomTypeName }}</span>
+                <span v-on="on">{{ props.item.tripName }}</span>
               </template>
-              <span>{{ props.item.roomTypeId.roomTypeName }}</span>
+              <span>{{ props.item.tripName }}</span>
             </v-tooltip>
           </td>
           <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <span v-on="on">{{ props.item.packageId.packageName }}</span>
+                <span v-on="on">{{ props.item.fromLocation }}</span>
               </template>
-              <span>{{ props.item.packageId.packageName }}</span>
+              <span>{{ props.item.fromLocation }}</span>
             </v-tooltip>
           </td>
-          <td style="color:green;font-weight:bold">
-            <v-btn
-              color="teal accent-4"
-              dark
-              small
-              @click.stop="loadCalendarPrice(props.item);dialogPrice = true"
-            >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.price)}}</v-btn>
-          </td>
-          <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.markUpPlus)}}</td>
-          <td>{{ props.item.markUpPercent }}</td>
-          <td
-            style="color:red;font-weight:bold"
-          >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.totalPrice) }}</td>
-          <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less4Price)}}</td>
-          <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.less12Price)}}</td>
-          <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.more12Price)}}</td>
-          <td>
+           <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <span v-on="on">{{ props.item.startDate.substring(0, 10) }}</span>
+                <span v-on="on">{{ props.item.toLocation }}</span>
               </template>
-              <span>{{ props.item.startDate.substring(0, 10) }}</span>
+              <span>{{ props.item.toLocation }}</span>
             </v-tooltip>
           </td>
-          <td>
+           <td>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <span v-on="on">{{ props.item.endDate.substring(0, 10)}}</span>
+                <span v-on="on">{{ props.item.kmTotal }}</span>
               </template>
-              <span>{{ props.item.endDate.substring(0, 10) }}</span>
+              <span>{{ props.item.kmTotal }}</span>
+            </v-tooltip>
+          </td>
+           <td>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <span v-on="on">{{ props.item.nightTotal }}</span>
+              </template>
+              <span>{{ props.item.nightTotal }}</span>
             </v-tooltip>
           </td>
           <td>{{ props.item.lang }}</td>
@@ -380,7 +368,7 @@
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
     <v-btn absolute dark fab bottom right small color="pink">
-      <download-excel :data="packagesHotelREL" name="markup.xls">
+      <download-excel :data="cardetailprice" name="markup.xls">
         <i class="far fa-file-excel"></i>
       </download-excel>
     </v-btn>
@@ -404,17 +392,6 @@ const AXIOS = axios.create({
 });
 export default {
   data: () => ({
-    type: "month",
-    start: "2019-01-01",
-    end: "2019-01-06",
-    typeOptions: [
-      { text: "Day", value: "day" },
-      { text: "4 Day", value: "4day" },
-      { text: "Week", value: "week" },
-      { text: "Month", value: "month" },
-      { text: "Custom Daily", value: "custom-daily" },
-      { text: "Custom Weekly", value: "custom-weekly" }
-    ],
     filterByCombo: {
       supplierId: {
         supplierCode: "ALL"
@@ -479,14 +456,14 @@ export default {
       { text: "IsUsed", value: "isUsed" },
       { text: "Note", value: "optionNote" }
     ],
-    priceRange: [],
+    priceByCarType: [],
     carType: [],
     carSupplier: [],
     carTransType: [],
     carTypeFilter: [],
     carSupplierFilter: [],
     carTransTypeFilter: [],
-    packagesHotelREL: [],
+    cardetailprice: [],
     rule: {
       markUpPlusRule: [
         // v => (v.toString().length > 0) || "Required field",
@@ -516,18 +493,17 @@ export default {
     menu2: false,
     editedItem: {
       supplierId: "",
-      hotelId: "",
-      roomTypeId: "",
-      packageId: "",
+      carTransTypeId: "",
+      tripCode: "",
+      tripName: "",
+      fromLocation:"",
+      toLocation:"",
+      kmTotal:0,
+      nightTotal:0,
       price: 10000000,
       markUpPercent: 10,
-      isAllDays: true,
-      days: [],
       markUpPlus: 50000,
-      less4Price: 10000000,
-      less12Price: 10000000,
-      more12Price: 10000000,
-      priceRanges: [],
+      priceByCarType: [],
       optionService: {
         optionPrice: 50000,
         optionServiceCode: "",
@@ -536,38 +512,27 @@ export default {
         isUsed: true,
         groupCode: ""
       },
-      utilities: {
-        isWifi: true,
-        isTivi: true,
-        isSwim: false,
-        isGym: false,
-        isKitchen: false,
-        isDry: true
-      },
       optionServices: [],
       lang: "EN",
       isUsed: true,
-      isDefault: false,
-      isPromote: false,
       createBy: "",
       modifyBy: "",
-      startDate: moment(new Date()).format("YYYY-MM-DD"),
-      endDate: moment(new Date()).format("YYYY-MM-DD")
+      carDetailsImages:[],
+      removeImages:[]
     },
     defaultItem: {
-      supplierId: "",
-      hotelId: "",
-      roomTypeId: "",
-      packageId: "",
-      isAllDays: true,
-      days: [],
+     supplierId: "",
+      carTransTypeId: "",
+      tripCode: "",
+      tripName: "",
+      fromLocation:"",
+      toLocation:"",
+      kmTotal:0,
+      nightTotal:0,
       price: 10000000,
       markUpPercent: 10,
       markUpPlus: 50000,
-      less4Price: 10000000,
-      less12Price: 10000000,
-      more12Price: 10000000,
-      priceRanges: [],
+      priceByCarType: [],
       optionService: {
         optionPrice: 50000,
         optionServiceCode: "",
@@ -576,23 +541,13 @@ export default {
         isUsed: true,
         groupCode: ""
       },
-      utilities: {
-        isWifi: true,
-        isTivi: true,
-        isSwim: false,
-        isGym: false,
-        isKitchen: false,
-        isDry: true
-      },
       optionServices: [],
       lang: "EN",
       isUsed: true,
-      isDefault: false,
-      isPromote: false,
       createBy: "",
       modifyBy: "",
-      startDate: moment(new Date()).format("YYYY-MM-DD"),
-      endDate: moment(new Date()).format("YYYY-MM-DD")
+      carDetailsImages:[],
+      removeImages:[]
     },
     snackbar: {
       snackbar: false,
@@ -601,46 +556,13 @@ export default {
   }),
 
   computed: {
-    eventsMap() {
-      const map = {};
-      this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e));
-      return map;
-    },
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
-    },
-    itemsWithTotalPrice() {
-      // This creates a new empty object, copies the item into it,
-      // then calculates `fullAddress` and copies that entry into it
-
-      return this.packagesHotelREL
-        .map(obj =>
-          Object.assign({}, obj, {
-            totalPrice:
-              obj.markUpPercent == 0
-                ? obj.price + obj.markUpPlus
-                : obj.markUpPlus !== 0
-                ? obj.price * ((obj.markUpPercent + 100) / 100) + obj.markUpPlus
-                : obj.price * ((obj.markUpPercent + 100) / 100)
-          })
-        )
-        .filter(i => {
-          return (
-            (this.filterByCombo.supplierId.supplierCode === "ALL" ||
-              i.supplierId._id === this.filterByCombo.supplierId._id) &&
-            (this.filterByCombo.hotelId.hotelCode === "ALL" ||
-              i.hotelId._id === this.filterByCombo.hotelId._id) &&
-            (this.filterByCombo.roomTypeId.roomTypeCode === "ALL" ||
-              i.roomTypeId._id === this.filterByCombo.roomTypeId._id) &&
-            (this.filterByCombo.packageId.packageCode === "ALL" ||
-              i.packageId._id === this.filterByCombo.packageId._id)
-          );
-        });
     },
     itemsWithTotalPriceEdit() {
       // This creates a new empty object, copies the item into it,
       // then calculates `fullAddress` and copies that entry into it
-      return this.editedItem.priceRanges.map(obj =>
+      return this.editedItem.priceByCarType.map(obj =>
         Object.assign({}, obj, {
           totalPrice:
             obj.markUpPercent == 0
@@ -650,6 +572,7 @@ export default {
               : obj.price * ((obj.markUpPercent + 100) / 100)
         })
       );
+      console.log(this.editedItem.priceByCarType);
     }
   },
 
@@ -670,7 +593,8 @@ export default {
     initialize() {
       AXIOS.get(apiIP + "/cardetailprice/", { crossdomain: true })
         .then(response => {
-          this.packagesHotelREL = response.data;
+          this.cardetailprice = response.data;
+                    console.log(this.cardetailprice);
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -703,7 +627,7 @@ export default {
 
       AXIOS.get(apiIP + "/cartype/", { crossdomain: true })
         .then(response => {
-          this.carType = response.data;
+          this.carType = JSON.parse(JSON.stringify(response.data));
           this.carTypeFilter = response.data;
           this.carTypeFilter.unshift({
             carTypeCode: "ALL",
@@ -720,15 +644,7 @@ export default {
       console.log(this.editedItem);
       this.editedItem = Object.assign({}, item);
       this.editedItem.supplierId = item.supplierId._id;
-      this.editedItem.hotelId = item.hotelId._id;
-      this.editedItem.roomTypeId = item.roomTypeId._id;
-      this.editedItem.packageId = item.packageId._id;
-      this.editedItem.startDate = moment(item.startDate)
-        .utc()
-        .format("YYYY-MM-DD");
-      this.editedItem.endDate = moment(item.endDate)
-        .utc()
-        .format("YYYY-MM-DD");
+      this.editedItem.carTransTypeId = item.carTransTypeId._id;
       this.editedItem.optionService = {
         optionPrice: 50000,
         optionServiceCode: "",
@@ -736,7 +652,6 @@ export default {
         optionNote: "",
         isUsed: true
       };
-      this.editedItem.days = [];
       this.disableSelect = true;
       this.dialog = true;
       delete this.editedItem._id;
@@ -745,7 +660,7 @@ export default {
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/packagehotelrel/" + item._id)
+        AXIOS.delete(apiIP + "/cardetailprice/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
@@ -778,19 +693,19 @@ export default {
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(
-            apiIP + "/packagehotelrel/update/" + this.editId,
+            apiIP + "/cardetailprice/update/" + this.editId,
             this.editedItem
           )
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/packagehotelrel/insert", this.editedItem)
+          AXIOS.post(apiIP + "/cardetailprice/insert", this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         }
-        this.editedItem.priceRange = [];
+        this.editedItem.priceByCarType = [];
         this.initialize();
         this.close();
       }
@@ -800,88 +715,39 @@ export default {
       console.log(event);
       this.defaultItem.markUpPlus = event.markUpPlus;
       this.defaultItem.markUpPercent = event.markUpPercent;
-      this.defaultItem.less4Price = event.less4Price;
-      this.defaultItem.less12Price = event.less12Price;
-      this.defaultItem.more12Price = event.more12Price;
       this.editedItem.markUpPlus = event.markUpPlus;
       this.editedItem.markUpPercent = event.markUpPercent;
-      this.editedItem.less4Price = event.less4Price;
-      this.editedItem.less12Price = event.less12Price;
-      this.editedItem.more12Price = event.more12Price;
       console.log(this.defaultItem);
-      AXIOS.get(apiIP + "/hotel/combobox/hotel/" + event._id, {
+      AXIOS.get(apiIP + "/cartype/combobox/cartype/" + event._id, {
         crossdomain: true
       })
         .then(response => {
-          this.hotel = response.data;
-          this.hotelFilter = response.data;
-          this.hotelFilter.unshift({
-            hotelCode: "ALL",
-            hotelName: "ALL",
-            hotelId: -1
+          this.carType = JSON.parse(JSON.stringify(response.data));
+          this.carTypeFilter = response.data;
+          this.carTypeFilter.unshift({
+            carTypeCode: "ALL",
+           carTypeName: "ALL",
+            carTypeId: -1
           });
         })
         .catch(function(error) {})
         .finally(function() {});
-
-      AXIOS.get(apiIP + "/package/combobox/package/" + event._id, {
-        crossdomain: true
-      })
-        .then(response => {
-          this.packages = response.data;
-          this.packagesFilter = response.data;
-          this.packagesFilter.unshift({
-            packageCode: "ALL",
-            packageName: "ALL",
-            packageId: -1
-          });
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-    },
-
-    changedHotelCombobox(event) {
-      AXIOS.get(apiIP + "/roomtype/combobox/roomtype/" + event._id, {
-        crossdomain: true
-      })
-        .then(response => {
-          this.roomtype = response.data;
-          this.roomtypeFilter = response.data;
-          this.roomtypeFilter.unshift({
-            roomTypeCode: "ALL",
-            roomTypeName: "ALL",
-            roomTypeId: -1
-          });
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-    },
-    changedRoomTypeCombobox(event) {
-      console.log(this.filterByCombo.roomTypeId);
     },
     addNewPriceRange() {
-      if (this.editedItem.isAllDays == true) {
-        this.editedItem.days = [];
-      }
-      this.editedItem.priceRanges.push({
+      console.log(this.editedItem.carTypeId);
+      this.editedItem.priceByCarType.push({
+        carTypeId:this.editedItem.carTypeId,
         price: this.editedItem.price,
         markUpPercent: this.editedItem.markUpPercent,
         markUpPlus: this.editedItem.markUpPlus,
-        less4Price: this.editedItem.less4Price,
-        less12Price: this.editedItem.less12Price,
-        more12Price: this.editedItem.more12Price,
         isUsed: this.editedItem.isUsed,
-        startDate: this.editedItem.startDate,
-        endDate: this.editedItem.endDate,
-        days: this.editedItem.days.slice(),
-        isAllDays: this.editedItem.isAllDays
       });
-      console.log(this.editedItem.priceRanges);
+      console.log(this.editedItem.priceByCarType);
     },
     addNewOptionPriceRange() {
       if (
-        this.editedItem.optionService.groupCode == "" ||
-        this.editedItem.optionService.groupCode.replace(/\s/g, "").length == 0
+        this.editedItem.optionService.groupCode == "" || this.editedItem.optionService.groupCode ==undefined ||
+        (this.editedItem.optionService.groupCode !=undefined && this.editedItem.optionService.groupCode.trim().length == 0)
       ) {
         this.editedItem.optionServices.push({
           groupCode: "checkbox",
@@ -932,7 +798,7 @@ export default {
     },
 
     deletepriceRangeItem(item) {
-      this.editedItem.priceRanges.splice(item, 1);
+      this.editedItem.priceByCarType.splice(item, 1);
     },
     deleteOptionServiceItem(item) {
       this.editedItem.optionServices.splice(item, 1);
@@ -946,34 +812,8 @@ export default {
     deleteAllOldPriceRange() {
       var r = confirm("Are you sure you want to delete all option service?");
       if (r == true) {
-        this.editedItem.priceRanges = [];
+        this.editedItem.priceByCarType = [];
       }
-    },
-    loadCalendarPrice(item) {
-      this.selectedItemLoadDetail = item;
-      console.log(this.selectedItemLoadDetail);
-      this.events = [];
-      var color = "";
-      item.priceRanges.forEach((element, index) => {
-        if (index % 2 == 0) {
-          color = true;
-        } else {
-          color = false;
-        }
-        var startDate = moment(element.startDate);
-        var endDate = moment(element.endDate);
-        for (let index = 0; index <= endDate.diff(startDate, "days"); index++) {
-          this.events.push({
-            title: element.price,
-            details: element,
-            date: moment(startDate)
-              .add(index, "days")
-              .format("YYYY-MM-DD"),
-            open: false,
-            color: color
-          });
-        }
-      });
     }
   }
 };
