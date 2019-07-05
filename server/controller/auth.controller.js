@@ -65,6 +65,7 @@ module.exports.insertUser= function (req, res) {
         })
 };
 
+
 module.exports.updateUser=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;

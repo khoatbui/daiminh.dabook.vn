@@ -1,4 +1,5 @@
 require('dotenv').config();
+var clientPath=process.env.CLIENT_PATH
 
 module.exports.uploadRoomTypeImg=async (req, res) => {
     try {
@@ -67,7 +68,10 @@ var copyFile = (file, dir2)=>{
     //include the fs, path modules
     var fs = require('fs');
     var path = require('path');
-  
+  //   if (!fs.existsSync(mkdireciton)){
+  //     fs.mkdirSync(mkdireciton,{ recursive: true });
+  //     console.log('success' + mkdireciton)
+  // }
     //gets file name and adds it to dir2
     var f = path.basename(file);
     var source = fs.createReadStream(file);
