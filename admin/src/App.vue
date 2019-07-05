@@ -62,10 +62,16 @@
 
         <v-list>
           <v-list-tile>
-            <v-btn flat to="/supplier">Supplier</v-btn>
+            <v-btn flat to="/carsupplier">Car Supplier (Nhà xe)</v-btn>
           </v-list-tile>
           <v-list-tile>
-            <v-btn flat to="/hotel">Car</v-btn>
+            <v-btn flat to="/carcartype">CarType (Loại xe, số chỗ)</v-btn>
+          </v-list-tile>
+          <v-list-tile>
+            <v-btn flat to="/cartranstype">TransType(Loại hình huê)</v-btn>
+          </v-list-tile>
+          <v-list-tile>
+            <v-btn flat to="/cardetailprice">CarPriceMarkUp ( Đặt giá xe)</v-btn>
           </v-list-tile>
         </v-list>
       </v-menu>

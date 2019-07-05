@@ -148,6 +148,40 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/RoomTypeHotelREL.vue')
+    },
+    {
+      path: '/carsupplier',
+      name: 'carsupplier',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ './views/CarSupplier.vue')
+    }
+    ,
+    {
+      path: '/carcartype',
+      name: 'carcartype',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ './views/CarType.vue')
+    }
+    ,
+    {
+      path: '/cartranstype',
+      name: 'cartranstype',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ './views/CarTransType.vue')
+    },
+    {
+      path: '/cardetailprice',
+      name: 'cardetailprice',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ './views/CarDetailPriceREL.vue')
     }
   ]
 })
