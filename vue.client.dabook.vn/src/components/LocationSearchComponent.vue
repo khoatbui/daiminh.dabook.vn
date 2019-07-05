@@ -8,7 +8,7 @@
       :data="data"
       :placeholder="$t('search_search')"
       @hit="search"
-      @input="searchEnter($event)"
+      @input="searchEnter()"
     />
     <span class="search-icon" @click="search">
       <font-awesome-icon class="text-danger" icon="search" />
@@ -54,15 +54,7 @@ export default {
       this.$store.commit("showHideLoading", false);
     },
     searchEnter(e) {
-      console.log(e);
-      var my=this;
-      $(".form-control").keypress(function(event) {
-        var keycode = event.keyCode ? event.keyCode : event.which;
-        if (keycode == "13") {
-          my.search();
-          return;
-        }
-      });
+      
     }
   },
   data: function() {

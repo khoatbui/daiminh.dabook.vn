@@ -55,7 +55,7 @@
           <div class="card-body w-100 text-left p-1">
             <p class="card-text text-uppercase p-0 m-0 text-sm hidden-outof-text">
               <span class="w-50 hidden-outof-text">{{item.packageId.packageName}}</span>
-              <span class="w-50 hidden-outof-text">{{item.roomTypeId.bed}}BED</span>
+              <span class="w-50 hidden-outof-text"> | {{item.roomTypeId.bed}}BED</span>
             </p>
             <p
               class="card-text font-weight-bolder p-0 m-0 hidden-outof-text"
@@ -66,7 +66,7 @@
               >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price) }} per night</span>
               <span class="card-text text-sm">
                 <font-awesome-icon
-                  class="ml-1 text-primary"
+                  class="ml-1 text-primary text-xs"
                   icon="star"
                   v-for="star in item.hotelId.star"
                   :key="star"

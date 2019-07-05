@@ -31,7 +31,8 @@
         <div class="col-12">
           <div class="form-group text-left">
             <label for="ifullname">
-              <span class="text-sm">Full name</span>
+              <span class="text-sm"
+               v-bind:class="formCheck.fullName">Full name <font-awesome-icon class="text-danger" icon="exclamation-circle" v-if="(!formCheck.isFail && formCheck.fullName.length>0)"/></span>
             </label>
             <input
               type="text"
@@ -45,7 +46,8 @@
         <div class="col-12">
           <div class="form-group text-left">
             <label for="iemail">
-              <span class="text-sm">Email</span>
+              <span class="text-sm"
+               v-bind:class="formCheck.email">Email <font-awesome-icon class="text-danger" icon="exclamation-circle" v-if="(!formCheck.isFail && formCheck.email.length>0)"/></span>
             </label>
             <input
               type="email"
@@ -59,7 +61,8 @@
         <div class="col-12">
           <div class="form-group text-left">
             <label for="iphone">
-              <span class="text-sm">Phone</span>
+              <span class="text-sm" 
+               v-bind:class="formCheck.phone">Phone <font-awesome-icon class="text-danger" icon="exclamation-circle" v-if="(!formCheck.isFail && formCheck.phone.length>0)"/></span>
             </label>
             <input
               type="tel"
@@ -89,8 +92,7 @@
             type="button"
             class="btn btn-danger w-100"
             @click="nextToResultStep"
-            data-toggle="modal"
-            data-target="#resultModal"
+            data-toggle="modal" data-target="#resultModal"
           >{{$t('btn_request')}}</button>
         </div>
         <div class="col-12 px-2">
@@ -107,6 +109,7 @@
       role="dialog"
       aria-labelledby="resultModalLabel"
       aria-hidden="true"
+      v-if="isShowModal"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -214,7 +217,9 @@ export default {
       this.$router.go(-1);
     },
     async nextToResultStep() {
-      this.$store.commit('showHideLoading',true);
+      if(this.formChecking()){
+                    this.isShowModal=true;
+      this.$store.commit("showHideLoading", true);
       console.log(this.customerInfo);
       this.$store.commit("updateCustomerInfo", this.customerInfo);
       var parrams = {
@@ -225,10 +230,12 @@ export default {
           package: this.$store.state.selectedHotel.package,
           priceByTime: this.$store.state.selectedHotel.priceByTime
         },
-        supplier:{
-           _id: this.$store.state.selectedHotel.package.supplierId._id,
-          supplierCode: this.$store.state.selectedHotel.package.supplierId.supplierCode,
-          supplierName: this.$store.state.selectedHotel.package.supplierId.supplierName
+        supplier: {
+          _id: this.$store.state.selectedHotel.package.supplierId._id,
+          supplierCode: this.$store.state.selectedHotel.package.supplierId
+            .supplierCode,
+          supplierName: this.$store.state.selectedHotel.package.supplierId
+            .supplierName
         },
         hotel: {
           _id: this.$store.state.selectedHotel.package.hotelId._id,
@@ -255,7 +262,53 @@ export default {
       var response = await PackageService.postRequestHotel(parrams);
       this.requestResult = response.data;
       console.log(this.requestResult);
-      this.$store.commit('showHideLoading',true);
+      this.$store.commit("showHideLoading", true);
+      }
+      else{
+        console.log('fail');
+        return
+      }
+    },
+    formChecking() {
+      if (this.customerInfo.fullName.length === 0) {
+        console.log('fullnam fail')
+        this.formCheck = {
+          fullName: "text-danger",
+          email: "",
+          phone: "",
+          isFail: false
+        };
+
+        return false;
+      } else if (this.customerInfo.email.length === 0) {
+         console.log('email fail')
+        this.formCheck = {
+          fullName: "",
+          email: "text-danger",
+          phone: "",
+          isFail: false
+        };
+
+        return false;
+      } else if (this.customerInfo.phone.length === 0) {
+         console.log('phone fail')
+        this.formCheck = {
+          fullName: "",
+          email: "",
+          phone: "text-danger",
+          isFail: false
+        };
+
+        return false;
+      } else {
+        this.formCheck = {
+          fullName: "",
+          email: "",
+          phone: "",
+          isFail: true
+        };
+        return true;
+      }
     }
   },
   data: function() {
@@ -271,7 +324,14 @@ export default {
         orderCode: "",
         feedbackTime: "",
         requestStatus: ""
-      }
+      },
+      formCheck: {
+        fullName: "",
+        email: "",
+        phone: "",
+        isFail: true
+      },
+      isShowModal:false
     };
   }
 };
