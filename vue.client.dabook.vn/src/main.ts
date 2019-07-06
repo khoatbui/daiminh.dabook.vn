@@ -6,7 +6,7 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret,faCoffee,faSearchLocation,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel, faAlignLeft,faBarcode,faCloudSun,faTv,faUtensils,faDumbbell,faArrowLeft,faCartPlus,faClock,faSearch,faExclamationCircle} from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret,faCoffee,faSearchLocation,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel, faAlignLeft,faBarcode,faCloudSun,faTv,faUtensils,faDumbbell,faArrowLeft,faCartPlus,faClock,faSearch,faExclamationCircle,faCarSide} from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faUserCircle as farUserCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -18,7 +18,7 @@ import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 
 Vue.component('VueSlider', VueSlider)
-library.add(faAlignLeft,faUserSecret,faCoffee,faSearchLocation,farUserCircle,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel,faBarcode,faCloudSun,faTv,faUtensils,faDumbbell,faArrowLeft,faCartPlus,faClock,faSearch,faExclamationCircle)
+library.add(faAlignLeft,faUserSecret,faCoffee,faSearchLocation,farUserCircle,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel,faBarcode,faCloudSun,faTv,faUtensils,faDumbbell,faArrowLeft,faCartPlus,faClock,faSearch,faExclamationCircle,faCarSide)
 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
