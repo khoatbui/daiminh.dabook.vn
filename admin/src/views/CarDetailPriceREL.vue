@@ -236,7 +236,7 @@
     <v-container fluid grid-list-xl pl-0 pr-0>
       <v-card>
         <v-layout pl-2 pr-2>
-          <v-flex xs12 sm6 md3 p-2>
+          <v-flex xs12 sm6 md4 p-2>
             <v-select
               v-model="filterByCombo.carSupplierId"
               :items="carSupplierFilter"
@@ -247,7 +247,7 @@
               return-object
             ></v-select>
           </v-flex>
-          <v-flex xs12 sm6 md3 p-2>
+          <v-flex xs12 sm6 md4 p-2>
             <v-select
               v-model="filterByCombo.carTransTypeId"
               :items="carTransTypeFilter"
@@ -257,7 +257,7 @@
               return-object
             ></v-select>
           </v-flex>
-          <v-flex xs12 sm6 md3 p-2>
+          <v-flex xs12 sm6 md4 p-2>
             <v-select
               v-model="filterByCombo.carTypeId"
               :items="carTypeFilter"
@@ -273,7 +273,8 @@
 
     <v-data-table
       :headers="headers"
-      :items="cardetailprice"
+      :search="search"
+      :items="itemsWithTotalPrice"
       class="elevation-1"
     >
       <template v-slot:items="props">
@@ -456,6 +457,14 @@ export default {
       { text: "IsUsed", value: "isUsed" },
       { text: "Note", value: "optionNote" }
     ],
+    filterByCombo: {
+      carSupplierId: {
+        supplierCode: "ALL"
+      },
+      carTransTypeId: {
+        carTransTypeCode: "ALL"
+      }
+    },
     priceByCarType: [],
     carType: [],
     carSupplier: [],
@@ -558,6 +567,19 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    }, itemsWithTotalPrice() {
+      // This creates a new empty object, copies the item into it,
+      // then calculates `fullAddress` and copies that entry into it
+
+      return this.cardetailprice
+        .filter(i => {
+          return (
+            (this.filterByCombo.carSupplierId.supplierCode === "ALL" ||
+              i.supplierId._id === this.filterByCombo.carSupplierId._id) &&
+            (this.filterByCombo.carTransTypeId.carTransTypeCode === "ALL" ||
+              i.carTransTypeId._id === this.filterByCombo.carTransTypeId._id)
+          );
+        });
     },
     itemsWithTotalPriceEdit() {
       // This creates a new empty object, copies the item into it,
@@ -732,6 +754,9 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
+    },
+    changedCarTransCombobox(event){
+
     },
     addNewPriceRange() {
       console.log(this.editedItem.carTypeId);
