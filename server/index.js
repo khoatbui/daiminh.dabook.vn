@@ -31,6 +31,11 @@ const paymentsRouter = require('./routes/payments.router')
 const userRouter = require('./routes/auth.router')
 const hotelOrderRouter=require('./routes/hotelorder.router')
 
+const carSuppler=require('./routes/carsupplier.router')
+const carType=require('./routes/cartype.router')
+const carTransType=require('./routes/cartranstype.router')
+const carDetailPrice=require('./routes/cardetailprice.router')
+
 app.set('view engine','pug');
 app.set('views','./views');
 
@@ -53,6 +58,11 @@ app.use('/packagehotelrel',packageHotelRELRouter);
 app.use('/payments',paymentsRouter);
 app.use('/user',userRouter)
 app.use('/hotelorder',hotelOrderRouter)
+
+app.use('/carsupplier',carSuppler)
+app.use('/cartype',carType)
+app.use('/cartranstype',carTransType)
+app.use('/cardetailprice',carDetailPrice)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

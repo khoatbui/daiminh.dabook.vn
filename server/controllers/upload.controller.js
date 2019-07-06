@@ -49,6 +49,40 @@ module.exports.uploadSupplierImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
+
+module.exports.uploadCarSupplierImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/car/supplier');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/car/supplier');
+      result.push({'fileName':element.filename,'filePath':`img/car/supplier/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
+
+module.exports.uploadCarTypeImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/car/cartype');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/car/cartype');
+      result.push({'fileName':element.filename,'filePath':`img/car/cartype/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 //moves the $file to $dir2
 var moveFile = (file, dir2)=>{
     //include the fs, path modules
