@@ -13,15 +13,15 @@
           <div class="col-12">
             <div class="form-group text-left">
               <label for="iwhere">
-                <span class="text-sm">Where</span>
+                <span class="text-sm">{{$t("pmain_lbl_where")}}</span>
               </label>
-              <input type="email" class="form-control" id="iwhere" placeholder="Any where">
+              <input type="email" class="form-control" id="iwhere" :placeholder="$t('pmain_txt_where')">
             </div>
           </div>
           <div class="col-12">
             <div class="form-group text-left">
               <label for="icheckinout">
-                <span class="text-sm">Check-in/out</span>
+                <span class="text-sm">{{$t("pmain_lbl_checkinout")}}</span>
               </label>
               <Datetime id="icheckinout"></Datetime>
             </div>
@@ -29,29 +29,29 @@
           <div class="col-12">
             <div class="form-group text-left">
               <label for="iadult">
-                <span class="text-sm">Adults - Children</span>
+                <span class="text-sm">{{$t("pmain_lbl_adultschildren")}}</span>
               </label>
               <div class="input-group">
-                <input type="email" class="form-control" id="iadult" placeholder="adult">
+                <input type="email" class="form-control" id="iadult" :placeholder="$t('pmain_txt_adult')">
                 <input
                   type="email"
                   class="form-control"
                   id="ichildren"
                   aria-describedby="emailHelp"
-                  placeholder="children"
+                  :placeholder="$t('pmain_txt_children')"
                 >
               </div>
             </div>
           </div>
           <div class="col-12 pt-2">
-            <button class="btn btn-primary w-100 font-weight-bold">Search</button>
+            <button class="btn btn-primary w-100 font-weight-bold">{{$t("pmain_btn_search")}}</button>
           </div>
         </div>
 
         <div class="row pb-4 top-city-destination">
           <div class="col-12 text-left">
             <h6 class="pl-2">
-              <b>Top City Destination</b>
+              <b>{{$t("pmain_h6_topcity")}}</b>
             </h6>
           </div>
           <div class="col-12 scroll-ngang">
@@ -141,64 +141,64 @@
         <div class="row pb-4 top-destination">
           <div class="col-12 text-left">
             <h6 class="pl-2">
-              <b>Explore DaiMinh Travel</b>
+              <b>{{$t("pmain_h6_exploreDaiMinh")}}</b>
             </h6>
           </div>
           <div class="col-12 scroll-ngang">
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/phuquoc_1.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text mb-0 font-weight-bolder">Destination</p>
-                <p class="card-text">Top destination in the world</p>
+                <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_destination")}}</p>
+                <p class="card-text">{{$t("pmain_cardtext_destination")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/phuquoc_2.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text mb-0 font-weight-bolder">Travel Style</p>
-                <p class="card-text">Top destination in the world</p>
+                <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_travelstyle")}}</p>
+                <p class="card-text">{{$t("pmain_cardtext_travelstyle")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/phuquoc_3.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text mb-0 font-weight-bolder">Travel Service.</p>
-                <p class="card-text">Top destination in the world</p>
+                <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_travelservice")}}</p>
+                <p class="card-text">{{$t("pmain_cardtext_travelservice")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/quynhon_1.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text mb-0 font-weight-bolder">MICE.</p>
-                <p class="card-text">Top destination in the world</p>
+                <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_MICE")}}</p>
+                <p class="card-text">{{$t("pmain_cardtext_MICE")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/quynhon_2.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text mb-0 font-weight-bolder">FIT.</p>
-                <p class="card-text">Top destination in the world</p>
+                <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_FIT")}}</p>
+                <p class="card-text">{{$t("pmain_cardtext_FIT")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/quynhon_3.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text mb-0 font-weight-bolder">About us.</p>
-                <p class="card-text">Top destination in the world</p>
+                <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_aboutus")}}</p>
+                <p class="card-text">{{$t("pmain_cardtext_aboutus")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/sapa.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text mb-0 font-weight-bolder">Top Tours.</p>
-                <p class="card-text">Top destination in the world</p>
+                <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_toptour")}}</p>
+                <p class="card-text">{{$t("pmain_cardtext_toptour")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
               <div class="card-body text-left">
-                <p class="card-text mb-0 font-weight-bolder">Top Destination.</p>
-                <p class="card-text">Top destination in the world</p>
+                <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_topdestination")}}</p>
+                <p class="card-text">{{$t("pmain_cardtext_topdestination")}}</p>
               </div>
             </div>
           </div>
@@ -207,18 +207,18 @@
         <div class="row pb-4">
           <div class="col-12 text-left">
             <h6 class="pl-2">
-              <b>Introduce DaiMinh Adventure</b>
+              <b>{{$t("pmain_h6_introduceDaiMinh")}}</b>
             </h6>
           </div>
           <div class="col-12 scroll-ngang">
             <div class="card m-2 text-white text-left border-radius-10">
               <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
               <div class="card-img-overlay">
-                <h6 class="card-title text-uppercase">Let's build every thing you wish!</h6>
-                <h5 class="card-title">Inform us</h5>
-                <p class="card-text">We can build almost tour style you wish.</p>
-                <a href="#">
-                  <span>Learn more</span>
+                <h6 class="card-title text-uppercase">{{$t("pmain_cardtitle_intro_letbuild")}}</h6>
+                <h5 class="card-title">{{$t("pmain_cardtitle_intro_inform")}}</h5>
+                <p class="card-text">{{$t("pmain_cardtitle_intro_text")}}</p>
+                <a href="#" class="link">
+                  <span>{{$t("pmain_cardtitle_intro_learnmore")}}</span>
                   <font-awesome-icon class="ml-1" icon="chevron-right"/>
                 </a>
               </div>
@@ -229,7 +229,7 @@
         <div class="row pb-4 hot-destination">
           <div class="col-12 text-left">
             <h6 class="pl-2">
-              <b>Recommended for you</b>
+              <b>{{$t("pmain_h6_recomendforyou")}}</b>
             </h6>
           </div>
           <div class="col-12 scroll-ngang">
@@ -310,7 +310,7 @@ import Navbar from "@/components/Navbar.vue";
 })
 export default class Main extends Vue {}
 </script>
-<style >
+<style scoped>
 .main-section {
   background-color: #ffffff;
   height: 100%;
@@ -356,5 +356,9 @@ export default class Main extends Vue {}
 .hot-destination .card-img {
   height: 100px;
   width: 140px;
+}
+.link,.link:hover,.link:active,.link:focus{
+  color: #FFF !important;
+  text-decoration: none !important;
 }
 </style>
