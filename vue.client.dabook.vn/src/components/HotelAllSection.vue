@@ -54,7 +54,7 @@
           </div>
           <div class="card-body w-100 text-left p-1">
             <p class="card-text text-uppercase p-0 m-0 text-sm hidden-outof-text">
-              <span class="w-50 hidden-outof-text">{{item.packageId.packageName}}</span>
+              <span class="w-50 hidden-outof-text">{{item.roomTypeId.roomTypeName}} | {{item.packageId.packageName}}</span>
               <span class="w-50 hidden-outof-text"> | {{item.roomTypeId.bed}}BED</span>
             </p>
             <p

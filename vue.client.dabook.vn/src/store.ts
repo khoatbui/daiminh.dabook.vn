@@ -203,7 +203,8 @@ export default new Vuex.Store({
       state.search.historySearch=payload;
     },
     asignSearchResult(state,payload){
-      state.search.searchResult=payload;
+      state.search.searchResult=payload.searchResult;
+      state.search.locationSearch=payload.locationSearch;
     },
     showHideLoading(state,payload){
       state.loading.isShow=payload;

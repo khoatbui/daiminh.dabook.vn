@@ -4,7 +4,7 @@
     <div class="col-12 p-1 m-0">
       <div class="m-2 text-left">
         <h4>
-          <b>Ha Long, Quang Ninh</b>
+          <b>{{searchStore.locationSearch.length==0?"All promotion":searchStore.locationSearch}}</b>
         </h4>
       </div>
     </div>
@@ -18,7 +18,7 @@
           >
           <div class="card-body w-100 text-left p-1">
             <p class="card-text text-uppercase p-0 m-0 text-sm hidden-outof-text">
-              <span class="w-50 hidden-outof-text">{{item.packageId.packageName}}</span>
+              <span class="w-50 hidden-outof-text">{{item.roomTypeId.roomTypeName}}</span>
               <span class="w-50 hidden-outof-text"> | {{item.roomTypeId.bed}}BED</span>
             </p>
             <p
@@ -159,6 +159,9 @@ export default {
       const start = this.pageNumber * this.size,
         end = start + this.size;
       return this.packagelist.slice(start, end);
+    },
+    searchStore() {
+      return this.$store.state.search;
     }
   },
   mounted() {

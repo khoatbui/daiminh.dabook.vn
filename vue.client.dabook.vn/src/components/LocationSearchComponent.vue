@@ -49,7 +49,8 @@ export default {
         response = await SearchService.getAllBySearch(this.query);
       }
       console.log(response);
-      this.$store.commit("asignSearchResult", response.data);
+      this.$store.commit("asignSearchResult",{'searchResult':response.data,
+      'locationSearch':this.query} );
       this.$root.$emit("userSearchActivity");
       this.$store.commit("showHideLoading", false);
     },
