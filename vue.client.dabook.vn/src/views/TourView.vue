@@ -20,135 +20,22 @@
         <GuestSelect></GuestSelect>
       </div>
     </div>
-    <div class="data-section margin-top-130">
-      <div class="row w-100 p-0 mx-0 bottom-page">
-        <div class="col-12 p-1 m-0">
-          <div class="m-2 text-left">
-            <h4>
-              <b>Ha Long, Quang Ninh</b>
-            </h4>
-          </div>
-        </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            >
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            >
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            >
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            >
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            >
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-                <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 p-1 m-0">
-          <div class="m-2">
-            <button class="btn btn-primary w-100" @click="redirectToPromotionAll">Show all(2016+)</button>
-          </div>
-        </div>
-      </div>
+    <div class="data-section w-100 h-100">
+     <ComingSoonComponent></ComingSoonComponent>
     </div>
     <Navbar v-bind:current="'tour'"></Navbar>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import Datetime from '@/components/Datetime2.vue' // @ is an alias to /src
-import Navbar from '@/components/Navbar.vue'
-import GuestSelect from '@/components/GuestSelect.vue'
-import MainNavBar from '@/components/MainNavBar.vue'
-import LocationSearchComponent from '@/components/LocationSearchComponent.vue'
-import LanguageComponent from '@/components/LanguageComponent.vue'
-
+import { Component, Vue } from "vue-property-decorator";
+import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
+import Navbar from "@/components/Navbar.vue";
+import GuestSelect from "@/components/GuestSelect.vue";
+import MainNavBar from "@/components/MainNavBar.vue";
+import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
+import LanguageComponent from "@/components/LanguageComponent.vue";
+import ComingSoonComponent from "@/components/ComingSoon.vue";
 
 @Component({
   components: {
@@ -157,7 +44,8 @@ import LanguageComponent from '@/components/LanguageComponent.vue'
     GuestSelect,
     MainNavBar,
     LocationSearchComponent,
-    LanguageComponent
+    LanguageComponent,
+    ComingSoonComponent
   }
 })
 export default class Promotion extends Vue {

@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="data-section margin-top-130">
-      <HotelPromotionSection></HotelPromotionSection>
+      <HotelPromotionSection v-bind:showTitle="true"></HotelPromotionSection>
     </div>
     <Navbar v-bind:current="'hotel'"></Navbar>
   </div>

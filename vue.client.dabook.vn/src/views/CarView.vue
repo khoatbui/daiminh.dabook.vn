@@ -73,7 +73,7 @@
         </div>
       </div>
     </div>
-    <div class="trans-section px-2">
+    <div class="trans-section px-2 pb-4">
       <div class="row m-0 top-city-destination">
         <div class="col-12 text-left">
           <h4>
@@ -292,6 +292,11 @@
             </div>
           </div>
         </div>
+        <div class="col-12 m-0 p-0">
+          <div class="m-2">
+        <button class="btn btn-primary w-100" @click="redirectToCarViewAll">{{$t('btn_showall')}}(20+)</button>
+      </div>
+        </div>
       </div>
     </div>
     <div>
@@ -299,115 +304,11 @@
         <div class="col-12 p-1 m-0">
           <div class="m-2 text-left">
             <h4>
-              <b>Best tour for you</b>
+              <b>Best hotel for you</b>
             </h4>
           </div>
         </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5 shadow"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 p-1 m-0">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 p-1 m-0">
-          <div class="m-2">
-            <button class="btn btn-primary w-100">Show all(2016+)</button>
-          </div>
-        </div>
+        <HotelPromotionSection v-bind:showTitle="false"></HotelPromotionSection>
       </div>
     </div>
     <Navbar v-bind:current="'car'"></Navbar>
@@ -423,6 +324,7 @@ import MainNavBar from "@/components/MainNavBar.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
 import FilterCar from "@/components/FilterCar.vue";
+import HotelPromotionSection from "@/components/HotelPromotionSection.vue";
 
 export default {
   components: {
@@ -432,7 +334,8 @@ export default {
     MainNavBar,
     LocationSearchComponent,
     LanguageComponent,
-    FilterCar
+    FilterCar,
+    HotelPromotionSection
   },
   data: () => ({}),
 
@@ -442,7 +345,11 @@ export default {
 
   created() {},
 
-  methods: {}
+  methods: {
+    redirectToCarViewAll(){
+      this.$router.push({ path: "carviewall" });
+    }
+  }
 };
 </script>
 <style scoped>

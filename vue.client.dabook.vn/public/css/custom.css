@@ -206,3 +206,10 @@ ol.carousel-indicators li.active {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.under-contruction{
+  /* background-color: #F8BF0C !important; */
+  width: 100%;
+  height: 100%;
+  color: #FFF;
+  overflow: hidden;
+}

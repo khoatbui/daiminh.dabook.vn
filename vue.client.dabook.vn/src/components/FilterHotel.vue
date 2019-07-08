@@ -1,5 +1,5 @@
 <template>
-  <div class="search-component">
+  <div class="filter-hotel-component">
     <!-- Button trigger modal -->
     <button
       type="button"
@@ -120,10 +120,10 @@ GuestSelectDropDown
 .btn-sm-round svg {
   margin: 0 !important;
 }
-.search-component .modal-dialog{
+.filter-hotel-component .modal-dialog{
   margin: 0 !important;
 }
-.search-component .modal-content{
+.filter-hotel-component .modal-content{
   width: 100vw;
     margin: 0 !important;
     padding: 0 !important;

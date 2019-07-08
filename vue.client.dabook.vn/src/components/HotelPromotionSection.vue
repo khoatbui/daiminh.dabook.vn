@@ -1,7 +1,7 @@
 //src/components/Navbar.vue
 <template>
   <div class="row w-100 p-0 mx-0 bottom-page">
-    <div class="col-12 p-1 m-0">
+    <div class="col-12 p-1 m-0" v-if="showTitle">
       <div class="m-2 text-left">
         <h4>
           <b>{{searchStore.locationSearch.length==0?"All promotion":searchStore.locationSearch}}</b>
@@ -98,7 +98,7 @@ export default {
     LoadingComponent
   },
   name: "HotelPromotionSection",
-  props: ["current"],
+  props: ["current","showTitle"],
   data() {
     return {
       packagelist: [],
