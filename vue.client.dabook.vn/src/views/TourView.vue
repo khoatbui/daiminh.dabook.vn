@@ -20,7 +20,7 @@
         <GuestSelect></GuestSelect>
       </div>
     </div>
-    <div class="data-section">
+    <div class="data-section margin-top-130">
       <div class="row w-100 p-0 mx-0 bottom-page">
         <div class="col-12 p-1 m-0">
           <div class="m-2 text-left">
@@ -231,7 +231,4 @@ export default class Promotion extends Vue {
   border-left: none !important;
 }
 /* ========DATA SECTION=========== */
-.data-section {
-  margin-top: 130px !important;
-}
 </style>

@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <div class="data-section pb-4">
+    <div class="data-section margin-top-130 pb-4">
       <router-view></router-view>
     </div>
     <div class="relate-section">
@@ -259,9 +259,6 @@ export default class Promotion extends Vue {
   border-left: none !important;
 }
 /* ========DATA SECTION=========== */
-.data-section {
-  margin-top: 130px !important;
-}
 
 .page-item:last-child .page-link,
 .page-item:first-child .page-link {

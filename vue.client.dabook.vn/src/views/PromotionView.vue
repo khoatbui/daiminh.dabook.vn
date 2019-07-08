@@ -20,7 +20,7 @@
         <GuestSelect></GuestSelect>
       </div>
     </div>
-    <div class="data-section">
+    <div class="data-section margin-top-130">
       <HotelPromotionSection></HotelPromotionSection>
     </div>
     <Navbar v-bind:current="'hotel'"></Navbar>
@@ -116,7 +116,4 @@ export default class Promotion extends Vue {
   border-left: none !important;
 }
 /* ========DATA SECTION=========== */
-.data-section {
-  margin-top: 130px !important;
-}
 </style>
