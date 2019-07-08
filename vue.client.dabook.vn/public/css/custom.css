@@ -9,7 +9,7 @@
 }
 body{
   /* font-size: 0.7rem !important; */
-  color:#374B66 !important;
+  color:#484848 !important;
 }
 input::-webkit-input-placeholder,input::-moz-placeholder,input:-ms-input-placeholder,input:-moz-placeholder { /* Firefox 18- */
   font-size: 0.5rem !important;
@@ -19,7 +19,7 @@ input:focus,input:active{
   outline: none !important;
 }
 a:hover,a,a:active,a:visited,a:focus{
-  color: #374B66 !important;
+  color: #484848 !important;
   text-decoration: none !important;
 }
 ol.carousel-indicators {

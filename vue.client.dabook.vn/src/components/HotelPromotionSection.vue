@@ -82,7 +82,7 @@
     </div>
     <div class="col-12 p-1 m-0">
       <div class="m-2">
-        <button class="btn btn-primary w-100" @click="redirectToPromotionAll">{{$t('btn_showall')}}(326+)</button>
+        <button class="btn btn-outline-primary w-100" @click="redirectToPromotionAll">{{$t('btn_showall')}}(326+)</button>
       </div>
     </div>
         <LoadingComponent class="center-page"></LoadingComponent>
