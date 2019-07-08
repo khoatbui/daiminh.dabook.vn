@@ -57,7 +57,7 @@
       <div class="col-12 px-3 m-0">
         <div class="m-2 d-flex justify-content-between align-items-center">
           <span>{{city.cityName}}</span>
-          <img class="hotel-owner-avatar shadow" src="img/hotel/hotel-owner/vinpearl.jpg" alt />
+          <img class="hotel-owner-avatar shadow" :src="packagedetail.supplierId.supplierImages.length>0?packagedetail.supplierId.supplierImages[0].filePath:'img/hotel/supplier/default.jpg'" alt />
         </div>
       </div>
       <div class="col-12 px-3 m-0 text-left">
