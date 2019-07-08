@@ -20,7 +20,7 @@
         <GuestSelect></GuestSelect>
       </div>
     </div>
-    <div class="data-section w-100 h-100">
+    <div class="data-section padding-top-100 w-100">
      <ComingSoonComponent></ComingSoonComponent>
     </div>
     <Navbar v-bind:current="'tour'"></Navbar>

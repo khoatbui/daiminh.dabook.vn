@@ -185,6 +185,11 @@ ol.carousel-indicators li.active {
 .margin-top-130{
   margin-top: 130px !important;
  }
+ .padding-top-100{
+   padding-top:100px !important;
+   min-height: 100vh !important;
+   height: 100vh !important;
+ }
 /* ======================
     GENERAL
 =========================*/
