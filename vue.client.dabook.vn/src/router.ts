@@ -15,6 +15,7 @@ import HistoryChecking from './views/HistoryChecking.vue'
 import HotelConfirmBooking from '@/components/HotelConfirmBooking.vue'
 import HotelRequestBooking from '@/components/HotelRequestBooking.vue'
 import HotelDetailSection from '@/components/HotelDetailSection.vue'
+import MainSearch from '@/views/MainSearch.vue'
 
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({
       path: '/main',
       name: 'main',
       component: Main
+    },{
+      path: '/mainsearch',
+      name: 'mainsearch',
+      component: MainSearch
     },
     {
       path: '/promotion',

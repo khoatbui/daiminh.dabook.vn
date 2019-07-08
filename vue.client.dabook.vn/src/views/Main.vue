@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="col-12 pt-2">
-            <button class="btn btn-primary w-100 font-weight-bold">{{$t("pmain_btn_search")}}</button>
+            <button class="btn btn-primary w-100 font-weight-bold" @click="redirectToMainSearch">{{$t("pmain_btn_search")}}</button>
           </div>
         </div>
 
@@ -217,10 +217,6 @@
                 <h6 class="card-title text-uppercase">{{$t("pmain_cardtitle_intro_letbuild")}}</h6>
                 <h5 class="card-title">{{$t("pmain_cardtitle_intro_inform")}}</h5>
                 <p class="card-text">{{$t("pmain_cardtitle_intro_text")}}</p>
-                <a href="#" class="link">
-                  <span>{{$t("pmain_cardtitle_intro_learnmore")}}</span>
-                  <font-awesome-icon class="ml-1" icon="chevron-right"/>
-                </a>
               </div>
             </div>
           </div>
@@ -308,7 +304,11 @@ import Navbar from "@/components/Navbar.vue";
     Navbar
   }
 })
-export default class Main extends Vue {}
+export default class Main extends Vue {
+  redirectToMainSearch() {
+      this.$router.push({ path: `mainsearch?where=${this.$route.query.supplier}&from=&to=&adult=&children=` });
+  }
+}
 </script>
 <style scoped>
 .main-section {
