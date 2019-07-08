@@ -62,7 +62,7 @@
       </div>
       <div class="col-12 px-3 m-0 text-left">
         <div class="m-2 pb-4 border-bottom">
-          <h6 class="font-weight-bolder">{{packagedetail.roomTypeId.roomTypeName}}</h6>
+          <h6 class="font-weight-bolder">{{packagedetail.roomTypeId.roomTypeName}} | {{packagedetail.packageId.packageName}}</h6>
           <div>
             <span
               class="text-sm"
