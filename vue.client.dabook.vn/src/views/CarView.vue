@@ -135,172 +135,10 @@
       </div>
     </div>
     <div class="data-section px-2 pb-4">
-      <div class="row w-100 mx-0 border-bottom">
-        <div class="col-12 text-left">
-          <h6>
-            <b>Today great deal</b>
-          </h6>
-        </div>
-        <div class="col-12 m-0 p-0">
-          <div class="card mx-2 my-4 p-0 border-0 border-radius-5 shadow-sm">
-            <div class="row no-gutters">
-              <div class="col-5 m-0 p-0">
-                <img class="border-left-radius-5 car-img" src="img/topdestination/sapa_2.jpg" alt />
-              </div>
-              <div class="col-7 p-2 d-flex flex-column justify-content-between">
-                <div
-                  class="row w-100 m-0 justify-content-between aling-items-center font-weight-bolder text-smd border-bottom-dash"
-                >
-                  <div class="col-5 p-0 text-left">
-                    <span>Ha Noi</span>
-                  </div>
-                  <div class="col-2 p-0 text-center">
-                    <font-awesome-icon class="ml-1 text-default" icon="car-side" />
-                  </div>
-                  <div class="col-5 p-0 text-right">
-                    <span>Sai Gon</span>
-                  </div>
-                </div>
-                <div class="row w-100 m-0">
-                  <div class="col-12 p-0 text-left">
-                    <span>Seats:12</span>
-                  </div>
-                  <div class="col-12 p-0 text-left">
-                    <span>120km | 3night</span>
-                  </div>
-                </div>
-                <div class="row w-100 m-0">
-                  <div class="col-12 p-0 text-right">
-                    <div class="d-inline-block font-weight-bolder">
-                      <span class="text-default">2.300.đ</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card mx-2 my-4 p-0 border-0 border-radius-5 shadow-sm">
-            <div class="row no-gutters">
-              <div class="col-5 m-0 p-0">
-                <img class="border-left-radius-5 car-img" src="img/topdestination/sapa_2.jpg" alt />
-              </div>
-              <div class="col-7 p-2 d-flex flex-column justify-content-between">
-                <div
-                  class="row w-100 m-0 justify-content-between aling-items-center font-weight-bolder text-smd border-bottom-dash"
-                >
-                  <div class="col-5 p-0 text-left">
-                    <span>Ha Noi</span>
-                  </div>
-                  <div class="col-2 p-0 text-center">
-                    <font-awesome-icon class="ml-1 text-default" icon="car-side" />
-                  </div>
-                  <div class="col-5 p-0 text-right">
-                    <span>Sai Gon</span>
-                  </div>
-                </div>
-                <div class="row w-100 m-0">
-                  <div class="col-12 p-0 text-left">
-                    <span>Seats:12</span>
-                  </div>
-                  <div class="col-12 p-0 text-left">
-                    <span>120km | 3night</span>
-                  </div>
-                </div>
-                <div class="row w-100 m-0">
-                  <div class="col-12 p-0 text-right text-sm">
-                    <div class="d-inline-block font-weight-bolder">
-                      <span class="text-success border-radius-5 success-opac-50 px-1">GREAT VALUE:</span>
-                      <span class="text-success">2.300.đ</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card mx-2 my-4 p-0 border-0 border-radius-5 shadow-sm">
-            <div class="row no-gutters">
-              <div class="col-5 m-0 p-0">
-                <img class="border-left-radius-5 car-img" src="img/topdestination/sapa_2.jpg" alt />
-              </div>
-              <div class="col-7 p-2 d-flex flex-column justify-content-between">
-                <div
-                  class="row w-100 m-0 justify-content-between aling-items-center font-weight-bolder text-smd border-bottom-dash"
-                >
-                  <div class="col-5 p-0 text-left">
-                    <span>Ha Noi</span>
-                  </div>
-                  <div class="col-2 p-0 text-center">
-                    <font-awesome-icon class="ml-1 text-default" icon="car-side" />
-                  </div>
-                  <div class="col-5 p-0 text-right">
-                    <span>Sai Gon</span>
-                  </div>
-                </div>
-                <div class="row w-100 m-0">
-                  <div class="col-12 p-0 text-left">
-                    <span>Seats:12</span>
-                  </div>
-                  <div class="col-12 p-0 text-left">
-                    <span>120km | 3night</span>
-                  </div>
-                </div>
-                <div class="row w-100 m-0">
-                  <div class="col-12 p-0 text-right">
-                    <div class="d-inline-block font-weight-bolder">
-                      <span class="text-default">2.300.đ</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card mx-2 my-4 p-0 border-0 border-radius-5 shadow-sm">
-            <div class="row no-gutters">
-              <div class="col-5 m-0 p-0">
-                <img class="border-left-radius-5 car-img" src="img/topdestination/sapa_2.jpg" alt />
-              </div>
-              <div class="col-7 p-2 d-flex flex-column justify-content-between">
-                <div
-                  class="row w-100 m-0 justify-content-between aling-items-center font-weight-bolder text-smd border-bottom-dash"
-                >
-                  <div class="col-5 p-0 text-left">
-                    <span>Ha Noi</span>
-                  </div>
-                  <div class="col-2 p-0 text-center">
-                    <font-awesome-icon class="ml-1 text-default" icon="car-side" />
-                  </div>
-                  <div class="col-5 p-0 text-right">
-                    <span>Sai Gon</span>
-                  </div>
-                </div>
-                <div class="row w-100 m-0">
-                  <div class="col-12 p-0 text-left">
-                    <span>Seats:12</span>
-                  </div>
-                  <div class="col-12 p-0 text-left">
-                    <span>120km | 3night</span>
-                  </div>
-                </div>
-                <div class="row w-100 m-0">
-                  <div class="col-12 p-0 text-right">
-                    <div class="d-inline-block font-weight-bolder">
-                      <span class="text-default">2.300.đ</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 m-0 p-0">
-          <div class="m-2">
-        <button class="btn btn-outline-primary w-100" @click="redirectToCarViewAll">{{$t('btn_showall')}}(20+)</button>
-      </div>
-        </div>
-      </div>
+     <CarPromotionSection></CarPromotionSection>
     </div>
     <div class="data-section px-2">
-      <div class="row w-100 p-0 mx-0  border-bottom bottom-page">
+      <div class="row w-100 p-0 mx-0 border-bottom bottom-page">
         <div class="col-12 p-1 m-0">
           <div class="m-2 text-left">
             <h6>
@@ -324,6 +162,7 @@ import MainNavBar from "@/components/MainNavBar.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
 import FilterCar from "@/components/FilterCar.vue";
+import CarPromotionSection from "@/components/CarPromotionSection.vue";
 import HotelPromotionSection from "@/components/HotelPromotionSection.vue";
 
 export default {
@@ -335,6 +174,7 @@ export default {
     LocationSearchComponent,
     LanguageComponent,
     FilterCar,
+    CarPromotionSection,
     HotelPromotionSection
   },
   data: () => ({}),
@@ -346,9 +186,6 @@ export default {
   created() {},
 
   methods: {
-    redirectToCarViewAll(){
-      this.$router.push({ path: "carviewall" });
-    }
   }
 };
 </script>
@@ -430,11 +267,4 @@ export default {
   border-left: none !important;
 }
 /* ========DATA SECTION=========== */
-.car-img {
-  height: 100% !important;
-  width: 100% !important;
-}
-.border-bottom-dash {
-  border-bottom: 1px dashed #ced4da;
-}
 </style>
