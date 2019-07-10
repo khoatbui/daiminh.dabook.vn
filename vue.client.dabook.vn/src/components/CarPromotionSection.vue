@@ -23,14 +23,14 @@
                     v-bind:data-slide-to="index"
                   ></li>
                 </ol>
-                <div class="carousel-inner border-radius-5 default-bg h-300">
+                <div class="carousel-inner border-radius-5 default-bg h-100">
                   <div
-                    class="carousel-item border-radius-5"
+                    class="carousel-item border-radius-5 h-100"
                     v-for="(subitem,index) in item.carImages"
                     v-bind:class="{'active':index==0}"
                   >
                     <img
-                      class="border-left-radius-5 car-img"
+                      class="border-left-radius-5 car-img h-300"
                       v-bind:src="caritem.priceByCarType.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
                       alt
                     />
