@@ -58,6 +58,10 @@
     color: #FFF;
     outline: none;
 }
+.h-140{
+    height: 140px !important;
+    width: auto;
+}
 .h-200{
     height: 200px !important;
     width: auto;

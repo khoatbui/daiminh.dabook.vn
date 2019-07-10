@@ -30,7 +30,7 @@
                     v-bind:class="{'active':index==0}"
                   >
                     <img
-                      class="border-left-radius-5 car-img h-300"
+                      class="border-left-radius-5 car-img h-140"
                       v-bind:src="caritem.priceByCarType.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
                       alt
                     />
