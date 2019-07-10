@@ -59,15 +59,15 @@
     outline: none;
 }
 .h-200{
-    height: 200px;
+    height: 200px !important;
     width: auto;
 }
 .h-300{
-    height: 300px;
+    height: 300px !important;
     width: auto;
 }
 .h-600{
-    height: 600px;
+    height: 600px !important;
     width: auto;
 }
 .btn:hover{

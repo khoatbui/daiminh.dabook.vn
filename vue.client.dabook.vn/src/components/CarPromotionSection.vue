@@ -23,7 +23,7 @@
                     v-bind:data-slide-to="index"
                   ></li>
                 </ol>
-                <div class="carousel-inner border-radius-5 default-bg h-100">
+                <div class="carousel-inner border-radius-5 default-bg h-300">
                   <div
                     class="carousel-item border-radius-5"
                     v-for="(subitem,index) in item.carImages"
