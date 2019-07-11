@@ -64,7 +64,7 @@
             <p class="p-0 m-0 d-flex justify-content-between">
               <span
                 class="card-text text-sm hidden-outof-text"
-              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.totalPrice) }} per night</span>
+              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.totalPrice) }}</span>
               <span class="card-text text-sm">{{item.kmTotal}}km | {{item.nightTotal}} night</span>
             </p>
           </div>
