@@ -149,6 +149,22 @@ ol.carousel-indicators li.active {
 .success-opac-50{
   background-color: #E6F4EA;
 }
+.h-140{
+  height: 140px !important;
+  width: auto;
+}
+.h-200{
+  height: 200px !important;
+  width: auto;
+}
+.h-300{
+  height: 300px !important;
+  width: auto;
+}
+.h-600{
+  height: 600px !important;
+  width: auto;
+}
 /* ======================
     GENERAL
 =========================*/
