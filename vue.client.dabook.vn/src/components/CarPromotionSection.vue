@@ -7,7 +7,7 @@
           <b>Today great deal</b>
         </h6>
       </div>
-      <div class="col-12 m-0 p-0" v-for="(caritem,i) in paginatedData">
+      <div class="col-12 m-0 p-0" v-for="(caritem,i) in paginatedData"  @click="selectCar(caritem)">
         <div
           class="card mx-2 my-4 p-0 border-0 border-radius-5 shadow-sm"
           v-for="(item,j) in caritem.priceByCarType"
@@ -99,7 +99,7 @@
                     <span
                       class="text-default"
                       v-bind:class="{'text-success':i==1}"
-                    >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(caculatePrice(item,caritem.kmTotal)) }}</span>
+                    >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(caritem.totalPrice) }}</span>
                   </div>
                 </div>
               </div>
@@ -221,13 +221,8 @@ export default {
       }
       this.pageNumber--;
     },
-    caculatePrice(obj, kmTotal) {
-      return obj.markUpPercent == 0 || obj.markUpPercent == ""
-        ? obj.price * kmTotal + obj.markUpPlus
-        : obj.markUpPlus !== 0 && obj.markUpPlus == ""
-        ? obj.price * kmTotal * ((obj.markUpPercent + 100) / 100) +
-          obj.markUpPlus
-        : obj.price * kmTotal * ((obj.markUpPercent + 100) / 100);
+    selectCar(item){
+      this.$store.commit("updateSelectedCar", item);
     }
   },
   computed: {
@@ -239,7 +234,18 @@ export default {
     paginatedData() {
       const start = this.pageNumber * this.size,
         end = start + this.size;
-      return this.carpricelist.slice(start, end);
+      return randomArray(this.carpricelist.map(obj =>
+        Object.assign({}, obj, {
+          totalPrice:
+            obj.priceByCarType[0].markUpPercent == 0 || obj.priceByCarType[0].markUpPercent == ""
+              ? obj.priceByCarType[0].price * obj.kmTotal + obj.priceByCarType[0].markUpPlus
+              : obj.priceByCarType[0].markUpPlus !== 0 && obj.priceByCarType[0].markUpPlus == ""
+              ? obj.priceByCarType[0].price * obj.kmTotal * ((obj.priceByCarType[0].markUpPercent + 100) / 100) +
+                obj.priceByCarType[0].markUpPlus
+              : obj.priceByCarType[0].price * obj.kmTotal * ((obj.priceByCarType[0].markUpPercent + 100) / 100)
+        })
+      ).slice(start, end));
+      
     },
     searchStore() {
       return this.$store.state.search;
@@ -251,6 +257,15 @@ export default {
     });
   }
 };
+function randomArray(array){
+        let array2=[];
+        while(array.length!==0){
+        let randomIndex=Math.floor(Math.random()*array.length);
+        array2.push(array[randomIndex]);
+        array.splice(randomIndex,1);
+        }
+        return array2;
+    }
 </script>
 <style lang="scss">
 .car-img {

@@ -71,7 +71,8 @@ export default new Vuex.Store({
     },
     loading:{
       isShow:false
-    }
+    },
+    selectedCar:{}
   },
   mutations: {
     plusAdult (state) {
@@ -208,6 +209,10 @@ export default new Vuex.Store({
     },
     showHideLoading(state,payload){
       state.loading.isShow=payload;
+    },
+    updateSelectedCar(state,payload){
+      state.selectedCar=payload;
+      console.log(state.selectedCar);
     }
   },
   actions: {

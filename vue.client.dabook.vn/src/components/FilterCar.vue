@@ -43,8 +43,8 @@
               </div>
              <div class="row p-2 pb-4 justify-content-start align-items-center border-bottom">
                 <div class="col-12">
-                  <h6 class="text-left mb-0 font-weight-bolder">Chuỗi khách sạn</h6>
-                  <p class="text-sm text-left mb-1">Phân loại theo chuỗi các khách sạn nổi tiếng</p>
+                  <h6 class="text-left mb-0 font-weight-bolder">Loại xe, số ghế</h6>
+                  <p class="text-sm text-left mb-1">Phân loại theo số ghế trên xe</p>
                 </div>
                 <div class="col-12">
                   <GuestSelectDropDown v-bind:id="'filter-guest'"></GuestSelectDropDown>

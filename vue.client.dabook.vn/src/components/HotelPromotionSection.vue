@@ -158,7 +158,7 @@ export default {
     paginatedData() {
       const start = this.pageNumber * this.size,
         end = start + this.size;
-      return this.packagelist.slice(start, end);
+      return randomArray(this.packagelist.slice(start, end));
     },
     searchStore() {
       return this.$store.state.search;
@@ -170,6 +170,15 @@ export default {
     })
   }
 };
+function randomArray(array){
+        let array2=[];
+        while(array.length!==0){
+        let randomIndex=Math.floor(Math.random()*array.length);
+        array2.push(array[randomIndex]);
+        array.splice(randomIndex,1);
+        }
+        return array2;
+    }
 </script>
 <style lang="scss">
 </style>

@@ -8,7 +8,7 @@
         </h4>
       </div>
     </div>
-    <div class="col-12 p-1 m-0" v-for="(item,i) in paginatedData">
+    <div class="col-12 p-1 m-0" v-for="(item,i) in paginatedData"  @click="selectCar(item)">
       <div class="card w-100 p-2 d-inline-block border-0">
         <a v-bind:href="`/cardetail?cardetailpriceid=${item._id}`">
           <div v-bind:id="`carousel-img-${i}`" class="carousel slide" data-ride="carousel">
@@ -166,6 +166,9 @@ export default {
         return;
       }
       this.pageNumber--;
+    },
+    selectCar(item){
+      this.$store.commit("updateSelectedCar", item);
     }
   },
   computed: {
@@ -177,7 +180,7 @@ export default {
     paginatedData() {
       const start = this.pageNumber * this.size,
         end = start + this.size;
-      return this.carpricelist.map(obj =>
+      return randomArray( this.carpricelist.map(obj =>
         Object.assign({}, obj, {
           totalPrice:
             obj.priceByCarType[0].markUpPercent == 0 || obj.priceByCarType[0].markUpPercent == ""
@@ -187,7 +190,7 @@ export default {
                 obj.priceByCarType[0].markUpPlus
               : obj.priceByCarType[0].price * obj.kmTotal * ((obj.priceByCarType[0].markUpPercent + 100) / 100)
         })
-      ).slice(start, end);
+      ).slice(start, end));
     }
   },
   mounted() {
@@ -196,6 +199,15 @@ export default {
     });
   }
 };
+function randomArray(array){
+        let array2=[];
+        while(array.length!==0){
+        let randomIndex=Math.floor(Math.random()*array.length);
+        array2.push(array[randomIndex]);
+        array.splice(randomIndex,1);
+        }
+        return array2;
+    }
 </script>
 <style lang="scss">
 .page-item.active .page-link {
