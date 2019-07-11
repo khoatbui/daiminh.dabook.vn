@@ -12,9 +12,14 @@
           class="card mx-2 my-4 p-0 border-0 border-radius-5 shadow-sm"
           v-for="(item,j) in caritem.priceByCarType"
         >
+         <a v-bind:href="`/cardetail?cardetailpriceid=${item._id}`">
           <div class="row no-gutters">
             <div class="col-5 m-0 p-0">
-              <div v-bind:id="`carousel-img-${i}${j}`" class="carousel slide h-100" data-ride="carousel">
+              <div
+                v-bind:id="`carousel-img-${i}${j}`"
+                class="carousel slide h-100"
+                data-ride="carousel"
+              >
                 <ol class="carousel-indicators">
                   <li
                     v-bind:data-target="`#carousel-img-${i}${j}`"
@@ -30,7 +35,7 @@
                     v-bind:class="{'active':index==0}"
                   >
                     <img
-                      class="border-left-radius-5 car-img h-140"
+                      class="border-left-radius-5 car-img h-110"
                       v-bind:src="caritem.priceByCarType.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
                       alt
                     />
@@ -71,34 +76,36 @@
                 </div>
               </div>
               <div class="row w-100 m-0">
-                <div class="col-12 p-0 text-left">
+                <div class="col-12 p-0 text-left text-ssm">
                   <span>
                     <b>Seats:</b>
                     {{item.seatNumber}}
                   </span>
                 </div>
-                <div class="col-12 p-0 text-left">
+                <div class="col-12 p-0 text-left text-ssm">
                   <span>
                     <b>Model:</b>
                     {{item.carTypeName}}
                   </span>
                 </div>
-                <div class="col-12 p-0 text-left">
-                  <span>{{caritem.kmTotal}} km | {{caritem.nightTotal}} night</span>
-                </div>
               </div>
               <div class="row w-100 m-0">
                 <div class="col-12 p-0 text-right">
                   <div class="d-inline-block font-weight-bolder">
-                      <span class="text-success border-radius-5 success-opac-50 px-1" v-if="j==2">GREAT VALUE:</span>
                     <span
-                      class="text-default" v-bind:class="{'text-success':j==2}"
+                      class="text-success border-radius-5 success-opac-50 px-1"
+                      v-if="i==1"
+                    >GREAT VALUE:</span>
+                    <span
+                      class="text-default"
+                      v-bind:class="{'text-success':i==1}"
                     >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(caculatePrice(item,caritem.kmTotal)) }}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+         </a>
         </div>
       </div>
 

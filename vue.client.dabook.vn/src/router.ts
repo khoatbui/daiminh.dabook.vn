@@ -76,8 +76,8 @@ export default new Router({
       component:CarView
     },
     {
-      path: '/carall',
-      name: 'carall',
+      path: '/carviewall',
+      name: 'carviewall',
       component:CarViewAll
     },
     {

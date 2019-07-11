@@ -59,7 +59,7 @@ export default {
 .nav-item span {
   font-size: 1.2rem;
   font-weight: bolder;
-  color: #484848;
+  color: #475776;
 }
 .nav-item span {
   font-size: 0.8rem;
