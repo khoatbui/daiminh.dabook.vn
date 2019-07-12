@@ -12,7 +12,7 @@
           class="card mx-2 my-4 p-0 border-0 border-radius-5 shadow-sm"
           v-for="(item,j) in caritem.priceByCarType"
         >
-         <a v-bind:href="`/cardetail?cardetailpriceid=${item._id}`">
+         <a @click="redirectToCarDetail(`/cardetail?cardetailpriceid=${item._id}`)" >
           <div class="row no-gutters">
             <div class="col-5 m-0 p-0">
               <div
@@ -192,6 +192,9 @@ export default {
     }
   },
   methods: {
+    redirectToCarDetail(url){
+      this.$router.push({ path: url });
+    },
     redirectToCarViewAll() {
       this.$router.push({ path: "carviewall" });
     },
@@ -199,8 +202,6 @@ export default {
       this.$store.commit("showHideLoading", true);
       var response = await CarPriceService.getAllCarPricePromotion();
       this.carpricelist = response.data;
-      console.log("data----------");
-      console.log(this.carpricelist);
       this.$store.commit("showHideLoading", false);
     },
     async initialWithSupplier(supplierId) {
@@ -223,6 +224,8 @@ export default {
     },
     selectCar(item){
       this.$store.commit("updateSelectedCar", item);
+      console.log('item commit to selectedCar');
+      console.log(item);
     }
   },
   computed: {

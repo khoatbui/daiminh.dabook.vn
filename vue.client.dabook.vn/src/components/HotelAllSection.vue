@@ -125,6 +125,7 @@
 import HotelService from "@/api/HotelService";
 import PackageService from "@/api/PackageService";
 import LoadingComponent from "@/components/LoadingComponent.vue";
+
 export default {
   components: {
     LoadingComponent

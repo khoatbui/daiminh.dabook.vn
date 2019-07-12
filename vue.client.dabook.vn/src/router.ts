@@ -15,6 +15,9 @@ import HistoryChecking from './views/HistoryChecking.vue'
 import HotelConfirmBooking from '@/components/HotelConfirmBooking.vue'
 import HotelRequestBooking from '@/components/HotelRequestBooking.vue'
 import HotelDetailSection from '@/components/HotelDetailSection.vue'
+import CarConfirmBooking from '@/components/CarConfirmBooking.vue'
+import CarRequestBooking from '@/components/CarRequestBooking.vue'
+import CarDetailSection from '@/components/CarDetailSection.vue'
 import MainSearch from '@/views/MainSearch.vue'
 
 Vue.use(Router)
@@ -83,7 +86,25 @@ export default new Router({
     {
       path: '/cardetail',
       name: 'cardetail',
-      component:CarViewDetail
+      component:CarViewDetail,
+      children: [
+        {
+          path: 'confirm',
+          name: 'cardetailconfirm',
+          component: CarConfirmBooking
+        },
+        {
+          path: 'request',
+          name: 'cardetailrequest',
+          component: CarRequestBooking,
+          props: true
+        },
+        {
+          path: '',
+          name: 'cardetailsection',
+          component: CarDetailSection
+        }
+      ]
     },
     {
       path: '/tour',

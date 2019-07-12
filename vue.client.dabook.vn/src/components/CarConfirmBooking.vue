@@ -143,7 +143,6 @@ export default {
   name: "HotelConfirmBooking",
   computed: {
     selectedHotel() {
-      console.log(this.$store.state);
       return this.$store.state.selectedHotel;
     }
   },
