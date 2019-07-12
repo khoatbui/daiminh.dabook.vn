@@ -29,124 +29,15 @@
       <router-view></router-view>
     </div>
     <div class="relate-section">
-      <div class="row w-100 p-0 mx-0 bottom-page">
-        <div class="col-12 px-3 m-0">
+      <div class="row w-100 p-0 mx-0 border-bottom bottom-page">
+        <div class="col-12 p-1 m-0">
           <div class="m-2 text-left">
-            <h4>
-              <b>Hotel you may like!</b>
-            </h4>
+            <h6>
+              <b>Best hotel for you</b>
+            </h6>
           </div>
         </div>
-        <div class="col-12 px-3 m-0 scroll-ngang">
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-          <div class="card m-2 d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-5"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            />
-            <div class="card-body text-left p-1">
-              <p class="card-text text-uppercase p-0 m-0 text-sm">DELUXURE 1BED</p>
-              <p class="card-text font-weight-bolder p-0 m-0">FLC HaLong Golf Resort.</p>
-              <p class="card-text text-sm p-0 m-0">$156 per night</p>
-              <p class="card-text text-sm">
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-                <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              </p>
-            </div>
-          </div>
-        </div>
+        <HotelPromotionSection v-bind:showTitle="false"></HotelPromotionSection>
       </div>
     </div>
     <div class="general-section"></div>
@@ -163,6 +54,7 @@ import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import MainNavBar from "@/components/MainNavBar.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
+import HotelPromotionSection from "@/components/HotelPromotionSection.vue"
 
 @Component({
   components: {
@@ -173,7 +65,8 @@ import LanguageComponent from "@/components/LanguageComponent.vue";
     DatetimeAutoShow,
     LocationSearchComponent,
     MainNavBar,
-    LanguageComponent
+    LanguageComponent,
+    HotelPromotionSection
   }
 })
 export default class Promotion extends Vue {
