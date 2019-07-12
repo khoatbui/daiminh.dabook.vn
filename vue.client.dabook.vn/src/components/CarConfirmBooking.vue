@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div class="hotel-confirm-component p-2">
+  <div class="car-confirm-component p-2">
     <div class="container m-0 p-0 w-100">
       <div class="row d-flex align-items-center border-bottom p-2 m-0">
         <div class="col-12 d-flex justify-content-between align-items-center">
@@ -170,7 +170,7 @@ export default {
 .btn-sm-round svg {
   margin: 0 !important;
 }
-.hotel-confirm-component {
+.car-confirm-component {
   margin: 0 !important;
   position: absolute !important;
   z-index: 300000 !important;
@@ -180,7 +180,7 @@ export default {
   width: 100vw;
   padding: 0 !important;
   min-height: 100vh !important;
-  height: auto !important;
+  height: 100vh !important;
   padding-bottom: 40px !important;
 }
 </style>
