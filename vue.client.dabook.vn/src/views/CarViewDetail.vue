@@ -28,18 +28,6 @@
     <div class="data-section margin-top-130 pb-4">
       <router-view></router-view>
     </div>
-    <div class="relate-section">
-      <div class="row w-100 p-0 mx-0 border-bottom bottom-page">
-        <div class="col-12 p-1 m-0">
-          <div class="m-2 text-left">
-            <h4>
-              <b>Best hotel for you</b>
-            </h4>
-          </div>
-        </div>
-        <HotelPromotionSection v-bind:showTitle="false"></HotelPromotionSection>
-      </div>
-    </div>
     <div class="general-section"></div>
   </div>
 </template>
@@ -54,7 +42,6 @@ import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import MainNavBar from "@/components/MainNavBar.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
-import HotelPromotionSection from "@/components/HotelPromotionSection.vue"
 
 @Component({
   components: {
@@ -65,8 +52,7 @@ import HotelPromotionSection from "@/components/HotelPromotionSection.vue"
     DatetimeAutoShow,
     LocationSearchComponent,
     MainNavBar,
-    LanguageComponent,
-    HotelPromotionSection
+    LanguageComponent
   }
 })
 export default class Promotion extends Vue {

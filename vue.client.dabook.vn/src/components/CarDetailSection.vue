@@ -1,5 +1,6 @@
 //src/components/Navbar.vue
 <template>
+<div>
   <div class="hotel-detail-section">
     <div class="row w-100 p-0 mx-0">
       <div class="col-12 p-0 m-0">
@@ -133,13 +134,29 @@
     </div>
     <LoadingComponent class="center-page"></LoadingComponent>
   </div>
+      <div class="relate-section">
+      <div class="row w-100 p-0 mx-0 border-bottom bottom-page">
+        <div class="col-12 p-1 m-0">
+          <div class="m-2 text-left">
+            <h4>
+              <b>Best hotel for you</b>
+            </h4>
+          </div>
+        </div>
+        <HotelPromotionSection v-bind:showTitle="false"></HotelPromotionSection>
+      </div>
+    </div>
+</div>
 </template>
 <script>
 import CarTypeService from "@/api/CarTypeService";
 import LoadingComponent from "@/components/LoadingComponent.vue";
+import HotelPromotionSection from "@/components/HotelPromotionSection.vue"
+
 export default {
   components: {
-    LoadingComponent
+    LoadingComponent,
+    HotelPromotionSection
   },
   name: "CarDetailSection",
   data() {
