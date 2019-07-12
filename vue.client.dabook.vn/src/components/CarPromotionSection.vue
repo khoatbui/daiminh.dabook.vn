@@ -81,11 +81,15 @@
                     <b>Seats:</b>
                     {{item.seatNumber}}
                   </span>
+                   <span>
+                    <b>Model:</b>
+                    {{item.carTypeName}}
+                  </span>
                 </div>
                 <div class="col-12 p-0 text-left text-ssm">
                   <span>
-                    <b>Model:</b>
-                    {{item.carTypeName}}
+                    <b>Loại hình:</b>
+                    {{caritem.carTransTypeId.carTransTypeName}}
                   </span>
                 </div>
               </div>

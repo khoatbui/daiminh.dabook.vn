@@ -8,14 +8,11 @@
             <h5>
               <span
                 class="font-weight-bolder text-lg"
-              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.totalPrice)}}</span>
-              <span class="text-sm">/ {{selectedHotel.priceByTime.diffTime}} night</span>
+              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedCar.totalPrice)}}</span>
+              <span class="text-sm">/ {{selectedCar.kmTotal}} km</span>
             </h5>
             <p class="text-sm">
-              <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              <font-awesome-icon class="ml-1 text-primary" icon="star" />
-              <font-awesome-icon class="ml-1 text-primary" icon="star" />
+             {{selectedCar.tripName}}
             </p>
           </div>
           <button
@@ -70,6 +67,21 @@
               id="iphone"
               placeholder="+8498868686"
               v-model="customerInfo.phone"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group text-left">
+            <label for="ipickup">
+              <span class="text-sm" 
+               v-bind:class="formCheck.pickup">Pickup <font-awesome-icon class="text-danger" icon="exclamation-circle" v-if="(!formCheck.isFail && formCheck.pickup.length>0)"/></span>
+            </label>
+            <input
+              type="tel"
+              class="form-control"
+              id="ipickup"
+              placeholder="Grand Plaza..."
+              v-model="customerInfo.pickup"
             />
           </div>
         </div>
@@ -182,7 +194,8 @@
 </template>
 <script>
 import axios from "axios";
-import PackageService from "@/api/PackageService";
+import CarPriceService from "@/api/CarPriceService";
+import CarTypeService from "@/api/CarTypeService";
 import Datetime from "@/components/Datetime2.vue";
 import GuestSelectDropDown from "@/components/GuestSelectDropDown.vue";
 import LoadingComponent from "@/components/LoadingComponent.vue";
@@ -196,8 +209,8 @@ export default {
   props: ["id", "packagedata", "authorName", "enddate"],
   name: "HotelRequestBooking",
   computed: {
-    selectedHotel() {
-      return this.$store.state.selectedHotel;
+    selectedCar() {
+      return this.$store.state.selectedCar;
     },
     customer() {
       return this.$store.state.customer;
@@ -211,6 +224,7 @@ export default {
         $("body").removeClass("modal-open");
       }
     });
+    this.initial(this.$route.query.cartypeid);
   },
   methods: {
     backStep() {
@@ -226,42 +240,32 @@ export default {
         selectedDate: this.$store.state.selectDate,
         customer: this.$store.state.customer,
         orderInfo: {
-          guest: this.$store.state.selectedHotel.guest,
-          package: this.$store.state.selectedHotel.package,
-          priceByTime: this.$store.state.selectedHotel.priceByTime
+          guest: this.$store.state.selectedCar.guest,
+          package: this.$store.state.selectedCar.package,
+          priceByTime: this.$store.state.selectedCar.priceByTime
         },
         supplier: {
-          _id: this.$store.state.selectedHotel.package.supplierId._id,
-          supplierCode: this.$store.state.selectedHotel.package.supplierId
+          _id: this.$store.state.selectedCar.supplierId._id,
+          supplierCode: this.$store.state.selectedCar.supplierId
             .supplierCode,
-          supplierName: this.$store.state.selectedHotel.package.supplierId
+          supplierName: this.$store.state.selectedCar.supplierId
             .supplierName
         },
-        hotel: {
-          _id: this.$store.state.selectedHotel.package.hotelId._id,
-          hotelCode: this.$store.state.selectedHotel.package.hotelId.hotelCode,
-          hotelName: this.$store.state.selectedHotel.package.hotelId.hotelName
+        carType: {
+          _id: this.carType._id,
+          carTypeCode: this.carType.carTypeCode,
+          carTypeName: this.carType.carTypeName
         },
-        package: {
-          _id: this.$store.state.selectedHotel.package.packageId._id,
-          packageCode: this.$store.state.selectedHotel.package.packageId
-            .packageCode,
-          packageName: this.$store.state.selectedHotel.package.packageId
-            .packageName
+        trip: {
+          _id: this.$store.state.selectedCar._id,
+          tripCode: this.$store.state.selectedCar.tripCode,
+          tripName: this.$store.state.selectedCar.tripName
         },
-        roomType: {
-          _id: this.$store.state.selectedHotel.package.roomTypeId._id,
-          roomTypeCode: this.$store.state.selectedHotel.package.roomTypeId
-            .roomTypeCode,
-          roomTypeName: this.$store.state.selectedHotel.package.roomTypeId
-            .roomTypeName
-        },
-        optionService: this.$store.state.selectedHotel.selectOptionService,
-        totalPrice: this.$store.state.selectedHotel.totalPrice
+        totalPrice: this.$store.state.selectedCar.totalPrice
       };
-      var response = await PackageService.postRequestHotel(parrams);
+      var response = await CarPriceService.postRequestCar(parrams);
       this.requestResult = response.data;
-      console.log(this.requestResult);
+      console.log(parrams);
       this.$store.commit("showHideLoading", true);
       }
       else{
@@ -276,6 +280,7 @@ export default {
           fullName: "text-danger",
           email: "",
           phone: "",
+          pickup:"",
           isFail: false
         };
 
@@ -286,6 +291,7 @@ export default {
           fullName: "",
           email: "text-danger",
           phone: "",
+          pickup:"",
           isFail: false
         };
 
@@ -296,6 +302,18 @@ export default {
           fullName: "",
           email: "",
           phone: "text-danger",
+          pickup:"",
+          isFail: false
+        };
+
+        return false;
+      }else if (this.customerInfo.pickup.length === 0) {
+         console.log('pickup fail')
+        this.formCheck = {
+          fullName: "",
+          email: "",
+          phone:"",
+          pickup: "text-danger",
           isFail: false
         };
 
@@ -304,11 +322,19 @@ export default {
         this.formCheck = {
           fullName: "",
           email: "",
-          phone: "",
+          phone: "",          
+          pickup:"",
           isFail: true
         };
         return true;
       }
+    },
+    async initial(id) {
+     this.$store.commit('showHideLoading',true);
+      var response = await CarTypeService.getCarTypeById(id);
+      this.carType = response.data;
+      this.$store.commit('showHideLoading',false);
+      this.componentLoaded = true;
     }
   },
   data: function() {
@@ -317,6 +343,7 @@ export default {
         fullName: "",
         email: "",
         phone: "",
+        pickup:"",
         question: ""
       },
       isLoadding: false,
@@ -331,7 +358,8 @@ export default {
         phone: "",
         isFail: true
       },
-      isShowModal:false
+      isShowModal:false,
+      carType:{}
     };
   }
 };

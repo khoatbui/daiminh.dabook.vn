@@ -154,7 +154,7 @@ export default {
   methods: {
     redirectToConfirm: function() {
       this.$router.push(
-        `/cardetail/confirm?cardetailpriceid=${this.$route.query.cardetailpriceid}`
+        `/cardetail/confirm?cardetailpriceid=${this.$route.query.cardetailpriceid}&cartypeid=${this.$route.query.cartypeid}`
       );
     },
     redirectToPromotionAll() {

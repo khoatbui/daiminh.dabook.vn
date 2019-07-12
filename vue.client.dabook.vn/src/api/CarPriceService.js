@@ -21,9 +21,9 @@ var hotelservice = {
     console.log(params)
     return Api().get('cardetailprice/m/getallcarpricebycartype/' + params)
   },
-  postRequestHotel (params) {
+  postRequestCar (params) {
     console.log(params)
-    return Api().post('mail/m/hotel-booking/', params)
+    return Api().post('mail/m/car-booking/', params)
   }
 }
 

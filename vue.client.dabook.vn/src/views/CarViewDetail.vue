@@ -32,9 +32,9 @@
       <div class="row w-100 p-0 mx-0 border-bottom bottom-page">
         <div class="col-12 p-1 m-0">
           <div class="m-2 text-left">
-            <h6>
+            <h4>
               <b>Best hotel for you</b>
-            </h6>
+            </h4>
           </div>
         </div>
         <HotelPromotionSection v-bind:showTitle="false"></HotelPromotionSection>
