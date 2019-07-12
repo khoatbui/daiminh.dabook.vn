@@ -8,20 +8,20 @@
             <ol class="carousel-indicators">
               <li
                 data-target="#carousel-img"
-                v-for="(subitem,index) in selectedCar.priceByCarType[0].carImages"
+                v-for="(subitem,index) in carType.carImages"
                 v-bind:class="{'active':index==0}"
                 v-bind:data-slide-to="index"
               ></li>
             </ol>
             <div class="carousel-inner default-bg h-200">
               <div
-                class="carousel-item"
-                v-for="(subitem,index) in selectedCar.priceByCarType[0].carImages"
+                class="carousel-item h-100"
+                v-for="(subitem,index) in carType.carImages"
                 v-bind:class="{'active':index==0}"
               >
                 <img
-                  v-bind:src="selectedCar.priceByCarType.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
-                  class="d-block card-img-top"
+                  v-bind:src="carType.carImages.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
+                  class="d-block card-img-top h-100"
                   alt="..."
                 />
               </div>
@@ -50,7 +50,7 @@
       <div class="col-12 px-3 m-0">
         <div class="m-2 text-left">
           <h4>
-            <b>{{selectedCar.carTypeName}}</b>
+            <b>{{carType.carTypeName}} [{{selectedCar.carTransTypeId.carTransTypeName}}]</b>
           </h4>
         </div>
       </div>
@@ -62,11 +62,50 @@
       </div>
       <div class="col-12 px-3 m-0 text-left">
         <div class="m-2 pb-4 border-bottom">
-          <h6 class="font-weight-bolder">{{selectedCar.kmTotal}} | {{selectedCar.nightTotal}}</h6>
+          <h6 class="font-weight-bolder">{{selectedCar.carTransTypeId.carTransTypeName}}</h6>
           <div>
             <span
               class="text-sm"
             >{{selectedCar.kmTotal}} km - {{selectedCar.nightTotal}} night</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row w-100 p-0 mx-0">
+      <div class="col-12 px-3 m-0">
+        <div class="m-2 text-left">
+          <p class="text-sm">{{selectedCar.carTransTypeId.carTransTypeIntro}}</p>
+        </div>
+      </div>
+      <div class="col-12 px-3 m-0 text-left">
+        <div class="m-2 pb-4 border-bottom">
+          <p class="text-sm">Contact host</p>
+        </div>
+      </div>
+    </div>
+    <div class="row w-100 p-0 mx-0">
+      <div class="col-12 px-3 m-0">
+        <div class="m-2 text-left pb-4 border-bottom">
+          <h6 class="font-weight-bolder">Car info</h6>
+          <div class="w-100 text-left">
+              <p class="text-sm">
+                  {{carType.carTypeIntro}}
+              </p>
+          </div>
+          <div class="w-100 d-flex justify-content-between align-items-center flex-wrap">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row w-100 p-0 mx-0">
+      <div class="col-12 px-3 m-0">
+        <div class="m-2 text-left pb-4 border-bottom">
+          <h6 class="font-weight-bolder">Lộ trình</h6>
+           <div class="w-100 text-left">
+              <p class="text-sm">
+                  {{selectedCar.tripIntro}}
+              </p>
           </div>
         </div>
       </div>
@@ -96,7 +135,7 @@
   </div>
 </template>
 <script>
-import CarPriceService from "@/api/CarPriceService";
+import CarTypeService from "@/api/CarTypeService";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 export default {
   components: {
@@ -105,10 +144,12 @@ export default {
   name: "CarDetailSection",
   data() {
     return {
-      componentLoaded: false
+      componentLoaded: false,
+      carType:{}
     };
   },
   created() {
+      this.initial(this.$route.query.cartypeid);
   },
   methods: {
     redirectToConfirm: function() {
@@ -118,11 +159,18 @@ export default {
     },
     redirectToPromotionAll() {
       this.$router.push({ path: "carviewall" });
+    },
+async initial(id) {
+      this.$store.commit('showHideLoading',true);
+      var response = await CarTypeService.getCarTypeById(id);
+      this.carType = response.data;
+      console.log(this.carType);
+      this.$store.commit('showHideLoading',false);
+      this.componentLoaded = true;
     }
   },
   computed: {
     selectedCar() {
-      console.log(this.$store.state);
       return this.$store.state.selectedCar;
     }
   }

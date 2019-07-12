@@ -12,7 +12,7 @@
           class="card mx-2 my-4 p-0 border-0 border-radius-5 shadow-sm"
           v-for="(item,j) in caritem.priceByCarType"
         >
-         <a @click="redirectToCarDetail(`/cardetail?cardetailpriceid=${item._id}`)" >
+         <a @click="redirectToCarDetail(`/cardetail?cardetailpriceid=${item._id}&cartypeid=${item.carTypeId}`)" >
           <div class="row no-gutters">
             <div class="col-5 m-0 p-0">
               <div
