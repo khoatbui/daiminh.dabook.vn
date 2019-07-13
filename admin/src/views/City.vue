@@ -24,6 +24,16 @@
               <v-container grid-list-xl>
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.countryId"
+                      :items="country"
+                      item-text="countryName"
+                      item-value="_id"
+                      v-bind:class="{ disabled: disableSelect }"
+                      label="Country"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
                       :rules="[() => editedItem.cityCode.length > 0 || 'Required field']"
@@ -46,6 +56,24 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImg = $event"
+                      v-bind:routerPath="apiIP+'/upload/tour/city'"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <h2>Old images.</h2>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="scroll-ngang">
+                    <img
+                      class="room-img"
+                      v-for="(item,i) in editedItem.cityImages"
+                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
+                      alt
+                    />
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -66,6 +94,7 @@
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
+          <td>{{ props.item.countryId.countryName }}</td>
           <td>{{ props.item.cityCode }}</td>
           <td>{{ props.item.cityName }}</td>
           <td>{{ props.item.cityNameEN }}</td>
@@ -98,6 +127,7 @@
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
+import FileUpload from "../components/FileUpload.vue";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -111,7 +141,12 @@ const AXIOS = axios.create({
   }
 });
 export default {
+   components: {
+    FileUpload
+  },
   data: () => ({
+    apiIP: apiIP,
+        uploadImg: [],
     search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -120,6 +155,7 @@ export default {
     dialog: false,
     headers: [
       { text: "Actions", value: "name", sortable: false },
+       { text: "CountryCode", value: "countryId.countryName" },
       { text: "cityCode", value: "cityCode" },
       { text: "cityName", value: "cityName" },
       { text: "cityNameEN", value: "cityNameEN" },
@@ -132,6 +168,7 @@ export default {
       { langCode: "VI", langName: "VietNam" }
     ],
     city: [],
+    country:[],
     editedIndex: -1,
     disableSelect: false,
     editId: "",
@@ -142,6 +179,8 @@ export default {
       createBy: "",
       modifyBy: "",
        lang: "EN",
+        cityImages: [],
+      removeImage: []
     },
     defaultItem: {
       cityCode: "",
@@ -150,6 +189,8 @@ export default {
       createBy: "",
       modifyBy: "",
        lang: "EN",
+        cityImages: [],
+      removeImage: []
     },
     snackbar: {
       snackbar: false,
@@ -181,15 +222,9 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/country/", { crossdomain: true })
         .then(response => {
-          this.supplier = response.data;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-         AXIOS.get(apiIP + "/city/", { crossdomain: true })
-        .then(response => {
-          this.city = response.data;
+          this.country = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -226,6 +261,12 @@ export default {
     },
 
     save() {
+       if (this.uploadImg.length > 0) {
+        console.log(this.editedItem.cityImages);
+        this.editedItem.removeImage = this.editedItem.cityImages;
+        this.editedItem.cityImages = this.uploadImg;
+        console.log(this.editedItem.removeImage);
+      }
       this.editedItem.modifyBy = this.user.userName;
       this.editedItem.createBy = this.user.userName;
       if (this.$refs.form.validate()) {
@@ -243,6 +284,8 @@ export default {
         this.initialize();
         this.close();
       }
+       this.uploadImg = [];
+      this.editedItem.removeImage = [];
     }
   }
 };

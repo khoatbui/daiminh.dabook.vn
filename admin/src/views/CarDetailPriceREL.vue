@@ -87,6 +87,16 @@
                     <v-flex xs6 sm3 md2>
                       <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                     </v-flex>
+                    <v-flex xs6 sm3 md2>
+                      <v-checkbox v-model="editedItem.isPromotion" :label="`IsPromotion?`"></v-checkbox>
+                    </v-flex>
+                     <v-flex xs12 sm12 md12>
+                    <v-textarea
+                      name="input-7-1"
+                      label="Trip Introduce"
+                      v-model="editedItem.tripIntro"
+                    ></v-textarea>
+                  </v-flex>
                   </v-layout>
                   <v-layout>
                   <v-flex xs12 sm6 md4 class="sub-add-component">
@@ -123,6 +133,9 @@
                   <v-flex xs4 sm2 md4 class="sub-add-component">
                     <v-checkbox v-model="editedItem.isPriceUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
+                    <v-flex xs4 sm2 md4 class="sub-add-component">
+                    <v-checkbox v-model="editedItem.isPricePromotion" :label="`IsPromotion?`"></v-checkbox>
+                  </v-flex>
                   <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-btn color="blue darken-1" dark @click="addNewPriceRange">Add</v-btn>
                     <v-btn color="red darken-4" dark @click="deleteAllOldPriceRange">Delete Price</v-btn>
@@ -140,7 +153,7 @@
                         <td class="justify-center px-0">
                           <v-icon small @click="deletepriceRangeItem(props.index)">delete</v-icon>
                         </td>
-                        <td class="text-xs-right">{{props.item.carTypeId.carTypeName}}</td>
+                        <td class="text-xs-right">{{props.item.carTypeName}}</td>
                         <td
                           class="text-xs-right"
                           style="color:green;font-weight:bold"
@@ -155,6 +168,7 @@
                         >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.totalPrice) }}</td>
                         
                         <td class="text-xs-right">{{props.item.isUsed}}</td>
+                         <td class="text-xs-right">{{props.item.isPromotion}}</td>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -443,11 +457,13 @@ export default {
     ],
     priceHeaders: [
       { text: "Actions", sortable: false },
-       { text: "CarType", value: "carTypeId.carTypeName" },
+       { text: "CarType", value: "carTypeName" },
       { text: "Price", value: "price" },
       { text: "MarkUp(+)", value: "markUpPlus" },
       { text: "MarkUp(%)", value: "markUpPercent" },
-      { text: "Total Price", value: "totalPrice" }
+      { text: "Total Price", value: "totalPrice" },
+      { text: "IsUsed", value: "isUsed" },
+      { text: "IsPromotion", value: "isPromotion" }
     ],
     optionPriceHeaders: [
       { text: "Actions", sortable: false },
@@ -505,6 +521,7 @@ export default {
       carTransTypeId: "",
       tripCode: "",
       tripName: "",
+      tripIntro:"",
       fromLocation:"",
       toLocation:"",
       kmTotal:0,
@@ -513,6 +530,7 @@ export default {
       markUpPercent: 10,
       markUpPlus: 50000,
       priceByCarType: [],
+      isPromotion:false,
       optionService: {
         optionPrice: 50000,
         optionServiceCode: "",
@@ -527,13 +545,16 @@ export default {
       createBy: "",
       modifyBy: "",
       carDetailsImages:[],
-      removeImages:[]
+      removeImages:[],
+      isPriceUsed:true,
+      isPricePromotion:false
     },
     defaultItem: {
      supplierId: "",
       carTransTypeId: "",
       tripCode: "",
       tripName: "",
+      tripIntro:"",
       fromLocation:"",
       toLocation:"",
       kmTotal:0,
@@ -542,6 +563,7 @@ export default {
       markUpPercent: 10,
       markUpPlus: 50000,
       priceByCarType: [],
+      isPromotion:false,
       optionService: {
         optionPrice: 50000,
         optionServiceCode: "",
@@ -556,7 +578,9 @@ export default {
       createBy: "",
       modifyBy: "",
       carDetailsImages:[],
-      removeImages:[]
+      removeImages:[],
+      isPriceUsed:true,
+      isPricePromotion:false
     },
     snackbar: {
       snackbar: false,
@@ -587,13 +611,14 @@ export default {
       return this.editedItem.priceByCarType.map(obj =>
         Object.assign({}, obj, {
           totalPrice:
-            obj.markUpPercent == 0
-              ? obj.price + obj.markUpPlus
-              : obj.markUpPlus !== 0
-              ? obj.price * ((obj.markUpPercent + 100) / 100) + obj.markUpPlus
-              : obj.price * ((obj.markUpPercent + 100) / 100)
+            (obj.markUpPercent == 0 ||obj.markUpPercent == '')
+              ? (obj.price *this.editedItem.kmTotal) + obj.markUpPlus
+              : (obj.markUpPlus !== 0 && obj.markUpPlus == '')
+              ? (obj.price *this.editedItem.kmTotal) * ((obj.markUpPercent + 100) / 100) + obj.markUpPlus
+              : (obj.price *this.editedItem.kmTotal) * ((obj.markUpPercent + 100) / 100)
         })
       );
+      console.log('computed')
       console.log(this.editedItem.priceByCarType);
     }
   },
@@ -616,7 +641,7 @@ export default {
       AXIOS.get(apiIP + "/cardetailprice/", { crossdomain: true })
         .then(response => {
           this.cardetailprice = response.data;
-                    console.log(this.cardetailprice);
+                  console.log(this.cardetailprice);
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -663,7 +688,6 @@ export default {
 
     editItem(item) {
       this.editedIndex = 100;
-      console.log(this.editedItem);
       this.editedItem = Object.assign({}, item);
       this.editedItem.supplierId = item.supplierId._id;
       this.editedItem.carTransTypeId = item.carTransTypeId._id;
@@ -674,6 +698,9 @@ export default {
         optionNote: "",
         isUsed: true
       };
+      this.editedItem.price= 10000,
+       this.editedItem.markUpPercent= item.supplierId.markUpPercent;
+       this.editedItem.markUpPlus=item.supplierId.markUpPlus;
       this.disableSelect = true;
       this.dialog = true;
       delete this.editedItem._id;
@@ -701,6 +728,7 @@ export default {
     },
 
     save() {
+      console.log(this.editedItem);
       this.editedItem.modifyBy = this.user.userName;
       this.editedItem.createBy = this.user.userName;
       if (
@@ -727,19 +755,16 @@ export default {
             .catch(function(error) {})
             .finally(function() {});
         }
-        this.editedItem.priceByCarType = [];
         this.initialize();
         this.close();
       }
     },
 
     changedSupplierCombobox(event) {
-      console.log(event);
       this.defaultItem.markUpPlus = event.markUpPlus;
       this.defaultItem.markUpPercent = event.markUpPercent;
       this.editedItem.markUpPlus = event.markUpPlus;
       this.editedItem.markUpPercent = event.markUpPercent;
-      console.log(this.defaultItem);
       AXIOS.get(apiIP + "/cartype/combobox/cartype/" + event._id, {
         crossdomain: true
       })
@@ -759,15 +784,25 @@ export default {
 
     },
     addNewPriceRange() {
-      console.log(this.editedItem.carTypeId);
+      if (this.editedItem.carTypeId==undefined) {
+        return;
+      }
+      else{
       this.editedItem.priceByCarType.push({
         carTypeId:this.editedItem.carTypeId,
         price: this.editedItem.price,
         markUpPercent: this.editedItem.markUpPercent,
         markUpPlus: this.editedItem.markUpPlus,
-        isUsed: this.editedItem.isUsed,
+        isUsed: this.editedItem.isPriceUsed,
+        isPromotion:this.editedItem.isPricePromotion,
+        carTypeName:this.editedItem.carTypeId.carTypeName,
+        seatNumber: this.editedItem.carTypeId.seatNumber,
+        carTypeIntro: this.editedItem.carTypeId.carTypeIntro,
+        carImages:this.editedItem.carTypeId.carImages,
       });
-      console.log(this.editedItem.priceByCarType);
+      console.log('addNewPriceRange');
+      console.log(this.editedItem);
+      }
     },
     addNewOptionPriceRange() {
       if (

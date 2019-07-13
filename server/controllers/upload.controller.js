@@ -83,6 +83,57 @@ module.exports.uploadCarTypeImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
+
+module.exports.uploadCityImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/tour/city');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/city');
+      result.push({'fileName':element.filename,'filePath':`img/tour/city/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
+
+module.exports.uploadAreaImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/tour/area');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/area');
+      result.push({'fileName':element.filename,'filePath':`img/tour/area/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
+
+module.exports.uploadCountryImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/tour/country');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/country');
+      result.push({'fileName':element.filename,'filePath':`img/tour/country/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 //moves the $file to $dir2
 var moveFile = (file, dir2)=>{
     //include the fs, path modules
@@ -117,6 +168,7 @@ var copyFile = (file, dir2)=>{
   };
 
   module.exports.removeImage = function(imageList) {
+    try {
     //include the fs, path modules
     var fs = require("fs");
   
@@ -128,4 +180,8 @@ var copyFile = (file, dir2)=>{
           } catch(err) {
           }
     });
+      
+  } catch (error) {
+    
+  }
   };

@@ -5,10 +5,11 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var router = express.Router()
-var db = require('../db')
+var controller=require('../controllers/area.controller')
+var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
+var router = express.Router()
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -16,27 +17,13 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',(req,res,next) => {
-    res.send(db.get('area').value());
-})
+router.get('/',controller.index)
 
-router.delete('/:index', function (req, res) {
-    db.get('area').value().splice(req.params.index, 1)
-})
+router.get('/m/getareabyid/:_id',controller.getmAreaById)
 
-router.post('/insert', jsonParser, function (req, res) {
-    db.get('area')
-        .push(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
-})
+router.delete('/:_id', controller.deleteArea)
 
-router.post('/update', jsonParser, function (req, res) {
-    db.get('area')
-        .filter({ areaId: req.body.areaId })
-        .filter({ lang: req.body.lang })
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
-})
+router.post('/insert', jsonParser,controller.insertArea)
+
+router.post('/update/:_id', jsonParser,controller.updateArea)
 module.exports = router

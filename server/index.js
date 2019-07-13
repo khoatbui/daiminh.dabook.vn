@@ -16,6 +16,7 @@ const mainRoute = require('./routes/main.router')
 const destinationRoute = require('./routes/destination.router')
 const travelStyleRoute = require('./routes/travelstyle.router')
 const cityRoute = require('./routes/city.router')
+const countryRoute = require('./routes/country.router')
 const areaRouter = require('./routes/area.router')
 const tourListRoute = require('./routes/tourlist.router')
 const tourDetailRoute = require('./routes/tourdetail.router')
@@ -44,6 +45,7 @@ app.use('/main',mainRoute);
 app.use('/destination',destinationRoute);
 app.use('/travelstyle',travelStyleRoute);
 app.use('/city',cityRoute);
+app.use('/country',countryRoute);
 app.use('/tourlist',tourListRoute);
 app.use('/tourdetail',tourDetailRoute);
 app.use('/area',areaRouter);

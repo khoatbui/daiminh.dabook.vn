@@ -86,30 +86,30 @@ module.exports.getPriceByService=(req, res, next) => {
 // MOBILE
 
 module.exports.getmAllPackage = (req, res, next) => {
-    PackageHotelREL.find({"isUsed":true}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+    PackageHotelREL.find({"isUsed":true}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
         res.send(pac)
     })
 };
 
 module.exports.getmAllPromotionPackage = (req, res, next) => {
-    PackageHotelREL.find({"isUsed":true,"isPromote":true}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+    PackageHotelREL.find({"isUsed":true,"isPromote":true}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
         res.send(pac)
     })
 };
 
 module.exports.getmAllPromotePackageBySupplier = (req, res, next) => {
-    PackageHotelREL.find({"isUsed":true,"isPromote":true,"supplierId":req.params._id}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+    PackageHotelREL.find({"isUsed":true,"isPromote":true,"supplierId":req.params._id}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
         res.send(pac)
     })
 };
 module.exports.getmAllPackageBySupplier = (req, res, next) => {
-    PackageHotelREL.find({"isUsed":true,"supplierId":req.params._id}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+    PackageHotelREL.find({"isUsed":true,"supplierId":req.params._id}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
         res.send(pac)
     })
 };
 
 module.exports.getmPackageDetail = (req, res, next) => {
-    PackageHotelREL.findOne({"isUsed":true,"_id":req.params._id}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+    PackageHotelREL.findOne({"isUsed":true,"_id":req.params._id}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
         res.send(pac)
     })
 };

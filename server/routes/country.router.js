@@ -5,7 +5,7 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var controller=require('../controllers/city.controller')
+var controller=require('../controllers/country.controller')
 var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
@@ -19,11 +19,11 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
-router.get('/m/getcitybyid/:_id',controller.getmCityById)
+router.get('/m/getcountrybyid/:_id',controller.getmCountryById)
 
-router.delete('/:_id', controller.deleteCity)
+router.delete('/:_id', controller.deleteCountry)
 
-router.post('/insert', jsonParser,controller.insertCity)
+router.post('/insert', jsonParser,controller.insertCountry)
 
-router.post('/update/:_id', jsonParser,controller.updateCity)
+router.post('/update/:_id', jsonParser,controller.updateCountry)
 module.exports = router

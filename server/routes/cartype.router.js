@@ -28,4 +28,6 @@ router.post('/update/:_id', jsonParser, controller.updateCarType)
 router.get('/combobox/cartype/:index',controller.getCarTypeBySupplier)
 
 router.get('/combobox/cartypebysupplierCode/:index',controller.getCarTypeBySupplierCode)
+
+router.get('/m/getcartypebyid/:_id',controller.getCarTypeById)
 module.exports = router
