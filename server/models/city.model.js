@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 var citySchema = new mongoose.Schema({
+    countryId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Country' },
     cityCode: String,
     cityName: String,
     cityNameEN: String,
@@ -7,7 +8,8 @@ var citySchema = new mongoose.Schema({
     createBy:String,
     createDate:Date,
     modifyBy:String,
-    modifyDate:Date
+    modifyDate:Date,
+    cityImages:[{fileName:String,filePath:String,destination:String,size:Number}]
 });
 var City =mongoose.model('City',citySchema,'city');
 

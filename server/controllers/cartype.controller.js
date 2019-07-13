@@ -7,14 +7,14 @@ moment().format();
 module.exports.index = function(req, res) {
   CarType.find()
     .populate("supplierId")
-    .then(function(roomtype) {
-      res.send(roomtype);
+    .then(function(cartype) {
+      res.send(cartype);
     });
 };
 
 module.exports.getCarType = (req, res, next) => {
-  CarType.find().then(function(roomtype) {
-    res.send(roomtype);
+  CarType.find().then(function(cartype) {
+    res.send(cartype);
   });
 };
 
@@ -33,11 +33,11 @@ module.exports.insertCarType = function(req, res) {
   req.body.createDate = new Date();
   delete req.body.modifyBy;
 
-  CarType.create(req.body, function(err, roomtype) {
+  CarType.create(req.body, function(err, cartype) {
     if (err) {
       console.log(err);
     } else {
-      res.send(roomtype);
+      res.send(cartype);
     }
   });
 };
@@ -50,27 +50,33 @@ module.exports.updateCarType = function(req, res) {
   CarType.updateOne(
     { _id: req.params._id },
     { $set: req.body },
-    (err, roomtype) => {
+    (err, cartype) => {
       if (err) {
         console.log(err);
         res.status(500).send(err);
       } else {
-        console.log(roomtype);
+        console.log(cartype);
 
-        res.status(200).send(roomtype);
+        res.status(200).send(cartype);
       }
     }
   );
 };
 
 module.exports.getCarTypeBySupplier = (req, res, next) => {
-  CarType.find({ supplierId: req.params.index }).then(function(roomtype) {
-    res.send(roomtype);
+  CarType.find({ supplierId: req.params.index }).then(function(cartype) {
+    res.send(cartype);
   });
 };
 
 module.exports.getCarTypeBySupplierCode = (req, res, next) => {
-  CarType.find({ supplierId: req.params.index }).then(function(roomtype) {
-    res.send(roomtype);
+  CarType.find({ supplierId: req.params.index }).then(function(cartype) {
+    res.send(cartype);
+  });
+};
+
+module.exports.getCarTypeById = (req, res, next) => {
+  CarType.findOne({ _id: req.params._id }).then(function(cartype) {
+    res.send(cartype);
   });
 };

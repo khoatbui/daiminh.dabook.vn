@@ -1,22 +1,26 @@
 var CarDetailPrice = require("../models/cardetailprice.model");
-var UploadController=require('../controllers/upload.controller')
+var UploadController = require("../controllers/upload.controller");
+var _ = require('lodash');
 var mongoose = require("mongoose");
 var moment = require("moment");
 moment().format();
 
 module.exports.index = function(req, res) {
   CarDetailPrice.find()
-  .populate('supplierId')
-  .populate('carTransTypeId')
+    .populate("supplierId")
+    .populate("carTransTypeId")
     .then(function(carDetailPrice) {
       res.send(carDetailPrice);
     });
 };
 
 module.exports.getCarDetailPrice = (req, res, next) => {
-  CarDetailPrice.find().then(function(carDetailPrice) {
-    res.send(carDetailPrice);
-  });
+  CarDetailPrice.find()
+    .populate("supplierId")
+    .populate("carTransTypeId")
+    .then(function(carDetailPrice) {
+      res.send(carDetailPrice);
+    });
 };
 
 module.exports.deleteCarDetailPrice = function(req, res) {
@@ -44,7 +48,7 @@ module.exports.insertCarDetailPrice = function(req, res) {
 };
 
 module.exports.updateCarDetailPrice = function(req, res) {
-  console.log(req.body);
+  console.log(req.body.priceByCarType);
   req.body.modifyDate = new Date();
   delete req.body.createBy;
   UploadController.removeImage(req.body.removeImage);
@@ -65,13 +69,96 @@ module.exports.updateCarDetailPrice = function(req, res) {
 };
 
 module.exports.getCarDetailPriceByHotel = (req, res, next) => {
-  CarDetailPrice.find({ hotelId: req.params.index }).then(function(carDetailPrice) {
+  CarDetailPrice.find({ hotelId: req.params.index }).then(function(
+    carDetailPrice
+  ) {
     res.send(carDetailPrice);
   });
 };
 
 module.exports.getCarDetailPriceByHotelCode = (req, res, next) => {
-  CarDetailPrice.find({ hotelId: req.params.index }).then(function(carDetailPrice) {
+  CarDetailPrice.find({ hotelId: req.params.index }).then(function(
+    carDetailPrice
+  ) {
     res.send(carDetailPrice);
   });
+};
+
+// MOBILE
+module.exports.getmAllPromotionCarDetailPrice = (req, res, next) => {
+  console.log('in')
+  try {
+    CarDetailPrice.find({ isUsed: true })
+      .populate("supplierId")
+      .populate("carTransTypeId")
+      .then(function(pac) {
+        var result = [];
+        var temp = {};
+        pac.forEach(element => {
+          if (element.isPromotion !== true) {
+            element.priceByCarType.forEach((item, index) => {
+              if (item.isPromotion === true) {
+                temp = element;
+                temp.priceByCarType = item;
+                result.push(_.cloneDeep(temp));
+              }
+            });
+          } else {
+            element.priceByCarType.forEach((item, index) => {
+              temp = element;
+              temp.priceByCarType = item;
+              result.push(_.cloneDeep(temp));
+            });
+          }
+        });
+        console.log(result);
+        res.send(result);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.getmAllCarDetailPrice = (req, res, next) => {
+  CarDetailPrice.find({ isUsed: true })
+    .populate("supplierId")
+    .populate("carTransTypeId")
+    .then(function(pac) {
+      var result = [];
+        var temp = {};
+        pac.forEach(element => {
+            element.priceByCarType.forEach((item, index) => {
+              temp = element;
+              temp.priceByCarType = item;
+              result.push(_.cloneDeep(temp));
+            });
+        });
+        console.log(result);
+        res.send(result);
+    });
+};
+
+module.exports.getmAllCarDetailPriceBySupplier = (req, res, next) => {
+  CarDetailPrice.find({ isUsed: true, supplierId: req.params._id })
+    .populate("supplierId")
+    .populate("carTransTypeId")
+    .then(function(pac) {
+      res.send(pac);
+    });
+};
+module.exports.getmAllCarDetailPriceByCarTransType = (req, res, next) => {
+  CarDetailPrice.find({ isUsed: true, carTransTypeId: req.params._id })
+    .populate("supplierId")
+    .populate("carTransTypeId")
+    .then(function(pac) {
+      res.send(pac);
+    });
+};
+module.exports.getmAllCarDetailPriceByCarType = (req, res, next) => {
+  CarDetailPrice.find({ isUsed: true, "priceByCarType.carTypeId": _id })
+    .populate("supplierId")
+    .populate("carTransTypeId")
+    .then(function(pac) {
+      res.send(pac);
+    });
 };

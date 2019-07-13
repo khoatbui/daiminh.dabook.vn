@@ -77,6 +77,13 @@
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
                   </v-flex>
+                   <v-flex xs12 sm12 md12>
+                    <v-textarea
+                      name="input-7-1"
+                      label="Hotel Introduce"
+                      v-model="editedItem.hotelIntro"
+                    ></v-textarea>
+                  </v-flex>
                   <v-flex xs12 sm12 md12>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
@@ -122,6 +129,7 @@
           <td>{{ props.item.star }}</td>
           <td>{{ props.item.createBy }}</td>
           <td>{{ props.item.createDate }}</td>
+          <td>{{ props.item.hotelIntro }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -183,7 +191,8 @@ export default {
       { text: "HotelName", value: "hotelName" },
       { text: "Star", value: "star" },
       { text: "Create By", value: "createBy" },
-      { text: "Create Date", value: "createDate" }
+      { text: "Create Date", value: "createDate" },
+      { text: "Hotel Intro", value: "hotelIntro" }
     ],
     language: [
       { langCode: "EN", langName: "English" },
@@ -209,7 +218,8 @@ export default {
       isHot: true,
       isPromote: true,
       hotelImages: [],
-      removeImage: []
+      removeImage: [],
+      hotelIntro:""
     },
     defaultItem: {
       supplierId: "",
@@ -224,7 +234,8 @@ export default {
       isHot: true,
       isPromote: true,
       hotelImages: [],
-      removeImage: []
+      removeImage: [],
+      hotelIntro:""
     },
     snackbar: {
       snackbar: false,

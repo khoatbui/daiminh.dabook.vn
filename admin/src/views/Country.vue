@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>AREA CRUD</v-toolbar-title>
+      <v-toolbar-title>COUNTRY CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="900px">
@@ -18,16 +18,26 @@
             <v-subheader>KEY</v-subheader>
             <v-container grid-list-xl>
               <v-layout wrap>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.areaId"
+                      :items="area"
+                      item-text="areaName"
+                      item-value="_id"
+                      v-bind:class="{ disabled: disableSelect }"
+                      label="Area"
+                    ></v-select>
+                  </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field required
-                    :rules="[() => editedItem.areaCode.length > 0 || 'Required field']"
-                     v-model="editedItem.areaCode" label="AreaId"></v-text-field>
+                    :rules="[() => editedItem.countryCode.length > 0 || 'Required field']"
+                     v-model="editedItem.countryCode" label="CountryCode"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.areaName" label="AreaName"></v-text-field>
+                  <v-text-field v-model="editedItem.countryName" label="CountryName"></v-text-field>
                 </v-flex>
                  <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.areaNameEN" label="AreaNameEN"></v-text-field>
+                  <v-text-field v-model="editedItem.countryNameEN" label="CountryNameEN"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-select
@@ -39,19 +49,18 @@
                   ></v-select>
                 </v-flex>
                  <v-flex xs12 sm12 md12>
-                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
-                      v-bind:routerPath="apiIP+'/upload/tour/area'"
+                      v-bind:routerPath="apiIP+'/upload/tour/country'"
                     ></file-upload>
-                 </v-flex>
-                 <v-flex xs12 sm12 md12>
+                    </v-flex>
+                  <v-flex xs12 sm12 md12>
                     <h2>Old images.</h2>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="scroll-ngang">
                     <img
                       class="room-img"
-                      v-for="(item,i) in editedItem.areaImages"
+                      v-for="(item,i) in editedItem.countryImages"
                       v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
                       alt
                     />
@@ -69,16 +78,17 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="area" class="elevation-1">
+    <v-data-table :headers="headers" :items="country" class="elevation-1">
       <template v-slot:items="props">
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
-          <td>{{ props.item.areaCode }}</td>
-          <td>{{ props.item.areaName }}</td>
-           <td>{{ props.item.areaNameEN }}</td>
+          <td>{{ props.item.areaId.areaName }}</td>
+          <td>{{ props.item.countryCode }}</td>
+          <td>{{ props.item.countryName }}</td>
+           <td>{{ props.item.countryNameEN }}</td>
           <td>{{ props.item.lang }}</td>
         </tr>
       </template>
@@ -105,11 +115,11 @@ const AXIOS = axios.create({
   }
 });
 export default {
-  components: {
+     components: {
     FileUpload
   },
   data: () => ({
-    apiIP: apiIP,
+      apiIP: apiIP,
      uploadImg: [],
       search: "",
     valid: true,
@@ -119,16 +129,18 @@ export default {
     dialog: false,
     headers: [
       { text: "Actions", value: "name", sortable: false },
+       { text: "Area", value: "areaId.areaName" },
       {
-        text: "AreaCode",
+        text: "CountryCode",
         sortable: false,
-        value: "areaCode"
+        value: "countryCode"
       },
-      { text: "AreaName", value: "areaName" },
-       { text: "AreaNameEN", value: "areaNameEN" },
+      { text: "CountryName", value: "countryName" },
+       { text: "CountryNameEN", value: "countryNameEN" },
       { text: "Language", value: "lang" }
     ],
-    area: [],
+    country: [],
+    area:[],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
@@ -136,19 +148,21 @@ export default {
     ],
     editedIndex: -1,
     editedItem: {
-      areaCode: "",
-      areaName: "",
-      areaNameEN: "",
+        areaId: "",
+      countryCode: "",
+      countryName: "",
+      countryNameEN: "",
       lang: "EN",
-       areaImages: [],
+       countryImages: [],
       removeImage: []
     },
     defaultItem: {
-      areaCode: "",
-      areaName: "",
-      areaNameEN: "",
+        areaId: "",
+      countryCode: "",
+      countryName: "",
+      countryNameEN: "",
       lang: "EN",
-       areaImages: [],
+       countryImages: [],
       removeImage: []
     }
   }),
@@ -171,7 +185,13 @@ export default {
 
  methods: {
     initialize() {
-      AXIOS.get(apiIP + "/area/", { crossdomain: true })
+      AXIOS.get(apiIP + "/country/", { crossdomain: true })
+        .then(response => {
+          this.country = response.data;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+        AXIOS.get(apiIP + "/area/", { crossdomain: true })
         .then(response => {
           this.area = response.data;
         })
@@ -190,7 +210,7 @@ export default {
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/area/" + item._id)
+        AXIOS.delete(apiIP + "/country/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
@@ -211,21 +231,21 @@ export default {
 
     save() {
        if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.areaImages);
-        this.editedItem.removeImage = this.editedItem.areaImages;
-        this.editedItem.areaImages = this.uploadImg;
+        console.log(this.editedItem.countryImages);
+        this.editedItem.removeImage = this.editedItem.countryImages;
+        this.editedItem.countryImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
       this.editedItem.modifyBy = this.user.userName;
       this.editedItem.createBy = this.user.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/area/update/" + this.editId, this.editedItem)
+          AXIOS.post(apiIP + "/country/update/" + this.editId, this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/area/insert", this.editedItem)
+          AXIOS.post(apiIP + "/country/insert", this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});

@@ -24,6 +24,9 @@
           <v-list-tile>
             <v-btn flat to="/area">Area</v-btn>
           </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/country">Country</v-btn>
+          </v-list-tile>
           <v-list-tile>
             <v-btn flat to="/destination">Destination</v-btn>
           </v-list-tile>

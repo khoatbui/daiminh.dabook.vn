@@ -1,14 +1,16 @@
 var City = require('../models/city.model')
 var Supplier=require('../models/supplier.model')
 var mongoose = require('mongoose');
+var UploadController=require('../controllers/upload.controller')
+
 module.exports.index =function(req,res){
-    City.find().then(function(city){
+    City.find().populate('countryId').then(function(city){
         res.send(city)
     })
 };
 
 module.exports.getmCityById=(req,res,next) => {
-    City.findOne({"_id":req.params._id}).then(function(city){
+    City.findOne({"_id":req.params._id}).populate('countryId').then(function(city){
         res.send(city)
     })
 };
@@ -40,6 +42,7 @@ module.exports.insertCity= function (req, res) {
 module.exports.updateCity=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
+    UploadController.removeImage(req.body.removeImage);
         City.updateOne({ _id: req.params._id },{$set:req.body},(err, city) =>{
         if(err) {
             console.log(err);
@@ -52,14 +55,14 @@ module.exports.updateCity=function (req, res) {
 };
 
 module.exports.getCityBySupplier=(req,res,next) => {
-    City.find({supplierId:req.params.index}).then(function(city){
+    City.find({supplierId:req.params.index}).populate('countryId').then(function(city){
         console.log(city);
         res.send(city)
     })
 };
 
 module.exports.getCityBySupplierCode=(req,res,next) => {
-    Supplier.findOne({supplierCode:req.params.index}).then(function(supp){
+    Supplier.findOne({supplierCode:req.params.index}).populate('countryId').then(function(supp){
         City.find({supplierId:supp._id}).then(function(city){
             res.send(city)
         })
