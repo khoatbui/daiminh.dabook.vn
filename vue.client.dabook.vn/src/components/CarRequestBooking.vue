@@ -77,7 +77,7 @@
                v-bind:class="formCheck.pickup">Pickup <font-awesome-icon class="text-danger" icon="exclamation-circle" v-if="(!formCheck.isFail && formCheck.pickup.length>0)"/></span>
             </label>
             <input
-              type="tel"
+              type="text"
               class="form-control"
               id="ipickup"
               placeholder="Grand Plaza..."
@@ -239,11 +239,6 @@ export default {
       var parrams = {
         selectedDate: this.$store.state.selectDate,
         customer: this.$store.state.customer,
-        orderInfo: {
-          guest: this.$store.state.selectedCar.guest,
-          package: this.$store.state.selectedCar.package,
-          priceByTime: this.$store.state.selectedCar.priceByTime
-        },
         supplier: {
           _id: this.$store.state.selectedCar.supplierId._id,
           supplierCode: this.$store.state.selectedCar.supplierId
