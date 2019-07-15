@@ -20,7 +20,46 @@
       </div>
     </div>
     <div class="data-section margin-top-130">
-      <HotelPromotionSection v-bind:showTitle="true"></HotelPromotionSection>
+      <div class="row m-0 p-0">
+        <div class="col-12">
+          <div class="m-2 text-left">
+            <h4>
+              <b>{{searchStore.locationSearch.length==0?"All hotel promotion":searchStore.locationSearch}}</b>
+            </h4>
+          </div>
+        </div>
+        <div class="col-12">
+          <HotelPromotionSection v-bind:showTitle="false"></HotelPromotionSection>
+        </div>
+        <div class="col-12">
+          <div class="row pb-4 ads-section">
+            <div class="col-12 p-0 scroll-ngang">
+              <div class="card text-white text-left border-0">
+                <img src="/img/promotion/ads/korea02.jpg" class="card-img" alt="..." />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="m-2 text-left">
+            <h4>
+              <b>{{searchStore.locationSearch.length==0?"All car promotion":searchStore.locationSearch}}</b>
+            </h4>
+          </div>
+        </div>
+        <div class="col-12">
+          <CarPromotionSection v-bind:showTitle="false"></CarPromotionSection>
+        </div>
+        <div class="col-12">
+          <div class="row pb-4 ads-section">
+            <div class="col-12 p-0 scroll-ngang">
+              <div class="card text-white text-left border-0">
+                <img src="/img/promotion/ads/airasia.jpg" class="card-img" alt="..." />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <Navbar v-bind:current="'main'"></Navbar>
   </div>
@@ -35,6 +74,7 @@ import MainNavBar from "@/components/MainNavBar.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
 import HotelPromotionSection from "@/components/HotelPromotionSection.vue";
+import CarPromotionSection from "@/components/CarPromotionSection.vue";
 
 @Component({
   components: {
@@ -44,11 +84,14 @@ import HotelPromotionSection from "@/components/HotelPromotionSection.vue";
     MainNavBar,
     LocationSearchComponent,
     LanguageComponent,
-    HotelPromotionSection
+    HotelPromotionSection,
+    CarPromotionSection
   }
 })
 export default class Main extends Vue {
-
+  get searchStore() {
+    return this.$store.state.search;
+  }
 }
 </script>
 <style scoped>
@@ -98,8 +141,11 @@ export default class Main extends Vue {
   height: 100px;
   width: 140px;
 }
-.link,.link:hover,.link:active,.link:focus{
-  color: #FFF !important;
+.link,
+.link:hover,
+.link:active,
+.link:focus {
+  color: #fff !important;
   text-decoration: none !important;
 }
 </style>

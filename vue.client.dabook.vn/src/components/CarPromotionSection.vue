@@ -1,8 +1,8 @@
 //src/components/Navbar.vue
 <template>
-  <div class="row w-100 p-0 mx-0 bottom-page">
+  <div class="row w-100 p-0 mx-0">
     <div class="row w-100 mx-0 border-bottom">
-      <div class="col-12 text-left">
+      <div class="col-12 text-left"  v-if="showTitle">
         <h6>
           <b>Today great deal</b>
         </h6>
@@ -36,7 +36,7 @@
                   >
                     <img
                       class="border-left-radius-5 car-img h-110"
-                      v-bind:src="caritem.priceByCarType.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
+                      v-bind:src="caritem.priceByCarType.length>0?`/${subitem.filePath}`:'/img/hotel/roomtype/default.jpg'"
                       alt
                     />
                   </div>

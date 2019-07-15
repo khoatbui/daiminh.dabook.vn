@@ -20,7 +20,7 @@
         <GuestSelect></GuestSelect>
       </div>
     </div>
-    <div class="data-section margin-top-130">
+    <div class="data-section margin-top-130 bottom-page">
       <HotelPromotionSection v-bind:showTitle="true"></HotelPromotionSection>
     </div>
     <Navbar v-bind:current="'hotel'"></Navbar>

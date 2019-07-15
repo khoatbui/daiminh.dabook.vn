@@ -62,7 +62,7 @@
         </div>
         <TopCityDestination v-bind:rootUrl="'/mainsearch'"></TopCityDestination>
         <div class="row pb-4 ads-section">
-          <div class="col-12 scroll-ngang">
+          <div class="col-12 p-0 scroll-ngang">
             <div class="card text-white text-left border-0">
               <img src="img/promotion/ads/airasia.jpg" class="card-img" alt="..." />
             </div>
@@ -156,7 +156,7 @@
 
         <HotelTop10PromotionSectionHorizontal></HotelTop10PromotionSectionHorizontal>
         <div class="row pb-4 ads-section">
-          <div class="col-12 scroll-ngang">
+          <div class="col-12 p-0 scroll-ngang">
             <div class="card text-white text-left border-0">
               <img src="img/promotion/ads/korea02.jpg" class="card-img" alt="..." />
             </div>
