@@ -7,7 +7,7 @@
           </div>
           <div class="col-12 scroll-ngang">
             <div class="card m-2 d-inline-block border-0" v-for="city in cities">
-                <a v-bind:href="`${rootUrl}/?cityid=${item._id}`">
+                <a v-bind:href="`${rootUrl}/?cityid=${city._id}`">
               <img
                 class="card-img-top shadow border-radius-100"
                v-bind:src="city.cityImages.length>0?city.cityImages[0].filePath:'img/hotel/roomtype/default.jpg'"
