@@ -13,6 +13,10 @@
         <font-awesome-icon class="nav-icon-fa" icon="hotel"/>
         <span>{{$t("nav_hotel")}}</span>
       </a>
+      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="http://www.dabook.vn" v-bind:class="{'active':current=='ticket'}">
+        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'car']"/>
+        <span>{{$t("nav_ticket")}}</span>
+      </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="/car" v-bind:class="{'active':current=='car'}">
         <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'car']"/>
         <span>{{$t("nav_car")}}</span>
