@@ -7,7 +7,7 @@ To//src/components/Navbar.vue
             </h6>
           </div>
           <div class="col-12 scroll-ngang">
-            <div class="card m-2 text-white d-inline-block shadow-box" v-for="pac in packagelist">
+            <div class="card m-2 text-white d-inline-block shadow-box overlay-img" v-for="pac in packagelist">
               <img  v-bind:src="pac.roomTypeId.roomImages.length>0?pac.roomTypeId.roomImages[0].filePath:'img/hotel/roomtype/default.jpg'" class="card-img" alt="...">
               <div class="card-img-overlay">
                 <h5 class="card-title text-uppercase text-sm">{{pac.hotelId.hotelName}}</h5>

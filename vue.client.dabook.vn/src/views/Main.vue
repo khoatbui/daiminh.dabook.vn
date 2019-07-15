@@ -124,7 +124,7 @@
           </div>
           <div class="col-12 scroll-ngang">
             <div class="card m-2 text-white text-left border-radius-10">
-              <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
+              <img src="img/topdestination/phuquoc_1.jpg" class="card-img overlay-img" alt="...">
               <div class="card-img-overlay">
                 <h6 class="card-title text-uppercase">{{$t("pmain_cardtitle_intro_letbuild")}}</h6>
                 <h5 class="card-title">{{$t("pmain_cardtitle_intro_inform")}}</h5>
