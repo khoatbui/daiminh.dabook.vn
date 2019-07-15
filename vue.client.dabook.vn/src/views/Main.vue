@@ -3,7 +3,7 @@
     <div class="row w-100 row w-100 m-0 p-0">
       <div class="col-12">
         <a href="/">
-        <img src="img/main_logo_only.png" class="main-logo m-2">
+          <img src="img/main_logo_only.png" class="main-logo m-2" />
         </a>
       </div>
     </div>
@@ -15,7 +15,12 @@
               <label for="iwhere">
                 <span class="text-sm">{{$t("pmain_lbl_where")}}</span>
               </label>
-              <input type="email" class="form-control" id="iwhere" :placeholder="$t('pmain_txt_where')">
+              <input
+                type="email"
+                class="form-control"
+                id="iwhere"
+                :placeholder="$t('pmain_txt_where')"
+              />
             </div>
           </div>
           <div class="col-12">
@@ -32,24 +37,37 @@
                 <span class="text-sm">{{$t("pmain_lbl_adultschildren")}}</span>
               </label>
               <div class="input-group">
-                <input type="email" class="form-control" id="iadult" :placeholder="$t('pmain_txt_adult')">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="iadult"
+                  :placeholder="$t('pmain_txt_adult')"
+                />
                 <input
                   type="email"
                   class="form-control"
                   id="ichildren"
                   aria-describedby="emailHelp"
                   :placeholder="$t('pmain_txt_children')"
-                >
+                />
               </div>
             </div>
           </div>
           <div class="col-12 pt-2">
-            <button class="btn btn-primary w-100 font-weight-bold" @click="redirectToMainSearch">{{$t("pmain_btn_search")}}</button>
+            <button
+              class="btn btn-primary w-100 font-weight-bold"
+              @click="redirectToMainSearch"
+            >{{$t("pmain_btn_search")}}</button>
           </div>
         </div>
-
-        <TopCityDestination></TopCityDestination>
-
+        <TopCityDestination v-bind:rootUrl="'/mainsearch'"></TopCityDestination>
+        <div class="row pb-4 ads-section">
+          <div class="col-12 scroll-ngang">
+            <div class="card text-white text-left border-0">
+              <img src="img/promotion/ads/airasia.jpg" class="card-img" alt="..." />
+            </div>
+          </div>
+        </div>
         <div class="row pb-4 top-destination">
           <div class="col-12 text-left">
             <h6 class="pl-2">
@@ -58,58 +76,60 @@
           </div>
           <div class="col-12 scroll-ngang">
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/general/destination.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/destination.jpg" alt="Card image cap" />
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_destination")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_destination")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/general/travelstyle.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/travelstyle.jpg" alt="Card image cap" />
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_travelstyle")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_travelstyle")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/general/travelservice.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/travelservice.jpg" alt="Card image cap" />
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_travelservice")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_travelservice")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/general/MICE.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/MICE.jpg" alt="Card image cap" />
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_MICE")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_MICE")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/general/fit.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/fit.jpg" alt="Card image cap" />
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_FIT")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_FIT")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/topdestination/quynhon_3.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/aboutus.jpg" alt="Card image cap" />
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_aboutus")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_aboutus")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/general/toptour.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/toptour.jpg" alt="Card image cap" />
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_toptour")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_toptour")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/general/topdestination.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/topdestination.jpg" alt="Card image cap" />
               <div class="card-body text-left">
-                <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_topdestination")}}</p>
+                <p
+                  class="card-text mb-0 font-weight-bolder"
+                >{{$t("pmain_cardtitle_topdestination")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_topdestination")}}</p>
               </div>
             </div>
@@ -124,7 +144,7 @@
           </div>
           <div class="col-12 scroll-ngang">
             <div class="card m-2 text-white text-left border-radius-10">
-              <img src="img/topdestination/phuquoc_1.jpg" class="card-img overlay-img" alt="...">
+              <img src="img/topdestination/phuquoc_1.jpg" class="card-img overlay-img" alt="..." />
               <div class="card-img-overlay">
                 <h6 class="card-title text-uppercase">{{$t("pmain_cardtitle_intro_letbuild")}}</h6>
                 <h5 class="card-title">{{$t("pmain_cardtitle_intro_inform")}}</h5>
@@ -134,7 +154,14 @@
           </div>
         </div>
 
-       <HotelTop10PromotionSectionHorizontal></HotelTop10PromotionSectionHorizontal>
+        <HotelTop10PromotionSectionHorizontal></HotelTop10PromotionSectionHorizontal>
+        <div class="row pb-4 ads-section">
+          <div class="col-12 scroll-ngang">
+            <div class="card text-white text-left border-0">
+              <img src="img/promotion/ads/korea02.jpg" class="card-img" alt="..." />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <Navbar v-bind:current="'main'"></Navbar>
@@ -145,8 +172,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
 import Navbar from "@/components/Navbar.vue";
-import TopCityDestination from "@/components/TopCityDestination.vue"
-import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10PromotionSectionHorizontal.vue"
+import TopCityDestination from "@/components/TopCityDestination.vue";
+import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10PromotionSectionHorizontal.vue";
 
 @Component({
   components: {
@@ -158,7 +185,9 @@ import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10Promoti
 })
 export default class Main extends Vue {
   redirectToMainSearch() {
-      this.$router.push({ path: `mainsearch?where=${this.$route.query.supplier}&from=&to=&adult=&children=` });
+    this.$router.push({
+      path: `mainsearch?where=${this.$route.query.supplier}&from=&to=&adult=&children=`
+    });
   }
 }
 </script>
@@ -204,8 +233,11 @@ export default class Main extends Vue {
   vertical-align: middle;
   cursor: pointer;
 }
-.link,.link:hover,.link:active,.link:focus{
-  color: #FFF !important;
+.link,
+.link:hover,
+.link:active,
+.link:focus {
+  color: #fff !important;
   text-decoration: none !important;
 }
 </style>
