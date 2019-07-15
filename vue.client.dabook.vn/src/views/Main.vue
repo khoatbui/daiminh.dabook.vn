@@ -58,35 +58,35 @@
           </div>
           <div class="col-12 scroll-ngang">
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/topdestination/phuquoc_1.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/destination.jpg" alt="Card image cap">
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_destination")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_destination")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/topdestination/phuquoc_2.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/travelstyle.jpg" alt="Card image cap">
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_travelstyle")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_travelstyle")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/topdestination/phuquoc_3.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/travelservice.jpg" alt="Card image cap">
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_travelservice")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_travelservice")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/topdestination/quynhon_1.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/MICE.jpg" alt="Card image cap">
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_MICE")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_MICE")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/topdestination/quynhon_2.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/fit.jpg" alt="Card image cap">
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_FIT")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_FIT")}}</p>
@@ -100,14 +100,14 @@
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/topdestination/sapa.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/toptour.jpg" alt="Card image cap">
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_toptour")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_toptour")}}</p>
               </div>
             </div>
             <div class="card m-2 d-inline-block shadow-box">
-              <img class="card-img-top" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
+              <img class="card-img-top" src="img/general/topdestination.jpg" alt="Card image cap">
               <div class="card-body text-left">
                 <p class="card-text mb-0 font-weight-bolder">{{$t("pmain_cardtitle_topdestination")}}</p>
                 <p class="card-text">{{$t("pmain_cardtext_topdestination")}}</p>
