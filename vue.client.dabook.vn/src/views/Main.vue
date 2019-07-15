@@ -134,71 +134,7 @@
           </div>
         </div>
 
-        <div class="row pb-4 hot-destination">
-          <div class="col-12 text-left">
-            <h6 class="pl-2">
-              <b>{{$t("pmain_h6_recomendforyou")}}</b>
-            </h6>
-          </div>
-          <div class="col-12 scroll-ngang">
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img src="img/topdestination/phuquoc_1.jpg" class="card-img" alt="...">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">Paris!</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img class="card-img" src="img/topdestination/phuquoc_2.jpg" alt="Card image cap">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">Paris!</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img class="card-img" src="img/topdestination/phuquoc_3.jpg" alt="Card image cap">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">Paris!</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img class="card-img" src="img/topdestination/quynhon_1.jpg" alt="Card image cap">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">Paris!</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img class="card-img" src="img/topdestination/quynhon_2.jpg" alt="Card image cap">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">Paris!</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img class="card-img" src="img/topdestination/quynhon_3.jpg" alt="Card image cap">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">Paris!</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img class="card-img" src="img/topdestination/sapa.jpg" alt="Card image cap">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">Paris!</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-            <div class="card m-2 text-white d-inline-block shadow-box">
-              <img class="card-img" src="img/topdestination/sapa_2.jpg" alt="Card image cap">
-              <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase">Paris!</h5>
-                <h6 class="card-title">$80.95</h6>
-              </div>
-            </div>
-          </div>
-        </div>
+       <HotelTop10PromotionSectionHorizontal></HotelTop10PromotionSectionHorizontal>
       </div>
     </div>
     <Navbar v-bind:current="'main'"></Navbar>
@@ -210,12 +146,14 @@ import { Component, Vue } from "vue-property-decorator";
 import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
 import Navbar from "@/components/Navbar.vue";
 import TopCityDestination from "@/components/TopCityDestination.vue"
+import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10PromotionSectionHorizontal.vue"
 
 @Component({
   components: {
     Datetime,
     Navbar,
-    TopCityDestination
+    TopCityDestination,
+    HotelTop10PromotionSectionHorizontal
   }
 })
 export default class Main extends Vue {
@@ -265,11 +203,6 @@ export default class Main extends Vue {
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-}
-
-.hot-destination .card-img {
-  height: 100px;
-  width: 140px;
 }
 .link,.link:hover,.link:active,.link:focus{
   color: #FFF !important;
