@@ -303,17 +303,32 @@
                       width="100%"
                     >
                       <template v-slot:items="props">
-                        <td class="justify-center px-0">
-                          <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
-                        </td>
-                        <td class="text-xs-right">{{props.item.optionServiceCode}}</td>
-                        <td class="text-xs-right">{{props.item.optionServiceName}}</td>
-                        <td
-                          class="text-xs-right"
-                          style="color:green;font-weight:bold"
-                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.optionPrice) }}</td>
-                        <td class="text-xs-right">{{ props.item.isUsed }}</td>
-                        <td class="text-xs-right">{{ props.item.optionNote }}</td>
+                        <tr v-if="props.item.groupCode=='checkbox'">
+                          <td class="justify-center px-0">
+                            <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
+                          </td>
+                          <td class="text-xs-right">{{props.item.data.optionServiceCode}}</td>
+                          <td class="text-xs-right">{{props.item.data.optionServiceName}}</td>
+                          <td
+                            class="text-xs-right"
+                            style="color:green;font-weight:bold"
+                          >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.data.optionPrice) }}</td>
+                          <td class="text-xs-right">{{ props.item.data.isUsed }}</td>
+                          <td class="text-xs-right">{{ props.item.data.optionNote }}</td>
+                        </tr>
+                        <tr v-if="props.item.groupCode!='checkbox'" v-for="(itemdata,i) in props.item.data" v-bind:key="i">
+                            <td class="justify-center px-0">
+                              <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
+                            </td>
+                            <td class="text-xs-right">{{itemdata.optionServiceCode}}</td>
+                            <td class="text-xs-right">{{itemdata.optionServiceName}}</td>
+                            <td
+                              class="text-xs-right"
+                              style="color:green;font-weight:bold"
+                            >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(itemdata.optionPrice) }}</td>
+                            <td class="text-xs-right">{{ itemdata.isUsed }}</td>
+                            <td class="text-xs-right">{{ itemdata.optionNote }}</td>
+                        </tr>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -1017,7 +1032,8 @@ export default {
         optionServiceCode: "",
         optionServiceName: "",
         optionNote: "",
-        isUsed: true
+        isUsed: true,
+        groupCode: ""
       };
       this.editedItem.days = [];
       this.disableSelect = true;
@@ -1199,19 +1215,22 @@ export default {
         } else {
           this.editedItem.optionServices.push({
             groupCode: this.editedItem.optionService.groupCode.trim(),
-            data: [{
-              optionPrice: this.editedItem.optionService.optionPrice,
-              optionServiceCode: this.editedItem.optionService
-                .optionServiceCode,
-              optionServiceName: this.editedItem.optionService
-                .optionServiceName,
-              optionNote: this.editedItem.optionService.optionNote,
-              isUsed: this.editedItem.optionService.isUsed,
-              groupCode: this.editedItem.optionService.groupCode.trim()
-            }]
+            data: [
+              {
+                optionPrice: this.editedItem.optionService.optionPrice,
+                optionServiceCode: this.editedItem.optionService
+                  .optionServiceCode,
+                optionServiceName: this.editedItem.optionService
+                  .optionServiceName,
+                optionNote: this.editedItem.optionService.optionNote,
+                isUsed: this.editedItem.optionService.isUsed,
+                groupCode: this.editedItem.optionService.groupCode.trim()
+              }
+            ]
           });
         }
       }
+      console.log(this.editedItem.optionServices);
     },
 
     deletepriceRangeItem(item) {

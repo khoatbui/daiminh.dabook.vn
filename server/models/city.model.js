@@ -9,7 +9,8 @@ var citySchema = new mongoose.Schema({
     createDate:Date,
     modifyBy:String,
     modifyDate:Date,
-    cityImages:[{fileName:String,filePath:String,destination:String,size:Number}]
+    cityImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    order:Number
 });
 var City =mongoose.model('City',citySchema,'city');
 

@@ -9,6 +9,13 @@ module.exports.index =function(req,res){
     })
 };
 
+module.exports.getmTop10City =function(req,res){
+    City.find().sort('order')
+    .limit(10).populate('countryId').then(function(city){
+        res.send(city)
+    })
+};
+
 module.exports.getmCityById=(req,res,next) => {
     City.findOne({"_id":req.params._id}).populate('countryId').then(function(city){
         res.send(city)

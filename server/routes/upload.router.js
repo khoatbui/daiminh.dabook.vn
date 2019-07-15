@@ -90,6 +90,33 @@ var countryUpload = multer.diskStorage({
 })
 const uploadCountry = multer({storage:countryUpload});
 
+//DESTINATION IMAGE
+var destinationUpload = multer.diskStorage({
+  destination: `./uploads/tour/country`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadDestination = multer({storage:destinationUpload});
+
+//TRAVEL STYLE IMAGE
+var travelStyleUpload = multer.diskStorage({
+  destination: `./uploads/tour/travelstyle`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTravelStyle = multer({storage:travelStyleUpload});
+
+//TOUR LIST IMAGE
+var tourListUpload = multer.diskStorage({
+  destination: `./uploads/tour/tourlist`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTourList = multer({storage:tourListUpload});
+
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -103,5 +130,8 @@ router.post('/car/cartype',uploadCarType.array('photos', 12),controller.uploadCa
 router.post('/tour/city',uploadCity.array('photos', 12),controller.uploadCityImg)
 router.post('/tour/area',uploadArea.array('photos', 12),controller.uploadAreaImg)
 router.post('/tour/country',uploadCountry.array('photos', 12),controller.uploadCountryImg)
+router.post('/tour/destination',uploadDestination.array('photos', 12),controller.uploadDestinationImg)
+router.post('/tour/travelstyle',uploadTravelStyle.array('photos', 12),controller.uploadTravelStyleImg)
+router.post('/tour/tourlist',uploadTourList.array('photos', 12),controller.uploadTourListImg)
 
 module.exports = router

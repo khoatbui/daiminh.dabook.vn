@@ -134,6 +134,63 @@ module.exports.uploadCountryImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
+
+module.exports.uploadDestinationImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/tour/destination');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/destination');
+      result.push({'fileName':element.filename,'filePath':`img/tour/destination/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
+
+module.exports.uploadTravelStyleImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/tour/travelstyle');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/travelstyle');
+      result.push({'fileName':element.filename,'filePath':`img/tour/travelstyle/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
+
+module.exports.uploadTourListImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/tour/tourlist');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/tourlist');
+      result.push({'fileName':element.filename,'filePath':`img/tour/tourlist/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
+
+
+
+
+
+
 //moves the $file to $dir2
 var moveFile = (file, dir2)=>{
     //include the fs, path modules

@@ -1,69 +1,29 @@
+/*=======GET TRAVEL STYLE LIST======
++ Duong dan hinh anh
++ Link
++ Title
++ Noi dung
+==================================*/
 var express = require('express')
-var router = express.Router()
-var db = require('../db')
+var controller=require('../controllers/tourlist.controller')
+var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
+var router = express.Router()
 // create application/json parser
 var jsonParser = bodyParser.json()
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-// View all
-router.get('/', (req, res, next) => {
-    res.send(db.get('tourList').value());
-})
 
-// Xoa ban ghi
-router.delete('/:index', function (req, res) {
-    db.get('tourList').value().splice(req.params.index, 1)
-})
+router.get('/',controller.index)
 
-// Them moi ban ghi
-router.post('/insert', jsonParser, function (req, res) {
-    db.get('tourList')
-        .push(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
-})
+router.get('/m/gettourlistbyid/:_id',controller.getmTourListById)
 
-// Update ban ghi
-router.post('/update', jsonParser, function (req, res) {
-    db.get('tourList')
-        .filter({ tourId: req.body.tourId })
-        .filter( v=> v.lang=== req.body.lang || v.lang=== "")
-        .assign(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
-})
+router.delete('/:_id', controller.deleteTourList)
 
-// Tim kiem ban ghi theo destination
-router.get('/destination-search/:id', (req, res, next) => {
-    var id = req.params.id;
-    var tours = db.get('tourList').filter({ destinationId: id });
-    res.send(tours);
-})
+router.post('/insert', jsonParser,controller.insertTourList)
 
-
-// Tim kiem ban ghi theo travel style
-router.get('/travelstyle-search/:id', (req, res, next) => {
-    var id = req.params.id;
-    var tours = db.get('tourList').filter({ travelStyleId: id});
-    res.send(tours);
-})
-
-// Tim kiem ban ghi theo city
-router.get('/city-search/:id', (req, res, next) => {
-    var id = req.params.id;
-    var tours = db.get('tourList').filter({ cityId: id});
-    res.send(tours);
-})
-// Tim kiem ban ghi theo search box
-router.get('/searchbox-search/:id', (req, res, next) => {
-    var id = req.params.id;
-    var tours = db.get('tourList').filter(function(tour) {
-        return id.indexOf(tour.tag) > -1
-      });
-    res.send(tours);
-})
+router.post('/update/:_id', jsonParser,controller.updateTourList)
 module.exports = router

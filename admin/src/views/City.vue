@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>city CRUD</v-toolbar-title>
+      <v-toolbar-title>DESTINATION CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
@@ -46,6 +46,9 @@
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.cityNameEN" label="CityNameEN"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-select
@@ -98,6 +101,7 @@
           <td>{{ props.item.cityCode }}</td>
           <td>{{ props.item.cityName }}</td>
           <td>{{ props.item.cityNameEN }}</td>
+          <td>{{ props.item.order }}</td>
           <td>{{ props.item.createBy }}</td>
           <td>{{ props.item.createDate }}</td>
         </tr>
@@ -159,6 +163,7 @@ export default {
       { text: "cityCode", value: "cityCode" },
       { text: "cityName", value: "cityName" },
       { text: "cityNameEN", value: "cityNameEN" },
+      { text: "Order", value: "order" },
       { text: "Create By", value: "createBy" },
       { text: "Create Date", value: "createDate" }
     ],

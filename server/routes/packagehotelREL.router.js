@@ -43,6 +43,8 @@ router.get('/m/getallpackage',controller.getmAllPackage)
 
 router.get('/m/getallpromotionpackage',controller.getmAllPromotionPackage)
 
+router.get('/m/gettop10promotionpackage',controller.getmAllPromotionPackage)
+
 router.get('/m/getpackagedetail/:_id', controller.getmPackageDetail)
 
 router.get('/m/getallpromotepackagebysupplier/:_id',controller.getmAllPromotePackageBySupplier)
@@ -50,6 +52,7 @@ router.get('/m/getallpromotepackagebysupplier/:_id',controller.getmAllPromotePac
 router.get('/m/getallpackagebysupplier/:_id',controller.getmAllPackageBySupplier)
 
 router.post('/m/postpackagebysearch', jsonParser,controller.getmAllPackageBySearch)
+
 router.post('/m/postpromotionpackagebysearch', jsonParser,controller.getmAllPromotionPackageBySearch)
 
 module.exports = router
