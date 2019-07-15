@@ -48,95 +48,7 @@
           </div>
         </div>
 
-        <div class="row pb-4 top-city-destination">
-          <div class="col-12 text-left">
-            <h6 class="pl-2">
-              <b>{{$t("pmain_h6_topcity")}}</b>
-            </h6>
-          </div>
-          <div class="col-12 scroll-ngang">
-            <div class="card m-2 d-inline-block border-0">
-              <img
-                class="card-img-top shadow border-radius-100"
-                src="img/topdestination/phuquoc_1.jpg"
-                alt="Card image cap"
-              >
-              <div class="card-body p-1 text-center">
-                <p class="card-text font-weight-bolder">Ho Chi Minh</p>
-              </div>
-            </div>
-            <div class="card m-2 d-inline-block border-0">
-              <img
-                class="card-img-top shadow border-radius-100"
-                src="img/topdestination/phuquoc_2.jpg"
-                alt="Card image cap"
-              >
-              <div class="card-body p-1 text-center">
-                <p class="card-text font-weight-bolder">Ha Noi</p>
-              </div>
-            </div>
-            <div class="card m-2 d-inline-block border-0">
-              <img
-                class="card-img-top shadow border-radius-100"
-                src="img/topdestination/phuquoc_3.jpg"
-                alt="Card image cap"
-              >
-              <div class="card-body p-1 text-center">
-                <p class="card-text font-weight-bolder">Danang</p>
-              </div>
-            </div>
-            <div class="card m-2 d-inline-block border-0">
-              <img
-                class="card-img-top shadow border-radius-100"
-                src="img/topdestination/quynhon_1.jpg"
-                alt="Card image cap"
-              >
-              <div class="card-body p-1 text-center">
-                <p class="card-text font-weight-bolder">Phu Quoc</p>
-              </div>
-            </div>
-            <div class="card m-2 d-inline-block border-0">
-              <img
-                class="card-img-top shadow border-radius-100"
-                src="img/topdestination/quynhon_2.jpg"
-                alt="Card image cap"
-              >
-              <div class="card-body p-1 text-center">
-                <p class="card-text font-weight-bolder">Hoi An</p>
-              </div>
-            </div>
-            <div class="card m-2 d-inline-block border-0">
-              <img
-                class="card-img-top shadow border-radius-100"
-                src="img/topdestination/quynhon_3.jpg"
-                alt="Card image cap"
-              >
-              <div class="card-body p-1 text-center">
-                <p class="card-text font-weight-bolder">Quang Binh</p>
-              </div>
-            </div>
-            <div class="card m-2 d-inline-block border-0">
-              <img
-                class="card-img-top shadow border-radius-100"
-                src="img/topdestination/sapa.jpg"
-                alt="Card image cap"
-              >
-              <div class="card-body p-1 text-center">
-                <p class="card-text font-weight-bolder">Sapa.</p>
-              </div>
-            </div>
-            <div class="card m-2 d-inline-block border-0">
-              <img
-                class="card-img-top shadow border-radius-100"
-                src="img/topdestination/sapa_2.jpg"
-                alt="Card image cap"
-              >
-              <div class="card-body p-1 text-center">
-                <p class="card-text font-weight-bolder">Ha Long.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <TopCityDestination></TopCityDestination>
 
         <div class="row pb-4 top-destination">
           <div class="col-12 text-left">
@@ -297,11 +209,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
 import Navbar from "@/components/Navbar.vue";
+import TopCityDestination from "@/components/TopCityDestination.vue"
 
 @Component({
   components: {
     Datetime,
-    Navbar
+    Navbar,
+    TopCityDestination
   }
 })
 export default class Main extends Vue {

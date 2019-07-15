@@ -4,6 +4,10 @@ var cityservice = {
   getCityDetailById (params) {
     console.log(params)
     return Api().get('city/m/getcitybyid/' + params)
+  },
+
+  getAllCity() {
+    return Api().get('city/m/gettop10city')
   }
 }
 
