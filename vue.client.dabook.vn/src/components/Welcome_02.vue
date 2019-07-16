@@ -1,25 +1,45 @@
 <template>
-  <div class="container-fluid p-0 h-100 welcome-component overlay-img-parrent-orage">
+  <div class="container-fluid p-0 h-100 welcome-component overlay-img-parrent-primary">
     <div class="row h-100 m-0 p-0 align-items-center">
-        <div class="col-12 p-0 m-0 w-100 h-100">
-            <div id="carouselExampleSlidesOnly" class="carousel slide w-100 h-100" data-ride="carousel">
-  <div class="carousel-inner w-100 h-100">
-    <div class="carousel-item active  w-100 h-100">
-                <img src="/img/background.jpg" alt="/img/background.jpg" class="d-blockoverlay-img overlay-img-orage w-100 h-100 p-0 m-0">
-    </div>
-    <div class="carousel-item  w-100 h-100">
-     <img src="/img/background_02.jpg" alt="/img/background.jpg" class="d-blockoverlay-img overlay-img-orage w-100 h-100 p-0 m-0">
-    </div>
-    <div class="carousel-item  w-100 h-100">
-      <img src="/img/background_03.jpg" alt="/img/background.jpg" class="d-blockoverlay-img overlay-img-orage w-100 h-100 p-0 m-0">
-    </div>
-  </div>
-</div>
+      <div class="col-12 p-0 m-0 w-100 h-100">
+        <div id="carouselExampleSlidesOnly" class="carousel slide w-100 h-100" data-ride="carousel">
+          <div class="carousel-inner w-100 h-100">
+            <div class="carousel-item active w-100 h-100">
+              <img
+                src="/img/background.jpg"
+                alt="/img/background.jpg"
+                class="d-blockoverlay-img overlay-img-orage w-100 h-100 p-0 m-0"
+              />
+            </div>
+            <div class="carousel-item w-100 h-100">
+              <img
+                src="/img/background_02.jpg"
+                alt="/img/background.jpg"
+                class="d-blockoverlay-img overlay-img-orage w-100 h-100 p-0 m-0"
+              />
+            </div>
+            <div class="carousel-item w-100 h-100">
+              <img
+                src="/img/background_03.jpg"
+                alt="/img/background.jpg"
+                class="d-blockoverlay-img overlay-img-orage w-100 h-100 p-0 m-0"
+              />
+            </div>
+          </div>
         </div>
-        <div class="main-action-btngroup w-100 p-2">
-            <a class="btn btn-primary border-radius-100 w-100 my-2" v-bind:href="`/promotion?supplier=${promoteSupplierList[0]._id}`">Travel with us</a>
-            <a class="btn bg-white text-primary border-radius-100 w-100 my-2" v-bind:href="'http://www.dabook.vn'">Explor flight booking</a>
-        </div>
+      </div>
+      <div class="main-action-btngroup w-100 p-2">
+        <img src="img/main_logo_full.png" class="main-logo">
+        <a
+          class="btn btn-primary border-radius-100 w-100 my-2 text-white"
+          v-bind:href="`/promotion?supplier=${promoteSupplierList[0]._id}`"
+        >Travel with us</a>
+        <a
+          class="btn bg-white text-primary border-radius-100 w-100 my-2"
+          v-bind:href="'http://www.dabook.vn'"
+          target="_blank"
+        >Flight ticket</a>
+      </div>
     </div>
   </div>
 </template>
@@ -56,11 +76,11 @@ export default {
 };
 </script>
 <style lang="scss">
-.main-action-btngroup{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%)
+.main-action-btngroup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .welcome-component .ads-banner-img {
   height: 70px;

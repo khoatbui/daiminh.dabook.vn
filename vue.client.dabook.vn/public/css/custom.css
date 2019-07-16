@@ -19,7 +19,7 @@ input:focus,input:active{
   outline: none !important;
 }
 a:hover,a,a:active,a:visited,a:focus{
-  color: #475776 !important;
+  color: #475776 ;
   text-decoration: none !important;
 }
 ol.carousel-indicators {
@@ -194,6 +194,12 @@ ol.carousel-indicators li.active {
 }
 .overlay-img-parrent-orage{
   background: rgba(255, 165, 0,.6) !important;
+}
+.overlay-img-parrent-white{
+  background: #FFFFFF !important;
+}
+.overlay-img-parrent-primary{
+  background: #007bff !important;
 }
 /* ======================
     GENERAL
