@@ -31,8 +31,8 @@
       <div class="main-action-btngroup w-100 p-2">
         <img src="img/main_logo_full.png" class="main-logo">
         <a
-          class="btn btn-primary border-radius-100 w-100 my-2 text-white"
-          v-bind:href="`/promotion?supplier=${promoteSupplierList[0]._id}`"
+          class="btn btn-primary border-radius-100 w-100 my-2 text-white shadow"
+          v-bind:href="`/promotion`"
         >Travel with us</a>
         <a
           class="btn bg-white text-primary border-radius-100 w-100 my-2"
