@@ -19,7 +19,7 @@ input:focus,input:active{
   outline: none !important;
 }
 a:hover,a,a:active,a:visited,a:focus{
-  color: #475776 ;
+  color: #475776 !important;
   text-decoration: none !important;
 }
 ol.carousel-indicators {

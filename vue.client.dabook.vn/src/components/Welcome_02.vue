@@ -82,6 +82,12 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.main-action-btngroup .btn.btn-primary{
+  color: #FFFFFF !important;
+}
+.main-action-btngroup .btn.text-primary{
+  color: #007bff !important;
+}
 .welcome-component .ads-banner-img {
   height: 70px;
   color: #fff !important;
