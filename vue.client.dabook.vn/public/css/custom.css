@@ -176,7 +176,7 @@ ol.carousel-indicators li.active {
     width: 100%;
     height: 100%;
     background-color: #000000;
-    opacity: 0.3;
+    opacity: 0.6;
 }
 .overlay-img::after {
   z-index: 1;
