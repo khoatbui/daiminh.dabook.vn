@@ -32,7 +32,7 @@
         <img src="img/main_logo_full.png" class="main-logo">
         <a
           class="btn btn-primary border-radius-100 w-100 my-2 text-white shadow"
-          v-bind:href="`/promotion`"
+          v-bind:href="`/main`"
         >Travel with us</a>
         <a
           class="btn bg-white text-primary border-radius-100 w-100 my-2"
