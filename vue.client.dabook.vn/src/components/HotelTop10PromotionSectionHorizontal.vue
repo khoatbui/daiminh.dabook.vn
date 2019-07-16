@@ -11,8 +11,8 @@ To//src/components/Navbar.vue
               <a v-bind:href="`/promotiondetail?packagehotelrelid=${pac._id}`">
               <img  v-bind:src="pac.roomTypeId.roomImages.length>0?pac.roomTypeId.roomImages[0].filePath:'img/hotel/roomtype/default.jpg'" class="card-img" alt="...">
               <div class="card-img-overlay">
-                <h5 class="card-title text-uppercase text-ssm hidden-outof-text">{{pac.hotelId.hotelName}}</h5>
-                <h6 class="card-title text-sm hidden-outof-text">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pac.price) }} per night</h6>
+                <h5 class="card-title text-white text-uppercase text-ssm hidden-outof-text">{{pac.hotelId.hotelName}}</h5>
+                <h6 class="card-title text-white text-sm hidden-outof-text">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pac.price) }} per night</h6>
               </div>
               </a>
             </div>
