@@ -16,7 +16,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import i18n from './i18n'
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
-
+var VueTouch = require('vue-touch')
+Vue.use(VueTouch, {name: 'v-touch'})
 Vue.component('VueSlider', VueSlider)
 library.add(faAlignLeft,faUserSecret,faCoffee,faSearchLocation,farUserCircle,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel,faBarcode,faCloudSun,faTv,faUtensils,faDumbbell,faArrowLeft,faCartPlus,faClock,faSearch,faExclamationCircle,faCarSide,faArrowDown,faRulerCombined,faTruckPickup,faPaintRoller,faFileSignature,faPhone,faPlaneDeparture)
 

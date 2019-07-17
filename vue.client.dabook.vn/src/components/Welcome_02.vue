@@ -1,5 +1,6 @@
 <template>
   <div class="container-fluid p-0 h-100 welcome-component overlay-img-parrent-primary">
+    <v-touch v-on:swipeup="onSwipeUp" class="h-100 m-0 p-0">
     <div class="row h-100 m-0 p-0 align-items-center">
       <div class="col-12 p-0 m-0 w-100 h-100">
         <div id="carouselExampleSlidesOnly" class="carousel slide w-100 h-100" data-ride="carousel">
@@ -41,6 +42,7 @@
         >Flight ticket</a>
       </div>
     </div>
+    </v-touch>
   </div>
 </template>
 <script>
@@ -57,6 +59,9 @@ export default {
     this.initial();
   },
   methods: {
+    onSwipeUp:function(){
+      this.$router.push({ path: "main" });
+    },
     redirectMain: function() {
       this.$router.push({ path: "main" });
     },
