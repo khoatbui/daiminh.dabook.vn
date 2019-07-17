@@ -23,31 +23,10 @@
                     v-model="editedItem.tourId"
                     :items="tourlist"
                     item-text="tourName"
-                    item-value="tourId"
+                    item-value="_id"
+                     v-bind:class="{ disabled: disableSelect }"
                     label="Tour"
-                  required
-                    :rules="[() => editedItem.tourId.length > 0 || 'Required field']"></v-select>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <file-upload v-model="editedItem.carolImg" label="Carol Image" routerPath="http://localhost:3000/upload"></file-upload>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.subImg" label="Sub Image"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.program" label="Program"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.priceDetail" label="Price Detail"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.serviceInclude" label="Service Include"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.serviceNotInclude" label="Service Not Include"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.shouldTake" label="Should Take"></v-text-field>
+                    return-object></v-select>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-select
@@ -57,6 +36,26 @@
                     item-value="langCode"
                     label="Language"
                   ></v-select>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                  <h5><b>Program</b></h5>
+                    <VueTrixEditor v-model="editedItem.program" placeholder="Program" localStorage></VueTrixEditor>
+                </v-flex>
+                 <v-flex xs12 sm12 md12>
+                  <h5><b>Transport</b></h5>
+                    <VueTrixEditor v-model="editedItem.transport" placeholder="Transport"></VueTrixEditor>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                    <h5><b>Service Include</b></h5>
+                  <VueTrixEditor v-model="editedItem.serviceInclude" placeholder="Service Include"></VueTrixEditor>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                    <h5><b>Service Not Include</b></h5>
+                  <VueTrixEditor v-model="editedItem.serviceNotInclude" placeholder="Service Not Include"></VueTrixEditor>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                    <h5><b>Should Take</b></h5>
+                  <VueTrixEditor v-model="editedItem.shouldTake" placeholder="Should Take"></VueTrixEditor>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -73,20 +72,18 @@
     </v-toolbar>
     <v-data-table :headers="headers" :items="tourdetail" class="elevation-1">
       <template v-slot:items="props">
-        <tr class="ellip-text">
+        <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
-          <td>{{ props.item.tourId }}</td>
-          <td class="text-xs-right">{{ props.item.carolImg }}</td>
-          <td class="text-xs-right">{{ props.item.subImg }}</td>
-          <td class="text-xs-right">{{ props.item.program }}</td>
-          <td class="text-xs-right">{{ props.item.priceDetail }}</td>
-          <td class="text-xs-right">{{ props.item.serviceInclude }}</td>
-          <td class="text-xs-right">{{ props.item.serviceNotInclude }}</td>
-          <td class="text-xs-right">{{ props.item.shouldTake }}</td>
-          <td class="text-xs-right">{{ props.item.lang }}</td>
+          <td v-html="replace(props.item.tourId.tourName)"></td>
+          <td class="text-xs-right"><p v-html="props.item.program"></p></td>
+          <td class="text-xs-right"><p v-html="props.item.transport"></p></td>
+          <td class="text-xs-right"><p v-html="props.item.serviceInclude"></p></td>
+          <td class="text-xs-right"><p v-html="props.item.serviceNotInclude"></p></td>
+          <td class="text-xs-right"><p v-html="props.item.shouldTake"></p></td>
+          <td class="text-xs-right"><p v-html="props.item.lang"></p></td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -96,9 +93,12 @@
   </div>
 </template>
 <script>
-var apiIP = process.env.VUE_APP_API_IPADDRESS
-import FileUpload from '../components/FileUpload.vue'
+var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
+import FileUpload from "../components/FileUpload.vue";
+import moment from "moment";
+// import VueTrix from "vue-trix";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -113,9 +113,12 @@ const AXIOS = axios.create({
 });
 export default {
   components:{
-    FileUpload
+    FileUpload,
+    // VueTrix
+    VueTrixEditor
   },
   data: () => ({
+    apiIP:apiIP,
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
@@ -127,12 +130,10 @@ export default {
         text: "Tour",
         align: "center",
         sortable: false,
-        value: "tourId"
+        value: "tourId.tourName"
       },
-      { text: "Carol Image", align: "center", value: "carolImg" },
-      { text: "Sub Image", align: "center", value: "subImg" },
       { text: "Program", align: "center", value: "program" },
-      { text: "Price Detail", align: "center", value: "priceDetail" },
+      { text: "Transport", align: "center", value: "transport" },
       { text: "Service Include", align: "center", value: "serviceInclude" },
       {
         text: "Service NotInclude",
@@ -143,33 +144,43 @@ export default {
     ],
     tourlist: [],
     tourdetail: [],
+    uploadImg:[],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
       { langCode: "VI", langName: "VietNam" }
     ],
     editedIndex: -1,
+    disableSelect: false,
     editedItem: {
       tourId: "",
-      carolImg: "",
-      subImg: "",
       program: "",
-      priceDetail: "",
+      transport: "",
       serviceInclude: "",
       serviceNotInclude: "",
       shouldTake: "",
-      lang: "EN"
+      lang: "EN",
+      createBy: "",
+      createDate: moment(new Date()).format("YYYY-MM-DD"),
+      modifyBy: "",
+      modifyDate: moment(new Date()).format("YYYY-MM-DD"),
+            tourDetailImages: [],
+            removeImage: []
     },
     defaultItem: {
-      tourId: "",
-      carolImg: "",
-      subImg: "",
+       tourId: "",
       program: "",
-      priceDetail: "",
+      transport: "",
       serviceInclude: "",
       serviceNotInclude: "",
       shouldTake: "",
-      lang: "EN"
+      lang: "EN",
+      createBy: "",
+      createDate: moment(new Date()).format("YYYY-MM-DD"),
+      modifyBy: "",
+      modifyDate: moment(new Date()).format("YYYY-MM-DD"),
+      tourDetailImages: [],
+            removeImage: []
     }
   }),
 
@@ -190,44 +201,46 @@ export default {
   },
 
   methods: {
-    initialize() {
-      AXIOS.get("http://localhost:3000/tourdetail/", { crossdomain: true })
-        .then(response => {
-          this.tourdetail = response.data;
-        })
-        .catch(function(error) {
-        })
-        .finally(function() {});
-
-      AXIOS.get("http://localhost:3000/tourlist/", { crossdomain: true })
+     initialize() {
+      AXIOS.get(apiIP + "/tourlist/", { crossdomain: true })
         .then(response => {
           this.tourlist = response.data;
         })
-        .catch(function(error) {
+        .catch(function(error) {})
+        .finally(function() {});
+      AXIOS.get(apiIP + "/tourdetail/", { crossdomain: true })
+        .then(response => {
+          this.tourdetail = response.data;
+          console.log(this.tourdetail);
         })
+        .catch(function(error) {})
         .finally(function() {});
     },
 
     editItem(item) {
-      this.editedIndex = this.tourdetail.indexOf(item);
+      this.editedIndex = 100;
       this.editedItem = Object.assign({}, item);
+      delete this.editedItem._id;
+      this.editId = item._id;
       this.dialog = true;
+      this.disableSelect = true;
     },
 
     deleteItem(item) {
-      const index = this.tourdetail.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete("http://localhost:3000/tourdetail/" + index)
+        AXIOS.delete(apiIP + "/tourdetail/" + item._id)
           .then(response => {
-            this.tourdetail.splice(index, 1);
+            this.snackbar.snackbar = true;
+            this.snackbar.text = response.data;
+            this.initialize();
           })
-          .catch(function(error) {
-          })
+          .catch(function(error) {})
           .finally(function() {});
     },
 
     close() {
       this.dialog = false;
+      this.disableSelect = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
@@ -235,24 +248,35 @@ export default {
     },
 
     save() {
-      if (this.editedIndex > -1) {
-        AXIOS.post("http://localhost:3000/tourdetail/update", this.editedItem)
-          .then(response => {
-            Object.assign(this.tourdetail[this.editedIndex], this.editedItem);
-          })
-          .catch(function(error) {
-          })
-          .finally(function() {});
-      } else {
-        AXIOS.post("http://localhost:3000/tourdetail/insert", this.editedItem)
-          .then(response => {
-          })
-          .catch(function(error) {
-          })
-          .finally(function() {});
-        this.tourdetail.push(this.editedItem);
+      console.log(this.editedItem);
+      if (this.uploadImg.length > 0) {
+        console.log(this.editedItem.tourDetailImages);
+        this.editedItem.removeImage = this.editedItem.tourDetailImages;
+        this.editedItem.tourDetailImages = this.uploadImg;
+        console.log(this.editedItem.removeImage);
       }
-      this.close();
+      this.editedItem.modifyBy = this.user.userName;
+      this.editedItem.createBy = this.user.userName;
+      if (this.$refs.form.validate()) {
+        if (this.editedIndex > -1) {
+          AXIOS.post(apiIP + "/tourdetail/update/" + this.editId, this.editedItem)
+            .then(response => {})
+            .catch(function(error) {})
+            .finally(function() {});
+        } else {
+          AXIOS.post(apiIP + "/tourdetail/insert", this.editedItem)
+            .then(response => {})
+            .catch(function(error) {})
+            .finally(function() {});
+        }
+        this.initialize();
+        this.close();
+      }
+      this.uploadImg = [];
+      this.editedItem.removeImage = [];
+    },
+    replace(item){
+      return item.replace('block','');
     }
   }
 };
@@ -264,5 +288,13 @@ export default {
   max-width: 50px !important;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.disabled {
+  pointer-events: none;
+  color: #bfcbd9;
+  cursor: not-allowed;
+  background-image: none;
+  background-color: #eef1f6;
+  border-color: #d1dbe5;
 }
 </style>

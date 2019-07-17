@@ -6,7 +6,7 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 import Vuetify from 'vuetify'
-import User from './mixins/User';
+import User from './mixins/User'
 import JsonExcel from 'vue-json-excel'
  
 Vue.component('downloadExcel', JsonExcel)

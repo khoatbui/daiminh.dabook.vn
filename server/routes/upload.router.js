@@ -117,6 +117,16 @@ var tourListUpload = multer.diskStorage({
 })
 const uploadTourList = multer({storage:tourListUpload});
 
+
+//TOUR DETAIL IMAGE
+var tourDetailUpload = multer.diskStorage({
+  destination: `./uploads/tour/tourlist`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTourDetail = multer({storage:tourDetailUpload});
+
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -133,5 +143,7 @@ router.post('/tour/country',uploadCountry.array('photos', 12),controller.uploadC
 router.post('/tour/destination',uploadDestination.array('photos', 12),controller.uploadDestinationImg)
 router.post('/tour/travelstyle',uploadTravelStyle.array('photos', 12),controller.uploadTravelStyleImg)
 router.post('/tour/tourlist',uploadTourList.array('photos', 12),controller.uploadTourListImg)
+router.post('/tour/tourdetail',uploadTourDetail.array('photos', 12),controller.uploadTourDetailImg)
+
 
 module.exports = router

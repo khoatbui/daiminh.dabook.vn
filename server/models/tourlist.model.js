@@ -22,7 +22,8 @@ var tourListSchema = new mongoose.Schema({
     discount:Number,
     price:Number,
     isUsed:Boolean,
-    isPromotion:Boolean
+    isPromotion:Boolean,
+    tourIntros:[]
 });
 var TourList =mongoose.model('TourList',tourListSchema,'tourlist');
 

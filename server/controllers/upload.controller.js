@@ -176,7 +176,7 @@ module.exports.uploadTourListImg=async (req, res) => {
      req.files.forEach(element => {
   copyFile(element.path, '../daiminh.dabook.vn/img/tour/tourlist');
   copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/tourlist');
-      result.push({'fileName':element.filename,'filePath':`img/tour/tourlist/${element.filename}`,'destination':element.destination})
+      result.push({'fileName':element.filename,'filePath':`img/tour/tourlist/${element.filename}`,'destination':element.destination,'src':`img/tour/tourlist/${element.filename}`})
   });
   console.log(result);
   res.json({'files':result});
@@ -186,6 +186,22 @@ module.exports.uploadTourListImg=async (req, res) => {
   }
 }
 
+module.exports.uploadTourDetailImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/tour/tourdetail');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/tourdetail');
+        result.push({'fileName':element.filename,'filePath':`img/tour/tourdetail/${element.filename}`,'destination':element.destination,'src':`img/tour/tourdetail/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 
 
 

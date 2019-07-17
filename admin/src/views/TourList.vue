@@ -39,24 +39,12 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.lang"
-                      :items="language"
-                      item-text="langName"
-                      item-value="langCode"
-                      label="Language"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
                       :rules="[() => editedItem.tourCode.length > 0 || 'Required field']"
                       v-model="editedItem.tourCode"
                       label="Tour Code"
                     ></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.tourName" label="Tour Name"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
@@ -67,20 +55,7 @@
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isPromotion" :label="`IsPromotion?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <v-textarea
-                      name="input-7-1"
-                      label="Tour Introduce"
-                      v-model="editedItem.tourIntro"
-                    ></v-textarea>
-                  </v-flex>
                   <v-flex xs12 sm6 md3>
-                    <v-text-field v-model="editedItem.from" label="From(Destination)"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md3>
-                    <v-text-field v-model="editedItem.to" label="To(Arrived)"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-menu
                       v-model="menu2"
                       :close-on-content-click="false"
@@ -103,7 +78,7 @@
                       <v-date-picker v-model="editedItem.startDate" @input="menu2 = false"></v-date-picker>
                     </v-menu>
                   </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                  <v-flex xs12 sm6 md3>
                     <v-menu
                       v-model="menu2"
                       :close-on-content-click="false"
@@ -141,6 +116,57 @@
                   <v-flex xs12 sm12 md12>
                     <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
                   </v-flex>
+                  <v-flex xs12 sm12 md12 class="sub-add-component">
+                    <v-text-field v-model="editedItem.tourName" label="Tour Name"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="sub-add-component">
+                    <v-textarea
+                      name="input-7-1"
+                      label="Tour Introduce"
+                      v-model="editedItem.tourIntro"
+                    ></v-textarea>
+                  </v-flex>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                    <v-text-field v-model="editedItem.from" label="From(Destination)"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                    <v-text-field v-model="editedItem.to" label="To(Arrived)"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addTourIntroByLang">Add</v-btn>
+                  </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="tourIntrosHeader"
+                      :items="editedItem.tourIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deleteTourIntroByLang(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.tourName}}</td>
+                        <td>{{props.item.from}}</td>
+                        <td>{{props.item.to}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.tourIntro}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
+                <v-layout wrap>
                   <v-flex xs12 sm12 md12>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
@@ -185,7 +211,7 @@
           <td>{{ props.item.isUsed }}</td>
           <td>{{ props.item.order }}</td>
           <td>{{ props.item.keyword }}</td>
-                    <td>{{ props.item.tourIntro }}</td>
+          <td>{{ props.item.tourIntro }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -225,6 +251,14 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
+    tourIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "TourName", value: "tourName" },
+      { text: "from", value: "from" },
+      { text: "to", value: "to" },
+      { text: "language", value: "lang" },
+      { text: "TourIntro", value: "tourIntro" }
+    ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
       {
@@ -237,7 +271,7 @@ export default {
       { text: "isUsed", value: "isUsed" },
       { text: "order", value: "order" },
       { text: "keyword", value: "keyword" },
-            { text: "Intro", value: "tourIntro" }
+      { text: "Intro", value: "tourIntro" }
     ],
     tourList: [],
     destination: [],
@@ -249,7 +283,7 @@ export default {
       { langCode: "KO", langName: "Korea" },
       { langCode: "VI", langName: "VietNam" }
     ],
-        disableSelect: false,
+    disableSelect: false,
     editedIndex: -1,
     editedItem: {
       destinationId: "",
@@ -275,7 +309,8 @@ export default {
       price: 50000,
       isUsed: true,
       isPromotion: false,
-      removeImage: []
+      removeImage: [],
+      tourIntros: []
     },
     defaultItem: {
       destinationId: "",
@@ -301,7 +336,8 @@ export default {
       price: 50000,
       isUsed: true,
       isPromotion: false,
-      removeImage: []
+      removeImage: [],
+      tourIntros: []
     }
   }),
 
@@ -399,6 +435,20 @@ export default {
       }
       this.uploadImg = [];
       this.editedItem.removeImage = [];
+    },
+    addTourIntroByLang() {
+      console.log(this.editedItem);
+      this.editedItem.tourIntros.push({
+        tourName: this.editedItem.tourName,
+        tourIntro: this.editedItem.tourIntro,
+        from: this.editedItem.from,
+        to: this.editedItem.to,
+        lang: this.editedItem.lang
+      });
+      console.log(this.editedItem.tourIntros);
+    },
+    deleteTourIntroByLang(item) {
+      this.editedItem.tourIntros.splice(item, 1);
     }
   }
 };
@@ -410,5 +460,8 @@ export default {
   max-width: 50px !important;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.sub-add-component {
+  background-color: rgb(205, 224, 243) !important;
 }
 </style>
