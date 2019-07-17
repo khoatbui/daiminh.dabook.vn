@@ -729,8 +729,8 @@ export default {
 
     save() {
       console.log(this.editedItem);
-      this.editedItem.modifyBy = this.user.userName;
-      this.editedItem.createBy = this.user.userName;
+     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      this.editedItem.createBy = this.$store.state.user.login.userName;
       if (
         (this.editedItem.markUpPlus == "" ||
           this.editedItem.markUpPlus.toString().length <= 0) &&

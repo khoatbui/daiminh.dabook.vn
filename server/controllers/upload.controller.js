@@ -189,14 +189,13 @@ module.exports.uploadTourListImg=async (req, res) => {
 module.exports.uploadTourDetailImg=async (req, res) => {
     try {
         var result=[];
-       console.log(req.files)
-       req.files.forEach(element => {
+       console.log(req.file)
+       var element=req.file;
     copyFile(element.path, '../daiminh.dabook.vn/img/tour/tourdetail');
     copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/tourdetail');
-        result.push({'fileName':element.filename,'filePath':`img/tour/tourdetail/${element.filename}`,'destination':element.destination,'src':`img/tour/tourdetail/${element.filename}`})
-    });
+    result.push({'fileName':element.filename,'filePath':`img/tour/tourdetail/${element.filename}`,'destination':element.destination,'src':`img/tour/tourdetail/${element.filename}`})
     console.log(result);
-    res.json({'files':result});
+    res.json(result);
     } catch (err) {
         console.log(err);
         res.sendStatus(400);

@@ -37,25 +37,40 @@
                     label="Language"
                   ></v-select>
                 </v-flex>
-                <v-flex xs12 sm12 md12>
+                <v-flex xs12 sm12 md12 class="group-card">
                   <h5><b>Program</b></h5>
-                    <VueTrixEditor v-model="editedItem.program" placeholder="Program" localStorage></VueTrixEditor>
+                    <VueTrixEditor v-model="editedItem.program" v-bind:initial-content="editedItem.program" placeholder="Program" uniqueId="iprogram" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
+                    <div v-html="editedItem.program" class="old-content">
+
+                    </div>
                 </v-flex>
-                 <v-flex xs12 sm12 md12>
+                 <v-flex xs12 sm12 md12 class="group-card">
                   <h5><b>Transport</b></h5>
-                    <VueTrixEditor v-model="editedItem.transport" placeholder="Transport"></VueTrixEditor>
+                    <VueTrixEditor v-model="editedItem.transport" placeholder="Transport" uniqueId="itransport" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
+                    <div v-html="editedItem.transport" class="old-content">
+
+                    </div>
                 </v-flex>
-                <v-flex xs12 sm12 md12>
+                <v-flex xs12 sm12 md12 class="group-card">
                     <h5><b>Service Include</b></h5>
-                  <VueTrixEditor v-model="editedItem.serviceInclude" placeholder="Service Include"></VueTrixEditor>
+                  <VueTrixEditor v-model="editedItem.serviceInclude" placeholder="Service Include" uniqueId="iserviceinclude" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.serviceInclude" class="old-content">
+
+                    </div>
                 </v-flex>
-                <v-flex xs12 sm12 md12>
+                <v-flex xs12 sm12 md12 class="group-card">
                     <h5><b>Service Not Include</b></h5>
-                  <VueTrixEditor v-model="editedItem.serviceNotInclude" placeholder="Service Not Include"></VueTrixEditor>
+                  <VueTrixEditor v-model="editedItem.serviceNotInclude" placeholder="Service Not Include" uniqueId="iservicenotinclude" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.serviceNotInclude" class="old-content">
+
+                    </div>
                 </v-flex>
-                <v-flex xs12 sm12 md12>
+                <v-flex xs12 sm12 md12 class="group-card">
                     <h5><b>Should Take</b></h5>
-                  <VueTrixEditor v-model="editedItem.shouldTake" placeholder="Should Take"></VueTrixEditor>
+                  <VueTrixEditor v-model="editedItem.shouldTake" placeholder="Should Take" uniqueId="ishouldtake" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.shouldTake" class="old-content">
+
+                    </div>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -78,12 +93,12 @@
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
           <td v-html="replace(props.item.tourId.tourName)"></td>
-          <td class="text-xs-right"><p v-html="props.item.program"></p></td>
-          <td class="text-xs-right"><p v-html="props.item.transport"></p></td>
-          <td class="text-xs-right"><p v-html="props.item.serviceInclude"></p></td>
-          <td class="text-xs-right"><p v-html="props.item.serviceNotInclude"></p></td>
-          <td class="text-xs-right"><p v-html="props.item.shouldTake"></p></td>
-          <td class="text-xs-right"><p v-html="props.item.lang"></p></td>
+          <td ><p v-html="props.item.program"></p></td>
+          <td ><p v-html="props.item.transport"></p></td>
+          <td ><p v-html="props.item.serviceInclude"></p></td>
+          <td ><p v-html="props.item.serviceNotInclude"></p></td>
+          <td ><p v-html="props.item.shouldTake"></p></td>
+          <td ><p v-html="props.item.lang"></p></td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -224,6 +239,8 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
+      console.log('edit show')
+      console.log(this.editedItem);
     },
 
     deleteItem(item) {
@@ -255,8 +272,8 @@ export default {
         this.editedItem.tourDetailImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
-      this.editedItem.modifyBy = this.user.userName;
-      this.editedItem.createBy = this.user.userName;
+     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(apiIP + "/tourdetail/update/" + this.editId, this.editedItem)
@@ -296,5 +313,16 @@ export default {
   background-image: none;
   background-color: #eef1f6;
   border-color: #d1dbe5;
+}
+.old-content{
+  margin-top:10px;
+  background-color: #e2e9f1;
+}
+.group-card{
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px #c1c1c1;
+  margin-bottom: 40px;
+  border:1px solid #01b3fa;
 }
 </style>

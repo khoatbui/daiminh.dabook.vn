@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>TRAVEL STYLE CRUD</v-toolbar-title>
+      <v-toolbar-title>TOUR LIST CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="900px">
@@ -416,8 +416,8 @@ export default {
         this.editedItem.tourImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
-      this.editedItem.modifyBy = this.user.userName;
-      this.editedItem.createBy = this.user.userName;
+     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(apiIP + "/tourlist/update/" + this.editId, this.editedItem)

@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import store from './store'
 var Auth = require('./controllers/auth.middleware');
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -20,176 +20,151 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/Login.vue')
     },
     {
+      path: '/register',
+      name: 'register',
+      component: () => import(/* webpackChunkName: "about" */ './views/Register.vue')
+    },
+    {
       path: '/tour-list',
       name: 'tourlist',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/TourList.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/TourList.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/destination',
       name: 'destination',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Destination.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Destination.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/area',
       name: 'area',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Area.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Area.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/city',
       name: 'city',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/City.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/City.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/country',
       name: 'country',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Country.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Country.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/tour-detail',
       name: 'tourdetail',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/TourDetail.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/TourDetail.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/travel-style',
       name: 'travelstyle',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/TravelStyle.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/TravelStyle.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/payment',
       name: 'payment',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Payments.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Payments.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/order',
       name: 'order',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Order.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Order.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/service-include',
       name: 'serviceinclude',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/ServiceInclude.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/ServiceInclude.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/hotel',
       name: 'hotel',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Hotel.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Hotel.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/supplier',
       name: 'supplier',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Supplier.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Supplier.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/package',
       name: 'package',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Package.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Package.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/room-type',
       name: 'room-type',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/RoomType.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/RoomType.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/option-service',
       name: 'option-service',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/OptionService.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/OptionService.vue'),
+      meta: { requiresAuth: true }
     }
     ,
     {
       path: '/package-hotel-rel',
       name: 'package-hotel-rel',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/PackageHotelREL.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/PackageHotelREL.vue'),
+      meta: { requiresAuth: true }
     }
     ,
     {
       path: '/roomtype-hotel-rel',
       name: 'roomtype-hotel-rel',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/RoomTypeHotelREL.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/RoomTypeHotelREL.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/carsupplier',
       name: 'carsupplier',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/CarSupplier.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/CarSupplier.vue'),
+      meta: { requiresAuth: true }
     }
     ,
     {
       path: '/carcartype',
       name: 'carcartype',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/CarType.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/CarType.vue'),
+      meta: { requiresAuth: true }
     }
     ,
     {
       path: '/cartranstype',
       name: 'cartranstype',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/CarTransType.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/CarTransType.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/cardetailprice',
       name: 'cardetailprice',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/CarDetailPriceREL.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/CarDetailPriceREL.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/login') 
+  } else {
+    next() 
+  }
+})
+export default router

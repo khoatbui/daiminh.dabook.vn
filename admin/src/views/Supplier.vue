@@ -266,8 +266,8 @@ export default {
         this.editedItem.supplierImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
-       this.editedItem.modifyBy = this.user.userName;
-      this.editedItem.createBy = this.user.userName;
+      this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(apiIP + "/supplier/update/"+ this.editId, this.editedItem)
