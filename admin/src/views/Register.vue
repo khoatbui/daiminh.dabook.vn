@@ -143,7 +143,6 @@ export default {
 
     register() {
           if (this.$refs.form.validate()) {
-                this.input.modifyBy = 'system';
       this.input.createBy = 'system';
       AXIOS.post(apiIP + "/user/insert", this.input)
         .then(response => {

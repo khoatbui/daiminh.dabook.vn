@@ -4,6 +4,7 @@
       <v-toolbar-title>TOUR LIST CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
+       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -198,13 +199,41 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="tourList" class="elevation-1">
+    <v-container fluid grid-list-xl pl-0 pr-0>
+      <v-card>
+        <v-layout pl-2 pr-2>
+          <v-flex xs12 sm6 md3 p-2>
+            <v-select
+              v-model="filterByCombo.destinationId"
+              :items="destinationFilter"
+              item-text="destinationName"
+              item-value="_id"
+              label="Destination"
+              return-object
+            ></v-select>
+          </v-flex>
+          <v-flex xs12 sm6 md3 p-2>
+            <v-select
+              v-model="filterByCombo.travelStyleId"
+              :items="travelStyleFilter"
+              item-text="travelStyleName"
+              item-value="_id"
+              label="Travel Style"
+              return-object
+            ></v-select>
+          </v-flex>
+        </v-layout>
+      </v-card>
+    </v-container>
+    <v-data-table :headers="headers" :items="itemsFilter"  :search="search"  class="elevation-1">
       <template v-slot:items="props">
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
+           <td>{{ props.item.destinationId.destinationName }}</td>
+          <td>{{ props.item.travelStyleId.travelStyleName }}</td>
           <td>{{ props.item.tourCode }}</td>
           <td>{{ props.item.tourName }}</td>
           <td>{{ props.item.lang }}</td>
@@ -216,6 +245,13 @@
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
+      </template>
+       <template v-slot:no-results>
+        <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+        >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
   </div>
@@ -261,9 +297,10 @@ export default {
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
+       { text: "Destination", value: "destinationId.destinationName" },
+        { text: "Travel Style", value: "travelStyleId.travelStyleName" },
       {
         text: "TourCode",
-        sortable: false,
         value: "tourCode"
       },
       { text: "TourName", value: "tourName" },
@@ -273,9 +310,20 @@ export default {
       { text: "keyword", value: "keyword" },
       { text: "Intro", value: "tourIntro" }
     ],
+    filterByCombo: {
+      destinationId: {
+        tourCode: "ALL"
+      },
+      travelStyleId: {
+        langCode: "ALL"
+      }
+    },
+     search: "",
     tourList: [],
     destination: [],
     travelStyle: [],
+    destinationFilter: [],
+    travelStyleFilter: [],
     menu1: false,
     menu2: false,
     language: [
@@ -344,7 +392,20 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
-    }
+    },
+    itemsFilter() {
+      // This creates a new empty object, copies the item into it,
+      // then calculates `fullAddress` and copies that entry into it
+
+      return this.tourList.filter(i => {
+          return (
+            (this.filterByCombo.destinationId.destinationCode === "ALL" || typeof( this.filterByCombo.destinationId.destinationCode) === "undefined" ||
+              i.destinationId._id === this.filterByCombo.destinationId._id) &&
+            (this.filterByCombo.travelStyleId.travelStyleCode === "ALL" || typeof( this.filterByCombo.travelStyleId.travelStyleCode) === "undefined" ||
+              i.travelStyleId._id === this.filterByCombo.travelStyleId._id)
+          );
+        });
+    },
   },
 
   watch: {
@@ -368,12 +429,24 @@ export default {
       AXIOS.get(apiIP + "/destination/", { crossdomain: true })
         .then(response => {
           this.destination = response.data;
+          this.destinationFilter = response.data;
+          this.destinationFilter.unshift({
+            destinationCode: "ALL",
+            destinationName: "ALL",
+            destinationId: -1
+          });
         })
         .catch(function(error) {})
         .finally(function() {});
       AXIOS.get(apiIP + "/travelstyle/", { crossdomain: true })
         .then(response => {
           this.travelStyle = response.data;
+          this.travelStyleFilter = response.data;
+          this.travelStyleFilter.unshift({
+            travelStyleCode: "ALL",
+            travelStyleName: "ALL",
+            travelStyleId: -1
+          });
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -411,10 +484,8 @@ export default {
 
     save() {
       if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.tourImages);
         this.editedItem.removeImage = this.editedItem.tourImages;
         this.editedItem.tourImages = this.uploadImg;
-        console.log(this.editedItem.removeImage);
       }
      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
@@ -437,7 +508,6 @@ export default {
       this.editedItem.removeImage = [];
     },
     addTourIntroByLang() {
-      console.log(this.editedItem);
       this.editedItem.tourIntros.push({
         tourName: this.editedItem.tourName,
         tourIntro: this.editedItem.tourIntro,
@@ -445,7 +515,6 @@ export default {
         to: this.editedItem.to,
         lang: this.editedItem.lang
       });
-      console.log(this.editedItem.tourIntros);
     },
     deleteTourIntroByLang(item) {
       this.editedItem.tourIntros.splice(item, 1);

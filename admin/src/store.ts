@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     user:{
       login:{
+        fullName:"Guest",
         userName:"Guest"
       },
       status:false

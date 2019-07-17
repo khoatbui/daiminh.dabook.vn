@@ -4,13 +4,13 @@ var mongoose = require('mongoose');
 var UploadController=require('../controllers/upload.controller')
 
 module.exports.index =function(req,res){
-    TourList.find().then(function(tourlist){
+    TourList.find().populate('destinationId').populate('travelStyleId').then(function(tourlist){
         res.send(tourlist)
     })
 };
 
 module.exports.getmTourListById=(req,res,next) => {
-    TourList.findOne({"_id":req.params._id}).then(function(tourlist){
+    TourList.findOne({"_id":req.params._id}).populate('destinationId').populate('travelStyleId').then(function(tourlist){
         res.send(tourlist)
     })
 };
@@ -55,14 +55,14 @@ module.exports.updateTourList=function (req, res) {
 };
 
 module.exports.getTourListBySupplier=(req,res,next) => {
-    TourList.find({supplierId:req.params.index}).then(function(tourlist){
+    TourList.find({supplierId:req.params.index}).populate('destinationId').populate('travelStyleId').then(function(tourlist){
         console.log(tourlist);
         res.send(tourlist)
     })
 };
 
 module.exports.getTourListBySupplierCode=(req,res,next) => {
-    Supplier.findOne({supplierCode:req.params.index}).then(function(supp){
+    Supplier.findOne({supplierCode:req.params.index}).populate('destinationId').populate('travelStyleId').then(function(supp){
         TourList.find({supplierId:supp._id}).then(function(tourlist){
             res.send(tourlist)
         })

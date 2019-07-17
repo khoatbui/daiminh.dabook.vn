@@ -4,6 +4,7 @@
       <v-toolbar-title>TOUR DETAIL CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -85,7 +86,33 @@
          </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="tourdetail" class="elevation-1">
+     <v-container fluid grid-list-xl pl-0 pr-0>
+      <v-card>
+        <v-layout pl-2 pr-2>
+          <v-flex xs12 sm6 md3 p-2>
+            <v-select
+              v-model="filterByCombo.tourId"
+              :items="tourlistFilter"
+              item-text="tourName"
+              item-value="_id"
+              label="Tour"
+              return-object
+            ></v-select>
+          </v-flex>
+          <v-flex xs12 sm6 md3 p-2>
+            <v-select
+              v-model="filterByCombo.language"
+              :items="language"
+              item-text="langName"
+              item-value="langCode"
+              label="Language"
+              return-object
+            ></v-select>
+          </v-flex>
+        </v-layout>
+      </v-card>
+    </v-container>
+    <v-data-table :headers="headers" :items="itemsFilter" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr>
           <td class="justify-center layout px-0">
@@ -103,6 +130,13 @@
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
+      </template>
+       <template v-slot:no-results>
+        <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+        >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
   </div>
@@ -157,8 +191,18 @@ export default {
       { text: "ShouldTake", align: "center", value: "shouldTake" },
       { text: "Language", align: "center", value: "lang" }
     ],
+    filterByCombo: {
+      tourId: {
+        tourCode: "ALL"
+      },
+      language: {
+        langCode: "ALL"
+      }
+    },
+        search: "",
     tourlist: [],
     tourdetail: [],
+    tourlistFilter: [],
     uploadImg:[],
     language: [
       { langCode: "EN", langName: "English" },
@@ -202,7 +246,20 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
-    }
+    },
+    itemsFilter() {
+      // This creates a new empty object, copies the item into it,
+      // then calculates `fullAddress` and copies that entry into it
+
+      return this.tourdetail.filter(i => {
+          return (
+            (this.filterByCombo.tourId.tourCode === "ALL" ||
+              i.tourId._id === this.filterByCombo.tourId._id) &&
+            (this.filterByCombo.language.langCode === "ALL" ||
+              i.lang === this.filterByCombo.language.langCode)
+          );
+        });
+    },
   },
 
   watch: {
@@ -220,6 +277,12 @@ export default {
       AXIOS.get(apiIP + "/tourlist/", { crossdomain: true })
         .then(response => {
           this.tourlist = response.data;
+          this.tourlistFilter = response.data;
+          this.tourlistFilter.unshift({
+            tourCode: "ALL",
+            tourName: "ALL",
+            tourId: -1
+          });
         })
         .catch(function(error) {})
         .finally(function() {});

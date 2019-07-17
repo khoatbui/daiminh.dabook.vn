@@ -118,67 +118,190 @@
           </template>
           <v-list>
             <v-layout row wrap p-2 class="text-xs-center">
-                <v-flex xs4 class="m-2">
-                    <img src="img/user/user.png" alt="" class=" img-avata">
-                </v-flex>
+              <v-flex xs4 class="m-2">
+                <img src="img/user/user.png" alt class="img-avata" />
+              </v-flex>
               <v-flex xs8 class="m-2 text-xs-left align-center justify-center align-self-center">
-                  <div class="subheading p-2 font-weight-bold">{{userLogin.login.userName}}</div>
-                  <span class="p-2">{{userLogin.login.team}}</span>
+                <div class="subheading p-2 font-weight-bold">{{userLogin.login.fullName}}</div>
+                <span class="p-2">{{userLogin.login.team}}</span>
               </v-flex>
               <v-flex xs12 class="text-xs-right m-2">
-                <v-btn depressed small color="primary" v-if="userLogin.status==true" @click="logout">Logout</v-btn>
-                <v-btn depressed small color="primary" v-if="userLogin.status==false" @click="login">Login</v-btn>
+                <v-btn
+                  depressed
+                  small
+                  color="default"
+                  v-if="userLogin.status==true"
+                  @click="logout"
+                >Logout</v-btn>
+                <v-btn
+                  depressed
+                  small
+                  color="primary"
+                  v-if="userLogin.status==true"
+                  @click.stop="dialog = true"
+                >Change Info</v-btn>
+                <v-btn
+                  depressed
+                  small
+                  color="primary"
+                  v-if="userLogin.status==false"
+                  @click="login"
+                >Login</v-btn>
               </v-flex>
             </v-layout>
           </v-list>
         </v-menu>
       </div>
     </v-toolbar>
+    <template>
+      <v-dialog v-model="dialog" max-width="490">
+        <v-form ref="form" v-model="valid">
+          <v-card>
+            <v-card-title class="headline primary white--text" dark>Change user info</v-card-title>
+
+            <v-card-text>
+              <v-layout row wrap fill-width align-center justify-center>
+                <v-flex xs12 class="align-center justify-center align-self-center">
+                  <img src="img/user/user.png" alt class="img-avata" />
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="userInfo.fullName" label="FullName" disabled></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="userInfo.userName" label="UserName" disabled></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="userInfo.userEmail" label="Email" disabled></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field
+                    type="password"
+                    v-model="userInfo.password"
+                    label="New Password"
+                    required
+                    :rules="[() => userInfo.password.length > 0 || 'Required field']"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field
+                    type="password"
+                    v-model="confirmPassword"
+                    label="Confirm Password"
+                    required
+                    :rules="[() =>  confirmPassword == userInfo.password || 'Password not matching']"
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn color="default" flat="flat" @click="dialog = false">Close</v-btn>
+
+              <v-btn type="button" color="primary" @click="changePassword">Save</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
+      </v-dialog>
+    </template>
+  </div>
+</template>
   </div>
 </template>
 
 <!-- Javascript -->
 <script>
+var apiIP = process.env.VUE_APP_API_IPADDRESS;
+import axios from "axios";
+import moment from "moment";
+const AXIOS = axios.create({
+  baseURL: `http://localhost:8082/Fleet-App/api/`,
+  withCredentials: false,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + localStorage.token,
+    "Access-Control-Allow-Origin": "*",
+    Accept: "application/json, text/plain, */*",
+    "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
+    "Access-Control-Allow-Credentials": true
+  }
+});
 export default {
   props: [],
   name: "NavBar",
   data() {
-    return {};
+    return {
+      valid: true,
+      dialog: false,
+      userInfo: {
+          fullName:"",
+          userName:"",
+          userEmail:"",
+          password:"",
+          modifyDate: moment(new Date()).format("YYYY-MM-DD")
+      },
+      confirmPassword: "",
+      input:{
+          message:""
+      }
+    };
   },
   computed: {
     userLogin() {
-      console.log(this.$store.state);
       return this.$store.state.user;
     }
   },
   methods: {
-      login(){
-          this.$router.replace('/login');
-      },
-      logout(){
-           localStorage.loginStatus = false;
-            this.$store.dispatch("updateUserAction", {
-              login: {
-                userName: "Guest"
-              },
-              status: false
-            });
-            this.$store.dispatch(
-              "updateLoginStatusAction",
-              false
-            );
-            this.$router.replace('/login');
+    login() {
+      this.$router.replace("/login");
+    },
+    logout() {
+      localStorage.loginStatus = false;
+      this.$store.dispatch("updateUserAction", {
+        login: {
+          userName: "Guest"
+        },
+        status: false
+      });
+      this.$store.dispatch("updateLoginStatusAction", false);
+      this.$router.replace("/login");
+    },
+    changePassword() {
+        console.log('caa')
+      if (this.$refs.form.validate()) {
+        this.userInfo.modifyBy = "system";
+        this.userInfo.modifyDate= moment(new Date()).format("YYYY-MM-DD");
+        AXIOS.post(apiIP + `/user/update/${this.userInfo._id}`, this.userInfo)
+          .then(response => {
+            this.snackbar = true;
+            this.input.message = response.status;
+            if (response.status == 200) {
+            //   this.$store.dispatch("updateUserAction", response.data);
+            }
+          })
+          .catch(function(error) {})
+          .finally(function() {});
+      } else {
+        this.snackbar = true;
+        this.input.message = "Yeu cau nhap day du thong tin";
       }
+      this.dialog = false;
+      this.$router.replace('/')
+    }
   },
-  mounted() {}
+  mounted() {
+    this.userInfo = this.$store.state.user.login;
+    console.log(this.userInfo);
+  }
 };
 </script>
 
 <!-- SASS styling -->
 <style lang="scss">
-.img-avata{
-    width: 70px;
-    height: 70px;
+.img-avata {
+  width: 70px;
+  height: 70px;
 }
 .text-2lg {
   font-size: 1.5rem;
