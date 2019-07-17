@@ -17,11 +17,10 @@
       </div>
       <div class="col-12 px-2 d-flex flex-row justify-content-between align-items-center">
         <Datetime id="icheckinout" radius="border-radius-100" placeholder="Dates"></Datetime>
-        <GuestSelect></GuestSelect>
       </div>
     </div>
     <div class="data-section padding-top-100 w-100">
-     <ComingSoonComponent></ComingSoonComponent>
+     <TourPromotionSection></TourPromotionSection>
     </div>
     <Navbar v-bind:current="'tour'"></Navbar>
   </div>
@@ -31,21 +30,21 @@
 import { Component, Vue } from "vue-property-decorator";
 import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
 import Navbar from "@/components/Navbar.vue";
-import GuestSelect from "@/components/GuestSelect.vue";
 import MainNavBar from "@/components/MainNavBar.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
 import ComingSoonComponent from "@/components/ComingSoon.vue";
+import TourPromotionSection from "@/components/TourPromotionSection.vue"
 
 @Component({
   components: {
     Datetime,
     Navbar,
-    GuestSelect,
     MainNavBar,
     LocationSearchComponent,
     LanguageComponent,
-    ComingSoonComponent
+    ComingSoonComponent,
+    TourPromotionSection
   }
 })
 export default class Promotion extends Vue {
@@ -58,65 +57,4 @@ export default class Promotion extends Vue {
 }
 </script>
 <style >
-.main-section {
-  background-color: #ffffff;
-  height: 100%;
-  box-sizing: border-box;
-}
-.scroll-ngang {
-  width: 100%;
-  overflow: hidden;
-  overflow-x: scroll;
-  white-space: nowrap;
-}
-.scroll-ngang::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
-.top-destination img {
-  height: 100px;
-  width: 140px;
-}
-.top-destination .card-text {
-  white-space: nowrap;
-  width: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.card-img-overlay > h6 {
-  font-size: 0.8rem;
-}
-.card-img-overlay > h5 {
-  font-size: 1.1rem;
-}
-.card-img-overlay > a,
-.card-img-overlay > a:active,
-.card-img-overlay > a:hover,
-.card-img-overlay > a:visited {
-  color: #fff;
-  font-weight: bold;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
-.hot-destination .card-img {
-  height: 100px;
-  width: 140px;
-}
-.promotion-container .input-group-text {
-  background-color: #fff;
-  border-right: none;
-}
-/* ========SEARCH SECTION======== */
-.search-section {
-  z-index: 1000000000000 !important;
-}
-.search input {
-  border-left: none;
-}
-.search input:focus {
-  border-left: none !important;
-}
-/* ========DATA SECTION=========== */
 </style>

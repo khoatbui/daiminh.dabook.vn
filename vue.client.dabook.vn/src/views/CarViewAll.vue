@@ -26,7 +26,7 @@
     <div class="data-section margin-top-130">
       <CarAllSection></CarAllSection>
     </div>
-    <Navbar v-bind:current="'hotel'"></Navbar>
+    <Navbar v-bind:current="'car'"></Navbar>
   </div>
 </template>
 
