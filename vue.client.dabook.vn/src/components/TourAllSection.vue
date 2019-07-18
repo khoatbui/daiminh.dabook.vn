@@ -8,7 +8,7 @@
         </h4>
       </div>
     </div>
-    <div class="col-12 p-1 m-0" v-for="(item,i) in paginatedData">
+    <div class="col-12 p-1 m-0 mb-4" v-for="(item,i) in paginatedData">
       <div class="card w-100 p-2 d-inline-block border-0 hot-promotion-parent">
         <div class="hot-promotion" v-if="item.isPromotion">
           <font-awesome-icon icon="fire-alt" />

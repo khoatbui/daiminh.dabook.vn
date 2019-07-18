@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="data-section margin-top-130 pb-4">
-      <ComingSoonComponent></ComingSoonComponent>
+      <TourDetailSection></TourDetailSection>
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@ import GuestSelect from '@/components/GuestSelect.vue'
 import FilterHotel from '@/components/FilterHotel.vue'
 import CustomerBookedAlert from '@/components/CustomerBookedAlert.vue'
 import LocationSearchComponent from '@/components/LocationSearchComponent.vue'
-import ComingSoonComponent from "@/components/ComingSoon.vue";
+import TourDetailSection from "@/components/TourDetailSection.vue"
 
 @Component({
   components: {
@@ -40,7 +40,7 @@ import ComingSoonComponent from "@/components/ComingSoon.vue";
     CustomerBookedAlert,
     DatetimeAutoShow,
     LocationSearchComponent,
-    ComingSoonComponent
+    TourDetailSection
   }
 })
 export default class Promotion extends Vue {}

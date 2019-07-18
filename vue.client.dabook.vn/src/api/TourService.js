@@ -19,9 +19,9 @@ var tourservice = {
     console.log()
     return Api().get('tourlist/m/getalltour/')
   },
-  getTourDetail (params) {
+  getTourDetailById (params) {
     console.log(params)
-    return Api().get('packagehotelrel/m/getpackagedetail/' + params)
+    return Api().get('tourdetail/m/gettourdetailbyid/' + params)
   },
   postRequestTour (params) {
     console.log(params)
