@@ -22,8 +22,9 @@
         <FilterHotel></FilterHotel>
       </div>
     </div>
-    <div class="data-section margin-top-130">
+    <div class="data-section margin-top-130 bottom-page">
          <TourAllSection></TourAllSection>
+         <AdsSectionHorizontal></AdsSectionHorizontal>
     </div>
     <Navbar v-bind:current="'tour'"></Navbar>
   </div>
@@ -40,6 +41,7 @@ import MainNavBar from '@/components/MainNavBar.vue'
 import LocationSearchComponent from '@/components/LocationSearchComponent.vue'
 import LanguageComponent from '@/components/LanguageComponent.vue'
 import TourAllSection from "@/components/TourAllSection.vue";
+import AdsSectionHorizontal from "@/components/AdsSectionHorizontal.vue"
 
 @Component({
   components: {
@@ -51,7 +53,8 @@ import TourAllSection from "@/components/TourAllSection.vue";
     MainNavBar,
     LocationSearchComponent,
     LanguageComponent,
-    TourAllSection
+    TourAllSection,
+    AdsSectionHorizontal
   }
 })
 export default class Promotion extends Vue {}

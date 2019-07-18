@@ -10,10 +10,9 @@
     </div>
     <div class="col-12 p-1 m-0" v-for="(item,i) in paginatedData">
       <div class="card w-100 p-2 d-inline-block border-0 hot-promotion-parent">
-                <div class="hot-promotion" v-if="item.isPromotion">
-                    <font-awesome-icon
-                  icon="fire-alt"/>
-                </div>
+        <div class="hot-promotion" v-if="item.isPromotion">
+          <font-awesome-icon icon="fire-alt" />
+        </div>
         <a v-bind:href="`/tourdetail?tourid=${item._id}`">
           <div v-bind:id="`carousel-img-${i}`" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -60,13 +59,15 @@
             <p class="card-text text-uppercase p-0 m-0 text-sm hidden-outof-text">
               <span class="w-50 hidden-outof-text">{{item.tourName}}</span>
             </p>
-            <p
-              class="card-text font-weight-bolder p-0 m-0 hidden-outof-text"
-            >{{item.tourIntro}}</p>
+            <p class="card-text font-weight-bolder p-0 m-0 hidden-outof-text">{{item.tourIntro}}</p>
             <p class="p-0 m-0 d-flex justify-content-between">
-              <span
-                class="card-text text-sm hidden-outof-text"
-              >from {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price) }}</span>
+              <span class="card-text text-sm hidden-outof-text">
+                <span class="badge badge-success text-sm font-weight-lighter" v-if="item.voteScore !=''">
+                  <span class="badge badge-light text-sm font-weight-lighter mr-1">{{item.voteScore}}</span>
+                  <span>{{item.voteStatus}}</span>
+                </span>
+                from {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price) }}
+              </span>
               <span class="card-text text-sm">
                 <font-awesome-icon
                   class="ml-1 text-primary text-xs"
@@ -139,7 +140,7 @@ export default {
     return {
       tourlist: [],
       pageNumber: 0,
-      size: 10,
+      size: 10
     };
   },
   created() {
@@ -154,16 +155,16 @@ export default {
       this.$router.push({ path: "promotionall" });
     },
     async initial() {
-      this.$store.commit('showHideLoading',true);
+      this.$store.commit("showHideLoading", true);
       var response = await TourService.getAllTour();
       this.tourlist = response.data;
-      this.$store.commit('showHideLoading',false);
+      this.$store.commit("showHideLoading", false);
     },
     async initialWithSupplier(supplierId) {
-      this.$store.commit('showHideLoading',true);
+      this.$store.commit("showHideLoading", true);
       var response = await TourService.getAllPackageBySupplier(supplierId);
       this.tourlist = response.data;
-      this.$store.commit('showHideLoading',false);
+      this.$store.commit("showHideLoading", false);
     },
     nextPage() {
       if (this.pageNumber + 1 == this.pageCount) {
@@ -191,20 +192,20 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on('userSearchActivity', () => {
-       this.tourlist=this.$store.state.search.searchResult;
-    })
+    this.$root.$on("userSearchActivity", () => {
+      this.tourlist = this.$store.state.search.searchResult;
+    });
   }
 };
-function randomArray(array){
-        let array2=[];
-        while(array.length!==0){
-        let randomIndex=Math.floor(Math.random()*array.length);
-        array2.push(array[randomIndex]);
-        array.splice(randomIndex,1);
-        }
-        return array2;
-    }
+function randomArray(array) {
+  let array2 = [];
+  while (array.length !== 0) {
+    let randomIndex = Math.floor(Math.random() * array.length);
+    array2.push(array[randomIndex]);
+    array.splice(randomIndex, 1);
+  }
+  return array2;
+}
 </script>
 <style lang="scss">
 .page-item.active .page-link {

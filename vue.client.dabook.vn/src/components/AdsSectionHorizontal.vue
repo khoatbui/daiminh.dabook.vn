@@ -1,14 +1,11 @@
 To//src/components/Navbar.vue
 <template>
-  <div class="card m-2 d-inline-block border-0">
+  <div class="card d-inline-block border-0 border-radius-none">
             <img
-              class="card-img-top shadow border-radius-100"
+              class="card-img-top  border-radius-none"
               src="img/car/trans/tourtrip.jpg"
               alt="Card image cap"
             />
-            <div class="card-body p-1 text-center">
-              <p class="card-text font-weight-bolder">TourTrip</p>
-            </div>
           </div>
 </template>
 <script>
