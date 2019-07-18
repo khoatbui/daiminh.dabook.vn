@@ -57,17 +57,16 @@
           </div>
           <div class="card-body w-100 text-left p-1">
             <p class="card-text text-uppercase p-0 m-0 text-sm hidden-outof-text">
-              <span class="w-50 hidden-outof-text">{{item.tourName}}</span>
+              <span class="w-50 font-weight-bolder hidden-outof-text">{{item.tourName}}</span>
             </p>
-            <p class="card-text font-weight-bolder p-0 m-0 hidden-outof-text">{{item.tourIntro}}</p>
+            <p class="card-text p-0 m-0 hidden-outof-text">{{item.tourIntro}}</p>
             <p class="p-0 m-0 d-flex justify-content-between">
-              <span class="card-text text-sm hidden-outof-text">
+                <span>
                 <span class="badge badge-success text-sm font-weight-lighter" v-if="item.voteScore !=''">
-                  <span class="badge badge-light text-sm font-weight-lighter mr-1">{{item.voteScore}}</span>
+                  <span class="badge badge-light text-success text-sm font-weight-bold mr-1">{{item.voteScore}}</span>
                   <span>{{item.voteStatus}}</span>
                 </span>
-                from {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price) }}
-              </span>
+                </span>
               <span class="card-text text-sm">
                 <font-awesome-icon
                   class="ml-1 text-primary text-xs"
@@ -75,6 +74,14 @@
                   v-for="sta in item.star"
                   :key="sta"
                 />
+              </span>
+            </p>
+            <p class="px-0 py-2 m-0 d-flex justify-content-between align-items-center">
+            <span class="card-text text-md hidden-outof-text font-weight-bold">
+                <span class="text-sm">from</span> {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price) }}
+              </span>
+              <span class="card-text text-ssm hidden-outof-text text-success">
+                  Có thể đặt từ ngày 19-06-2019
               </span>
             </p>
           </div>
