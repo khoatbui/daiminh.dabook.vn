@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="data-section margin-top-130">
-         <ComingSoonComponent></ComingSoonComponent>
+         <TourAllSection></TourAllSection>
     </div>
     <Navbar v-bind:current="'tour'"></Navbar>
   </div>
@@ -40,7 +40,7 @@ import CustomerBookedAlert from '@/components/CustomerBookedAlert.vue'
 import MainNavBar from '@/components/MainNavBar.vue'
 import LocationSearchComponent from '@/components/LocationSearchComponent.vue'
 import LanguageComponent from '@/components/LanguageComponent.vue'
-import ComingSoonComponent from "@/components/ComingSoon.vue";
+import TourAllSection from "@/components/TourAllSection.vue";
 
 @Component({
   components: {
@@ -52,7 +52,7 @@ import ComingSoonComponent from "@/components/ComingSoon.vue";
     MainNavBar,
     LocationSearchComponent,
     LanguageComponent,
-    ComingSoonComponent
+    TourAllSection
   }
 })
 export default class Promotion extends Vue {}
