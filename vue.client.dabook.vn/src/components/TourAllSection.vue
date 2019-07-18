@@ -9,7 +9,11 @@
       </div>
     </div>
     <div class="col-12 p-1 m-0" v-for="(item,i) in paginatedData">
-      <div class="card w-100 p-2 d-inline-block border-0">
+      <div class="card w-100 p-2 d-inline-block border-0 hot-promotion-parent">
+                <div class="hot-promotion" v-if="item.isPromotion">
+                    <font-awesome-icon
+                  icon="fire-alt"/>
+                </div>
         <a v-bind:href="`/tourdetail?tourid=${item._id}`">
           <div v-bind:id="`carousel-img-${i}`" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -67,8 +71,8 @@
                 <font-awesome-icon
                   class="ml-1 text-primary text-xs"
                   icon="star"
-                  v-for="star in item.voteScore"
-                  :key="star"
+                  v-for="sta in item.star"
+                  :key="sta"
                 />
               </span>
             </p>

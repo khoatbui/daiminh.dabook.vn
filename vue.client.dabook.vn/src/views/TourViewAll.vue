@@ -19,7 +19,6 @@
         class="col-12 px-2 d-flex flex-row justify-content-between align-items-center scroll-ngang"
       >
         <Datetime id="icheckinout" radius="border-radius-100" placeholder="Dates"></Datetime>
-        <GuestSelect></GuestSelect>
         <FilterHotel></FilterHotel>
       </div>
     </div>

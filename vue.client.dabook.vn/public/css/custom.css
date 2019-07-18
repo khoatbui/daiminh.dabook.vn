@@ -270,3 +270,32 @@ ol.carousel-indicators li.active {
   color: #FFF;
   overflow: hidden;
 }
+
+/* ======================= */
+.hot-promotion{
+  position: absolute;
+  background-color: crimson;
+  color: #FFFFFF;
+  top:5px;
+  right: 20px;
+  z-index: 10;
+  padding:8px 7px;
+  border:1px solid crimson;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px !important;
+}
+.hot-promotion::after{
+  content: "";
+  position: absolute;
+  bottom: -13px;
+  left: 50%;
+  border:13px solid crimson;
+  border-bottom-color:    rgba(0,0,0,0.01);
+  width: 26.2px;
+  height: 1px;
+  box-sizing: border-box;
+  transform: translate(-50%);
+  z-index: 20;
+}
+.hot-promotion-parent{
+  position: relative;
+}
