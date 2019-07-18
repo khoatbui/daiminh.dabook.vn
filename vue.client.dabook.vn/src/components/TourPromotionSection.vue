@@ -10,7 +10,7 @@
     </div>
     <div class="col-6 p-1 m-0" v-for="item in paginatedData">
       <div class="card w-100 p-2 d-inline-block border-0">
-        <a v-bind:href="`/promotiondetail?tourId=${item._id}`">
+        <a v-bind:href="`/tourdetail?tourId=${item._id}`">
           <img
             class="card-img-top border-radius-5"
             v-bind:src="item.tourImages.length>0?`/${item.tourImages[0].filePath}`:'/img/hotel/roomtype/default.jpg'"
@@ -82,7 +82,7 @@
     </div>
     <div class="col-12 p-1 m-0">
       <div class="m-2">
-        <button class="btn btn-outline-primary w-100" @click="redirectToPromotionAll">{{$t('btn_showall')}}(326+)</button>
+        <button class="btn btn-outline-primary w-100" @click="redirectToPromotionAll">{{$t('btn_showall')}}(86+)</button>
       </div>
     </div>
         <LoadingComponent class="center-page"></LoadingComponent>

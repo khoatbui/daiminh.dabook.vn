@@ -19,8 +19,27 @@
         <Datetime id="icheckinout" radius="border-radius-100" placeholder="Dates"></Datetime>
       </div>
     </div>
-    <div class="data-section padding-top-100 w-100">
-     <TourPromotionSection></TourPromotionSection>
+    <div class="data-section margin-top-130 w-100">
+      <TourPromotionSection :showTitle="true"></TourPromotionSection>
+      <div class="col-12">
+        <div class="row pb-4 ads-section">
+          <div class="col-12 p-0 scroll-ngang">
+            <div class="card text-white text-left border-0">
+              <img src="/img/promotion/ads/korea02.jpg" class="card-img" alt="..." />
+            </div>
+          </div>
+        </div>
+      </div>
+      <HotelTop10PromotionSectionHorizontal></HotelTop10PromotionSectionHorizontal>
+      <div class="col-12">
+        <div class="row pb-4 ads-section">
+          <div class="col-12 p-0 scroll-ngang">
+            <div class="card text-white text-left border-0">
+              <img src="/img/promotion/ads/airasia.jpg" class="card-img" alt="..." />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <Navbar v-bind:current="'tour'"></Navbar>
   </div>
@@ -34,7 +53,8 @@ import MainNavBar from "@/components/MainNavBar.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
 import ComingSoonComponent from "@/components/ComingSoon.vue";
-import TourPromotionSection from "@/components/TourPromotionSection.vue"
+import TourPromotionSection from "@/components/TourPromotionSection.vue";
+import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10PromotionSectionHorizontal.vue";
 
 @Component({
   components: {
@@ -44,7 +64,8 @@ import TourPromotionSection from "@/components/TourPromotionSection.vue"
     LocationSearchComponent,
     LanguageComponent,
     ComingSoonComponent,
-    TourPromotionSection
+    TourPromotionSection,
+    HotelTop10PromotionSectionHorizontal
   }
 })
 export default class Promotion extends Vue {
