@@ -125,6 +125,9 @@ ol.carousel-indicators li.active {
   overflow-x: scroll;
   white-space: nowrap;
 }
+.one-line{
+  white-space: nowrap;
+}
 .scroll-ngang::-webkit-scrollbar {
   width: 0px;
   background: transparent;
@@ -239,6 +242,9 @@ ol.carousel-indicators li.active {
 }
 .margin-top-130{
   margin-top: 130px !important;
+ }
+ .margin-top-90{
+  margin-top: 90px !important;
  }
  .padding-top-100{
    padding-top:100px !important;

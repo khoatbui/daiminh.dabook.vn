@@ -81,7 +81,7 @@
                 <span class="text-sm">from</span> {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price) }}
               </span>
               <span class="card-text text-ssm hidden-outof-text text-success">
-                  Có thể đặt từ ngày 19-06-2019
+                  Có thể đặt từ ngày {{bookingDate}}
               </span>
             </p>
           </div>
@@ -136,6 +136,7 @@
 import HotelService from "@/api/HotelService";
 import TourService from "@/api/TourService";
 import LoadingComponent from "@/components/LoadingComponent.vue";
+import moment from "moment";
 
 export default {
   components: {
@@ -147,7 +148,8 @@ export default {
     return {
       tourlist: [],
       pageNumber: 0,
-      size: 10
+      size: 10,
+            bookingDate:moment().format('MM-DD-YYYY')
     };
   },
   created() {

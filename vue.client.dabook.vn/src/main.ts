@@ -6,7 +6,7 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret,faCoffee,faSearchLocation,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel, faAlignLeft,faBarcode,faCloudSun,faTv,faUtensils,faDumbbell,faArrowLeft,faCartPlus,faClock,faSearch,faExclamationCircle,faCarSide,faArrowDown,faRulerCombined,faTruckPickup,faPaintRoller,faFileSignature,faPhone,faPlaneDeparture,faFireAlt} from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret,faCoffee,faSearchLocation,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel, faAlignLeft,faBarcode,faCloudSun,faTv,faUtensils,faDumbbell,faArrowLeft,faCartPlus,faClock,faSearch,faExclamationCircle,faCarSide,faArrowDown,faRulerCombined,faTruckPickup,faPaintRoller,faFileSignature,faPhone,faPlaneDeparture,faFireAlt,faEnvelope,faFileDownload,faFileContract} from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faUserCircle as farUserCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -19,7 +19,7 @@ import 'vue-slider-component/theme/default.css'
 var VueTouch = require('vue-touch')
 Vue.use(VueTouch, {name: 'v-touch'})
 Vue.component('VueSlider', VueSlider)
-library.add(faAlignLeft,faUserSecret,faCoffee,faSearchLocation,farUserCircle,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel,faBarcode,faCloudSun,faTv,faUtensils,faDumbbell,faArrowLeft,faCartPlus,faClock,faSearch,faExclamationCircle,faCarSide,faArrowDown,faRulerCombined,faTruckPickup,faPaintRoller,faFileSignature,faPhone,faPlaneDeparture,faFireAlt)
+library.add(faAlignLeft,faUserSecret,faCoffee,faSearchLocation,farUserCircle,faChevronRight,faChevronLeft,faChevronDown,faPlus,faMinus,faStar,faAngleDoubleRight,faAngleDoubleLeft,faBed,faWifi,faSwimmingPool,faTimes,faCar,faUmbrellaBeach,faHotel,faBarcode,faCloudSun,faTv,faUtensils,faDumbbell,faArrowLeft,faCartPlus,faClock,faSearch,faExclamationCircle,faCarSide,faArrowDown,faRulerCombined,faTruckPickup,faPaintRoller,faFileSignature,faPhone,faPlaneDeparture,faFireAlt,faEnvelope,faFileDownload,faFileContract)
 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
