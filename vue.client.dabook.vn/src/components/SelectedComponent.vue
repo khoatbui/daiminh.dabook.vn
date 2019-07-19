@@ -7,7 +7,7 @@
       aria-haspopup="true"
       aria-expanded="false"
     >
-    <font-awesome-icon class="ml-1 float-right" icon="chevron-down"/>
+    <font-awesome-icon class="ml-1 float-right" icon="chevron-down" style="vertical-align:baseline"/>
     </button>
 
     <div class="dropdown-menu dropdown-menu-center guest-dropdown-menu">
@@ -15,9 +15,9 @@
         <div class="row m-1">
           <div class="col-12">
             <div class="row p-2 justify-content-start align-items-center" v-for="(item,index) in listitem">
-              <dv class="col-12">
+              <div class="col-12">
                   {{item.text}}
-              </dv>
+              </div>
             </div>
           </div>
         </div>

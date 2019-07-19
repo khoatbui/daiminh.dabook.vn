@@ -3,11 +3,11 @@
     <!-- Button trigger modal -->
     <button
       type="button"
-      class="form-control btn btn-outline-secondary btn-dropdown-guest w-100 text-left"
+      class="form-control btn btn-outline-secondary btn-dropdown-guest w-100 text-left text-sm"
       aria-haspopup="true"
       aria-expanded="false"
     >
-      <font-awesome-icon class="ml-1 float-right" icon="chevron-down"/>
+     {{`Adult:${adult} | Children:${less12} | Infant:${less4}`}} <font-awesome-icon class="ml-1 float-right" icon="chevron-down"/>
     </button>
 
     <div

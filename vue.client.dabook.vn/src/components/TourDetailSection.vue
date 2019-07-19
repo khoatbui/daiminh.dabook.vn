@@ -153,15 +153,15 @@
       </div>
       <div class="action-section">
         <div
-          class="row w-100 p-0 mx-0 fixed-bottom border-top pt-2 align-items-start bg-white action-section-modal z-index-10001"
+          class="row w-100 p-0 mx-0 fixed-bottom border-top py-2 align-items-start bg-white action-section-modal z-index-10001"
         >
           <div class="col-6 text-left pr-1 align-self-end">
-            <a v-if="typeof tourDetail.detailDocs!=='undefined' && tourDetail.detailDocs.length!==0"
+            <a v-show="typeof tourDetail.detailDocs!=='undefined' && tourDetail.detailDocs.length!==0"
               class="btn btn-light text-primary border-0 w-100"
               :href="(typeof tourDetail.detailDocs!=='undefined' && tourDetail.detailDocs.length>0) ? tourDetail.detailDocs[0].filePath :'#'" target="_blank" role="button"
             ><font-awesome-icon class="ml-1" icon="file-contract"/> {{ $t('btn_downloadtour') }}
             </a>
-                        <p class="text-xs"> Vui lòng tải file để xem thông tin chi tiết</p>
+            <p class="text-xs" v-show="typeof tourDetail.detailDocs!=='undefined' && tourDetail.detailDocs.length!==0"> Vui lòng tải file để xem thông tin chi tiết</p>
           </div>
           <div class="col-6 pl-1">
             <button

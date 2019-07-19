@@ -65,7 +65,7 @@
             <label class="mb-0" for="i">
               <span class="text-sm font-weight-bold">Hướng dẫn viên</span>
             </label>
-            <CheckBoxGroup v-bind:data="translate"></CheckBoxGroup>
+            <CheckBoxGroup v-bind:data="translate" @select="showdata($event)"></CheckBoxGroup>
           </div>
         </div>
 
@@ -287,10 +287,17 @@ export default {
       },
       isLoadding: false,
       tourDetail: {},
-      destination: {}
+      destination: {},
+      data:{
+        translate:{},
+        hotel:{}
+      }
     };
   },
   methods: {
+    showdata(value){
+      this.data.translate=value;console.log(this.data.translate);
+    },
     backStep() {
       this.$router.go(-1);
     },
