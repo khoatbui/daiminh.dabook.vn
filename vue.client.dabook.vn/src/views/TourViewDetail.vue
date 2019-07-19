@@ -11,8 +11,9 @@
         </div>
       </div>
     </div>
-    <div class="data-section margin-top-90 pb-4">
-      <TourDetailSection></TourDetailSection>
+    <div class="data-section margin-top-90 pb-4 bottom-page">
+      <router-view></router-view>
+      <AdsSectionHorizontal></AdsSectionHorizontal>
     </div>
   </div>
 </template>
@@ -27,6 +28,7 @@ import FilterHotel from '@/components/FilterHotel.vue'
 import CustomerBookedAlert from '@/components/CustomerBookedAlert.vue'
 import LocationSearchComponent from '@/components/LocationSearchComponent.vue'
 import TourDetailSection from "@/components/TourDetailSection.vue"
+import AdsSectionHorizontal from "@/components/AdsSectionHorizontal.vue"
 
 @Component({
   components: {
@@ -37,7 +39,8 @@ import TourDetailSection from "@/components/TourDetailSection.vue"
     CustomerBookedAlert,
     DatetimeAutoShow,
     LocationSearchComponent,
-    TourDetailSection
+    TourDetailSection,
+    AdsSectionHorizontal
   }
 })
 export default class Promotion extends Vue {}

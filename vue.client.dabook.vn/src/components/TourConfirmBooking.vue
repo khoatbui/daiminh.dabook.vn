@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div class="car-confirm-component p-2">
+  <div class="tour-confirm-component p-2">
     <div class="container m-0 p-0 w-100">
       <div class="row d-flex align-items-center border-bottom p-2 m-0">
         <div class="col-12 d-flex justify-content-between align-items-center">
@@ -8,12 +8,10 @@
             <h5>
               <span
                 class="font-weight-bolder text-lg"
-              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedTour.totalPrice)}}</span>
-              <span class="text-sm">/ {{selectedTour.kmTotal}} km</span>
+              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tourDetail.tourId.price)}}</span>
+              <span class="text-sm font-weight-bold">/ {{tourDetail.tourId.from}} / {{tourDetail.tourId.to}}</span>
             </h5>
-            <p class="text-sm">
-              {{selectedTour.tripName}}
-            </p>
+            <p class="text-sm">{{tourDetail.tourId.tourName}}</p>
           </div>
           <button
             type="button"
@@ -24,11 +22,11 @@
           </button>
         </div>
       </div>
-      <div class="row p-4 justify-content-start align-items-center m-0">
+      <div class="row p-2 justify-content-start border-bottom align-items-center m-0">
         <div class="col-12">
           <div class="form-group text-left">
-            <label for="icheckinout">
-              <span class="text-sm">Date</span>
+            <label class="mb-0" for="icheckinout">
+              <span class="text-sm font-weight-bold">Date</span>
             </label>
             <Datetime
               id="icheckinout"
@@ -39,38 +37,117 @@
           </div>
         </div>
         <div class="col-12">
-          <div class="row text-smd">
-            <div class="col-12 border-bottom p-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <span>
-                  {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedTour.priceByTourType[0].price)}} x
-                  <span
-                    class="text-sm"
-                  >{{selectedTour.kmTotal}} km</span>
-                </span>
-                <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedTour.totalPrice)}}</span>
-              </div>
-            </div>
-            <div class="col-12 border-bottom p-2">
-              <div class="d-flex justify-content-between align-items-center text-success">
-                <span>Discount</span>
-                <span>- 0 đ</span>
-              </div>
-            </div>
-            <div class="col-12 p-2">
-              <div class="d-flex justify-content-between align-items-center font-weight-bolder">
-                <span>Total</span>
-                <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedTour.totalPrice)}}</span>
-              </div>
-            </div>
+          <div class="form-group text-left">
+            <label class="mb-0" for="icheckinout">
+              <span class="text-sm font-weight-bold">Guest</span>
+            </label>
+            <GuestSelectDropDown></GuestSelectDropDown>
           </div>
         </div>
+        <div class="col-12">
+          <div class="form-group text-left m-0">
+            <label class="mb-0" for="icheckinout">
+              <span class="text-sm font-weight-bold">Hạng khách sạn</span>
+            </label>
+            <CheckBoxGroup v-bind:data="hotelStar" v-bind:icon="'star'"></CheckBoxGroup>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group text-left m-0">
+            <label class="mb-0" for="i">
+              <span class="text-sm font-weight-bold">Số bữa chính</span>
+            </label>
+            <CheckBoxGroup v-bind:data="meals" v-bind:icon="'pizza-slice'"></CheckBoxGroup>
+          </div>
+        </div>
+        <div class="col-12 mb-3 border-bottom">
+          <div class="form-group text-left m-0">
+            <label class="mb-0" for="i">
+              <span class="text-sm font-weight-bold">Hướng dẫn viên</span>
+            </label>
+            <CheckBoxGroup v-bind:data="translate"></CheckBoxGroup>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group text-left">
+            <label class="mb-0" for="ifullname">
+              <span class="text-sm font-weight-bold" v-bind:class="formCheck.fullName">
+                Full name
+                <font-awesome-icon
+                  class="text-danger"
+                  icon="exclamation-circle"
+                  v-if="(!formCheck.isFail && formCheck.fullName.length>0)"
+                />
+              </span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="ifullname"
+              placeholder="Your name"
+              v-model="customerInfo.fullName"
+            />
+          </div>
+          <div class="form-group text-left">
+            <label class="mb-0" for="iemail">
+              <span class="text-sm font-weight-bold" v-bind:class="formCheck.email">
+                Email
+                <font-awesome-icon
+                  class="text-danger"
+                  icon="exclamation-circle"
+                  v-if="(!formCheck.isFail && formCheck.email.length>0)"
+                />
+              </span>
+            </label>
+            <input
+              type="email"
+              class="form-control"
+              id="iemail"
+              placeholder="your@email.com"
+              v-model="customerInfo.email"
+            />
+          </div>
+          <div class="form-group text-left">
+            <label class="mb-0" for="iphone">
+              <span class="text-sm font-weight-bold" v-bind:class="formCheck.phone">
+                Phone
+                <font-awesome-icon
+                  class="text-danger"
+                  icon="exclamation-circle"
+                  v-if="(!formCheck.isFail && formCheck.phone.length>0)"
+                />
+              </span>
+            </label>
+            <input
+              type="tel"
+              class="form-control"
+              id="iphone"
+              placeholder="+8498868686"
+              v-model="customerInfo.phone"
+            />
+          </div>
+          <div class="form-group text-left">
+            <label class="mb-0" for="imessage">
+              <span class="text-sm font-weight-bold">Message</span>
+            </label>
+            <textarea
+              class="form-control"
+              id="imessage"
+              rows="3"
+              placeholder="Other request"
+              v-model="customerInfo.question"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row px-2 m-0">
         <div class="col-12 px-2 mt-4">
           <button
             type="button"
             class="btn btn-danger w-100"
-            @click="redirectToRequest"
-          >{{$t('btn_confirm')}}</button>
+            @click="nextToResultStep" data-toggle="modal" data-target="#resultModal"
+          >{{$t('btn_request')}}</button>
         </div>
         <div class="col-12 px-2">
           <p class="text-sm">Ban khong can thanh toan ngay. Chung toi se lien he lai</p>
@@ -91,35 +168,126 @@
 </template>
 <script>
 import axios from "axios";
-import TourTypeService from "@/api/TourTypeService";
+import TourService from "@/api/TourService";
 import Datetime from "@/components/Datetime2.vue";
 import LoadingComponent from "@/components/LoadingComponent.vue";
+import GuestSelectDropDown from "@/components/GuestSelectDropDown.vue";
+import DestinationService from "@/api/DestinationService";
+import CheckBoxGroup from "@/components/CheckBoxGroup.vue";
 
 export default {
   components: {
     Datetime,
-    LoadingComponent
-      },
+    LoadingComponent,
+    GuestSelectDropDown,
+    CheckBoxGroup
+  },
   props: ["id"],
-  name: "HotelConfirmBooking",
+  name: "TourConfirmBooking",
   computed: {
     selectedTour() {
       return this.$store.state.selectedTour;
     }
   },
   mounted() {
-    this.initial(this.$route.query.cartypeid);
+    this.initial(this.$route.query.tourid);
   },
   data: function() {
     return {
-      carType:{},
+      customerInfo: {
+        fullName: "",
+        email: "",
+        phone: "",
+        pickup: "",
+        question: ""
+      },
+      formCheck: {
+        fullName: "",
+        email: "",
+        phone: "",
+        isFail: true
+      },
+      hotelStar: [
+        {
+          value: "Theo tour",
+          text: "Theo tour",
+          isIcon: false
+        },
+        {
+          value: 1,
+          text: 1,
+          isIcon: true
+        },
+        {
+          value: 2,
+          text: 2,
+          isIcon: true
+        },
+        {
+          value: 3,
+          text: 3,
+          isIcon: true
+        },
+        {
+          value: 4,
+          text: 4,
+          isIcon: true
+        },
+        {
+          value: 5,
+          text: 5,
+          isIcon: true
+        }
+      ],
+      meals: [
+        {
+          value: "Theo tour",
+          text: "Theo tour",
+          isIcon: false
+        },
+        {
+          value: 1,
+          text: 1,
+          isIcon: true
+        },
+        {
+          value: 2,
+          text: 2,
+          isIcon: true
+        },
+        {
+          value: 3,
+          text: 3,
+          isIcon: true
+        }
+      ],
+      translate: [
+        {
+          value: "Theo tour",
+          text: "Theo tour",
+          isIcon: false
+        },
+        {
+          value: "Tiếng Anh",
+          text: "Tiếng Anh",
+          isIcon: false
+        },
+        {
+          value: "Tiếng Hàn",
+          text: "Tiếng Hàn",
+          isIcon: false
+        }
+      ],
+      carType: {},
       selectTime: {
         startDate: moment().format("DD-MM-YYYY"),
         endDate: moment(new Date())
           .add(1, "days")
           .format("DD-MM-YYYY")
       },
-      isLoadding: false
+      isLoadding: false,
+      tourDetail: {},
+      destination: {}
     };
   },
   methods: {
@@ -128,15 +296,21 @@ export default {
     },
     redirectToRequest: function() {
       this.$router.push({
-        path: `/cardetail/request?cardetailpriceid=${this.$route.query.cardetailpriceid}&cartypeid=${this.$route.query.cartypeid}`
+        path: `/cardetail/request?tourid=${this.$route.query.tourid}&cartypeid=${this.$route.query.cartypeid}`
       });
     },
     async initial(id) {
-     this.$store.commit('showHideLoading',true);
-      var response = await TourTypeService.getTourTypeById(id);
-      this.carType = response.data;
-      console.log(this.carType);
-      this.$store.commit('showHideLoading',false);
+      this.$store.commit("showHideLoading", true);
+      var response = await TourService.getTourDetailById(id);
+      this.tourDetail = response.data;
+      console.log(this.tourDetail);
+
+      var desresp = await DestinationService.getDestinationById(
+        response.data.tourId.destinationId
+      );
+      this.destination = desresp.data;
+      console.log(this.destination);
+      this.$store.commit("showHideLoading", false);
       this.componentLoaded = true;
     }
   }
@@ -170,7 +344,7 @@ export default {
 .btn-sm-round svg {
   margin: 0 !important;
 }
-.car-confirm-component {
+.tour-confirm-component {
   margin: 0 !important;
   position: absolute !important;
   z-index: 300000 !important;
@@ -179,8 +353,6 @@ export default {
   left: 0 !important;
   width: 100vw;
   padding: 0 !important;
-  min-height: 100vh !important;
-  height: 100vh !important;
   padding-bottom: 40px !important;
 }
 </style>

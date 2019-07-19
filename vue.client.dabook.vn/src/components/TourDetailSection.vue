@@ -153,13 +153,15 @@
       </div>
       <div class="action-section">
         <div
-          class="row w-100 p-0 mx-0 fixed-bottom border-top py-4 bg-white action-section-modal z-index-10001"
+          class="row w-100 p-0 mx-0 fixed-bottom border-top pt-2 align-items-start bg-white action-section-modal z-index-10001"
         >
-          <div class="col-6 text-left pr-1">
-            <a
+          <div class="col-6 text-left pr-1 align-self-end">
+            <a v-if="typeof tourDetail.detailDocs!=='undefined' && tourDetail.detailDocs.length!==0"
               class="btn btn-light text-primary border-0 w-100"
-              :href="tourDetail.detailDocs[0].filePath" target="_blank" role="button"
-            ><font-awesome-icon class="ml-1" icon="file-contract"/> {{ $t('btn_downloadtour') }}</a>
+              :href="(typeof tourDetail.detailDocs!=='undefined' && tourDetail.detailDocs.length>0) ? tourDetail.detailDocs[0].filePath :'#'" target="_blank" role="button"
+            ><font-awesome-icon class="ml-1" icon="file-contract"/> {{ $t('btn_downloadtour') }}
+            </a>
+                        <p class="text-xs"> Vui lòng tải file để xem thông tin chi tiết</p>
           </div>
           <div class="col-6 pl-1">
             <button
@@ -173,7 +175,7 @@
       <LoadingComponent class="center-page"></LoadingComponent>
     </div>
     <div class="relate-section text-sm">
-      <div class="row w-100 p-0 mx-0 border-bottom bottom-page">
+      <div class="row w-100 p-0 mx-0 border-bottom">
         <div class="col-12 p-1 m-0">
           <div class="m-2 text-left">
             <h4>
@@ -229,8 +231,6 @@ export default {
         response.data.tourId.destinationId
       );
       this.destination = desresp.data;
-      console.log(this.tourDetail);
-      console.log(this.destination);
       this.$store.commit("showHideLoading", false);
       this.componentLoaded = true;
     }
