@@ -65,7 +65,7 @@
             <label class="mb-0" for="i">
               <span class="text-sm font-weight-bold">Hướng dẫn viên</span>
             </label>
-            <CheckBoxGroup v-bind:data="translate" @select="showdata($event)"></CheckBoxGroup>
+            <CheckBoxGroup v-bind:data="translate" @select="showdata"></CheckBoxGroup>
           </div>
         </div>
 
