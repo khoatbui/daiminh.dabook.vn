@@ -32,7 +32,7 @@
               id="icheckinout"
               v-bind:startdate="selectTime.starDate"
               v-bind:enddate="selectTime.endDate"
-              v-bind:cachotelprice="true"
+              v-bind:cachotelprice="false"
             ></Datetime>
           </div>
         </div>
@@ -49,7 +49,7 @@
             <label class="mb-0" for="icheckinout">
               <span class="text-sm font-weight-bold">Hạng khách sạn</span>
             </label>
-            <CheckBoxGroup v-bind:data="hotelStar" v-bind:icon="'star'"></CheckBoxGroup>
+            <CheckBoxGroup v-bind:name="'hotelStar'" v-bind:data="hotelStar" v-bind:icon="'star'" @select="requestData.hotelStar=$event"></CheckBoxGroup>
           </div>
         </div>
         <div class="col-12">
@@ -57,7 +57,7 @@
             <label class="mb-0" for="i">
               <span class="text-sm font-weight-bold">Số bữa chính</span>
             </label>
-            <CheckBoxGroup v-bind:data="meals" v-bind:icon="'pizza-slice'"></CheckBoxGroup>
+            <CheckBoxGroup v-bind:name="'meals'" v-bind:data="meals" v-bind:icon="'pizza-slice'"  @select="requestData.meal=$event"></CheckBoxGroup>
           </div>
         </div>
         <div class="col-12 mb-3 border-bottom">
@@ -65,7 +65,7 @@
             <label class="mb-0" for="i">
               <span class="text-sm font-weight-bold">Hướng dẫn viên</span>
             </label>
-            <CheckBoxGroup v-bind:data="translate" @select="showdata"></CheckBoxGroup>
+            <CheckBoxGroup v-bind:name="'translate'" v-bind:data="translate" @select="requestData.translate=$event"></CheckBoxGroup>
           </div>
         </div>
 
@@ -198,7 +198,6 @@ export default {
         fullName: "",
         email: "",
         phone: "",
-        pickup: "",
         question: ""
       },
       formCheck: {
@@ -278,7 +277,6 @@ export default {
           isIcon: false
         }
       ],
-      carType: {},
       selectTime: {
         startDate: moment().format("DD-MM-YYYY"),
         endDate: moment(new Date())
@@ -288,9 +286,10 @@ export default {
       isLoadding: false,
       tourDetail: {},
       destination: {},
-      data:{
+      requestData:{
         translate:{},
-        hotel:{}
+        hotelStar:{},
+        meal:{}
       }
     };
   },
@@ -301,10 +300,82 @@ export default {
     backStep() {
       this.$router.go(-1);
     },
-    redirectToRequest: function() {
-      this.$router.push({
-        path: `/cardetail/request?tourid=${this.$route.query.tourid}&cartypeid=${this.$route.query.cartypeid}`
-      });
+    async nextToResultStep() {
+      if(this.formChecking()){
+                    this.isShowModal=true;
+      this.$store.commit("showHideLoading", true);
+      console.log(this.customerInfo);
+      this.$store.commit("updateCustomerInfo", this.customerInfo);
+      var parrams = {
+        selectedDate: this.$store.state.selectDate,
+        customer: this.$store.state.customer,
+        requestData:{
+          translate:this.requestData.translate.value,
+        hotelStar:this.requestData.hotelStar.value,
+        meal:this.requestData.meal.value
+          },
+        destination: {
+          _id: this.destination._id,
+          destinationCode: this.destination.destinationCode,
+          destinationName: this.destination.destinationName
+        },
+        tour: {
+          _id: this.tourDetail.tourId._id,
+          tourCode:this.tourDetail.tourId.tourCode,
+          tourName: this.tourDetail.tourId.tourName
+        }
+      };
+            console.log(parrams);
+      var response = await TourService.postRequestTour(parrams);
+      this.requestResult = response.data;
+      this.$store.commit("showHideLoading", true);
+      }
+      else{
+        console.log('fail');
+        return
+      }
+    },
+    formChecking() {
+      if (this.customerInfo.fullName.length === 0) {
+        console.log('fullnam fail')
+        this.formCheck = {
+          fullName: "text-danger",
+          email: "",
+          phone: "",
+          isFail: false
+        };
+
+        return false;
+      } else if (this.customerInfo.email.length === 0) {
+         console.log('email fail')
+        this.formCheck = {
+          fullName: "",
+          email: "text-danger",
+          phone: "",
+          isFail: false
+        };
+
+        return false;
+      } else if (this.customerInfo.phone.length === 0) {
+         console.log('phone fail')
+        this.formCheck = {
+          fullName: "",
+          email: "",
+          phone: "text-danger",
+          isFail: false
+        };
+
+        return false;
+      }
+       else {
+        this.formCheck = {
+          fullName: "",
+          email: "",
+          phone: "",          
+          isFail: true
+        };
+        return true;
+      }
     },
     async initial(id) {
       this.$store.commit("showHideLoading", true);

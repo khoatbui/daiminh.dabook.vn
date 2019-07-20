@@ -3,7 +3,7 @@
   <div>
      <div class="scroll-ngang w-100 px-0 mx-0">
        <label  class="select-container"  v-for="item in data">
-         <input type="radio" name="radio" v-model="currentItem" @click="onClickButton(item)">
+         <input type="radio" :name="name"  @click="$emit('select', item)">
          <span class="border-radius-100 scroll-select-item text-sm checkmark">
                     {{item.text}} <font-awesome-icon class="text-xs" :icon="icon" v-if="item.isIcon"/>
                 </span>
@@ -13,19 +13,16 @@
 </template>
 <script>
 export default {
-    props:['data','icon','currentItem'],
+    props:['data','name','icon','currentItem'],
   name: "CheckBoxGroup",
   data() {
     return {
-      selectedData:""
+      selectedItem:""
     };
   },
   created() {
   },
   methods: {
-    onClickButton (event,selectItem) {
-      this.$emit('select', selectItem)
-    }
   },
   computed: {
     select(){
