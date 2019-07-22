@@ -2,3 +2,9 @@
     transform: scale(0.875);
     transform-origin: left;
 }
+.sub-add-component {
+    background-color: rgb(205, 224, 243) !important;
+  }
+.text-supplerlarge{
+    font-size: 5rem;
+}

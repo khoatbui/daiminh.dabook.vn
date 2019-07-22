@@ -309,6 +309,7 @@ export default {
       var parrams = {
         selectedDate: this.$store.state.selectDate,
         customer: this.$store.state.customer,
+        guest:this.$store.state.selectedHotel.guest,
         requestData:{
           translate:this.requestData.translate.value,
         hotelStar:this.requestData.hotelStar.value,

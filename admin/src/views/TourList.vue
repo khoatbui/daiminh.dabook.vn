@@ -13,6 +13,9 @@
           <v-card>
             <v-card-title class="pink white--text">
               <span class="headline">{{ formTitle }}</span>
+               <v-spacer></v-spacer>
+              <v-btn color="white darken-1" flat @click="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
             </v-card-title>
 
             <v-card-text>
@@ -40,6 +43,16 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.tourTypeId"
+                      :items="tourType"
+                      item-text="tourTypeName"
+                      item-value="_id"
+                      v-bind:class="{ disabled: disableSelect }"
+                      label="TourType"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
                       :rules="[() => editedItem.tourCode.length > 0 || 'Required field']"
@@ -47,14 +60,23 @@
                       label="Tour Code"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-checkbox v-model="editedItem.isPromotion" :label="`IsPromotion?`"></v-checkbox>
+                  </v-flex>
+                   <v-flex xs12 sm6 md3>
+                    <v-select
+                      v-model="editedItem.star"
+                      :items="stars"
+                      item-text="star"
+                      item-value="start"
+                      label="Star"
+                    ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md3>
                     <v-menu
@@ -222,6 +244,16 @@
               return-object
             ></v-select>
           </v-flex>
+          <v-flex xs12 sm6 md3 p-2>
+            <v-select
+              v-model="filterByCombo.tourTypeId"
+              :items="tourTypeFilter"
+              item-text="tourTypeName"
+              item-value="_id"
+              label="Tour Type"
+              return-object
+            ></v-select>
+          </v-flex>
         </v-layout>
       </v-card>
     </v-container>
@@ -234,6 +266,7 @@
           </td>
            <td>{{ props.item.destinationId.destinationName }}</td>
           <td>{{ props.item.travelStyleId.travelStyleName }}</td>
+          <td>{{ props.item.tourTypeId.tourTypeName }}</td>
           <td>{{ props.item.tourCode }}</td>
           <td>{{ props.item.tourName }}</td>
           <td>{{ props.item.lang }}</td>
@@ -299,6 +332,7 @@ export default {
       { text: "Actions", value: "name", sortable: false },
        { text: "Destination", value: "destinationId.destinationName" },
         { text: "Travel Style", value: "travelStyleId.travelStyleName" },
+        { text: "Tour Type", value: "tourTypeId.tourTypeName" },
       {
         text: "TourCode",
         value: "tourCode"
@@ -322,8 +356,10 @@ export default {
     tourList: [],
     destination: [],
     travelStyle: [],
+    tourType:[],
     destinationFilter: [],
     travelStyleFilter: [],
+    tourTypeFilter:[],
     menu1: false,
     menu2: false,
     language: [
@@ -331,11 +367,19 @@ export default {
       { langCode: "KO", langName: "Korea" },
       { langCode: "VI", langName: "VietNam" }
     ],
+    stars:[
+      {star:1},
+      {star:2},
+      {star:3},
+      {star:4},
+      {star:5}
+    ],
     disableSelect: false,
     editedIndex: -1,
     editedItem: {
       destinationId: "",
       travelStyleId: "",
+      tourTypeId:"",
       tourCode: "",
       tourName: "",
       tourIntro: "",
@@ -358,11 +402,13 @@ export default {
       isUsed: true,
       isPromotion: false,
       removeImage: [],
-      tourIntros: []
+      tourIntros: [],
+      star:3
     },
     defaultItem: {
       destinationId: "",
       travelStyleId: "",
+      tourTypeId:"",
       tourCode: "",
       tourName: "",
       tourIntro: "",
@@ -385,7 +431,8 @@ export default {
       isUsed: true,
       isPromotion: false,
       removeImage: [],
-      tourIntros: []
+      tourIntros: [],
+      star:3
     }
   }),
 
@@ -446,6 +493,19 @@ export default {
             travelStyleCode: "ALL",
             travelStyleName: "ALL",
             travelStyleId: -1
+          });
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+         AXIOS.get(apiIP + "/tourtype/", { crossdomain: true })
+        .then(response => {
+          console.log( response.data);
+          this.tourType = response.data;
+          this.tourTypeFilter = response.data;
+          this.tourTypeFilter.unshift({
+            tourTypeCode: "ALL",
+            tourTypeName: "ALL",
+            tourTypeId: -1
           });
         })
         .catch(function(error) {})

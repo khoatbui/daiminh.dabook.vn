@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 var tourListSchema = new mongoose.Schema({
     destinationId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Destination' },
     travelStyleId:{ type: mongoose.Schema.Types.ObjectId, ref: 'TravelStyle' },
+    tourTypeId:{ type: mongoose.Schema.Types.ObjectId, ref: 'TourType' },
     tourCode: String,
     tourName: String,
     tourIntro: String,
@@ -23,7 +24,8 @@ var tourListSchema = new mongoose.Schema({
     price:Number,
     isUsed:Boolean,
     isPromotion:Boolean,
-    tourIntros:[]
+    tourIntros:[],
+    star:Number
 });
 var TourList =mongoose.model('TourList',tourListSchema,'tourlist');
 

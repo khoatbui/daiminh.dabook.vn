@@ -11,10 +11,10 @@ import JsonExcel from 'vue-json-excel'
 import Vuex from 'vuex'
 import 'es6-promise/auto'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret,faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret,faUser, faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faUserSecret,faUser)
+library.add(faUserSecret,faUser,faFilePdf)
  
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('downloadExcel', JsonExcel)

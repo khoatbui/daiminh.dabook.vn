@@ -5,7 +5,7 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var controller=require('../controllers/tourlist.controller')
+var controller=require('../controllers/ads.controller')
 var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
@@ -19,17 +19,11 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
-router.get('/m/gettourlistbyid/:_id',controller.getmTourListById)
+router.get('/m/getadsbyid/:_id',controller.getmAdsById)
 
-router.get('/m/getalltourpromotion',controller.getmAllTourPromotion)
+router.delete('/:_id', controller.deleteAds)
 
-router.get('/m/gettop10tourpromotion',controller.getmTop10AllTourPromotion)
+router.post('/insert', jsonParser,controller.insertAds)
 
-router.get('/m/getalltour',controller.getmAllTour)
-
-router.delete('/:_id', controller.deleteTourList)
-
-router.post('/insert', jsonParser,controller.insertTourList)
-
-router.post('/update/:_id', jsonParser,controller.updateTourList)
+router.post('/update/:_id', jsonParser,controller.updateAds)
 module.exports = router

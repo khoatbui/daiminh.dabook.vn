@@ -202,10 +202,57 @@ module.exports.uploadTourDetailImg=async (req, res) => {
     }
   }
 
+  module.exports.uploadAdsImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/ads');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/ads');
+        result.push({'fileName':element.filename,'filePath':`img/ads/${element.filename}`,'destination':element.destination,'src':`img/ads/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+
+  module.exports.uploadTourSupplierImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/tour/supplier');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/supplier');
+        result.push({'fileName':element.filename,'filePath':`img/tour/supplier/${element.filename}`,'destination':element.destination,'src':`img/tour/supplier/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 
 
-
-
+  module.exports.uploadTourDocumentImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/file/tour/document');
+    copyFile(element.path, '../m.daiminh.dabook.vn/file/tour/document');
+        result.push({'fileName':element.filename,'filePath':`file/tour/document/${element.filename}`,'destination':element.destination,'src':`file/tour/document/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 //moves the $file to $dir2
 var moveFile = (file, dir2)=>{
     //include the fs, path modules

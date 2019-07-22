@@ -12,7 +12,8 @@ var tourDetailSchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     tourDetailImages:[{fileName:String,filePath:String,destination:String,size:Number}],
-    isUsed:Boolean
+    isUsed:Boolean,
+    detailDocs:[{fileName:String,filePath:String,destination:String,size:Number}]
 });
 var TourDetail =mongoose.model('TourDetail',tourDetailSchema,'tourdetail');
 

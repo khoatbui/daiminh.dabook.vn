@@ -25,6 +25,18 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/Register.vue')
     },
     {
+      path: '/tour-supplier',
+      name: 'toursupplier',
+      component: () => import(/* webpackChunkName: "about" */ './views/TourSupplier.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/tour-type',
+      name: 'tourtype',
+      component: () => import(/* webpackChunkName: "about" */ './views/TourType.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/tour-list',
       name: 'tourlist',
       component: () => import(/* webpackChunkName: "about" */ './views/TourList.vue'),
@@ -152,6 +164,12 @@ const router = new Router({
       path: '/cardetailprice',
       name: 'cardetailprice',
       component: () => import(/* webpackChunkName: "about" */ './views/CarDetailPriceREL.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/adsmanager',
+      name: 'adsmanager',
+      component: () => import(/* webpackChunkName: "about" */ './views/Ads.vue'),
       meta: { requiresAuth: true }
     }
   ]

@@ -10,7 +10,7 @@ module.exports.index =function(req,res){
 };
 
 module.exports.getmTourDetailById=(req,res,next) => {
-    TourDetail.findOne({"_id":req.params._id}).populate('tourId').then(function(tourdetail){
+    TourDetail.findOne({"tourId":req.params._id}).populate('tourId').then(function(tourdetail){
         res.send(tourdetail)
     })
 };

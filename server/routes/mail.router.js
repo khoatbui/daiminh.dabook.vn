@@ -16,6 +16,8 @@ router.post('/m/hotel-booking',jsonParser,controller.sendMobileHotelBookingEmail
 
 router.post('/m/car-booking',jsonParser,controller.sendMobileCarBookingEmail)
 
+router.post('/m/tour-booking',jsonParser,controller.sendMobileTourBookingEmail)
+
 router.post('/tour-booking', jsonParser,controller.sendTourBookingEmail)
 
 router.post('/car-booking', jsonParser, )

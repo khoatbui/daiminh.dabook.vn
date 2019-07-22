@@ -7,9 +7,24 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat to="/other-setting">Other Setting</v-btn>
         <v-btn flat to="/order-manager">Order Management</v-btn>
       </v-toolbar-items>
+      <v-menu :nudge-width="100">
+        <template v-slot:activator="{ on }">
+          <v-toolbar-title v-on="on">
+            <v-btn flat>
+              <span>Other Setting</span>
+              <v-icon dark>arrow_drop_down</v-icon>
+            </v-btn>
+          </v-toolbar-title>
+        </template>
+
+        <v-list>
+          <v-list-tile>
+            <v-btn flat to="/adsmanager">AdsManager</v-btn>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
       <v-menu :nudge-width="100">
         <template v-slot:activator="{ on }">
           <v-toolbar-title v-on="on">
@@ -35,6 +50,12 @@
           </v-list-tile>
           <v-list-tile>
             <v-btn flat to="/travel-style">Travel Style</v-btn>
+          </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/tour-supplier">Tour Supplier</v-btn>
+          </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/tour-type">Tour Type</v-btn>
           </v-list-tile>
           <v-list-tile>
             <v-btn flat to="/tour-list">Tour List</v-btn>

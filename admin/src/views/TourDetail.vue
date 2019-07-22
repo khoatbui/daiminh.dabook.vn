@@ -74,6 +74,27 @@
                     </div>
                 </v-flex>
               </v-layout>
+              
+
+                 <v-layout wrap>
+                  <v-flex xs12 sm12 md12>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <doc-upload
+                      @getUploadFilesURL="uploadDocument = $event"
+                      v-bind:routerPath="apiIP+'/upload/tour/document'"
+                    ></doc-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <h2>Old Document.</h2>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="scroll-ngang">
+                    <a  v-for="(item,i) in editedItem.detailDocs"
+                      v-bind:href="`http://mdaiminh.dabook.vn/${item.filePath}`">
+                    <font-awesome-icon icon="file-pdf" class="text-supplerlarge" />
+                    <span style="display:block">{{item.fileName}}</span>
+                    </a>
+                  </v-flex>
+                </v-layout>
             </v-container>
           </v-card-text>
 
@@ -145,6 +166,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import DocUpload from "../components/DocUpload.vue";
+
 import moment from "moment";
 // import VueTrix from "vue-trix";
 import VueTrixEditor from "@dymantic/vue-trix-editor";
@@ -164,11 +187,13 @@ export default {
   components:{
     FileUpload,
     // VueTrix
-    VueTrixEditor
+    VueTrixEditor,
+    DocUpload
   },
   data: () => ({
     apiIP:apiIP,
     valid: true,
+        uploadDocument:[],
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
@@ -224,7 +249,9 @@ export default {
       modifyBy: "",
       modifyDate: moment(new Date()).format("YYYY-MM-DD"),
             tourDetailImages: [],
-            removeImage: []
+            removeImage: [],
+                  removeDoc:[],
+                        detailDocs:[]
     },
     defaultItem: {
        tourId: "",
@@ -239,7 +266,9 @@ export default {
       modifyBy: "",
       modifyDate: moment(new Date()).format("YYYY-MM-DD"),
       tourDetailImages: [],
-            removeImage: []
+            removeImage: [],
+                  removeDoc:[],
+                        detailDocs:[]
     }
   }),
 
@@ -328,12 +357,13 @@ export default {
     },
 
     save() {
-      console.log(this.editedItem);
       if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.tourDetailImages);
         this.editedItem.removeImage = this.editedItem.tourDetailImages;
         this.editedItem.tourDetailImages = this.uploadImg;
-        console.log(this.editedItem.removeImage);
+      }
+      if (this.uploadDocument.length > 0) {
+        this.editedItem.removeDoc = this.editedItem.detailDocs;
+        this.editedItem.detailDocs = this.uploadDocument;
       }
      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;

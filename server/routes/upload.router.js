@@ -127,6 +127,33 @@ var tourDetailUpload = multer.diskStorage({
 })
 const uploadTourDetail = multer({storage:tourDetailUpload});
 
+//TOUR DETAIL IMAGE
+var adsUpload = multer.diskStorage({
+  destination: `./uploads/ads`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadAds = multer({storage:adsUpload});
+
+//TOUR SUPPLIER IMAGE
+var tourSupplierUpload = multer.diskStorage({
+  destination: `./uploads/tour/supplier`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTourSupplier = multer({storage:tourSupplierUpload});
+
+//TOUR DOCUMENT
+var tourDocumentUpload = multer.diskStorage({
+  destination: `./uploads/tour/supplier`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTourDocument = multer({storage:tourDocumentUpload});
+
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -141,9 +168,13 @@ router.post('/tour/city',uploadCity.array('photos', 12),controller.uploadCityImg
 router.post('/tour/area',uploadArea.array('photos', 12),controller.uploadAreaImg)
 router.post('/tour/country',uploadCountry.array('photos', 12),controller.uploadCountryImg)
 router.post('/tour/destination',uploadDestination.array('photos', 12),controller.uploadDestinationImg)
+router.post('/tour/supplier',uploadTourSupplier.array('photos', 12),controller.uploadTourSupplierImg)
 router.post('/tour/travelstyle',uploadTravelStyle.array('photos', 12),controller.uploadTravelStyleImg)
 router.post('/tour/tourlist',uploadTourList.array('photos', 12),controller.uploadTourListImg)
 router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploadTourDetailImg)
+router.post('/tour/document',uploadTourDocument.array('documents', 12),controller.uploadTourDocumentImg)
+
+router.post('/ads',uploadAds.array('photos', 12),controller.uploadAdsImg)
 
 
 module.exports = router
