@@ -1,5 +1,5 @@
 <template>
-  <div class="search-component">
+  <div class="filter-hotel-component">
     <!-- Button trigger modal -->
     <button
       type="button"
@@ -43,43 +43,11 @@
               </div>
              <div class="row p-2 pb-4 justify-content-start align-items-center border-bottom">
                 <div class="col-12">
-                  <h6 class="text-left mb-0 font-weight-bolder">Number of guest</h6>
-                  <p class="text-sm text-left mb-1">Số người trong phòng</p>
+                  <h6 class="text-left mb-0 font-weight-bolder">Chuỗi khách sạn</h6>
+                  <p class="text-sm text-left mb-1">Phân loại theo chuỗi các khách sạn nổi tiếng</p>
                 </div>
                 <div class="col-12">
                   <GuestSelectDropDown v-bind:id="'filter-guest'"></GuestSelectDropDown>
-                </div>
-              </div>
-              <div class="row p-2 pb-4 justify-content-start align-items-center border-bottom">
-                <div class="col-12">
-                  <h6 class="text-left mb-0 font-weight-bolder">Number of beds</h6>
-                  <p class="text-sm text-left mb-1">Số giường trong phòng</p>
-                </div>
-                <div class="col-12">
-                  <div class="row px-3">
-                    <div class="col-6 pl-0 text-left d-flex align-items-center">
-                  <p class="m-0 ">Beds</p>
-                </div>
-                <div class="col-1 p-0 m-0 d-flex align-items-center">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  >
-                    <font-awesome-icon class="ml-1" icon="minus"/>
-                  </button>
-                </div>
-                <div class="col-4 m-0 d-flex align-items-center">
-                  <input type="text" class="form-control" readonly placeholder="10">
-                </div>
-                <div class="col-1 p-0 m-0 d-flex align-items-center">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  >
-                    <font-awesome-icon class="ml-1" icon="plus"/>
-                  </button>
-                </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -152,10 +120,10 @@ GuestSelectDropDown
 .btn-sm-round svg {
   margin: 0 !important;
 }
-.search-component .modal-dialog{
+.filter-hotel-component .modal-dialog{
   margin: 0 !important;
 }
-.search-component .modal-content{
+.filter-hotel-component .modal-content{
   width: 100vw;
     margin: 0 !important;
     padding: 0 !important;

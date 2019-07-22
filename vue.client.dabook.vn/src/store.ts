@@ -1,8 +1,8 @@
-import 'es6-promise/auto'
 import moment from 'moment'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { start } from 'repl';
+import { pathToFileURL } from 'url';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -22,6 +22,16 @@ export default new Vuex.Store({
             name: 'less12',
             qty: 0
           }
+        },
+        golfer: {
+          golfer: {
+            name: 'golfer',
+            qty: 0
+          },
+          nongolfer: {
+            name: 'nongolfer',
+            qty: 0
+          }
         }
       },
       package: {
@@ -36,51 +46,66 @@ export default new Vuex.Store({
         smallPrice: 0,
         avgPrice: 0,
         avgChild: 0
-      }
+      },
+      selectOptionService: {
+        selectedOption: [],
+        totalPrice: 0
+      },
+      totalPrice: 0
     },
     selectDate: {
       startDate: moment().format('YYYY-MM-DD'),
       endDate: moment(new Date()).add(1, 'days').format('YYYY-MM-DD')
     },
-    customer:{
-      fullname:'',
-      email:'',
-      phone:'',
-      question:''
-    }
+    customer: {
+      fullName: '',
+      email: '',
+      phone: '',
+      question: ''
+    },
+    search: {
+      isSearch: false,
+      historySearch: "",
+      locationSearch: "",
+      searchResult: []
+    },
+    loading: {
+      isShow: false
+    },
+    selectedCar:{}
   },
   mutations: {
-    plusAdult (state) {
-      state.selectedHotel.guest.adult.qty++
+    plusAdult(state) {
+      state.selectedHotel.guest.adult.qty = state.selectedHotel.guest.adult.qty + 1
     },
-    minusAdult (state) {
-      state.selectedHotel.guest.adult.qty--
+    minusAdult(state) {
+      state.selectedHotel.guest.adult.qty = state.selectedHotel.guest.adult.qty - 1
     },
-    plusChildLess4 (state) {
-      state.selectedHotel.guest.children.less4.qty++
+    plusChildLess4(state) {
+      state.selectedHotel.guest.children.less4.qty = state.selectedHotel.guest.children.less4.qty + 1
     },
-    minusChildLess4 (state) {
-      state.selectedHotel.guest.children.less4.qty--
+    minusChildLess4(state) {
+      state.selectedHotel.guest.children.less4.qty = state.selectedHotel.guest.children.less4.qty - 1
     },
-    plusChildLess12 (state) {
-      state.selectedHotel.guest.children.less12.qty++
+    plusChildLess12(state) {
+      state.selectedHotel.guest.children.less12.qty = state.selectedHotel.guest.children.less12.qty + 1
     },
-    minusChildLess12 (state) {
-      state.selectedHotel.guest.children.less12.qty--
+    minusChildLess12(state) {
+      state.selectedHotel.guest.children.less12.qty = state.selectedHotel.guest.children.less12.qty - 1
     },
-    selectDate (state, payload) {
+    selectDate(state, payload) {
       state.selectDate.startDate = payload.startDate
       state.selectDate.endDate = payload.endDate
     },
-    updateselectedHotelDetail (state, payload) {
+    updateselectedHotelDetail(state, payload) {
       state.selectedHotel.package = payload
     },
-    updateSelectedPriceByTime (state) {
+    updateSelectedPriceByTime(state) {
       var totalPrice = 0
       var diffTime = 0
       var avgPrice = 0
       var avgChild = 0
-      var detailPriceByRange: any =[]
+      var detailPriceByRange: any = []
       var startSelectDate = moment(state.selectDate.startDate, 'YYYY-MM-DD')
       var endSelectDate = moment(state.selectDate.endDate, 'YYYY-MM-DD')
       var priceRange = state.selectedHotel.package.priceRanges
@@ -130,7 +155,7 @@ export default new Vuex.Store({
 
         }
       })
-      detailPriceByRange.forEach((element: any ) => {
+      detailPriceByRange.forEach((element: any) => {
         if (element.price.markUpPercent !== 0) {
           totalPrice = totalPrice +
             element.diff * element.price.price * element.price.markUpPercent +
@@ -138,10 +163,10 @@ export default new Vuex.Store({
             element.diff * state.selectedHotel.guest.children.less12.qty * element.price.less12Price +
             element.diff * state.selectedHotel.guest.children.less4.qty * element.price.less4Price
 
-            avgPrice += element.diff * element.price.price * element.price.markUpPercent +
+          avgPrice += element.diff * element.price.price * element.price.markUpPercent +
             element.price.markUpPlus
 
-            avgChild += element.diff * state.selectedHotel.guest.children.less12.qty * element.price.less12Price +
+          avgChild += element.diff * state.selectedHotel.guest.children.less12.qty * element.price.less12Price +
             element.diff * state.selectedHotel.guest.children.less4.qty * element.price.less4Price
         } else {
           totalPrice = totalPrice +
@@ -150,10 +175,10 @@ export default new Vuex.Store({
             element.diff * state.selectedHotel.guest.children.less12.qty * element.price.less12Price +
             element.diff * state.selectedHotel.guest.children.less4.qty * element.price.less4Price
 
-            avgChild += element.diff * state.selectedHotel.guest.children.less12.qty * element.price.less12Price +
+          avgChild += element.diff * state.selectedHotel.guest.children.less12.qty * element.price.less12Price +
             element.diff * state.selectedHotel.guest.children.less4.qty * element.price.less4Price
 
-            avgPrice += element.diff * element.price.price +
+          avgPrice += element.diff * element.price.price +
             element.price.markUpPlus
         }
         diffTime += element.diff
@@ -166,14 +191,100 @@ export default new Vuex.Store({
         avgChild: avgChild
       }
     },
-    updateCustomerInfo(state,payload){
-      state.customer=payload;
+    updateCustomerInfo(state, payload) {
+      state.customer = payload;
+    },
+    updateSelectOptionService(state, payload) {
+      state.selectedHotel.selectOptionService = payload;
+    },
+    updateTotalPrice(state) {
+      state.selectedHotel.totalPrice = state.selectedHotel.selectOptionService.totalPrice + state.selectedHotel.priceByTime.price;
+    },
+    updateHistorySearch(state, payload) {
+      state.search.historySearch = payload;
+    },
+    asignSearchResult(state, payload) {
+      state.search.searchResult = payload.searchResult;
+      state.search.locationSearch = payload.locationSearch;
+    },
+    showHideLoading(state, payload) {
+      state.loading.isShow = payload;
+    },
+    updateSelectedCar(state, payload) {
+      state.selectedCar = payload;
+      console.log('show state')
+      console.log(state.selectedCar);
     }
   },
   actions: {
-    updateselectedHotelDetailAction ({ commit }, selectedHotelpackage) {
+    updateselectedHotelDetailAction({ commit }, selectedHotelpackage) {
       commit('updateselectedHotelDetail', selectedHotelpackage)
       commit('updateSelectedPriceByTime')
+      commit('updateTotalPrice')
+    },
+    updateSelectOptionService({ commit }, selectedOptionService) {
+      commit('updateSelectOptionService', selectedOptionService)
+      commit('updateSelectedPriceByTime')
+      commit('updateTotalPrice')
+    },
+    updateSelectDate({ commit }, selectDate) {
+      commit('selectDate', selectDate)
+      commit('updateSelectedPriceByTime')
+      commit('updateTotalPrice')
+    },
+    updateGuest({ commit }, action) {
+      commit(action)
+      commit('updateSelectedPriceByTime')
+      commit('updateTotalPrice')
     }
   }
 })
+
+/* {
+  carTransTypeId: {
+    _id: "",
+    carTransTypeName: "",
+    carTransTypeCode: "",
+    carTransTypeIntro: ""
+  },
+  fromLocation: "",
+  isPromotion: false,
+  isUsed: false,
+  kmTotal: "",
+  lang: "",
+  modifyBy: "",
+  modifyDate: "",
+  nightTotal: "",
+  optionServices: "",
+  priceByCarType: [{
+    _id: "",
+    carImages: [{
+      filePath: "",
+      fileName: "",
+      destination: ""
+    }],
+    carTypeId: "",
+    carTypeIntro: "",
+    carTypeName: "",
+    isPromotion: false,
+    isUsed: false,
+    markUpPercent: "",
+    markUpPlus: "",
+    price: "",
+    seatNumber: "",
+  }],
+  supplierId: {
+    _id: "",
+    supplierName: "",
+    supplierCode: "",
+    supplierImages: [{
+      filePath: "",
+      fileName: "",
+      destination: ""
+    }]
+  },
+  toLocation: "",
+  totalPrice: "",
+  tripCode: "",
+  tripName: "",
+}*/

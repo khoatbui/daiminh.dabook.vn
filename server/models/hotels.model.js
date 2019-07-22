@@ -12,7 +12,10 @@ var hotelSchema = new mongoose.Schema({
     modifyDate:Date,
     isUsed:Boolean,
     isHot:Boolean,
-    isPromote:Boolean
+    isPromote:Boolean,
+    hotelImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    keyword:String,
+    hotelIntro:String
 });
 var Hotel =mongoose.model('Hotel',hotelSchema,'hotel');
 

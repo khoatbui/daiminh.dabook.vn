@@ -2,7 +2,7 @@ export default  {
     data: function () {
       return {
         user:{
-          userName:"khoatbui.dev",
+          userName:"vankhoat.bui",
           loginTime:"",
           isLogin:true
         }

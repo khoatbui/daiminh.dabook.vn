@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="container-fluid main h-100 p-0 m-0 promotion-container text-sm">
     <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section">
@@ -7,7 +8,7 @@
             <MainNavBar></MainNavBar>
           </div>
           <div class="col-8">
-            <LocationSearchComponent></LocationSearchComponent>
+            <LocationSearchComponent v-bind:searchtype="'HOTEL'"></LocationSearchComponent>
           </div>
           <div class="col-2">
             <LanguageComponent></LanguageComponent>
@@ -22,8 +23,9 @@
         <FilterHotel></FilterHotel>
       </div>
     </div>
-    <div class="data-section">
+    <div class="data-section margin-top-130 bottom-page">
       <HotelAllSection></HotelAllSection>
+      <TourTop10PromotionSectionHorizontal></TourTop10PromotionSectionHorizontal>
     </div>
     <Navbar v-bind:current="'hotel'"></Navbar>
   </div>
@@ -40,6 +42,7 @@ import MainNavBar from "@/components/MainNavBar.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
 import HotelAllSection from "@/components/HotelAllSection.vue";
+import TourTop10PromotionSectionHorizontal from "@/components/TourTop10PromotionSectionHorizontal.vue"
 
 @Component({
   components: {
@@ -51,10 +54,13 @@ import HotelAllSection from "@/components/HotelAllSection.vue";
     MainNavBar,
     LocationSearchComponent,
     LanguageComponent,
-    HotelAllSection
+    HotelAllSection,
+    TourTop10PromotionSectionHorizontal
   }
 })
-export default class Promotion extends Vue {}
+export default class Promotion extends Vue {
+
+}
 </script>
 <style >
 .main-section {
@@ -112,9 +118,6 @@ export default class Promotion extends Vue {}
   z-index: 1000000000000 !important;
 }
 /* ========DATA SECTION=========== */
-.data-section {
-  margin-top: 130px !important;
-}
 
 .page-item:last-child .page-link,
 .page-item:first-child .page-link {

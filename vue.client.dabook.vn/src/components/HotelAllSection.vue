@@ -1,6 +1,6 @@
 //src/components/Navbar.vue
 <template>
-  <div class="row w-100 p-0 mx-0 bottom-page">
+  <div class="row w-100 p-0 mx-0 hotel-all-section">
     <div class="col-12 p-1 m-0">
       <div class="m-2 text-left">
         <h4>
@@ -8,18 +8,54 @@
         </h4>
       </div>
     </div>
-    <div class="col-12 p-1 m-0" v-for="item in paginatedData">
+    <div class="col-12 p-1 m-0" v-for="(item,i) in paginatedData">
       <div class="card w-100 p-2 d-inline-block border-0">
         <a v-bind:href="`/promotiondetail?packagehotelrelid=${item._id}`">
-          <img
-            class="card-img-top border-radius-5"
-            src="img/topdestination/sapa_2.jpg"
-            alt="Card image cap"
-          >
+          <div v-bind:id="`carousel-img-${i}`" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li
+                v-bind:data-target="`#carousel-img-${i}`"
+                v-for="(subitem,index) in item.roomTypeId.roomImages"
+                v-bind:class="{'active':index==0}"
+                v-bind:data-slide-to="index"
+              ></li>
+            </ol>
+            <div class="carousel-inner border-radius-5 default-bg h-200">
+              <div
+                class="carousel-item border-radius-5"
+                v-for="(subitem,index) in item.roomTypeId.roomImages"
+                v-bind:class="{'active':index==0}"
+              >
+                <img
+                  v-bind:src="item.roomTypeId.roomImages.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
+                  class="d-block border-radius-5"
+                  alt="..."
+                />
+              </div>
+            </div>
+            <a
+              class="carousel-control-prev"
+              v-bind:href="`#carousel-img-${i}`"
+              role="button"
+              data-slide="prev"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a
+              class="carousel-control-next"
+              v-bind:href="`#carousel-img-${i}`"
+              role="button"
+              data-slide="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
           <div class="card-body w-100 text-left p-1">
             <p class="card-text text-uppercase p-0 m-0 text-sm hidden-outof-text">
-              <span class="w-50 hidden-outof-text">{{item.packageId.packageName}}</span>
-              <span class="w-50 hidden-outof-text">{{item.roomTypeId.bed}}BED</span>
+              <span class="w-50 hidden-outof-text">{{item.roomTypeId.roomTypeName}} | {{item.packageId.packageName}}</span>
+              <span class="w-50 hidden-outof-text"> | {{item.roomTypeId.bed}}BED</span>
             </p>
             <p
               class="card-text font-weight-bolder p-0 m-0 hidden-outof-text"
@@ -30,7 +66,7 @@
               >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price) }} per night</span>
               <span class="card-text text-sm">
                 <font-awesome-icon
-                  class="ml-1 text-primary"
+                  class="ml-1 text-primary text-xs"
                   icon="star"
                   v-for="star in item.hotelId.star"
                   :key="star"
@@ -52,7 +88,7 @@
                 @click="prevPage"
                 :disabled="pageNumber == 0"
               >
-                <font-awesome-icon class="text-primary" icon="angle-double-left"/>
+                <font-awesome-icon class="text-primary" icon="angle-double-left" />
               </a>
             </li>
             <li class="page-item">
@@ -75,20 +111,21 @@
                 @click="nextPage"
                 :disabled="pageNumber >= pageCount -1"
               >
-                <font-awesome-icon class="text-primary" icon="angle-double-right"/>
+                <font-awesome-icon class="text-primary" icon="angle-double-right" />
               </a>
             </li>
           </ul>
         </nav>
       </div>
     </div>
-    <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+    <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
 import HotelService from "@/api/HotelService";
 import PackageService from "@/api/PackageService";
 import LoadingComponent from "@/components/LoadingComponent.vue";
+
 export default {
   components: {
     LoadingComponent
@@ -100,7 +137,6 @@ export default {
       packagelist: [],
       pageNumber: 0,
       size: 10,
-      isLoadding: false
     };
   },
   created() {
@@ -111,23 +147,20 @@ export default {
     }
   },
   methods: {
-    changeLoadingState(state) {
-      this.isLoadding = state;
-    },
     redirectToPromotionAll() {
       this.$router.push({ path: "promotionall" });
     },
     async initial() {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getAllPackage();
       this.packagelist = response.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     },
     async initialWithSupplier(supplierId) {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getAllPackageBySupplier(supplierId);
       this.packagelist = response.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     },
     nextPage() {
       if (this.pageNumber + 1 == this.pageCount) {
@@ -151,13 +184,42 @@ export default {
     paginatedData() {
       const start = this.pageNumber * this.size,
         end = start + this.size;
-      return this.packagelist.slice(start, end);
+      return randomArray(this.packagelist.slice(start, end));
     }
+  },
+  mounted() {
+    this.$root.$on('userSearchActivity', () => {
+       this.packagelist=this.$store.state.search.searchResult;
+    })
   }
 };
+function randomArray(array){
+        let array2=[];
+        while(array.length!==0){
+        let randomIndex=Math.floor(Math.random()*array.length);
+        array2.push(array[randomIndex]);
+        array.splice(randomIndex,1);
+        }
+        return array2;
+    }
 </script>
 <style lang="scss">
 .page-item.active .page-link {
   color: #fff !important;
+}
+.hotel-all-section .h-200 {
+  height: 200px !important;
+  overflow: hidden;
+  min-height: 200px !important;
+  max-height: 200px;
+}
+.hotel-all-section .carousel-item {
+  height: 100%;
+  width: 100%;
+}
+.hotel-all-section .carousel-item img {
+  height: 100% !important;
+  min-height: 100% !important;
+  min-width: 100% !important;
 }
 </style>

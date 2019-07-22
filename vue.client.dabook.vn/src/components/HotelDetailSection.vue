@@ -3,12 +3,48 @@
   <div class="hotel-detail-section">
     <div class="row w-100 p-0 mx-0">
       <div class="col-12 p-0 m-0">
-        <div class="card d-inline-block border-0">
-          <img
-            class="card-img-top border-radius-none"
-            src="img/topdestination/sapa_2.jpg"
-            alt="Card image cap"
-          >
+        <div class="card d-inline-block border-0 w-100">
+            <div id="carousel-img" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li
+                data-target="#carousel-img"
+                v-for="(subitem,index) in packagedetail.roomTypeId.roomImages"
+                v-bind:class="{'active':index==0}"
+                v-bind:data-slide-to="index"
+              ></li>
+            </ol>
+            <div class="carousel-inner default-bg h-200">
+              <div
+                class="carousel-item"
+                v-for="(subitem,index) in packagedetail.roomTypeId.roomImages"
+                v-bind:class="{'active':index==0}"
+              >
+                <img
+                  v-bind:src="packagedetail.roomTypeId.roomImages.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
+                  class="d-block card-img-top"
+                  alt="..."
+                />
+              </div>
+            </div>
+            <a
+              class="carousel-control-prev"
+              href="#carousel-img"
+              role="button"
+              data-slide="prev"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a
+              class="carousel-control-next"
+              href="#carousel-img"
+              role="button"
+              data-slide="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
         </div>
       </div>
       <div class="col-12 px-3 m-0">
@@ -21,12 +57,12 @@
       <div class="col-12 px-3 m-0">
         <div class="m-2 d-flex justify-content-between align-items-center">
           <span>{{city.cityName}}</span>
-          <img class="hotel-owner-avatar shadow" src="img/hotel/hotel-owner/vinpearl.jpg" alt>
+          <img class="hotel-owner-avatar shadow" :src="packagedetail.supplierId.supplierImages.length>0?packagedetail.supplierId.supplierImages[0].filePath:'img/hotel/supplier/default.jpg'" alt />
         </div>
       </div>
       <div class="col-12 px-3 m-0 text-left">
         <div class="m-2 pb-4 border-bottom">
-          <h6 class="font-weight-bolder">{{packagedetail.roomTypeId.roomTypeName}}</h6>
+          <h6 class="font-weight-bolder">{{packagedetail.roomTypeId.roomTypeName}} | {{packagedetail.packageId.packageName}}</h6>
           <div>
             <span
               class="text-sm"
@@ -53,26 +89,26 @@
           <h6 class="font-weight-bolder">Room Info</h6>
           <div class="w-100 d-flex justify-content-between align-items-center flex-wrap">
             <span class="text-sm">
-              <font-awesome-icon class="m-1" icon="bed"/>
+              <font-awesome-icon class="m-1" icon="bed" />
               {{packagedetail.roomTypeId.bed}}kingbed
             </span>
             <span class="text-sm" v-if="packagedetail.utilities.isKitchen">
-              <font-awesome-icon class="m-1" icon="utensils"/>Kitchen
+              <font-awesome-icon class="m-1" icon="utensils" />Kitchen
             </span>
             <span class="text-sm" v-if="packagedetail.utilities.isWifi">
-              <font-awesome-icon class="m-1" icon="wifi"/>Wifi
+              <font-awesome-icon class="m-1" icon="wifi" />Wifi
             </span>
             <span class="text-sm" v-if="packagedetail.utilities.isTivi">
-              <font-awesome-icon class="m-1" icon="tv"/>Tivi
+              <font-awesome-icon class="m-1" icon="tv" />Tivi
             </span>
             <span class="text-sm" v-if="packagedetail.utilities.isDry">
-              <font-awesome-icon class="m-1" icon="cloud-sun"/>Dry
+              <font-awesome-icon class="m-1" icon="cloud-sun" />Dry
             </span>
             <span class="text-sm" v-if="packagedetail.utilities.isSwim">
-              <font-awesome-icon class="m-1" icon="swimming-pool"/>Swimming pool
+              <font-awesome-icon class="m-1" icon="swimming-pool" />Swimming pool
             </span>
             <span class="text-sm" v-if="packagedetail.utilities.isGym">
-              <font-awesome-icon class="m-1" icon="dumbbell"/>Gym room
+              <font-awesome-icon class="m-1" icon="dumbbell" />Gym room
             </span>
           </div>
         </div>
@@ -115,7 +151,7 @@
         </div>
       </div>
     </div>
-    <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+    <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -154,7 +190,6 @@ export default {
         }
       },
       city: {},
-      isLoadding: false
     };
   },
   created() {
@@ -163,62 +198,60 @@ export default {
   methods: {
     redirectToConfirm: function() {
       this.$router.push(
-        `/promotiondetail/confirm?packagehotelrelid=${
-          this.$route.query.packagehotelrelid
-        }`
+        `/promotiondetail/confirm?packagehotelrelid=${this.$route.query.packagehotelrelid}`
       );
-    },
-    changeLoadingState(state) {
-      this.isLoadding = state;
     },
     redirectToPromotionAll() {
       this.$router.push({ path: "promotionall" });
     },
     async initial(id) {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getPackageDetail(id);
       this.$store.dispatch("updateselectedHotelDetailAction", response.data);
+      console.log(response.data);
       this.packagedetail = response.data;
       var cityresponse = await CityService.getCityDetailById(
         response.data.hotelId.cityId
       );
       this.city = cityresponse.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
       this.componentLoaded = true;
     }
   },
   computed: {
     selectedHotel() {
-      if (!this.componentLoaded){
- return {
-      guest: {
-        adult: {
-          name: "adult",
-          qty: 0
-        },
-        children: {
-          less4: {
-            name: 'less4',
-            qty: 0
+      if (!this.componentLoaded) {
+        return {
+          guest: {
+            adult: {
+              name: "adult",
+              qty: 0
+            },
+            children: {
+              less4: {
+                name: "less4",
+                qty: 0
+              },
+              less12: {
+                name: "less12",
+                qty: 0
+              }
+            }
           },
-          less12: {
-            name: 'less12',
-            qty: 0
+          package: {
+            priceRanges: [
+              {
+                startDate: "",
+                endDate: ""
+              }
+            ]
+          },
+          priceByTime: {
+            price: 0,
+            diffTime: 0,
+            smallPrice: 0
           }
-        }
-      },
-      package: {
-        priceRanges: [{
-          startDate: "",
-          endDate: ""
-        }]
-      },
-      priceByTime: {
-        price:0,
-        diffTime:0,
-        smallPrice:0
-      }
- };
+        };
       }
       return this.$store.state.selectedHotel;
     }
@@ -232,5 +265,11 @@ export default {
   border-radius: 100px;
   background-color: #ffffff;
   border: 1px solid #007bff;
+}
+.hotel-detail-section .h-200 {
+  height: 200px !important;
+  overflow: hidden;
+  min-height: 200px !important;
+  max-height: 200px;
 }
 </style>

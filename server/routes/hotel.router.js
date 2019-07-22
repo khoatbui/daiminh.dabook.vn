@@ -38,4 +38,7 @@ router.get('/m/getlisthotel',controller.getmListHotel)
 
 router.get('/m/getlisthotelpromotebysuppliercode/:_id',controller.getmListHotelPromotionBySupplier)
 
+router.post('/m/posthotelbysearch', jsonParser,controller.getmHotelBySearch)
+router.post('/m/postpromotionhotelbysearch', jsonParser,controller.getmPromotionHotelBySearch)
+
 module.exports = router

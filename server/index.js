@@ -16,6 +16,7 @@ const mainRoute = require('./routes/main.router')
 const destinationRoute = require('./routes/destination.router')
 const travelStyleRoute = require('./routes/travelstyle.router')
 const cityRoute = require('./routes/city.router')
+const countryRoute = require('./routes/country.router')
 const areaRouter = require('./routes/area.router')
 const tourListRoute = require('./routes/tourlist.router')
 const tourDetailRoute = require('./routes/tourdetail.router')
@@ -29,6 +30,12 @@ const optionServiceRoute = require('./routes/optionservice.router')
 const packageHotelRELRouter = require('./routes/packagehotelREL.router')
 const paymentsRouter = require('./routes/payments.router')
 const userRouter = require('./routes/auth.router')
+const hotelOrderRouter=require('./routes/hotelorder.router')
+
+const carSuppler=require('./routes/carsupplier.router')
+const carType=require('./routes/cartype.router')
+const carTransType=require('./routes/cartranstype.router')
+const carDetailPrice=require('./routes/cardetailprice.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -38,6 +45,7 @@ app.use('/main',mainRoute);
 app.use('/destination',destinationRoute);
 app.use('/travelstyle',travelStyleRoute);
 app.use('/city',cityRoute);
+app.use('/country',countryRoute);
 app.use('/tourlist',tourListRoute);
 app.use('/tourdetail',tourDetailRoute);
 app.use('/area',areaRouter);
@@ -51,6 +59,12 @@ app.use('/optionservice',optionServiceRoute);
 app.use('/packagehotelrel',packageHotelRELRouter);
 app.use('/payments',paymentsRouter);
 app.use('/user',userRouter)
+app.use('/hotelorder',hotelOrderRouter)
+
+app.use('/carsupplier',carSuppler)
+app.use('/cartype',carType)
+app.use('/cartranstype',carTransType)
+app.use('/cardetailprice',carDetailPrice)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

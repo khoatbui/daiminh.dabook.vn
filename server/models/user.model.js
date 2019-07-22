@@ -4,6 +4,7 @@ var userSchema = new mongoose.Schema({
     password: String,
     fullName:String,
     userEmail:String,
+    team:String,
     isUsed:Boolean,
     createBy:String,
     createDate:Date,

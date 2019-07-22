@@ -66,45 +66,45 @@
                       label="Package"
                     ></v-select>
                   </v-flex>
-                    <v-layout wrap>
-                  <v-flex xs12 sm6 md2>
-                    <v-select
-                      v-model="editedItem.lang"
-                      :items="language"
-                      item-text="langName"
-                      item-value="langCode"
-                      label="Language"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs6 sm3 md2>
-                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs6 sm3 md2 class="service-add-component">
-                    <v-checkbox v-model="editedItem.isDefault" :label="`IsDefault?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs6 sm3 md2 class="service-add-component">
-                    <v-checkbox v-model="editedItem.isPromote" :label="`IsPromote?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs6 sm3 md2 class="service-add-component">
-                    <v-checkbox v-model="editedItem.utilities.isWifi" :label="`Wifi?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs6 sm3 md2 class="service-add-component">
-                    <v-checkbox v-model="editedItem.utilities.isTivi" :label="`Tivi?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs6 sm3 md2 class="service-add-component">
-                    <v-checkbox v-model="editedItem.utilities.isSwim" :label="`Swimming Poor?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs6 sm3 md2 class="service-add-component">
-                    <v-checkbox v-model="editedItem.utilities.isGym" :label="`Gym?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs6 sm3 md2 class="service-add-component">
-                    <v-checkbox v-model="editedItem.utilities.isKitchen" :label="`Kitchen?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs6 sm3 md2 class="service-add-component">
-                    <v-checkbox v-model="editedItem.utilities.isDry" :label="`DryService?`"></v-checkbox>
-                  </v-flex>
-                    </v-layout>
-                  <v-flex xs12 sm6 md3  class="sub-add-component">
+                  <v-layout wrap>
+                    <v-flex xs12 sm6 md2>
+                      <v-select
+                        v-model="editedItem.lang"
+                        :items="language"
+                        item-text="langName"
+                        item-value="langCode"
+                        label="Language"
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs6 sm3 md2>
+                      <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6 sm3 md2 class="service-add-component">
+                      <v-checkbox v-model="editedItem.isDefault" :label="`IsDefault?`"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6 sm3 md2 class="service-add-component">
+                      <v-checkbox v-model="editedItem.isPromote" :label="`IsPromote?`"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6 sm3 md2 class="service-add-component">
+                      <v-checkbox v-model="editedItem.utilities.isWifi" :label="`Wifi?`"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6 sm3 md2 class="service-add-component">
+                      <v-checkbox v-model="editedItem.utilities.isTivi" :label="`Tivi?`"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6 sm3 md2 class="service-add-component">
+                      <v-checkbox v-model="editedItem.utilities.isSwim" :label="`Swimming Poor?`"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6 sm3 md2 class="service-add-component">
+                      <v-checkbox v-model="editedItem.utilities.isGym" :label="`Gym?`"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6 sm3 md2 class="service-add-component">
+                      <v-checkbox v-model="editedItem.utilities.isKitchen" :label="`Kitchen?`"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs6 sm3 md2 class="service-add-component">
+                      <v-checkbox v-model="editedItem.utilities.isDry" :label="`DryService?`"></v-checkbox>
+                    </v-flex>
+                  </v-layout>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-menu
                       v-model="menu1"
                       :close-on-content-click="false"
@@ -256,25 +256,28 @@
                   </v-flex>
                 </v-layout>
                 <v-layout wrap>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field
                       required
                       v-model="editedItem.optionService.optionServiceCode"
-                      label="Option Service Code"
+                      label="Service Code"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field
                       required
                       v-model="editedItem.optionService.optionServiceName"
                       label="Option Service Name"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field
                       v-model="editedItem.optionService.optionPrice"
                       label="Service Price"
                     ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                    <v-text-field v-model="editedItem.optionService.groupCode" label="Group Code"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4 class="sub-add-component">
                     <v-text-field v-model="editedItem.optionService.optionNote" label="Note"></v-text-field>
@@ -300,17 +303,32 @@
                       width="100%"
                     >
                       <template v-slot:items="props">
-                        <td class="justify-center px-0">
-                          <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
-                        </td>
-                        <td class="text-xs-right">{{props.item.optionServiceCode}}</td>
-                        <td class="text-xs-right">{{props.item.optionServiceName}}</td>
-                        <td
-                          class="text-xs-right"
-                          style="color:green;font-weight:bold"
-                        >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.optionPrice) }}</td>
-                        <td class="text-xs-right">{{ props.item.isUsed }}</td>
-                        <td class="text-xs-right">{{ props.item.optionNote }}</td>
+                        <tr v-if="props.item.groupCode=='checkbox'">
+                          <td class="justify-center px-0">
+                            <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
+                          </td>
+                          <td class="text-xs-right">{{props.item.data.optionServiceCode}}</td>
+                          <td class="text-xs-right">{{props.item.data.optionServiceName}}</td>
+                          <td
+                            class="text-xs-right"
+                            style="color:green;font-weight:bold"
+                          >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.item.data.optionPrice) }}</td>
+                          <td class="text-xs-right">{{ props.item.data.isUsed }}</td>
+                          <td class="text-xs-right">{{ props.item.data.optionNote }}</td>
+                        </tr>
+                        <tr v-if="props.item.groupCode!='checkbox'" v-for="(itemdata,i) in props.item.data" v-bind:key="i">
+                            <td class="justify-center px-0">
+                              <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
+                            </td>
+                            <td class="text-xs-right">{{itemdata.optionServiceCode}}</td>
+                            <td class="text-xs-right">{{itemdata.optionServiceName}}</td>
+                            <td
+                              class="text-xs-right"
+                              style="color:green;font-weight:bold"
+                            >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(itemdata.optionPrice) }}</td>
+                            <td class="text-xs-right">{{ itemdata.isUsed }}</td>
+                            <td class="text-xs-right">{{ itemdata.optionNote }}</td>
+                        </tr>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -800,15 +818,16 @@ export default {
         optionServiceCode: "",
         optionServiceName: "",
         optionNote: "",
-        isUsed: true
+        isUsed: true,
+        groupCode: ""
       },
-      utilities:{
-        isWifi:true,
-        isTivi:true,
-        isSwim:false,
-        isGym:false,
-        isKitchen:false,
-        isDry:true
+      utilities: {
+        isWifi: true,
+        isTivi: true,
+        isSwim: false,
+        isGym: false,
+        isKitchen: false,
+        isDry: true
       },
       optionServices: [],
       lang: "EN",
@@ -839,15 +858,16 @@ export default {
         optionServiceCode: "",
         optionServiceName: "",
         optionNote: "",
-        isUsed: true
+        isUsed: true,
+        groupCode: ""
       },
-      utilities:{
-        isWifi:true,
-        isTivi:true,
-        isSwim:false,
-        isGym:false,
-        isKitchen:false,
-        isDry:true
+      utilities: {
+        isWifi: true,
+        isTivi: true,
+        isSwim: false,
+        isGym: false,
+        isKitchen: false,
+        isDry: true
       },
       optionServices: [],
       lang: "EN",
@@ -1012,7 +1032,8 @@ export default {
         optionServiceCode: "",
         optionServiceName: "",
         optionNote: "",
-        isUsed: true
+        isUsed: true,
+        groupCode: ""
       };
       this.editedItem.days = [];
       this.disableSelect = true;
@@ -1042,8 +1063,8 @@ export default {
     },
 
     save() {
-      this.editedItem.modifyBy = this.user.userName;
-      this.editedItem.createBy = this.user.userName;
+     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      this.editedItem.createBy = this.$store.state.user.login.userName;
       if (
         (this.editedItem.markUpPlus == "" ||
           this.editedItem.markUpPlus.toString().length <= 0) &&
@@ -1157,13 +1178,59 @@ export default {
       console.log(this.editedItem.priceRanges);
     },
     addNewOptionPriceRange() {
-      this.editedItem.optionServices.push({
-        optionPrice: this.editedItem.optionService.optionPrice,
-        optionServiceCode: this.editedItem.optionService.optionServiceCode,
-        optionServiceName: this.editedItem.optionService.optionServiceName,
-        optionNote: this.editedItem.optionService.optionNote,
-        isUsed: this.editedItem.optionService.isUsed
-      });
+      if (
+        this.editedItem.optionService.groupCode == "" ||
+        this.editedItem.optionService.groupCode.replace(/\s/g, "").length == 0
+      ) {
+        this.editedItem.optionServices.push({
+          groupCode: "checkbox",
+          data: {
+            optionPrice: this.editedItem.optionService.optionPrice,
+            optionServiceCode: this.editedItem.optionService.optionServiceCode,
+            optionServiceName: this.editedItem.optionService.optionServiceName,
+            optionNote: this.editedItem.optionService.optionNote,
+            isUsed: this.editedItem.optionService.isUsed,
+            groupCode: "checkbox"
+          }
+        });
+      } else {
+        var existIndex = -1;
+        this.editedItem.optionServices.forEach((element, index) => {
+          if (
+            element.groupCode != "checkbox" &&
+            element.groupCode == this.editedItem.optionService.groupCode.trim()
+          ) {
+            existIndex = index;
+          }
+        });
+        if (existIndex != -1) {
+          this.editedItem.optionServices[existIndex].data.push({
+            optionPrice: this.editedItem.optionService.optionPrice,
+            optionServiceCode: this.editedItem.optionService.optionServiceCode,
+            optionServiceName: this.editedItem.optionService.optionServiceName,
+            optionNote: this.editedItem.optionService.optionNote,
+            isUsed: this.editedItem.optionService.isUsed,
+            groupCode: this.editedItem.optionService.groupCode.trim()
+          });
+        } else {
+          this.editedItem.optionServices.push({
+            groupCode: this.editedItem.optionService.groupCode.trim(),
+            data: [
+              {
+                optionPrice: this.editedItem.optionService.optionPrice,
+                optionServiceCode: this.editedItem.optionService
+                  .optionServiceCode,
+                optionServiceName: this.editedItem.optionService
+                  .optionServiceName,
+                optionNote: this.editedItem.optionService.optionNote,
+                isUsed: this.editedItem.optionService.isUsed,
+                groupCode: this.editedItem.optionService.groupCode.trim()
+              }
+            ]
+          });
+        }
+      }
+      console.log(this.editedItem.optionServices);
     },
 
     deletepriceRangeItem(item) {
@@ -1263,8 +1330,8 @@ export default {
 .sub-add-component {
   background-color: rgb(205, 224, 243) !important;
 }
-.service-add-component{
-background-color: rgba(229, 57, 53,0.2) !important;
+.service-add-component {
+  background-color: rgba(229, 57, 53, 0.2) !important;
 }
 .flex-table {
   display: flex;

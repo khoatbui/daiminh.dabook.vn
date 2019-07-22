@@ -20,11 +20,14 @@
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
                   <v-text-field required
-                    :rules="[() => editedItem.areaId.length > 0 || 'Required field']"
-                     v-model="editedItem.areaId" label="AreaId"></v-text-field>
+                    :rules="[() => editedItem.areaCode.length > 0 || 'Required field']"
+                     v-model="editedItem.areaCode" label="AreaId"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="editedItem.areaName" label="AreaName"></v-text-field>
+                </v-flex>
+                 <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="editedItem.areaNameEN" label="AreaNameEN"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-select
@@ -35,6 +38,24 @@
                     label="Language"
                   ></v-select>
                 </v-flex>
+                 <v-flex xs12 sm12 md12>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImg = $event"
+                      v-bind:routerPath="apiIP+'/upload/tour/area'"
+                    ></file-upload>
+                 </v-flex>
+                 <v-flex xs12 sm12 md12>
+                    <h2>Old images.</h2>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="scroll-ngang">
+                    <img
+                      class="room-img"
+                      v-for="(item,i) in editedItem.areaImages"
+                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
+                      alt
+                    />
+                  </v-flex>
               </v-layout>
             </v-container>
           </v-card-text>
@@ -50,14 +71,15 @@
     </v-toolbar>
     <v-data-table :headers="headers" :items="area" class="elevation-1">
       <template v-slot:items="props">
-        <tr class="ellip-text">
+        <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
-          <td>{{ props.item.areaId }}</td>
-          <td class="text-xs-right">{{ props.item.areaName }}</td>
-          <td class="text-xs-right">{{ props.item.lang }}</td>
+          <td>{{ props.item.areaCode }}</td>
+          <td>{{ props.item.areaName }}</td>
+           <td>{{ props.item.areaNameEN }}</td>
+          <td>{{ props.item.lang }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -67,8 +89,9 @@
   </div>
 </template>
 <script>
-var apiIP = process.env.VUE_APP_API_IPADDRESS
+var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
+import FileUpload from "../components/FileUpload.vue";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -82,7 +105,13 @@ const AXIOS = axios.create({
   }
 });
 export default {
+  components: {
+    FileUpload
+  },
   data: () => ({
+    apiIP: apiIP,
+     uploadImg: [],
+      search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
@@ -91,13 +120,13 @@ export default {
     headers: [
       { text: "Actions", value: "name", sortable: false },
       {
-        text: "AreaId",
-        align: "center",
+        text: "AreaCode",
         sortable: false,
-        value: "areaId"
+        value: "areaCode"
       },
-      { text: "AreaName", align: "center", value: "areaName" },
-      { text: "Language", align: "center", value: "lang" }
+      { text: "AreaName", value: "areaName" },
+       { text: "AreaNameEN", value: "areaNameEN" },
+      { text: "Language", value: "lang" }
     ],
     area: [],
     language: [
@@ -107,14 +136,20 @@ export default {
     ],
     editedIndex: -1,
     editedItem: {
-      areaId: "",
+      areaCode: "",
       areaName: "",
-      lang: "EN"
+      areaNameEN: "",
+      lang: "EN",
+       areaImages: [],
+      removeImage: []
     },
     defaultItem: {
-      areaId: "",
+      areaCode: "",
       areaName: "",
-      lang: "EN"
+      areaNameEN: "",
+      lang: "EN",
+       areaImages: [],
+      removeImage: []
     }
   }),
 
@@ -134,37 +169,40 @@ export default {
     this.initialize();
   },
 
-  methods: {
+ methods: {
     initialize() {
-      AXIOS.get("http://localhost:3000/area/", { crossdomain: true })
+      AXIOS.get(apiIP + "/area/", { crossdomain: true })
         .then(response => {
           this.area = response.data;
         })
-        .catch(function(error) {
-        })
+        .catch(function(error) {})
         .finally(function() {});
     },
 
     editItem(item) {
-      this.editedIndex = this.area.indexOf(item);
+      this.editedIndex = 100;
       this.editedItem = Object.assign({}, item);
+      delete this.editedItem._id;
+      this.editId = item._id;
       this.dialog = true;
+      this.disableSelect = true;
     },
 
     deleteItem(item) {
-      const index = this.area.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete("http://localhost:3000/area/" + index)
+        AXIOS.delete(apiIP + "/area/" + item._id)
           .then(response => {
-            this.area.splice(index, 1);
+            this.snackbar.snackbar = true;
+            this.snackbar.text = response.data;
+            this.initialize();
           })
-          .catch(function(error) {
-          })
+          .catch(function(error) {})
           .finally(function() {});
     },
 
     close() {
       this.dialog = false;
+      this.disableSelect = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
@@ -172,26 +210,31 @@ export default {
     },
 
     save() {
-       if (this.$refs.form.validate()) {
-      if (this.editedIndex > -1) {
-        AXIOS.post("http://localhost:3000/area/update", this.editedItem)
-          .then(response => {
-            Object.assign(this.area[this.editedIndex], this.editedItem);
-          })
-          .catch(function(error) {
-          })
-          .finally(function() {});
-      } else {
-        AXIOS.post("http://localhost:3000/area/insert", this.editedItem)
-          .then(response => {
-          })
-          .catch(function(error) {
-          })
-          .finally(function() {});
-        this.area.push(this.editedItem);
+       if (this.uploadImg.length > 0) {
+        console.log(this.editedItem.areaImages);
+        this.editedItem.removeImage = this.editedItem.areaImages;
+        this.editedItem.areaImages = this.uploadImg;
+        console.log(this.editedItem.removeImage);
       }
-      this.close();
-       }
+     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      this.editedItem.createBy = this.$store.state.user.login.userName;
+      if (this.$refs.form.validate()) {
+        if (this.editedIndex > -1) {
+          AXIOS.post(apiIP + "/area/update/" + this.editId, this.editedItem)
+            .then(response => {})
+            .catch(function(error) {})
+            .finally(function() {});
+        } else {
+          AXIOS.post(apiIP + "/area/insert", this.editedItem)
+            .then(response => {})
+            .catch(function(error) {})
+            .finally(function() {});
+        }
+        this.initialize();
+        this.close();
+      }
+       this.uploadImg = [];
+      this.editedItem.removeImage = [];
     }
   }
 };

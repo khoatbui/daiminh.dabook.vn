@@ -15,44 +15,135 @@ moment().format();
 var router = express.Router()
 
 
-// ROOMTYPE IMAGE
-var roomTypeStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, process.env.ROOMTYPE_IMG_PATH)
-    },
-    filename: function (req, file, cb) {
-        cb(null,moment().format("YYYYMMDDHHMM") + file.originalname)
-  }
+// SUPPLIER IMAGE
+var supplierUpload = multer.diskStorage({
+  destination: `./uploads/hotel/supplier`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
 })
-const uploadRoomTypeImg = multer({ storage: roomTypeStorage });
+const uploadSupplier = multer({storage:supplierUpload});
 
 
 // HOTEL IMAGE
-var hotelStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-      cb(null, './uploads')
-  },
+var hotelUpload = multer.diskStorage({
+  destination: `./uploads/hotel/hotel`,
   filename: function (req, file, cb) {
-      cb(null, file.originalname)
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
 }
 })
-const uploadHotelImg = multer({ storage: hotelStorage })
+const uploadHotel = multer({storage:hotelUpload});
 
 
 // ROOMTYPE IMAGE
 var roomTypeUpload = multer.diskStorage({
-    destination: `./uploads`,
+    destination: `./uploads/hotel/roomtype`,
     filename: function (req, file, cb) {
-        cb(null,moment().format("YYYYMMDDHHMM") + file.originalname)
+        cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
   }
 })
-const upload = multer({storage:roomTypeUpload});
+const uploadRoomType = multer({storage:roomTypeUpload});
+
+
+//CAR SUPPLIER IMAGE
+var carsupplierUpload = multer.diskStorage({
+  destination: `./uploads/car/supplier`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadCarSupplier = multer({storage:carsupplierUpload});
+
+//CAR TYPE IMAGE
+var cartypeUpload = multer.diskStorage({
+  destination: `./uploads/car/cartype`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadCarType = multer({storage:cartypeUpload});
+
+//CITY IMAGE
+var cityUpload = multer.diskStorage({
+  destination: `./uploads/tour/city`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadCity = multer({storage:cityUpload});
+
+//AREA IMAGE
+var areaUpload = multer.diskStorage({
+  destination: `./uploads/tour/area`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadArea = multer({storage:areaUpload});
+
+//COUNTRY IMAGE
+var countryUpload = multer.diskStorage({
+  destination: `./uploads/tour/country`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadCountry = multer({storage:countryUpload});
+
+//DESTINATION IMAGE
+var destinationUpload = multer.diskStorage({
+  destination: `./uploads/tour/country`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadDestination = multer({storage:destinationUpload});
+
+//TRAVEL STYLE IMAGE
+var travelStyleUpload = multer.diskStorage({
+  destination: `./uploads/tour/travelstyle`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTravelStyle = multer({storage:travelStyleUpload});
+
+//TOUR LIST IMAGE
+var tourListUpload = multer.diskStorage({
+  destination: `./uploads/tour/tourlist`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTourList = multer({storage:tourListUpload});
+
+
+//TOUR DETAIL IMAGE
+var tourDetailUpload = multer.diskStorage({
+  destination: `./uploads/tour/tourdetail`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTourDetail = multer({storage:tourDetailUpload});
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-router.post('/hotel-image',uploadHotelImg.single('file'),controller.uploadHotelImage)
+router.post('/hotel/supplier',uploadSupplier.array('photos', 12),controller.uploadSupplierImg)
+router.post('/hotel/hotel',uploadHotel.array('photos', 12),controller.uploadHotelImg)
+router.post('/hotel/roomtype', uploadRoomType.array('photos', 12), controller.uploadRoomTypeImg)
 
-router.post('/room-type-image', upload.array('photos', 12), controller.uploadRoomTypeImg)
+router.post('/car/supplier',uploadCarSupplier.array('photos', 12),controller.uploadCarSupplierImg)
+router.post('/car/cartype',uploadCarType.array('photos', 12),controller.uploadCarTypeImg)
+
+router.post('/tour/city',uploadCity.array('photos', 12),controller.uploadCityImg)
+router.post('/tour/area',uploadArea.array('photos', 12),controller.uploadAreaImg)
+router.post('/tour/country',uploadCountry.array('photos', 12),controller.uploadCountryImg)
+router.post('/tour/destination',uploadDestination.array('photos', 12),controller.uploadDestinationImg)
+router.post('/tour/travelstyle',uploadTravelStyle.array('photos', 12),controller.uploadTravelStyleImg)
+router.post('/tour/tourlist',uploadTourList.array('photos', 12),controller.uploadTourListImg)
+router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploadTourDetailImg)
+
 
 module.exports = router

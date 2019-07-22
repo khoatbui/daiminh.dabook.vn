@@ -9,13 +9,27 @@
 <script>
 export default {
   name: "LoadingComponent",
-  props: ["isShow"],
   data() {
     return {};
   },
   created() {},
   methods: {},
-  computed: {}
+  computed: {
+    isShow(){
+      return this.$store.state.loading.isShow;
+    }
+  },
+  mounted() {
+        this.$root.$on('showLoading',function (){
+          console.log('showLoading');
+            this.iShow=true;
+        }),
+         this.$root.$on('hideLoading',function (){
+                     console.log('hideLoading');
+
+            this.iShow=false;
+        })
+    }
 };
 </script>
 <style lang="scss">

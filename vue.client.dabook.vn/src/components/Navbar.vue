@@ -3,7 +3,7 @@
   <div class="d-flex justify-content-center align-items-center border-top w-100 fixed-bottom p-0 m-0 bg-white">
     <nav class="navbar w-100 mx-4 my-2 navbar-light bg-white mx-auto">
       <a class="nav-item d-flex flex-column justify-content-around align-items-center" href="/main" v-bind:class="{'active':current=='main'}">
-        <img class="nav-icon" src="img/main_logo_only_color.png" alt>
+        <img class="nav-icon" src="/img/main_logo_only_color.png" alt>
         <span>{{$t("nav_home")}}</span>
       </a>
       <a
@@ -12,6 +12,10 @@
       >
         <font-awesome-icon class="nav-icon-fa" icon="hotel"/>
         <span>{{$t("nav_hotel")}}</span>
+      </a>
+      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="http://www.dabook.vn" target="_blank" v-bind:class="{'active':current=='ticket'}">
+        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'plane-departure']"/>
+        <span>{{$t("nav_ticket")}}</span>
       </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="/car" v-bind:class="{'active':current=='car'}">
         <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'car']"/>
@@ -22,8 +26,8 @@
         <span>{{$t("nav_tour")}}</span>
       </a>
       <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="/historychecking" v-bind:class="{'active':current=='history'}">
-        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'barcode']"/>
-        <span>{{$t("nav_deals")}}</span>
+        <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'cart-plus']"/>
+        <span>{{$t("nav_cart")}}</span>
       </a>
     </nav>
   </div>
@@ -59,7 +63,7 @@ export default {
 .nav-item span {
   font-size: 1.2rem;
   font-weight: bolder;
-  color: #374B66;
+  color: #475776;
 }
 .nav-item span {
   font-size: 0.8rem;

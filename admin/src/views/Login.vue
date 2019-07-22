@@ -23,15 +23,15 @@
               </v-flex>
 
               <v-flex xs12>
-                <v-text-field v-model="input.password" label="Password" required></v-text-field>
+                <v-text-field type="password" v-model="input.password" label="Password" required></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-title>
         <v-card-actions>
           <v-container>
-            <v-btn flat color="primary">Cancel</v-btn>
             <v-btn color="primary" @click="login">Login</v-btn>
+            <a color="primary" class="pl-4" @click="register">You dont have account ?</a>
           </v-container>
         </v-card-actions>
       </v-card>
@@ -51,7 +51,6 @@
 </template>
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
-console.log(apiIP);
 import axios from "axios";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -88,7 +87,6 @@ export default {
 
   methods: {
     initialize() {
-      console.log(this.userName);
     },
 
     login() {
@@ -99,18 +97,30 @@ export default {
             this.input.message = response.data.message;
             this.input.status = response.data.status;
             localStorage.loginStatus = true;
-            console.log("----------------");
-            console.log(document.cookies);
-            this.$router.go('/');
+            this.$store.dispatch("updateUserAction", response.data);
+            this.$router.replace('/');
           } else {
             this.snackbar = true;
             this.input.message = response.data.message;
             this.input.status = response.data.status;
             localStorage.loginStatus = false;
+            this.$store.dispatch("updateUserAction", {
+              login: {
+                userName: "Please login"
+              },
+              status: false
+            });
+            this.$store.dispatch(
+              "updateLoginStatusAction",
+              response.data.status
+            );
           }
         })
         .catch(function(error) {})
         .finally(function() {});
+    },
+    register(){
+      this.$router.replace('/register')
     }
   }
 };

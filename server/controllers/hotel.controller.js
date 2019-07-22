@@ -1,5 +1,6 @@
 var Hotel = require('../models/hotels.model')
 var Supplier=require('../models/supplier.model')
+var UploadController=require('../controllers/upload.controller')
 var mongoose = require('mongoose');
 module.exports.index =function(req,res){
     res.setHeader('Cache-Control', 'private');
@@ -43,6 +44,7 @@ module.exports.insertHotel= function (req, res) {
 module.exports.updateHotel=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
+    UploadController.removeImage(req.body.removeImage);
         Hotel.updateOne({ _id: req.params._id },{$set:req.body},(err, hotel) =>{
         if(err) {
             console.log(err);
@@ -93,6 +95,19 @@ module.exports.getmListHotel=(req,res,next) => {
 };
 module.exports.getmListHotelPromotionBySupplier=(req,res,next) => {
     Hotel.find({supplierId:req.params._id,isUsed:true}).then(function(hotel){
+        console.log(hotel);
+        res.send(hotel)
+    })
+};
+
+module.exports.getmPromotionHotelBySearch=(req,res,next) => {
+    Hotel.find({isPromote:true,isUsed:true,keyword: { $regex: req.body.keyword, $options: 'i' }}).then(function(hotel){
+        console.log(hotel);
+        res.send(hotel)
+    })
+};
+module.exports.getmHotelBySearch=(req,res,next) => {
+    Hotel.find({isUsed:true,keyword: { $regex: req.body.keyword, $options: 'i' }}).then(function(hotel){
         console.log(hotel);
         res.send(hotel)
     })

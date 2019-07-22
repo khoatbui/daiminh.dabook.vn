@@ -1,106 +1,114 @@
 <template>
   <div class="container-fluid main h-100 p-0 m-0 promotion-container">
-    <div class="search-section">
-      <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section-modal z-index-10000">
-        <div class="col-12 p-2">
-          <LocationSearchComponent></LocationSearchComponent>
+    <div class="search-section mb-4">
+      <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section-modal z-index-10000 d-flex align-items-center">
+        <div class="col-10 p-2">
+          <HistorySearchComponent></HistorySearchComponent>
         </div>
-        <div
-          class="col-12 px-2 d-flex flex-row justify-content-between align-items-center scroll-ngang"
-        >
-          <Datetime id="icheckinout" radius="border-radius-100" placeholder="Dates"></Datetime>
-          <GuestSelect></GuestSelect>
-          <FilterHotel></FilterHotel>
+        <div class="col-2">
+          <LanguageComponent></LanguageComponent>
         </div>
       </div>
     </div>
-    <div class="data-section pb-4">
-      <div class="row w-100 p-0 mx-0">
-        <div class="col-12 p-0 m-0">
-          <div class="card d-inline-block border-0">
-            <img
-              class="card-img-top border-radius-none"
-              src="img/topdestination/sapa_2.jpg"
-              alt="Card image cap"
-            >
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 text-left">
-            <h4>
-              <b>FLC Halong Bay Golf & Resort</b>
-            </h4>
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 d-flex justify-content-between align-items-center">
-            <span>HaLong</span>
-            <img class="hotel-owner-avatar shadow" src="img/hotel/hotel-owner/vinpearl.jpg" alt>
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0 text-left">
-          <div class="m-2 pb-4 border-bottom">
-            <h6 class="font-weight-bolder">Deluxury Room, moutant view</h6>
-            <div>
-              <span class="text-sm">1 guest - 1 bed - 1 bath</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row w-100 p-0 mx-0">
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 text-left">
-            <p
-              class="text-sm"
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus perferendis tempore a cupiditate mollitia nostrum doloremque deserunt ut numquam sapiente tenetur optio in nihil ducimus ab illum modi, aliquam dolorum?</p>
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0 text-left">
-          <div class="m-2 pb-4 border-bottom">
-            <p class="text-sm">Contact host</p>
-          </div>
-        </div>
-      </div>
-      <div class="row w-100 p-0 mx-0">
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 text-left pb-4 border-bottom">
-            <h6 class="font-weight-bolder">Room Info</h6>
-            <div class="w-100 d-flex justify-content-between align-items-center flex-wrap">
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="bed"/>1kingbed
-              </span>
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="wifi"/>Wifi
-              </span>
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="swimming-pool"/>Swimming pool
-              </span>
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="swimming-pool"/>Swimming pool
-              </span>
-              <span class="text-sm">
-                <font-awesome-icon class="m-1" icon="swimming-pool"/>Swimming pool
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row w-100 p-0 mx-0">
-        <div class="col-12 px-3 m-0">
-          <div class="m-2 text-left pb-4 border-bottom">
-            <h6 class="font-weight-bolder">Avaibility</h6>
-          </div>
-        </div>
-        <div class="col-12 px-3 m-0"></div>
-      </div>
+    <div class="data-section margin-top-130 pb-4">
+       <HistoryResultComponent></HistoryResultComponent>
     </div>
     <div class="relate-section">
-      <div class="row w-100 p-0 mx-0 bottom-page">
+      <div class="row w-100 pb-4 top-city-destination">
+          <div class="col-12 text-left">
+            <h6 class="m-2 text-left">
+              <b>Top City Destination</b>
+            </h6>
+          </div>
+          <div class="col-12 scroll-ngang">
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/phuquoc_1.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Ho Chi Minh</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/phuquoc_2.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Ha Noi</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/phuquoc_3.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Danang</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/quynhon_1.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Phu Quoc</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/quynhon_2.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Hoi An</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/quynhon_3.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Quang Binh</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/sapa.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Sapa.</p>
+              </div>
+            </div>
+            <div class="card m-2 d-inline-block border-0">
+              <img
+                class="card-img-top shadow border-radius-100"
+                src="img/topdestination/sapa_2.jpg"
+                alt="Card image cap"
+              >
+              <div class="card-body p-1 text-center">
+                <p class="card-text font-weight-bolder">Ha Long.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="row w-100 p-0 bottom-page">
         <div class="col-12 px-3 m-0">
           <div class="m-2 text-left">
-            <h4>
+            <h6>
               <b>Hotel you may like!</b>
-            </h4>
+            </h6>
           </div>
         </div>
         <div class="col-12 px-3 m-0 scroll-ngang">
@@ -216,26 +224,10 @@
       </div>
     </div>
     <div class="action-section">
-      <div class="row w-100 p-0 mx-0 fixed-bottom border-top py-4 bg-white action-section-modal z-index-10001">
-        <div class="col-6 text-left">
-          <div>
-            <span class="font-weight-bolder">800.000 đ</span>
-            <span class="text-sm">/ per night</span>
-          </div>
-          <p class="card-text text-sm">
-            <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-            <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-            <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-            <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-          </p>
-        </div>
-        <div class="col-6">
-          <ConfirmBooking></ConfirmBooking>
-        </div>
-      </div>
     </div>
     <div class="general-section">
     </div>
+        <Navbar v-bind:current="'history'"></Navbar>
   </div>
 </template>
 
@@ -244,24 +236,25 @@ import { Component, Vue } from "vue-property-decorator";
 import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
 import DatetimeAutoShow from "@/components/DatetimeAutoShow.vue";
 import Navbar from "@/components/Navbar.vue";
-import GuestSelect from "@/components/GuestSelect.vue";
-import FilterHotel from "@/components/FilterHotel.vue";
 import CustomerBookedAlert from "@/components/CustomerBookedAlert.vue";
-import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
+import HistorySearchComponent from "@/components/HistorySearchComponent.vue";
+import LanguageComponent from "@/components/LanguageComponent.vue";
+import HistoryResultComponent from "@/components/HistoryResultComponent.vue"
 
 
 @Component({
   components: {
-    Datetime,
     Navbar,
-    GuestSelect,
-    FilterHotel,
     CustomerBookedAlert,
     DatetimeAutoShow,
-    LocationSearchComponent
+    HistorySearchComponent,
+    LanguageComponent,
+    HistoryResultComponent
   }
 })
-export default class Promotion extends Vue {}
+export default class Promotion extends Vue {
+
+}
 </script>
 <style >
 .main-section {
@@ -322,9 +315,6 @@ export default class Promotion extends Vue {}
   border-left: none !important;
 }
 /* ========DATA SECTION=========== */
-.data-section {
-  margin-top: 130px !important;
-}
 
 .page-item:last-child .page-link,
 .page-item:first-child .page-link {

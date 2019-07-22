@@ -3,11 +3,11 @@
     <!-- Button trigger modal -->
     <button
       type="button"
-      class="form-control btn btn-outline-secondary btn-dropdown-guest w-100 text-left"
+      class="form-control btn btn-outline-secondary btn-dropdown-guest w-100 text-left text-sm"
       aria-haspopup="true"
       aria-expanded="false"
     >
-      <font-awesome-icon class="ml-1 float-right" icon="chevron-down"/>
+     {{`Adult:${adult} | Children:${less12} | Infant:${less4}`}} <font-awesome-icon class="ml-1 float-right" icon="chevron-down"/>
     </button>
 
     <div
@@ -25,7 +25,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="minusPersonByVuex('minusAdult')"
+                  @click="updatePersonByVuex('minusAdult')"
                   :disabled="adult==0"
                 >
                   <font-awesome-icon class="ml-1" icon="minus"/>
@@ -44,7 +44,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="plusPersonByVuex('plusAdult')"
+                  @click="updatePersonByVuex('plusAdult')"
                   :disabled="adult==maxguest"
                 >
                   <font-awesome-icon class="ml-1" icon="plus"/>
@@ -60,7 +60,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="minusPersonByVuex('minusChildLess12')"
+                  @click="updatePersonByVuex('minusChildLess12')"
                   :disabled="less12==0"
                 >
                   <font-awesome-icon class="ml-1" icon="minus"/>
@@ -79,7 +79,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="plusPersonByVuex('plusChildLess12')"
+                  @click="updatePersonByVuex('plusChildLess12')"
                 >
                   <font-awesome-icon class="ml-1" icon="plus"/>
                 </button>
@@ -94,7 +94,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="minusPersonByVuex('minusChildLess4')"
+                  @click="updatePersonByVuex('minusChildLess4')"
                   :disabled="less4==0"
                 >
                   <font-awesome-icon class="ml-1" icon="minus"/>
@@ -113,7 +113,7 @@
                 <button
                   type="button"
                   class="btn btn-sm btn-primary border-radius-100 btn-sm-round"
-                  @click="plusPersonByVuex('plusChildLess4')"
+                  @click="updatePersonByVuex('plusChildLess4')"
                 >
                   <font-awesome-icon class="ml-1" icon="plus"/>
                 </button>
@@ -173,6 +173,9 @@ export default {
     },
     minusPersonByVuex(minusTarget) {
       this.$store.commit(minusTarget)
+    },
+    updatePersonByVuex(action){
+      this.$store.dispatch('updateGuest',action)
     }
   },
   data: function() {

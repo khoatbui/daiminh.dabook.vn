@@ -17,11 +17,13 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',authMiddleware.requireLogin,controller.index)
+router.get('/',controller.index)
 
 router.get('/m/getcitybyid/:_id',controller.getmCityById)
 
-router.delete('/:index', controller.deleteCity)
+router.get('/m/gettop10city',controller.getmTop10City)
+
+router.delete('/:_id', controller.deleteCity)
 
 router.post('/insert', jsonParser,controller.insertCity)
 

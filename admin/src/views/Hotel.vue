@@ -33,7 +33,7 @@
                       label="Supplier"
                     ></v-select>
                   </v-flex>
- <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.cityId"
                       :items="city"
@@ -65,6 +65,9 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
+                   <v-flex xs12 sm12 md12>
+                    <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
+                  </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
@@ -73,6 +76,31 @@
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
+                  </v-flex>
+                   <v-flex xs12 sm12 md12>
+                    <v-textarea
+                      name="input-7-1"
+                      label="Hotel Introduce"
+                      v-model="editedItem.hotelIntro"
+                    ></v-textarea>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImg = $event"
+                      v-bind:routerPath="apiIP+'/upload/hotel/hotel'"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <h2>Old images.</h2>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="scroll-ngang">
+                    <img
+                      class="room-img"
+                      v-for="(item,i) in editedItem.hotelImages"
+                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
+                      alt
+                    />
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -101,6 +129,7 @@
           <td>{{ props.item.star }}</td>
           <td>{{ props.item.createBy }}</td>
           <td>{{ props.item.createDate }}</td>
+          <td>{{ props.item.hotelIntro }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -118,16 +147,17 @@
       {{ snackbar.text }}
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
-      <v-btn absolute dark fab bottom right small color="pink">
-        <download-excel :data="hotel" name= "hotel.xls">
-<i class="far fa-file-excel"></i>
-        </download-excel>
-      </v-btn>
+    <v-btn absolute dark fab bottom right small color="pink">
+      <download-excel :data="hotel" name="hotel.xls">
+        <i class="far fa-file-excel"></i>
+      </download-excel>
+    </v-btn>
   </div>
 </template>
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
+import FileUpload from "../components/FileUpload.vue";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -141,9 +171,14 @@ const AXIOS = axios.create({
   }
 });
 export default {
+  components: {
+    FileUpload
+  },
   data: () => ({
+    apiIP: apiIP,
     search: "",
     valid: true,
+    uploadImg: [],
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
@@ -156,7 +191,8 @@ export default {
       { text: "HotelName", value: "hotelName" },
       { text: "Star", value: "star" },
       { text: "Create By", value: "createBy" },
-      { text: "Create Date", value: "createDate" }
+      { text: "Create Date", value: "createDate" },
+      { text: "Hotel Intro", value: "hotelIntro" }
     ],
     language: [
       { langCode: "EN", langName: "English" },
@@ -177,9 +213,13 @@ export default {
       createBy: "",
       modifyBy: "",
       hotelCode: "",
-      isUsed:true,
-      isHot:true,
-      isPromote:true
+      keyword:"",
+      isUsed: true,
+      isHot: true,
+      isPromote: true,
+      hotelImages: [],
+      removeImage: [],
+      hotelIntro:""
     },
     defaultItem: {
       supplierId: "",
@@ -189,9 +229,13 @@ export default {
       createBy: "",
       modifyBy: "",
       hotelCode: "",
-      isUsed:true,
-      isHot:true,
-      isPromote:true
+      keyword:"",
+      isUsed: true,
+      isHot: true,
+      isPromote: true,
+      hotelImages: [],
+      removeImage: [],
+      hotelIntro:""
     },
     snackbar: {
       snackbar: false,
@@ -219,6 +263,7 @@ export default {
     initialize() {
       AXIOS.get(apiIP + "/hotel/", { crossdomain: true })
         .then(response => {
+          console.log(this.city);
           this.hotel = response.data;
         })
         .catch(function(error) {})
@@ -229,9 +274,10 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-         AXIOS.get(apiIP + "/city/", { crossdomain: true })
+      AXIOS.get(apiIP + "/city/", { crossdomain: true })
         .then(response => {
           this.city = response.data;
+                    console.log(this.city);
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -268,8 +314,14 @@ export default {
     },
 
     save() {
-      this.editedItem.modifyBy = this.user.userName;
-      this.editedItem.createBy = this.user.userName;
+      if (this.uploadImg.length > 0) {
+        console.log(this.editedItem.hotelImages);
+        this.editedItem.removeImage = this.editedItem.hotelImages;
+        this.editedItem.hotelImages = this.uploadImg;
+        console.log(this.editedItem.removeImage);
+      }
+     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(apiIP + "/hotel/update/" + this.editId, this.editedItem)
@@ -285,6 +337,8 @@ export default {
         this.initialize();
         this.close();
       }
+      this.uploadImg = [];
+      this.editedItem.removeImage = [];
     }
   }
 };
@@ -305,7 +359,16 @@ export default {
   background-color: #eef1f6;
   border-color: #d1dbe5;
 }
-.whitespace-nowrap td{
+.whitespace-nowrap td {
   white-space: nowrap;
+}
+.scroll-ngang {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.scroll-ngang li {
+  display: inline-block;
 }
 </style>

@@ -1,33 +1,15 @@
-/*=======GET DESTINATION LIST======
-NOI DIA
-[4 tinh thanh hot]
-[
-    {+ Tinh thanh
-    + Link
-    + Hinh anh
-    }
-]
-
- QUOC TE
-[4 tinh thanh hot]
-[{+ Tinh thanh
-    + Link
-    + Hinh anh
-    }]
-
-[{+ Ten tinh thanh trong nuoc
-    + Duong link
-    }]
-
-[{+ Ten tinh thanh trong nuoc
-    + Duong link
-    }]
+/*=======GET TRAVEL STYLE LIST======
++ Duong dan hinh anh
++ Link
++ Title
++ Noi dung
 ==================================*/
 var express = require('express')
-var router = express.Router()
-var db = require('../db')
+var controller=require('../controllers/destination.controller')
+var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
+var router = express.Router()
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -35,39 +17,15 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',(req,res,next) => {
-    res.send(db.get('destination').value());
-})
+router.get('/',controller.index)
 
-router.delete('/:index', function (req, res) {
-    db.get('destination').value().splice(req.params.index, 1)
-})
+router.get('/m/getdestinationbyid/:_id',controller.getmDestinationById)
 
-router.get('/des/:id', (req, res, next) => {
-    var id = req.params.id;
-    var destinations = db.get('destination').find({ destinationId: id });
-    res.send(destinations);
-})
+router.get('/m/gettop10destination',controller.getmTop10Destination)
 
-router.get('/tstyle/:id', (req, res, next) => {
-    var id = req.params.id;
-    var destinations = db.get('destination').find({ travelStyleId: id });
-    res.send(destinations);
-})
+router.delete('/:_id', controller.deleteDestination)
 
-router.post('/insert', jsonParser, function (req, res) {
-    db.get('destination')
-        .push(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
-})
+router.post('/insert', jsonParser,controller.insertDestination)
 
-router.post('/update', jsonParser, function (req, res) {
-    db.get('destination')
-        .filter({ destinationId: req.body.destinationId })
-        .filter( v=> v.lang=== req.body.lang || v.lang=== "")
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
-})
+router.post('/update/:_id', jsonParser,controller.updateDestination)
 module.exports = router

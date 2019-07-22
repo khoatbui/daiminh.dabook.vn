@@ -114,10 +114,24 @@
                       v-model="editedItem.roomTypeIntro"
                     ></v-textarea>
                   </v-flex>
-                   <v-flex xs12 sm12 md12>
-                  <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
-                  <file-upload @getUploadFilesURL="editedItem.roomImages = $event" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload>
-                   </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImg = $event"
+                      v-bind:routerPath="apiIP+'/upload/hotel/roomtype'"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <h2>Old images.</h2>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="scroll-ngang">
+                    <img
+                      class="room-img"
+                      v-for="(item,i) in editedItem.roomImages"
+                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
+                      alt
+                    />
+                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -179,7 +193,7 @@
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
-import FileUpload from '../components/FileUpload_V2.vue'
+import FileUpload from "../components/FileUpload.vue";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -193,12 +207,13 @@ const AXIOS = axios.create({
   }
 });
 export default {
-  components:{
+  components: {
     FileUpload
   },
   data: () => ({
-  apiIP:apiIP,
+    apiIP: apiIP,
     search: "",
+    uploadImg: [],
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
@@ -253,7 +268,7 @@ export default {
       { value: 10, name: 10 }
     ],
     maxLess12s: [
-            { value: 0, name: 0 },
+      { value: 0, name: 0 },
       { value: 1, name: 1 },
       { value: 2, name: 2 },
       { value: 3, name: 3 },
@@ -289,8 +304,8 @@ export default {
       roomTypeCode: "",
       roomTypeName: "",
       maxGuest: 2,
-       maxLess4: 0,
-        maxLess12: 0,
+      maxLess4: 0,
+      maxLess12: 0,
       roomTypeIntro: "",
       bed: 2,
       acreage: "",
@@ -298,14 +313,15 @@ export default {
       isUsed: true,
       createBy: "",
       modifyBy: "",
-      roomImages:[]
+      roomImages: [],
+      removeImage:[]
     },
     defaultItem: {
       roomTypeCode: "",
       roomTypeName: "",
       maxGuest: 2,
-       maxLess4: 2,
-        maxLess12: 2,
+      maxLess4: 2,
+      maxLess12: 2,
       bed: 2,
       acreage: "",
       roomTypeIntro: "",
@@ -313,7 +329,8 @@ export default {
       isUsed: true,
       createBy: "",
       modifyBy: "",
-            roomImages:[]
+      roomImages: [],
+      removeImage:[]
     },
     snackbar: {
       snackbar: false,
@@ -368,6 +385,7 @@ export default {
       delete this.editedItem._id;
       this.editId = item._id;
       this.disableSelect = true;
+      console.log(this.editedItem);
     },
 
     deleteItem(item) {
@@ -383,7 +401,6 @@ export default {
     },
 
     close() {
-      console.log(this.editedItem)
       this.dialog = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
@@ -393,8 +410,15 @@ export default {
     },
 
     save() {
-      this.editedItem.modifyBy = this.user.userName;
-      this.editedItem.createBy = this.user.userName;
+      if (this.uploadImg.length > 0) {
+        console.log(this.editedItem.roomImages);
+        this.editedItem.removeImage=this.editedItem.roomImages;
+        this.editedItem.roomImages = this.uploadImg;
+        console.log(this.editedItem.removeImage);
+      }
+     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      this.editedItem.createBy = this.$store.state.user.login.userName;
+      console.log(this.editedItem);
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(apiIP + "/roomtype/update/" + this.editId, this.editedItem)
@@ -410,6 +434,8 @@ export default {
         this.initialize();
         this.close();
       }
+      this.uploadImg=[];
+      this.editedItem.removeImage=[];
     },
 
     changedSupplierCombobox(event) {
@@ -443,5 +469,18 @@ export default {
 }
 .whitespace-nowrap td {
   white-space: nowrap;
+}
+.room-img {
+  height: 200px;
+  width: auto;
+}
+.scroll-ngang {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.scroll-ngang li {
+  display: inline-block;
 }
 </style>

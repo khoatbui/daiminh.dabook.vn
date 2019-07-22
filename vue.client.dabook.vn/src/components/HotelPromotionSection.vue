@@ -1,10 +1,10 @@
 //src/components/Navbar.vue
 <template>
-  <div class="row w-100 p-0 mx-0 bottom-page">
-    <div class="col-12 p-1 m-0">
+  <div class="row w-100 p-0 mx-0">
+    <div class="col-12 p-1 m-0" v-if="showTitle">
       <div class="m-2 text-left">
         <h4>
-          <b>Ha Long, Quang Ninh</b>
+          <b>{{searchStore.locationSearch.length==0?"All hotel promotion":searchStore.locationSearch}}</b>
         </h4>
       </div>
     </div>
@@ -13,13 +13,13 @@
         <a v-bind:href="`/promotiondetail?packagehotelrelid=${item._id}`">
           <img
             class="card-img-top border-radius-5"
-            src="img/topdestination/sapa_2.jpg"
+            v-bind:src="item.roomTypeId.roomImages.length>0?`/${item.roomTypeId.roomImages[0].filePath}`:'/img/hotel/roomtype/default.jpg'"
             alt="Card image cap"
           >
           <div class="card-body w-100 text-left p-1">
             <p class="card-text text-uppercase p-0 m-0 text-sm hidden-outof-text">
-              <span class="w-50 hidden-outof-text">{{item.packageId.packageName}}</span>
-              <span class="w-50 hidden-outof-text">{{item.roomTypeId.bed}}BED</span>
+              <span class="w-50 hidden-outof-text">{{item.roomTypeId.roomTypeName}}</span>
+              <span class="w-50 hidden-outof-text"> | {{item.roomTypeId.bed}}BED</span>
             </p>
             <p
               class="card-text font-weight-bolder p-0 m-0 hidden-outof-text"
@@ -28,11 +28,12 @@
               class="card-text text-sm p-0 m-0 hidden-outof-text"
             >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price) }} per night</p>
             <p class="card-text text-sm hidden-outof-text">
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+               <font-awesome-icon
+                  class="ml-1 text-primary text-xs"
+                  icon="star"
+                  v-for="star in item.hotelId.star"
+                  :key="star"
+                />
             </p>
           </div>
         </a>
@@ -81,10 +82,10 @@
     </div>
     <div class="col-12 p-1 m-0">
       <div class="m-2">
-        <button class="btn btn-primary w-100" @click="redirectToPromotionAll">{{$t('btn_showall')}}(326+)</button>
+        <button class="btn btn-outline-primary w-100" @click="redirectToPromotionAll">{{$t('btn_showall')}}(326+)</button>
       </div>
     </div>
-        <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+        <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -97,7 +98,7 @@ export default {
     LoadingComponent
   },
   name: "HotelPromotionSection",
-  props: ["current"],
+  props: ["current","showTitle"],
   data() {
     return {
       packagelist: [],
@@ -115,9 +116,6 @@ export default {
     }
   },
   methods: {
-    changeLoadingState(state) {
-      this.isLoadding = state;
-    },
     redirectToPromotionAll() {
       if (this.$route.query.supplier != undefined) {
       this.$router.push({ path: `promotionall?supplier=${this.$route.query.supplier}` });
@@ -127,16 +125,16 @@ export default {
     }
     },
     async initial() {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getAllPackagePromotion();
       this.packagelist = response.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     },
     async initialWithSupplier(supplierId) {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getPromotePackageBySupplier(supplierId);
       this.packagelist = response.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     },
     nextPage() {
       if (this.pageNumber + 1 == this.pageCount) {
@@ -160,10 +158,27 @@ export default {
     paginatedData() {
       const start = this.pageNumber * this.size,
         end = start + this.size;
-      return this.packagelist.slice(start, end);
+      return randomArray(this.packagelist.slice(start, end));
+    },
+    searchStore() {
+      return this.$store.state.search;
     }
+  },
+  mounted() {
+    this.$root.$on('userSearchActivity', () => {
+       this.packagelist=this.$store.state.search.searchResult;
+    })
   }
 };
+function randomArray(array){
+        let array2=[];
+        while(array.length!==0){
+        let randomIndex=Math.floor(Math.random()*array.length);
+        array2.push(array[randomIndex]);
+        array.splice(randomIndex,1);
+        }
+        return array2;
+    }
 </script>
 <style lang="scss">
 </style>

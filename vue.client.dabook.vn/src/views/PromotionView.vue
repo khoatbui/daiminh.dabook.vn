@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="container-fluid main h-100 p-0 m-0 promotion-container text-sm">
     <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section">
@@ -7,7 +8,7 @@
             <MainNavBar></MainNavBar>
           </div>
           <div class="col-8">
-            <LocationSearchComponent></LocationSearchComponent>
+            <LocationSearchComponent v-bind:searchtype="'PROMOTION_HOTEL'"></LocationSearchComponent>
           </div>
           <div class="col-2">
             <LanguageComponent></LanguageComponent>
@@ -19,8 +20,8 @@
         <GuestSelect></GuestSelect>
       </div>
     </div>
-    <div class="data-section">
-      <HotelPromotionSection></HotelPromotionSection>
+    <div class="data-section margin-top-130 bottom-page">
+      <HotelPromotionSection v-bind:showTitle="true"></HotelPromotionSection>
     </div>
     <Navbar v-bind:current="'hotel'"></Navbar>
   </div>
@@ -115,7 +116,4 @@ export default class Promotion extends Vue {
   border-left: none !important;
 }
 /* ========DATA SECTION=========== */
-.data-section {
-  margin-top: 130px !important;
-}
 </style>

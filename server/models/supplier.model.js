@@ -11,7 +11,8 @@ var supplierSchema = new mongoose.Schema({
     createBy:String,
     createDate:Date,
     modifyBy:String,
-    modifyDate:Date
+    modifyDate:Date,
+    supplierImages:[{fileName:String,filePath:String,destination:String,size:Number}]
 });
 var Supplier =mongoose.model('Supplier',supplierSchema,'supplier');
 

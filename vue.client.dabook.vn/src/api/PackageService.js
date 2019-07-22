@@ -12,7 +12,9 @@ var hotelservice = {
   getAllPackagePromotion () {
     return Api().get('packagehotelrel/m/getallpromotionpackage/')
   },
-
+  getTop10PackagePromotion () {
+    return Api().get('packagehotelrel/m/gettop10promotionpackage/')
+  },
   getAllPackage () {
     console.log()
     return Api().get('packagehotelrel/m/getallpackage/')
@@ -23,7 +25,7 @@ var hotelservice = {
   },
   postRequestHotel (params) {
     console.log(params)
-    return Api().get('packagehotelrel/m/getpackagedetail/' + params)
+    return Api().post('mail/m/hotel-booking/', params)
   }
 }
 

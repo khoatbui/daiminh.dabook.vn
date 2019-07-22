@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="container-fluid main h-100 p-0 m-0 promotion-container">
     <div class="search-section">
@@ -24,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="data-section pb-4">
+    <div class="data-section margin-top-130 pb-4">
      <HotelDetailSection @commitdata="data.packageinfo = $event"></HotelDetailSection>
     </div>
     <div class="relate-section">
@@ -272,9 +273,6 @@ export default class Promotion extends Vue {
   border-left: none !important;
 }
 /* ========DATA SECTION=========== */
-.data-section {
-  margin-top: 130px !important;
-}
 
 .page-item:last-child .page-link,
 .page-item:first-child .page-link {

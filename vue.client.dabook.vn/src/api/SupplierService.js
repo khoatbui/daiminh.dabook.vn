@@ -1,4 +1,4 @@
-import Api from '@/api/Api'
+import Api from '@/api/Api';
 
 var supplierservice = {
   getAllSupplier (params) {
@@ -13,6 +13,6 @@ var supplierservice = {
     console.log(params)
     return Api().get('hotel/gethoteldetailbyid/' + params.id)
   }
-}
+};
 
-export default supplierservice
+export default supplierservice;

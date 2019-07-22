@@ -1,4 +1,5 @@
 var Supplier = require('../models/supplier.model')
+var UploadController=require('../controllers/upload.controller')
 var mongoose = require('mongoose');
 var moment =require('moment');
 moment().format();
@@ -44,6 +45,7 @@ module.exports.updateSupplier = function (req, res) {
     console.log(req.body);
     req.body.modifyDate=new Date();
     delete req.body.createBy;
+    UploadController.removeImage(req.body.removeImage);
     Supplier.updateOne({ _id: req.params._id }, { $set: req.body }, (err, supplier) => {
         if (err) {
             console.log(err);

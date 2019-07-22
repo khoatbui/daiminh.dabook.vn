@@ -8,14 +8,14 @@
             <h5>
               <span
                 class="font-weight-bolder text-lg"
-              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.price)}}</span>
+              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.totalPrice)}}</span>
               <span class="text-sm">/ {{selectedHotel.priceByTime.diffTime}} night</span>
             </h5>
             <p class="text-sm">
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
-              <font-awesome-icon class="ml-1 text-primary" icon="star"/>
+              <font-awesome-icon class="ml-1 text-primary" icon="star" />
+              <font-awesome-icon class="ml-1 text-primary" icon="star" />
+              <font-awesome-icon class="ml-1 text-primary" icon="star" />
+              <font-awesome-icon class="ml-1 text-primary" icon="star" />
             </p>
           </div>
           <button
@@ -23,7 +23,7 @@
             class="close border-radius-100 shadow close-btn mx-1 text-sm"
             @click="backStep"
           >
-            <font-awesome-icon icon="times"/>
+            <font-awesome-icon icon="times" />
           </button>
         </div>
       </div>
@@ -33,7 +33,12 @@
             <label for="icheckinout">
               <span class="text-sm">Date</span>
             </label>
-            <Datetime id="icheckinout" v-bind:startdate="selectTime.starDate" v-bind:enddate="selectTime.endDate" v-bind:cachotelprice="true"></Datetime>
+            <Datetime
+              id="icheckinout"
+              v-bind:startdate="selectTime.starDate"
+              v-bind:enddate="selectTime.endDate"
+              v-bind:cachotelprice="true"
+            ></Datetime>
           </div>
         </div>
         <div class="col-12">
@@ -53,7 +58,7 @@
             <label for="iwhere">
               <span class="text-sm">Option Service</span>
             </label>
-            <input type="email" class="form-control" id="iwhere" placeholder="Option">
+            <OptionSelectDropDown v-bind:id="'confirm-service'" v-bind:data="selectedHotel.package.optionServices"></OptionSelectDropDown>
           </div>
         </div>
         <div class="col-12">
@@ -71,16 +76,14 @@
             </div>
             <div class="col-12 border-bottom p-2">
               <div class="d-flex justify-content-between align-items-center">
-                <span>
-                  Phụ thu trẻ em
-                </span>
+                <span>Phụ thu trẻ em</span>
                 <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.avgChild)}}</span>
               </div>
             </div>
             <div class="col-12 border-bottom p-2">
               <div class="d-flex justify-content-between align-items-center">
                 <span>OptionService</span>
-                <span>2.400.000 đ</span>
+                <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.selectOptionService.totalPrice)}}</span>
               </div>
             </div>
             <div class="col-12 border-bottom p-2">
@@ -92,7 +95,7 @@
             <div class="col-12 p-2">
               <div class="d-flex justify-content-between align-items-center font-weight-bolder">
                 <span>Total</span>
-                <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.priceByTime.price)}}</span>
+                <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedHotel.totalPrice)}}</span>
               </div>
             </div>
           </div>
@@ -104,17 +107,20 @@
             @click="redirectToRequest"
           >{{$t('btn_confirm')}}</button>
         </div>
+        <div class="col-12 px-2">
+          <p class="text-sm">Ban khong can thanh toan ngay. Chung toi se lien he lai</p>
+        </div>
       </div>
       <div class="row px-2 m-0">
         <div class="col-12">
           <div class="text-sm text-left">
             <span class="text-danger">Note :</span>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam, consequatur. Labore alias natus iusto, illum deleniti ipsa fuga incidunt voluptatum voluptatibus ab vitae dolores eos tempore aut est libero exercitationem.</p>
+            <p>Gia theo tung thoi diem se khac nhau. Chung toi se gui cho quy khach thong tin chi tiet sau khi nhan duoc yeu cau</p>
           </div>
         </div>
       </div>
     </div>
-    <LoadingComponent v-bind:isShow="isLoadding" class="center-page"></LoadingComponent>
+    <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
 <script>
@@ -123,18 +129,21 @@ import PackageService from "@/api/PackageService";
 import CityService from "@/api/CityService";
 import Datetime from "@/components/Datetime2.vue";
 import GuestSelectDropDown from "@/components/GuestSelectDropDown.vue";
+import OptionSelectDropDown from "@/components/OptionSelectDropDown.vue";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 
 export default {
   components: {
     Datetime,
     GuestSelectDropDown,
-    LoadingComponent
+    LoadingComponent,
+    OptionSelectDropDown
   },
   props: ["id"],
   name: "HotelConfirmBooking",
-  computed:{
-    selectedHotel(){
+  computed: {
+    selectedHotel() {
+      console.log(this.$store.state);
       return this.$store.state.selectedHotel;
     }
   },
@@ -182,9 +191,11 @@ export default {
           }
         }
       },
-      selectTime:{
-        startDate:moment().format('DD-MM-YYYY'),
-        endDate:moment(new Date()).add(1, 'days').format('DD-MM-YYYY')
+      selectTime: {
+        startDate: moment().format("DD-MM-YYYY"),
+        endDate: moment(new Date())
+          .add(1, "days")
+          .format("DD-MM-YYYY")
       },
       isLoadding: false
     };
@@ -195,20 +206,18 @@ export default {
     },
     redirectToRequest: function() {
       this.$router.push({
-        path:`/promotiondetail/request?packagehotelrelid=${this.packagedetail._id}`});
-    },
-    changeLoadingState(state) {
-      this.isLoadding = state;
+        path: `/promotiondetail/request?packagehotelrelid=${this.packagedetail._id}`
+      });
     },
     async initial(id) {
-      this.changeLoadingState(true);
+      this.$store.commit('showHideLoading',true);
       var response = await PackageService.getPackageDetail(id);
       this.packagedetail = response.data;
       var cityresponse = await CityService.getCityDetailById(
         response.data.hotelId.cityId
       );
       this.city = cityresponse.data;
-      this.changeLoadingState(false);
+      this.$store.commit('showHideLoading',false);
     }
   }
 };

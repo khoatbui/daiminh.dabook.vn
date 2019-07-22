@@ -5,10 +5,11 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var router = express.Router()
-var db = require('../db')
+var controller=require('../controllers/travelstyle.controller')
+var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
+var router = express.Router()
 // create application/json parser
 var jsonParser = bodyParser.json()
 
@@ -16,27 +17,13 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',(req,res,next) => {
-    res.send(db.get('travelStyle').value());
-})
+router.get('/',controller.index)
 
-router.delete('/:index', function (req, res) {
-    db.get('travelStyle').value().splice(req.params.index, 1)
-})
+router.get('/m/gettravelstylebyid/:_id',controller.getmTravelStyleById)
 
-router.post('/insert', jsonParser, function (req, res) {
-    db.get('travelStyle')
-        .push(req.body)
-        .write()
-    res.send('CREATE COMPLETED')
-})
+router.delete('/:_id', controller.deleteTravelStyle)
 
-router.post('/update', jsonParser, function (req, res) {
-    db.get('travelStyle')
-        .filter({ travelStyleId: req.body.travelStyleId })
-        .filter( v=> v.lang=== req.body.lang || v.lang=== "")
-        .assign(req.body)
-        .write()
-    res.send('UPDATE COMPLETED')
-})
+router.post('/insert', jsonParser,controller.insertTravelStyle)
+
+router.post('/update/:_id', jsonParser,controller.updateTravelStyle)
 module.exports = router
