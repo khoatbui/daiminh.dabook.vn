@@ -350,6 +350,9 @@ export default {
       },
       travelStyleId: {
         langCode: "ALL"
+      },
+      tourTypeId:{
+        tourTypeCode:"ALL"
       }
     },
      search: "",
@@ -449,7 +452,9 @@ export default {
             (this.filterByCombo.destinationId.destinationCode === "ALL" || typeof( this.filterByCombo.destinationId.destinationCode) === "undefined" ||
               i.destinationId._id === this.filterByCombo.destinationId._id) &&
             (this.filterByCombo.travelStyleId.travelStyleCode === "ALL" || typeof( this.filterByCombo.travelStyleId.travelStyleCode) === "undefined" ||
-              i.travelStyleId._id === this.filterByCombo.travelStyleId._id)
+              i.travelStyleId._id === this.filterByCombo.travelStyleId._id) &&
+              (this.filterByCombo.tourTypeId.tourTypeCode === "ALL" || typeof( this.filterByCombo.tourTypeId.tourTypeCode) === "undefined" ||
+              i.tourTypeId._id === this.filterByCombo.tourTypeId._id)
           );
         });
     },
@@ -470,6 +475,7 @@ export default {
       AXIOS.get(apiIP + "/tourlist/", { crossdomain: true })
         .then(response => {
           this.tourList = response.data;
+          console.log(this.tourList);
         })
         .catch(function(error) {})
         .finally(function() {});

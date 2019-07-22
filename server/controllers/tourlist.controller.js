@@ -4,32 +4,32 @@ var mongoose = require('mongoose');
 var UploadController=require('../controllers/upload.controller')
 
 module.exports.index =function(req,res){
-    TourList.find().populate('destinationId').populate('travelStyleId').populate('tourType').then(function(tourlist){
+    TourList.find().populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
         res.send(tourlist)
     })
 };
 
 
 module.exports.getmAllTourPromotion =function(req,res){
-    TourList.find({"isPromotion":true,"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('tourType').then(function(tourlist){
+    TourList.find({"isPromotion":true,"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
         res.send(tourlist)
     })
 };
 
 module.exports.getmAllTour =function(req,res){
-    TourList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('tourType').then(function(tourlist){
+    TourList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
         res.send(tourlist)
     })
 };
 
 module.exports.getmTop10AllTourPromotion =function(req,res){
-    TourList.find({"isPromotion":true,"isUsed":true}).limit(10).populate('destinationId').populate('travelStyleId').populate('tourType').then(function(tourlist){
+    TourList.find({"isPromotion":true,"isUsed":true}).limit(10).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
         res.send(tourlist)
     })
 };
 
 module.exports.getmTourListById=(req,res,next) => {
-    TourList.findOne({"_id":req.params._id}).populate('destinationId').populate('travelStyleId').populate('tourType').then(function(tourlist){
+    TourList.findOne({"_id":req.params._id}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
         res.send(tourlist)
     })
 };
@@ -74,14 +74,14 @@ module.exports.updateTourList=function (req, res) {
 };
 
 module.exports.getTourListBySupplier=(req,res,next) => {
-    TourList.find({supplierId:req.params.index}).populate('destinationId').populate('travelStyleId').populate('tourType').then(function(tourlist){
+    TourList.find({supplierId:req.params.index}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
         console.log(tourlist);
         res.send(tourlist)
     })
 };
 
 module.exports.getTourListBySupplierCode=(req,res,next) => {
-    Supplier.findOne({supplierCode:req.params.index}).populate('destinationId').populate('travelStyleId').populate('tourType').then(function(supp){
+    Supplier.findOne({supplierCode:req.params.index}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(supp){
         TourList.find({supplierId:supp._id}).then(function(tourlist){
             res.send(tourlist)
         })

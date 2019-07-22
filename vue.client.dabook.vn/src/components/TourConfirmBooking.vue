@@ -163,6 +163,83 @@
         </div>
       </div>
     </div>
+        <!-- Confirm Modal -->
+    <div
+      class="modal"
+      id="resultModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="resultModalLabel"
+      aria-hidden="true"
+      v-if="isShowModal"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-bottom">
+            <div class="row w-100">
+              <div class="col-12 w-100 pr-0 d-flex justify-content-between align-items-center">
+                <div class="text-left">
+                  <h5 class="modal-title" id="resultModalLabel">
+                    <span class="font-weight-bolder text-lg">Request completed</span>
+                  </h5>
+                  <p class="text-sm">Bellow is booking code, please keep it to reference!</p>
+                </div>
+                <button
+                  type="button"
+                  class="close border-radius-100 shadow close-btn mx-1 text-sm"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  @click="isShowModal=false"
+                >
+                  <font-awesome-icon icon="times" />
+                </button>
+              </div>
+              <div class="col-12">
+                <!-- <StepComponent></StepComponent> -->
+              </div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row p-2 justify-content-start align-items-center">
+                <div class="col-12">
+                  <div class="ticket-result">
+                    <img class="ticket-bg" src="/img/hotel/ticketbg.png" alt />
+                    <div
+                      class="absolute-group d-flex align-items-stretch flex-column justify-content-center"
+                    >
+                      <span class="ticket-owner">{{customerInfo.fullName}}</span>
+                      <input class="ticket-code" type="text" :value="requestResult.orderCode" />
+                      <h4 class="p-1">
+                        <span
+                          class="badge badge-primary ticket-status"
+                        >Status : {{requestResult.requestStatus}}</span>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <p class="text-sm mb-0 text-left text-danger">Note</p>
+                  <p class="text-sm text-left">
+                    Cam on quy khach da su dung dich vu cua chung toi. Nhan vien cua chung toi da tiep nhan yeu cau, va se phan hoi lai
+                    trong vong {{requestResult.feedbackTime}} tieng.
+                  </p>
+                  <p
+                    class="text-sm text-left"
+                  >Trong truong hop quy khach can ho tro gap, vui long lien he tong dai 19001562 hoac 0936376420 de duoc ho tro. Xin cam on</p>
+                </div>
+                <div class="col-12 text-left">
+                  <a href="#" class="text-sm">Show more</a>
+                </div>
+                <div class="col-12 p-0 mt-4">
+                  <button type="button" class="btn btn-danger w-100">{{$t('btn_copyticket')}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <LoadingComponent class="center-page"></LoadingComponent>
   </div>
 </template>
@@ -194,6 +271,7 @@ export default {
   },
   data: function() {
     return {
+       isShowModal:false,
       customerInfo: {
         fullName: "",
         email: "",
@@ -295,16 +373,14 @@ export default {
   },
   methods: {
     showdata(value){
-      this.data.translate=value;console.log(this.data.translate);
+      this.data.translate=value;
     },
     backStep() {
       this.$router.go(-1);
     },
     async nextToResultStep() {
       if(this.formChecking()){
-                    this.isShowModal=true;
       this.$store.commit("showHideLoading", true);
-      console.log(this.customerInfo);
       this.$store.commit("updateCustomerInfo", this.customerInfo);
       var parrams = {
         selectedDate: this.$store.state.selectDate,
@@ -326,10 +402,10 @@ export default {
           tourName: this.tourDetail.tourId.tourName
         }
       };
-            console.log(parrams);
       var response = await TourService.postRequestTour(parrams);
       this.requestResult = response.data;
-      this.$store.commit("showHideLoading", true);
+      this.$store.commit("showHideLoading", false);
+      this.isShowModal=true;
       }
       else{
         console.log('fail');
@@ -338,7 +414,6 @@ export default {
     },
     formChecking() {
       if (this.customerInfo.fullName.length === 0) {
-        console.log('fullnam fail')
         this.formCheck = {
           fullName: "text-danger",
           email: "",
@@ -348,7 +423,6 @@ export default {
 
         return false;
       } else if (this.customerInfo.email.length === 0) {
-         console.log('email fail')
         this.formCheck = {
           fullName: "",
           email: "text-danger",
@@ -358,7 +432,6 @@ export default {
 
         return false;
       } else if (this.customerInfo.phone.length === 0) {
-         console.log('phone fail')
         this.formCheck = {
           fullName: "",
           email: "",
@@ -382,13 +455,11 @@ export default {
       this.$store.commit("showHideLoading", true);
       var response = await TourService.getTourDetailById(id);
       this.tourDetail = response.data;
-      console.log(this.tourDetail);
 
       var desresp = await DestinationService.getDestinationById(
         response.data.tourId.destinationId
       );
       this.destination = desresp.data;
-      console.log(this.destination);
       this.$store.commit("showHideLoading", false);
       this.componentLoaded = true;
     }

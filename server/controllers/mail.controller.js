@@ -225,11 +225,16 @@ module.exports.sendMobileTourBookingEmail = function (req, res) {
   }).then(success => console.log('success: ', success))
     .catch(error => console.log('error: ', error))
 
+    try {
   res.send({
     orderCode:transactionCode,
     feedbackTime:timeStaffReply(),
     requestStatus:"PROCESSING"
   })
+} catch (error) {
+  console.log(error)
+
+}
 };
 
 module.exports.sendTourBookingEmail = function (req, res) {
