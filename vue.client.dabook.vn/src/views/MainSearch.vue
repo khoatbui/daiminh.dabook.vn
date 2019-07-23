@@ -24,7 +24,7 @@
         <div class="col-12">
           <div class="m-2 text-left">
             <h4>
-              <b>{{searchStore.locationSearch.length==0?"All hotel promotion":searchStore.locationSearch}}</b>
+              <b>{{searchStore.locationSearch.length==0?"All hotel promotion":`${searchStore.locationSearch} 'hotel'`}}</b>
             </h4>
           </div>
         </div>
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="col-12">
-          <CarPromotionSection v-bind:showTitle="false"></CarPromotionSection>
+          <CarSearchSection v-bind:showTitle="false"></CarSearchSection>
         </div>
         <div class="col-12">
           <div class="row pb-4 ads-section">
@@ -74,7 +74,7 @@ import MainNavBar from "@/components/MainNavBar.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
 import HotelSearchSection from "@/components/HotelSearchSection.vue";
-import CarPromotionSection from "@/components/CarPromotionSection.vue";
+import CarSearchSection from "@/components/CarSearchSection.vue";
 
 @Component({
   components: {
@@ -85,7 +85,7 @@ import CarPromotionSection from "@/components/CarPromotionSection.vue";
     LocationSearchComponent,
     LanguageComponent,
     HotelSearchSection,
-    CarPromotionSection
+    CarSearchSection
   }
 })
 export default class Main extends Vue {

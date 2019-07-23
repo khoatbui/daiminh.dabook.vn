@@ -195,6 +195,7 @@ export default class Main extends Vue {
       to:""
   }
   redirectToMainSearch() {
+    this.$store.commit('asignSearchField',this.search.location)
     this.$router.push({
       path: `mainsearch?where=${this.search.location}&from=${this.search.from}&to=${this.search.to}&adult=${this.search.adult}&children=${this.search.children}`
     });

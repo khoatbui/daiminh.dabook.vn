@@ -4,7 +4,7 @@
     <div class="col-12 p-1 m-0" v-if="showTitle">
       <div class="m-2 text-left">
         <h4>
-          <b>{{searchStore.locationSearch.length==0?"All hotel promotion":searchStore.locationSearch}}</b>
+          <b>{{searchStore.locationSearch.length==0?"All hotel promotion":`${searchStore.locationSearch} hotel`}}</b>
         </h4>
       </div>
     </div>

@@ -17,6 +17,10 @@ var hotelservice = {
     console.log()
     return Api().get('cardetailprice/m/getallcarprice/')
   },
+  getAllCarPriceBySearch (search) {
+    console.log(search)
+    return Api().post('cardetailprice/m/getallcarpricebysearch/',{ 'keyword': search })
+  },
   getAllCarPriceByCarType (params) {
     console.log(params)
     return Api().get('cardetailprice/m/getallcarpricebycartype/' + params)
