@@ -20,6 +20,7 @@
                 class="form-control"
                 id="iwhere"
                 :placeholder="$t('pmain_txt_where')"
+                v-model="search.location"
               />
             </div>
           </div>
@@ -42,6 +43,7 @@
                   class="form-control"
                   id="iadult"
                   :placeholder="$t('pmain_txt_adult')"
+                  v-model="search.adult"
                 />
                 <input
                   type="email"
@@ -49,6 +51,7 @@
                   id="ichildren"
                   aria-describedby="emailHelp"
                   :placeholder="$t('pmain_txt_children')"
+                  v-model="search.children"
                 />
               </div>
             </div>
@@ -184,9 +187,16 @@ import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10Promoti
   }
 })
 export default class Main extends Vue {
+  search={
+      location:"",
+      adult:0,
+      children:0,
+      from:"",
+      to:""
+  }
   redirectToMainSearch() {
     this.$router.push({
-      path: `mainsearch?where=${this.$route.query.supplier}&from=&to=&adult=&children=`
+      path: `mainsearch?where=${this.search.location}&from=${this.search.from}&to=${this.search.to}&adult=${this.search.adult}&children=${this.search.children}`
     });
   }
 }

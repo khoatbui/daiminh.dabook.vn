@@ -19,6 +19,10 @@ var hotelservice = {
     console.log()
     return Api().get('packagehotelrel/m/getallpackage/')
   },
+  getAllPackageByLocationTime () {
+    console.log()
+    return Api().post('packagehotelrel/m/postpackagebysearch/', { 'keyword': location });
+  },
   getPackageDetail (params) {
     console.log(params)
     return Api().get('packagehotelrel/m/getpackagedetail/' + params)

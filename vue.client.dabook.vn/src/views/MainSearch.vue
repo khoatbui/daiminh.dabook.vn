@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="col-12">
-          <HotelPromotionSection v-bind:showTitle="false"></HotelPromotionSection>
+          <HotelSearchSection v-bind:showTitle="false"></HotelSearchSection>
         </div>
         <div class="col-12">
           <div class="row pb-4 ads-section">
@@ -73,7 +73,7 @@ import GuestSelect from "@/components/GuestSelect.vue";
 import MainNavBar from "@/components/MainNavBar.vue";
 import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
-import HotelPromotionSection from "@/components/HotelPromotionSection.vue";
+import HotelSearchSection from "@/components/HotelSearchSection.vue";
 import CarPromotionSection from "@/components/CarPromotionSection.vue";
 
 @Component({
@@ -84,7 +84,7 @@ import CarPromotionSection from "@/components/CarPromotionSection.vue";
     MainNavBar,
     LocationSearchComponent,
     LanguageComponent,
-    HotelPromotionSection,
+    HotelSearchSection,
     CarPromotionSection
   }
 })

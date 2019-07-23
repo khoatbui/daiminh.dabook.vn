@@ -135,12 +135,24 @@ export default {
       var result = await OrderService.getHistoryByTransCode(
         this.input.transationCode
       );
+      if (result.data == undefined || result.data == "") {
+        result = await OrderService.getCarHistoryByTransCode(
+          this.input.transationCode
+        );
+        if (result.data == undefined || result.data == "") {
+          result = await OrderService.getTourHistoryByTransCode(
+            this.input.transationCode
+          );
+        }
+      }
       if (result.data != undefined && result.data != "") {
         if (
-          result.data.customer.phone.toUpperCase() == this.input.phoneEmail.toUpperCase() ||
-          result.data.customer.email.toUpperCase() == this.input.phoneEmail.toUpperCase()
+          result.data.customer.phone.toUpperCase() ==
+            this.input.phoneEmail.toUpperCase() ||
+          result.data.customer.email.toUpperCase() ==
+            this.input.phoneEmail.toUpperCase()
         ) {
-          console.log(result.data)
+          console.log(result.data);
           this.requestResult = {
             isFound: true,
             fullName: result.data.customer.fullName,
