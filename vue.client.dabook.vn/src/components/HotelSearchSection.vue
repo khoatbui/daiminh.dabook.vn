@@ -112,6 +112,9 @@ export default {
     if (this.$route.query.where != undefined) {
       this.initialWithSearch(this.$route.query.where,this.$route.query.from,this.$route.query.to);
     }
+    if (this.$route.query.cityid != undefined) {
+      this.initialWithCity(this.$route.query.cityid);
+    }
     else{
     this.initial();
     }
@@ -134,6 +137,14 @@ export default {
     async initialWithSearch(search,from,to) {
       this.$store.commit('showHideLoading',true);
       var response = await PackageService.getAllPackageByLocationTime(search,from,to);
+      this.packagelist = response.data;
+      console.log('where')
+      console.log(response.data)
+      this.$store.commit('showHideLoading',false);
+    },
+    async initialWithCity(city) {
+      this.$store.commit('showHideLoading',true);
+      var response = await PackageService.getAllPackageByCity(city);
       this.packagelist = response.data;
       console.log('where')
       console.log(response.data)

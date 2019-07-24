@@ -12,14 +12,16 @@ var hotelservice = {
   getAllCarPricePromotion () {
     return Api().get('cardetailprice/m/getallpromotioncarprice/')
   },
-
+  getAllCarPriceByCity (id) {
+    return Api().get('cardetailprice/m/getallcarpricebycity/'+id)
+  },
   getAllCarPrice () {
     console.log()
     return Api().get('cardetailprice/m/getallcarprice/')
   },
   getAllCarPriceBySearch (search) {
     console.log(search)
-    return Api().post('cardetailprice/m/getallcarpricebysearch/',{ 'keyword': search })
+    return Api().post('cardetailprice/m/getallcarpricebysearch/',{ 'git status': search })
   },
   getAllCarPriceByCarType (params) {
     console.log(params)

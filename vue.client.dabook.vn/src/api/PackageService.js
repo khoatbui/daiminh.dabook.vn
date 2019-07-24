@@ -23,6 +23,10 @@ var hotelservice = {
     console.log(search)
     return Api().post('packagehotelrel/m/postpackagebysearch/', { 'keyword': search });
   },
+   getAllPackageByCity (city) {
+    console.log(city)
+    return Api().get('packagehotelrel/m/getallpackagebycity/'+city);
+  },
   getPackageDetail (params) {
     console.log(params)
     return Api().get('packagehotelrel/m/getpackagedetail/' + params)

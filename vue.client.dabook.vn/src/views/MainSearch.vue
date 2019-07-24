@@ -24,7 +24,7 @@
         <div class="col-12">
           <div class="m-2 text-left">
             <h4>
-              <b>{{searchStore.locationSearch.length==0?"All hotel promotion":`${searchStore.locationSearch} 'hotel'`}}</b>
+              <b>{{searchStore.locationSearch.length==0?"All hotel promotion":`${searchStore.locationSearch} 'hotel`}}</b>
             </h4>
           </div>
         </div>

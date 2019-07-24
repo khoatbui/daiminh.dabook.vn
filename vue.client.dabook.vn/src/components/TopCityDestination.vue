@@ -7,7 +7,7 @@
           </div>
           <div class="col-12 scroll-ngang">
             <div class="card m-2 d-inline-block border-0" v-for="city in cities">
-                <a v-bind:href="`${rootUrl}/?cityid=${city._id}`">
+                <a @click="assignSearchAndRedirect(city)">
               <img
                 class="card-img-top shadow border-radius-100"
                v-bind:src="city.cityImages.length>0?city.cityImages[0].filePath:'img/hotel/roomtype/default.jpg'"
@@ -38,6 +38,13 @@ export default {
       this.cities = response.data;
       console.log(this.cities);
       this.$store.commit('showHideLoading',false);
+    },
+    assignSearchAndRedirect(item){
+            console.log(item.cityNameEN);
+      this.$store.commit('asignSearchField',item.cityNameEN);
+      this.$router.push({
+      path:`${this.rootUrl}/?cityid=${item._id}`
+    });
     }
   },
   data: function() {
