@@ -24,7 +24,7 @@
         <div class="col-12">
           <div class="m-2 text-left">
             <h4>
-              <b>{{searchStore.locationSearch.length==0?"All hotel promotion":`${searchStore.locationSearch} 'hotel`}}</b>
+              <b>{{searchStore.locationSearch.length==0?"All hotel promotion":`Các khách sạn tại ${searchStore.locationSearch}`}}</b>
             </h4>
           </div>
         </div>
@@ -43,7 +43,26 @@
         <div class="col-12">
           <div class="m-2 text-left">
             <h4>
-              <b>{{searchStore.locationSearch.length==0?"All car promotion":searchStore.locationSearch}}</b>
+              <b>{{searchStore.locationSearch.length==0?"All tour promotion":`Các tour ở ${searchStore.locationSearch}`}}</b>
+            </h4>
+          </div>
+        </div>
+        <div class="col-12">
+          <TourSearchSection v-bind:showTitle="false"></TourSearchSection>
+        </div>
+        <div class="col-12">
+          <div class="row pb-4 ads-section">
+            <div class="col-12 p-0 scroll-ngang">
+              <div class="card text-white text-left border-0">
+                <img src="/img/promotion/ads/airasia.jpg" class="card-img" alt="..." />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="m-2 text-left">
+            <h4>
+              <b>{{searchStore.locationSearch.length==0?"All car promotion":`Các chuyến xe đi đến ${searchStore.locationSearch}`}}</b>
             </h4>
           </div>
         </div>
@@ -75,6 +94,7 @@ import LocationSearchComponent from "@/components/LocationSearchComponent.vue";
 import LanguageComponent from "@/components/LanguageComponent.vue";
 import HotelSearchSection from "@/components/HotelSearchSection.vue";
 import CarSearchSection from "@/components/CarSearchSection.vue";
+import TourSearchSection from "@/components/TourSearchSection.vue";
 
 @Component({
   components: {
@@ -85,7 +105,8 @@ import CarSearchSection from "@/components/CarSearchSection.vue";
     LocationSearchComponent,
     LanguageComponent,
     HotelSearchSection,
-    CarSearchSection
+    CarSearchSection,
+    TourSearchSection
   }
 })
 export default class Main extends Vue {

@@ -19,6 +19,14 @@ var tourservice = {
     console.log()
     return Api().get('tourlist/m/getalltour/')
   },
+  getAllTourBySearch (search) {
+    console.log()
+    return Api().post('tourlist/m/getalltourbysearch/',{ 'keyword': search })
+  },
+  getAllTourByCity (city) {
+    console.log()
+    return Api().get('tourlist/m/getalltourbycity/'+city)
+  },
   getTourDetailById (params) {
     console.log(params)
     return Api().get('tourdetail/m/gettourdetailbyid/' + params)

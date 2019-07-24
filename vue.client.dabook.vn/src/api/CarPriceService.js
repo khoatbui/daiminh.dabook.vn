@@ -21,7 +21,7 @@ var hotelservice = {
   },
   getAllCarPriceBySearch (search) {
     console.log(search)
-    return Api().post('cardetailprice/m/getallcarpricebysearch/',{ 'git status': search })
+    return Api().post('cardetailprice/m/getallcarpricebysearch/',{ 'keyword': search })
   },
   getAllCarPriceByCarType (params) {
     console.log(params)
