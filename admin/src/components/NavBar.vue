@@ -25,6 +25,28 @@
           </v-list-tile>
         </v-list>
       </v-menu>
+       <v-menu :nudge-width="100">
+        <template v-slot:activator="{ on }">
+          <v-toolbar-title v-on="on">
+            <v-btn flat>
+              <span>Blog</span>
+              <v-icon dark>arrow_drop_down</v-icon>
+            </v-btn>
+          </v-toolbar-title>
+        </template>
+
+        <v-list>
+          <v-list-tile>
+            <v-btn flat to="/blogtype">Blog Type</v-btn>
+          </v-list-tile>
+          <v-list-tile>
+            <v-btn flat to="/bloglist">Blog List</v-btn>
+          </v-list-tile>
+          <v-list-tile>
+            <v-btn flat to="/blogdetail">Blog Detail</v-btn>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
       <v-menu :nudge-width="100">
         <template v-slot:activator="{ on }">
           <v-toolbar-title v-on="on">

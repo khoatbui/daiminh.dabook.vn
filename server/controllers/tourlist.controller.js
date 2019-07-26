@@ -1,5 +1,6 @@
 var TourList = require('../models/tourlist.model')
 var Supplier=require('../models/supplier.model')
+var Destination=require('../models/destination.model')
 var mongoose = require('mongoose');
 var UploadController=require('../controllers/upload.controller')
 
@@ -19,6 +20,33 @@ module.exports.getmAllTourPromotion =function(req,res){
 module.exports.getmAllTour =function(req,res){
     TourList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
         res.send(tourlist)
+    })
+};
+module.exports.getmAllTourByCity =function(req,res){
+    var des=[];
+    Destination.find({'cityId':req.params._id}).then(function(pac){
+        pac.forEach(element => {
+            des.push(element._id)
+        });
+    })
+    TourList.find({"isUsed":true,'destinationId':{ $in : des }}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
+        res.send(tourlist)
+    })
+};
+module.exports.getmAllTourBySearch =function(req,res){
+    TourList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(pac){
+        var result=pac.filter(item =>{ 
+            return xoa_dau(item.keyword).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
+            xoa_dau(item.destinationId.destinationName).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
+            xoa_dau(item.destinationId.destinationCode).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
+            xoa_dau(item.travelStyleId.travelStyleName).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
+            xoa_dau(item.travelStyleId.travelStyleCode).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
+            xoa_dau(item.tourTypeId.tourTypeName).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
+            xoa_dau(item.tourTypeId.tourTypeCode).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
+            xoa_dau(item.tourCode).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
+            xoa_dau(item.tourName).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1
+    })
+        res.send(result)
     })
 };
 
@@ -88,3 +116,20 @@ module.exports.getTourListBySupplierCode=(req,res,next) => {
     })
 };
 
+function xoa_dau(str) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    return str;
+  }

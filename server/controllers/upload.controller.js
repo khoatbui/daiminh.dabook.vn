@@ -186,22 +186,6 @@ module.exports.uploadTourListImg=async (req, res) => {
   }
 }
 
-module.exports.uploadTourDetailImg=async (req, res) => {
-    try {
-        var result=[];
-       console.log(req.file)
-       var element=req.file;
-    copyFile(element.path, '../daiminh.dabook.vn/img/tour/tourdetail');
-    copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/tourdetail');
-    result.push({'fileName':element.filename,'filePath':`img/tour/tourdetail/${element.filename}`,'destination':element.destination,'src':`img/tour/tourdetail/${element.filename}`})
-    console.log(result);
-    res.json(result);
-    } catch (err) {
-        console.log(err);
-        res.sendStatus(400);
-    }
-  }
-
   module.exports.uploadAdsImg=async (req, res) => {
     try {
         var result=[];
@@ -253,6 +237,70 @@ module.exports.uploadTourDetailImg=async (req, res) => {
         res.sendStatus(400);
     }
   }
+
+//   =========================================
+module.exports.uploadTourDetailImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.file)
+       var element=req.file;
+    copyFile(element.path, '../daiminh.dabook.vn/img/tour/tourdetail');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/tourdetail');
+    result.push({'fileName':element.filename,'filePath':`img/tour/tourdetail/${element.filename}`,'destination':element.destination,'src':`img/tour/tourdetail/${element.filename}`})
+    console.log(result);
+    res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+  module.exports.uploadCarTypeIntroImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.file)
+       var element=req.file;
+    copyFile(element.path, '../daiminh.dabook.vn/img/car/cartype/cartypeintro');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/car/cartype/cartypeintro');
+    result.push({'fileName':element.filename,'filePath':`img/car/cartype/cartypeintro/${element.filename}`,'destination':element.destination,'src':`img/car/cartype/cartypeintro/${element.filename}`})
+    console.log(result);
+    res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+  module.exports.uploadCarTransTypeIntroImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.file)
+       var element=req.file;
+    copyFile(element.path, '../daiminh.dabook.vn/img/car/trans/cartranstypeintro');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/car/trans/cartranstypeintro');
+    result.push({'fileName':element.filename,'filePath':`img/car/trans/cartranstypeintro/${element.filename}`,'destination':element.destination,'src':`img/car/trans/cartranstypeintro/${element.filename}`})
+    console.log(result);
+    res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+
+  module.exports.uploadCarTripIntroImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.file)
+       var element=req.file;
+    copyFile(element.path, '../daiminh.dabook.vn/img/car/trip/tripintro');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/car/trip/tripintro');
+    result.push({'fileName':element.filename,'filePath':`img/car/trip/tripintro/${element.filename}`,'destination':element.destination,'src':`img/car/trip/tripintro/${element.filename}`})
+    console.log(result);
+    res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+
 //moves the $file to $dir2
 var moveFile = (file, dir2)=>{
     //include the fs, path modules

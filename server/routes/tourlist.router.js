@@ -27,9 +27,13 @@ router.get('/m/gettop10tourpromotion',controller.getmTop10AllTourPromotion)
 
 router.get('/m/getalltour',controller.getmAllTour)
 
+router.get('/m/getalltourbycity/:_id',controller.getmAllTourByCity)
+
 router.delete('/:_id', controller.deleteTourList)
 
 router.post('/insert', jsonParser,controller.insertTourList)
+
+router.post('/m/getalltourbysearch', jsonParser,controller.getmAllTourBySearch)
 
 router.post('/update/:_id', jsonParser,controller.updateTourList)
 module.exports = router

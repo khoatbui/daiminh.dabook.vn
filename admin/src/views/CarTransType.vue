@@ -33,9 +33,13 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.carTransTypeName" label="carTransTypeName"></v-text-field>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm12 md8 class="sub-add-component">
+                    <v-text-field v-model="editedItem.carTransTypeName" label="CarTransType Name"></v-text-field>
+                  </v-flex>
+                  
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
                     <v-select
                       v-model="editedItem.lang"
                       :items="language"
@@ -44,16 +48,35 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addCarTransTypeIntroByLang">Add</v-btn>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <v-textarea
-                      name="input-7-1"
-                      label="Room Introduce"
-                      v-model="editedItem.carTransTypeIntro"
-                    ></v-textarea>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5><b>CarTransType Introduce</b></h5>
+                  <VueTrixEditor v-model="editedItem.carTransTypeIntro" placeholder="CarTransType Introduce" uniqueId="icartypeintro" v-bind:image-upload-path="`${apiIP}/upload/car/trans/cartranstypeintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.carTransTypeIntro" class="old-content">
+                    </div>
+                </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="carTransTypeIntrosHeader"
+                      :items="editedItem.carTransTypeIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deleteCarTransTypeIntroByLang(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.carTransTypeName}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.carTransTypeIntro}}</td>
+                      </template>
+                    </v-data-table>
                   </v-flex>
+                </v-layout>
                   <v-flex xs12 sm12 md12>
                     <!-- <file-upload v-model="editedItem.carTransTypeImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
@@ -127,6 +150,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -141,7 +166,8 @@ const AXIOS = axios.create({
 });
 export default {
   components: {
-    FileUpload
+    FileUpload,
+    VueTrixEditor
   },
   data: () => ({
     apiIP: apiIP,
@@ -152,13 +178,19 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
+    carTransTypeIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "CarTransTypeName", value: "carTransTypeName" },
+      { text: "language", value: "lang" },
+      { text: "CarTransTypeIntro", value: "carTransTypeIntro" }
+    ],
     headers: [
       { text: "Actions", sortable: false },
       {
-        text: "Room Type Code",
+        text: "CarTransType Code",
         value: "carTransTypeCode"
       },
-      { text: "Room Type Name", value: "carTransTypeName" },
+      { text: "CarTransType Name", value: "carTransTypeName" },
       { text: "Language", value: "lang" },
       { text: "Used", value: "isUsed" },
       { text: "CreateBy", value: "createBy" },
@@ -183,7 +215,8 @@ export default {
       createBy: "",
       modifyBy: "",
       carTransTypeImages: [],
-      removeImage:[]
+      removeImage:[],
+      carTransTypeIntros:[]
     },
     defaultItem: {
       carTransTypeCode: "",
@@ -194,7 +227,8 @@ export default {
       createBy: "",
       modifyBy: "",
       carTransTypeImages: [],
-      removeImage:[]
+      removeImage:[],
+      carTransTypeIntros:[]
     },
     snackbar: {
       snackbar: false,
@@ -286,6 +320,16 @@ export default {
       }
       this.uploadImg=[];
       this.editedItem.removeImage=[];
+    },
+    addCarTransTypeIntroByLang() {
+      this.editedItem.carTransTypeIntros.push({
+        carTransTypeName: this.editedItem.carTransTypeName,
+        carTransTypeIntro: this.editedItem.carTransTypeIntro,
+        lang: this.editedItem.lang
+      });
+    },
+    deleteCarTransTypeIntroByLang(item) {
+      this.editedItem.carTransTypeIntros.splice(item, 1);
     }
   }
 };

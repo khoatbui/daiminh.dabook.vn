@@ -32,7 +32,10 @@ const optionServiceRoute = require('./routes/optionservice.router')
 const packageHotelRELRouter = require('./routes/packagehotelREL.router')
 const paymentsRouter = require('./routes/payments.router')
 const userRouter = require('./routes/auth.router')
+
 const hotelOrderRouter=require('./routes/hotelorder.router')
+const tourOrderRouter=require('./routes/tourorder.router')
+const carOrderRouter=require('./routes/carorder.router')
 
 const carSuppler=require('./routes/carsupplier.router')
 const carType=require('./routes/cartype.router')
@@ -40,6 +43,10 @@ const carTransType=require('./routes/cartranstype.router')
 const carDetailPrice=require('./routes/cardetailprice.router')
 
 const ads=require('./routes/ads.router')
+
+const blogType=require('./routes/blogtype.router')
+const blogList=require('./routes/bloglist.router')
+const blogDetail=require('./routes/blogdetail.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -66,6 +73,8 @@ app.use('/packagehotelrel',packageHotelRELRouter);
 app.use('/payments',paymentsRouter);
 app.use('/user',userRouter)
 app.use('/hotelorder',hotelOrderRouter)
+app.use('/tourorder',tourOrderRouter)
+app.use('/carorder',carOrderRouter)
 
 app.use('/carsupplier',carSuppler)
 app.use('/cartype',carType)
@@ -73,6 +82,10 @@ app.use('/cartranstype',carTransType)
 app.use('/cardetailprice',carDetailPrice)
 
 app.use('/ads',ads)
+
+app.use('/blogtype',blogType)
+app.use('/bloglist',blogList)
+app.use('/blogdetail',blogDetail)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

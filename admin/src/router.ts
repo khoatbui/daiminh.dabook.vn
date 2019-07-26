@@ -171,6 +171,24 @@ const router = new Router({
       name: 'adsmanager',
       component: () => import(/* webpackChunkName: "about" */ './views/Ads.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/blogtype',
+      name: 'blogtype',
+      component: () => import(/* webpackChunkName: "about" */ './views/BlogType.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/bloglist',
+      name: 'bloglist',
+      component: () => import(/* webpackChunkName: "about" */ './views/BlogList.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/blogdetail',
+      name: 'blogdetail',
+      component: () => import(/* webpackChunkName: "about" */ './views/BlogDetail.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })

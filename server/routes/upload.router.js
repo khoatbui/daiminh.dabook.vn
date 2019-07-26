@@ -127,7 +127,7 @@ var tourDetailUpload = multer.diskStorage({
 })
 const uploadTourDetail = multer({storage:tourDetailUpload});
 
-//TOUR DETAIL IMAGE
+//TOUR DETAIL ADS
 var adsUpload = multer.diskStorage({
   destination: `./uploads/ads`,
   filename: function (req, file, cb) {
@@ -154,6 +154,35 @@ var tourDocumentUpload = multer.diskStorage({
 })
 const uploadTourDocument = multer({storage:tourDocumentUpload});
 
+
+//CAR TYPE INTRO IMAGE
+var carTypeIntroUpload = multer.diskStorage({
+  destination: `./uploads/car/cartype/cartypeintro`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadCarTypeIntro = multer({storage:carTypeIntroUpload});
+
+//CAR TRANS TYPE INTRO IMAGE
+var carTransTypeIntroUpload = multer.diskStorage({
+  destination: `./uploads/car/trans/cartranstypeintro`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadCarTransTypeIntro = multer({storage:carTransTypeIntroUpload});
+
+//CAR TRIP TYPE INTRO IMAGE
+var carTripIntroUpload = multer.diskStorage({
+  destination: `./uploads/car/trip/tripintro`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTripIntro = multer({storage:carTripIntroUpload});
+
+
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -171,10 +200,15 @@ router.post('/tour/destination',uploadDestination.array('photos', 12),controller
 router.post('/tour/supplier',uploadTourSupplier.array('photos', 12),controller.uploadTourSupplierImg)
 router.post('/tour/travelstyle',uploadTravelStyle.array('photos', 12),controller.uploadTravelStyleImg)
 router.post('/tour/tourlist',uploadTourList.array('photos', 12),controller.uploadTourListImg)
-router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploadTourDetailImg)
 router.post('/tour/document',uploadTourDocument.array('documents', 12),controller.uploadTourDocumentImg)
 
 router.post('/ads',uploadAds.array('photos', 12),controller.uploadAdsImg)
+
+
+router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploadTourDetailImg)
+router.post('/car/cartype/cartypeintro',uploadCarTypeIntro.single('image'),controller.uploadCarTypeIntroImg)
+router.post('/car/trans/cartranstypeintro',uploadCarTransTypeIntro.single('image'),controller.uploadCarTransTypeIntroImg)
+router.post('/car/trip/tripintro',uploadTripIntro.single('image'),controller.uploadCarTripIntroImg)
 
 
 module.exports = router

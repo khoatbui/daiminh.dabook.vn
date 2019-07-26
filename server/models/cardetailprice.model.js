@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 
 var carDetailPriceSchema = new mongoose.Schema({
+    cityId:{ type: mongoose.Schema.Types.ObjectId, ref: 'City' },
     supplierId:{ type: mongoose.Schema.Types.ObjectId, ref: 'CarSupplier' },
     carTransTypeId:{ type: mongoose.Schema.Types.ObjectId, ref: 'CarTransType' },
     tripCode:String,
@@ -36,7 +37,8 @@ var carDetailPriceSchema = new mongoose.Schema({
         optionNote: String,
         isUsed: Boolean
     }],
-    carDetailsImages:[{fileName:String,filePath:String,destination:String,size:Number}]
+    carDetailsImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    tripIntros:[]
 });
 var CarDetailPrice =mongoose.model('CarDetailPrice',carDetailPriceSchema,'carDetailPrice');
 

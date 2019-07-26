@@ -23,7 +23,7 @@
               <v-subheader>KEY</v-subheader>
               <v-container grid-list-xl>
                 <v-layout wrap>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-select
                       v-model="editedItem.supplierId"
                       :items="supplier"
@@ -34,7 +34,7 @@
                       @input="changedSupplierCombobox"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-text-field
                       required
                       :rules="[() => editedItem.carTypeCode.length > 0 || 'Required field']"
@@ -43,10 +43,17 @@
                       label="carTypeCode"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.carTypeName" label="carTypeName"></v-text-field>
+                  <v-flex xs12 sm6 md3>
+                    <v-text-field v-model="editedItem.seatNumber" label="Seat Number"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8 class="sub-add-component">
+                    <v-text-field v-model="editedItem.carTypeName" label="CarType Name"></v-text-field>
+                  </v-flex>
+                  
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
                     <v-select
                       v-model="editedItem.lang"
                       :items="language"
@@ -55,21 +62,36 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addCarTypeIntroByLang">Add</v-btn>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.seatNumber" label="Seat Number"></v-text-field>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5><b>CarType Introduce</b></h5>
+                  <VueTrixEditor v-model="editedItem.carTypeIntro" placeholder="CarType Introduce" uniqueId="icartypeintro" v-bind:image-upload-path="`${apiIP}/upload/car/cartype/cartypeintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.carTypeIntro" class="old-content">
+                    </div>
+                </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="carTypeIntrosHeader"
+                      :items="editedItem.carTypeIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deleteCarTypeIntroByLang(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.carTypeName}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.carTypeIntro}}</td>
+                      </template>
+                    </v-data-table>
                   </v-flex>
+                </v-layout>
                   <v-flex xs12 sm12 md12>
-                    <v-textarea
-                      name="input-7-1"
-                      label="Car Introduce"
-                      v-model="editedItem.carTypeIntro"
-                    ></v-textarea>
-                  </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
                       v-bind:routerPath="apiIP+'/upload/car/cartype'"
@@ -143,6 +165,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -157,7 +181,8 @@ const AXIOS = axios.create({
 });
 export default {
   components: {
-    FileUpload
+    FileUpload,
+    VueTrixEditor
   },
   data: () => ({
     apiIP: apiIP,
@@ -168,6 +193,12 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
+    carTypeIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "CarTypeName", value: "carTypeName" },
+      { text: "language", value: "lang" },
+      { text: "CarTypeIntro", value: "carTypeIntro" }
+    ],
     headers: [
       { text: "Actions", sortable: false },
       { text: "Supplier", value: "supplierId.supplierName" },
@@ -203,7 +234,8 @@ export default {
       createBy: "",
       modifyBy: "",
       carImages: [],
-      removeImage:[]
+      removeImage:[],
+      carTypeIntros:[]
     },
     defaultItem: {
       carTypeCode: "",
@@ -215,7 +247,8 @@ export default {
       createBy: "",
       modifyBy: "",
       carImages: [],
-      removeImage:[]
+      removeImage:[],
+      carTypeIntros:[]
     },
     snackbar: {
       snackbar: false,
@@ -326,6 +359,16 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
+    },
+    addCarTypeIntroByLang() {
+      this.editedItem.carTypeIntros.push({
+        carTypeName: this.editedItem.carTypeName,
+        carTypeIntro: this.editedItem.carTypeIntro,
+        lang: this.editedItem.lang
+      });
+    },
+    deleteCarTypeIntroByLang(item) {
+      this.editedItem.carTypeIntros.splice(item, 1);
     }
   }
 };

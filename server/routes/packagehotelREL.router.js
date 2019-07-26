@@ -51,6 +51,8 @@ router.get('/m/getallpromotepackagebysupplier/:_id',controller.getmAllPromotePac
 
 router.get('/m/getallpackagebysupplier/:_id',controller.getmAllPackageBySupplier)
 
+router.get('/m/getallpackagebycity/:_id',controller.getmAllPromotePackageByCity)
+
 router.post('/m/postpackagebysearch', jsonParser,controller.getmAllPackageBySearch)
 
 router.post('/m/postpromotionpackagebysearch', jsonParser,controller.getmAllPromotionPackageBySearch)

@@ -6,6 +6,7 @@ var carTypeSchema = new mongoose.Schema({
     carTypeName:String,
     seatNumber: Number,
     carTypeIntro: String,
+    carTypeIntros:[],
     lang: String,
     isUsed:Boolean,
     createBy:String,

@@ -53,24 +53,15 @@
                       label="Trip Code"
                     ></v-text-field>
                   </v-flex>
-                   <v-flex xs12 sm6 md3>
-                    <v-text-field
-                      required
-                      v-model="editedItem.tripName"
-                      label="Trip Name"
-                    ></v-text-field>
-                  </v-flex>
-                   <v-flex xs12 sm6 md3>
-                    <v-text-field
-                      v-model="editedItem.fromLocation"
-                      label="From"
-                    ></v-text-field>
-                  </v-flex>
-                   <v-flex xs12 sm6 md3>
-                    <v-text-field
-                      v-model="editedItem.toLocation"
-                      label="To"
-                    ></v-text-field>
+                  <v-flex xs12 sm6 md3>
+                    <v-select
+                      v-model="editedItem.cityId"
+                      :items="city"
+                      item-text="cityName"
+                      item-value="_id"
+                      label="City"
+                      return-object
+                    ></v-select>
                   </v-flex>
                    <v-flex xs12 sm6 md3>
                     <v-text-field
@@ -90,12 +81,53 @@
                     <v-flex xs6 sm3 md2>
                       <v-checkbox v-model="editedItem.isPromotion" :label="`IsPromotion?`"></v-checkbox>
                     </v-flex>
-                     <v-flex xs12 sm12 md12>
-                    <v-textarea
-                      name="input-7-1"
-                      label="Trip Introduce"
-                      v-model="editedItem.tripIntro"
-                    ></v-textarea>
+                     <v-flex xs12 sm12 md6 class="sub-add-component">
+                    <v-text-field v-model="editedItem.tripName" label="Trip Name"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md6 class="sub-add-component">
+                    <v-text-field v-model="editedItem.fromLocation" label="From"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md6 class="sub-add-component">
+                    <v-text-field v-model="editedItem.toLocation" label="To"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 class="sub-add-component">
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addTripIntroByLang">Add</v-btn>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5><b>Trip Introduce</b></h5>
+                  <VueTrixEditor v-model="editedItem.tripIntro" placeholder="Trip Introduce" uniqueId="icartypeintro" v-bind:image-upload-path="`${apiIP}/upload/car/trip/tripintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.tripIntro" class="old-content">
+                    </div>
+                </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="tripIntrosHeader"
+                      :items="editedItem.tripIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deleteTripIntroByLang(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.carTransTypeName}}</td>
+                         <td>{{props.item.from}}</td>
+                          <td>{{props.item.to}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.carTransTypeIntro}}</td>
+                      </template>
+                    </v-data-table>
                   </v-flex>
                   </v-layout>
                   <v-layout>
@@ -393,6 +425,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import moment from "moment";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -406,6 +440,9 @@ const AXIOS = axios.create({
   }
 });
 export default {
+  components: {
+    VueTrixEditor
+  },
   data: () => ({
     filterByCombo: {
       supplierId: {
@@ -440,6 +477,14 @@ export default {
     endDateModal: false,
     dialog: false,
     dialogPrice: false,
+    tripIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "CarTransTypeName", value: "carTransTypeName" },
+      { text: "From", value: "fromLocation" },
+      { text: "To", value: "toLocation" },
+      { text: "language", value: "lang" },
+      { text: "CarTransTypeIntro", value: "carTransTypeIntro" }
+    ],
     headers: [
       { text: "Actions", sortable: false },
       { text: "Supplier", value: "supplierId.supplierName" },
@@ -483,6 +528,7 @@ export default {
     },
     priceByCarType: [],
     carType: [],
+    city:[],
     carSupplier: [],
     carTransType: [],
     carTypeFilter: [],
@@ -517,6 +563,7 @@ export default {
     menu1: false,
     menu2: false,
     editedItem: {
+      cityId:"",
       supplierId: "",
       carTransTypeId: "",
       tripCode: "",
@@ -547,9 +594,11 @@ export default {
       carDetailsImages:[],
       removeImages:[],
       isPriceUsed:true,
-      isPricePromotion:false
+      isPricePromotion:false,
+      tripIntros:[]
     },
     defaultItem: {
+            cityId:"",
      supplierId: "",
       carTransTypeId: "",
       tripCode: "",
@@ -580,7 +629,8 @@ export default {
       carDetailsImages:[],
       removeImages:[],
       isPriceUsed:true,
-      isPricePromotion:false
+      isPricePromotion:false,
+      tripIntros:[]
     },
     snackbar: {
       snackbar: false,
@@ -684,6 +734,14 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
+
+        
+      AXIOS.get(apiIP + "/city/", { crossdomain: true })
+        .then(response => {
+          this.city = JSON.parse(JSON.stringify(response.data));
+        })
+        .catch(function(error) {})
+        .finally(function() {});
     },
 
     editItem(item) {
@@ -759,7 +817,16 @@ export default {
         this.close();
       }
     },
-
+    addTripIntroByLang() {
+      this.editedItem.tripIntros.push({
+        tripName: this.editedItem.tripName,
+        tripIntro: this.editedItem.tripIntro,
+        lang: this.editedItem.lang
+      });
+    },
+    deleteTripIntroByLang(item) {
+      this.editedItem.tripIntros.splice(item, 1);
+    },
     changedSupplierCombobox(event) {
       this.defaultItem.markUpPlus = event.markUpPlus;
       this.defaultItem.markUpPercent = event.markUpPercent;

@@ -40,4 +40,8 @@ router.get('/m/getallcarpricebysupplier/:_id',controller.getmAllCarDetailPriceBy
 router.get('/m/getallcarpricebycartranstype/:_id',controller.getmAllCarDetailPriceByCarTransType)
 
 router.get('/m/getallcarpricebycartype/:_id',controller.getmAllCarDetailPriceByCarType)
+
+router.get('/m/getallcarpricebycity/:_id',controller.getmAllCarDetailPriceByCity)
+
+router.post('/m/getallcarpricebysearch/', jsonParser, controller.getmAllCarDetailPriceBySearch)
 module.exports = router

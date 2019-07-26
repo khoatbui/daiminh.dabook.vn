@@ -113,7 +113,14 @@ module.exports.getmPackageDetail = (req, res, next) => {
         res.send(pac)
     })
 };
-
+module.exports.getmAllPromotePackageByCity = (req, res, next) => {
+    PackageHotelREL.find({"isUsed":true}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+        var result=pac.filter(item =>{ 
+            return item.hotelId.cityId == req.params._id
+    })
+        res.send(result)
+    })
+};
 module.exports.getmAllPackageBySearch = (req, res, next) => {
     console.log(req.body.keyword);
     PackageHotelREL.find({"isUsed":true}).populate('packageId').populate('hotelId').populate('roomTypeId').populate('supplierId').then(function (pac) {
