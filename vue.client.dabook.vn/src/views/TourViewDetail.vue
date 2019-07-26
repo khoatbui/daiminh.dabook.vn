@@ -1,14 +1,16 @@
 <template>
   <div class="container-fluid main h-100 p-0 m-0 promotion-container">
     <div class="search-section">
-      <div class="row w-100 p-0 m-0 pb-3 border-bottom fixed-top bg-white search-section-modal z-index-10000">
-        <div class="col-12 p-2">
-          <LocationSearchComponent></LocationSearchComponent>
-        </div>
-        <div
-          class="col-12 px-2 d-flex flex-row justify-content-between align-items-center scroll-ngang"
-        >
-        </div>
+      <div class="row w-100 p-2 m-0 pb-3 align-items-center border-bottom fixed-top bg-white search-section-modal z-index-10000">
+         <div class="col-2 d-flex justify-content-center align-items-center">
+              <MainNavBar></MainNavBar>
+            </div>
+            <div class="col-8">
+              <LocationSearchComponent></LocationSearchComponent>
+            </div>
+            <div class="col-2">
+              <LanguageComponent></LanguageComponent>
+            </div>
       </div>
     </div>
     <div class="data-section margin-top-90 pb-4 bottom-page">
@@ -29,6 +31,8 @@ import CustomerBookedAlert from '@/components/CustomerBookedAlert.vue'
 import LocationSearchComponent from '@/components/LocationSearchComponent.vue'
 import TourDetailSection from "@/components/TourDetailSection.vue"
 import AdsSectionHorizontal from "@/components/AdsSectionHorizontal.vue"
+import LanguageComponent from '@/components/LanguageComponent.vue'
+import MainNavBar from "@/components/MainNavBar.vue";
 
 @Component({
   components: {
@@ -40,7 +44,9 @@ import AdsSectionHorizontal from "@/components/AdsSectionHorizontal.vue"
     DatetimeAutoShow,
     LocationSearchComponent,
     TourDetailSection,
-    AdsSectionHorizontal
+    AdsSectionHorizontal,
+    LanguageComponent,
+    MainNavBar
   }
 })
 export default class Promotion extends Vue {}

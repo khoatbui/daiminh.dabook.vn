@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    currentLang:"en",
     selectedHotel: {
       guest: {
         adult: {
@@ -217,6 +218,9 @@ export default new Vuex.Store({
       state.selectedCar = payload;
       console.log('show state')
       console.log(state.selectedCar);
+    },
+    changeLanguage(state,payload){
+      state.currentLang=payload;
     }
   },
   actions: {

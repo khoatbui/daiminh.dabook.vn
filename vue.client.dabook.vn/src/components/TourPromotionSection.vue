@@ -92,6 +92,7 @@
 import HotelService from "@/api/HotelService";
 import TourService from "@/api/TourService";
 import LoadingComponent from "@/components/LoadingComponent.vue";
+import i18n from "@/i18n";
 
 export default {
   components: {
@@ -114,6 +115,7 @@ export default {
     else{
     this.initial();
     }
+    console.log(i18n.locale);
   },
   methods: {
     redirectToPromotionAll() {
@@ -159,11 +161,23 @@ export default {
     paginatedData() {
       const start = this.pageNumber * this.size,
         end = start + this.size;
-      return randomArray(this.tourlist.slice(start, end));
+      let tourlist=this.tourlist.slice(start,end);
+      tourlist.forEach(element => {
+        element.tourIntros.forEach(intro => {
+          if (intro.lang.toUpperCase()===i18n.locale.toUpperCase()) {
+            element.tourIntro=intro.tourIntro;
+             element.tourName=intro.tourName;
+              element.from=intro.from;
+              element.to=intro.to;
+          }
+        });
+      });
+      return randomArray(tourlist);
     },
     searchStore() {
       return this.$store.state.search;
-    }
+    },
+
   },
   mounted() {
     this.$root.$on('userSearchActivity', () => {

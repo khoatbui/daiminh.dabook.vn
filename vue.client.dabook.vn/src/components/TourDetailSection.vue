@@ -1,7 +1,7 @@
 //src/components/Navbar.vue
 <template>
   <div>
-    <div class="hotel-detail-section">
+    <div class="hotel-detail-section" v-if="tourDetail.length>0">
       <div class="row w-100 p-0 mx-0">
         <div class="col-12 p-0 m-0">
           <div class="card d-inline-block border-0 w-100">
@@ -9,7 +9,7 @@
               <ol class="carousel-indicators">
                 <li
                   data-target="#carousel-img"
-                  v-for="(subitem,index) in tourDetail.tourId.tourImages"
+                  v-for="(subitem,index) in tourDetailByLang.tourId.tourImages"
                   v-bind:class="{'active':index==0}"
                   v-bind:data-slide-to="index"
                 ></li>
@@ -17,11 +17,11 @@
               <div class="carousel-inner default-bg h-200">
                 <div
                   class="carousel-item h-100"
-                  v-for="(subitem,index) in tourDetail.tourId.tourImages"
+                  v-for="(subitem,index) in tourDetailByLang.tourId.tourImages"
                   v-bind:class="{'active':index==0}"
                 >
                   <img
-                    v-bind:src="tourDetail.tourId.tourImages.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
+                    v-bind:src="tourDetailByLang.tourId.tourImages.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
                     class="d-block card-img-top h-100"
                     alt="..."
                   />
@@ -41,7 +41,7 @@
         <div class="col-12 px-3 m-0">
           <div class="m-2 text-left">
             <h4>
-              <b>{{tourDetail.tourId.tourName}}</b>
+              <b>{{tourDetailByLang.tourId.tourName}}</b>
             </h4>
           </div>
         </div>
@@ -69,7 +69,7 @@
       <div class="row w-100 p-0 mx-0">
         <div class="col-12 px-3 m-0">
           <div class="m-2 text-left">
-            <p class="text-sm">{{tourDetail.tourId.tourIntro}}</p>
+            <p class="text-sm">{{tourDetailByLang.tourId.tourIntro}}</p>
           </div>
         </div>
         <div class="col-12 px-3 m-0 text-left ">
@@ -77,12 +77,12 @@
             <span>
               <span
                 class="badge badge-success text-sm font-weight-lighter"
-                v-if="tourDetail.tourId.voteScore !=''"
+                v-if="tourDetailByLang.tourId.voteScore !=''"
               >
                 <span
                   class="badge badge-light text-success text-sm font-weight-bold mr-1"
-                >{{tourDetail.tourId.voteScore}}</span>
-                <span>{{tourDetail.tourId.voteStatus}}</span>
+                >{{tourDetailByLang.tourId.voteScore}}</span>
+                <span>{{tourDetailByLang.tourId.voteStatus}}</span>
               </span>
             </span>
             <span
@@ -106,7 +106,7 @@
           <div class="m-2 text-left pb-4 border-bottom">
             <h6 class="font-weight-bolder">Program</h6>
             <div class="w-100 text-left">
-              <div class="text-sm" v-html="tourDetail.program"></div>
+              <div class="text-sm" v-html="tourDetailByLang.program"></div>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@
           <div class="m-2 text-left pb-4 border-bottom">
             <h6 class="font-weight-bolder">Transport</h6>
             <div class="w-100 text-left">
-              <div class="text-sm" v-html="tourDetail.transport"></div>
+              <div class="text-sm" v-html="tourDetailByLang.transport"></div>
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@
           <div class="m-2 text-left pb-4 border-bottom">
             <h6 class="font-weight-bolder">Service Include</h6>
             <div class="w-100 text-left">
-              <div class="text-sm" v-html="tourDetail.serviceInclude"></div>
+              <div class="text-sm" v-html="tourDetailByLang.serviceInclude"></div>
             </div>
           </div>
         </div>
@@ -136,7 +136,7 @@
           <div class="m-2 text-left pb-4 border-bottom">
             <h6 class="font-weight-bolder">Service Not Include</h6>
             <div class="w-100 text-left">
-              <div class="text-sm" v-html="tourDetail.serviceNotInclude"></div>
+              <div class="text-sm" v-html="tourDetailByLang.serviceNotInclude"></div>
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@
           <div class="m-2 text-left pb-4 border-bottom">
             <h6 class="font-weight-bolder">Should Take</h6>
             <div class="w-100 text-left">
-              <div class="text-sm" v-html="tourDetail.shouldTake"></div>
+              <div class="text-sm" v-html="tourDetailByLang.shouldTake"></div>
             </div>
           </div>
         </div>
@@ -156,12 +156,12 @@
           class="row w-100 p-0 mx-0 fixed-bottom border-top py-2 align-items-start bg-white action-section-modal z-index-10001"
         >
           <div class="col-6 text-left pr-1 align-self-end">
-            <a v-show="typeof tourDetail.detailDocs!=='undefined' && tourDetail.detailDocs.length!==0"
+            <a v-show="typeof tourDetailByLang.detailDocs!=='undefined' && tourDetailByLang.detailDocs.length!==0"
               class="btn btn-light text-primary border-0 w-100"
-              :href="(typeof tourDetail.detailDocs!=='undefined' && tourDetail.detailDocs.length>0) ? tourDetail.detailDocs[0].filePath :'#'" target="_blank" role="button"
+              :href="(typeof tourDetailByLang.detailDocs!=='undefined' && tourDetailByLang.detailDocs.length>0) ? tourDetailByLang.detailDocs[0].filePath :'#'" target="_blank" role="button"
             ><font-awesome-icon class="ml-1" icon="file-contract"/> {{ $t('btn_downloadtour') }}
             </a>
-            <p class="text-xs" v-show="typeof tourDetail.detailDocs!=='undefined' && tourDetail.detailDocs.length!==0"> Vui lòng tải file để xem thông tin chi tiết</p>
+            <p class="text-xs" v-show="typeof tourDetailByLang.detailDocs!=='undefined' && tourDetailByLang.detailDocs.length!==0"> Vui lòng tải file để xem thông tin chi tiết</p>
           </div>
           <div class="col-6 pl-1">
             <button
@@ -195,6 +195,8 @@ import LoadingComponent from "@/components/LoadingComponent.vue";
 import HotelPromotionSection from "@/components/HotelPromotionSection.vue";
 import ContactHost from "@/components/ContactHost.vue"
 import moment from "moment";
+import i18n from "@/i18n";
+
 export default {
   components: {
     LoadingComponent,
@@ -205,7 +207,7 @@ export default {
   data() {
     return {
       componentLoaded: false,
-      tourDetail: {},
+      tourDetail: [],
       destination: {},
       bookingDate:moment().format('MM-DD-YYYY')
     };
@@ -226,9 +228,9 @@ export default {
       this.$store.commit("showHideLoading", true);
       var response = await TourService.getTourDetailById(id);
       this.tourDetail = response.data;
-
+      console.log(this.tourDetail);
       var desresp = await DestinationService.getDestinationById(
-        response.data.tourId.destinationId
+        response.data[0].tourId.destinationId
       );
       this.destination = desresp.data;
       this.$store.commit("showHideLoading", false);
@@ -238,6 +240,22 @@ export default {
   computed: {
     selectedCar() {
       return this.$store.state.selectedCar;
+    },
+    tourDetailByLang(){
+      console.log(this.$store.state.currentLang);
+      var result= this.tourDetail.filter(item =>{
+        return item.lang.toUpperCase()==this.$store.state.currentLang.toUpperCase();
+      })
+      console.log(result);
+      result[0].tourId.tourIntros.forEach(intro => {
+          if (intro.lang.toUpperCase()===this.$store.state.currentLang.toUpperCase()) {
+            result[0].tourId.tourIntro=intro.tourIntro;
+             result[0].tourId.tourName=intro.tourName;
+              result[0].tourId.from=intro.from;
+              result[0].tourId.to=intro.to;
+          }
+        });
+      return result[0];
     }
   }
 };

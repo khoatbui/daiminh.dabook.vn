@@ -21,6 +21,7 @@ export default {
         this.lang.currentlang = this.lang.langlist[1];
       }
       i18n.locale = this.lang.currentlang.langcode;
+      this.$store.commit('changeLanguage',this.lang.currentlang.langcode);
     }
   },
   data: function() {

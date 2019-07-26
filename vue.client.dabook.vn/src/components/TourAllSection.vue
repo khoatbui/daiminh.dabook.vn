@@ -137,6 +137,7 @@ import HotelService from "@/api/HotelService";
 import TourService from "@/api/TourService";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import moment from "moment";
+import i18n from "@/i18n";
 
 export default {
   components: {
@@ -197,7 +198,18 @@ export default {
     paginatedData() {
       const start = this.pageNumber * this.size,
         end = start + this.size;
-      return randomArray(this.tourlist.slice(start, end));
+         let tourlist=this.tourlist.slice(start,end);
+      tourlist.forEach(element => {
+        element.tourIntros.forEach(intro => {
+          if (intro.lang.toUpperCase()===i18n.locale.toUpperCase()) {
+            element.tourIntro=intro.tourIntro;
+             element.tourName=intro.tourName;
+              element.from=intro.from;
+              element.to=intro.to;
+          }
+        });
+      });
+      return randomArray(tourlist);
     }
   },
   mounted() {
