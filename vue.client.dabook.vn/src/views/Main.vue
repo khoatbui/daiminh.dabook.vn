@@ -1,10 +1,13 @@
 <template>
   <div class="container-fluid main h-100 p-0 m-0 bg-main text-sm">
     <div class="row w-100 row w-100 m-0 p-0">
-      <div class="col-12">
+      <div class="col-8 offset-2">
         <a href="/">
           <img src="img/main_logo_only.png" class="main-logo m-2" />
         </a>
+      </div>
+      <div class="col-2 d-flex align-items-center">
+                    <LanguageComponent></LanguageComponent>
       </div>
     </div>
     <div class="row main-section p-0 d-flex align-items-start justify-content-center w-100 m-0">
@@ -78,6 +81,7 @@
             </h6>
           </div>
           <div class="col-12 scroll-ngang">
+            <a href="/destination">
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/general/destination.jpg" alt="Card image cap" />
               <div class="card-body text-left">
@@ -85,6 +89,7 @@
                 <p class="card-text">{{$t("pmain_cardtext_destination")}}</p>
               </div>
             </div>
+            </a>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/general/travelstyle.jpg" alt="Card image cap" />
               <div class="card-body text-left">
@@ -177,13 +182,15 @@ import Datetime from "@/components/Datetime2.vue"; // @ is an alias to /src
 import Navbar from "@/components/Navbar.vue";
 import TopCityDestination from "@/components/TopCityDestination.vue";
 import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10PromotionSectionHorizontal.vue";
+import LanguageComponent from "@/components/LanguageComponent.vue";
 
 @Component({
   components: {
     Datetime,
     Navbar,
     TopCityDestination,
-    HotelTop10PromotionSectionHorizontal
+    HotelTop10PromotionSectionHorizontal,
+    LanguageComponent
   }
 })
 export default class Main extends Vue {

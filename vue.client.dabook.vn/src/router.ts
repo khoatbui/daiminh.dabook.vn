@@ -22,6 +22,7 @@ import TourConfirmBooking from '@/components/TourConfirmBooking.vue'
 // import TourRequestBooking from '@/components/TourRequestBooking.vue'
 import TourDetailSection from '@/components/TourDetailSection.vue'
 import MainSearch from '@/views/MainSearch.vue'
+import Destination from '@/views/Destination.vue'
 
 Vue.use(Router)
 
@@ -146,6 +147,11 @@ export default new Router({
       path: '/historychecking',
       name: 'historychecking',
       component:HistoryChecking
+    },
+    {
+      path: '/destination',
+      name: 'destination',
+      component:Destination
     }
   ]
 })

@@ -92,6 +92,7 @@ export default {
     login() {
       AXIOS.post(apiIP + "/user/login", this.input)
         .then(response => {
+          console.log(response.data);
           if (response.data.status == true) {
             this.snackbar = true;
             this.input.message = response.data.message;
@@ -116,8 +117,12 @@ export default {
             );
           }
         })
-        .catch(function(error) {})
-        .finally(function() {});
+        .catch(function(error) {
+          console.log(error)
+        })
+        .finally(function() {
+
+        });
     },
     register(){
       this.$router.replace('/register')

@@ -54,18 +54,6 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.roomTypeName" label="roomtypeName"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.lang"
-                      :items="language"
-                      item-text="langName"
-                      item-value="langCode"
-                      label="Language"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
@@ -107,13 +95,48 @@
                   <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.acreage" label="Acreage"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <v-textarea
-                      name="input-7-1"
-                      label="Room Introduce"
-                      v-model="editedItem.roomTypeIntro"
-                    ></v-textarea>
+                  <v-flex xs12 sm12 md8 class="sub-add-component">
+                    <v-text-field v-model="editedItem.roomTypeName" label="RoomType Name"></v-text-field>
                   </v-flex>
+                  
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addRoomTypeIntroByLang">Add</v-btn>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5><b>RoomType Introduce</b></h5>
+                  <VueTrixEditor v-model="editedItem.roomTypeIntro" placeholder="RoomType Introduce" uniqueId="iroomtypeintro" v-bind:image-upload-path="`${apiIP}/upload/hotel/roomtype/roomtypeintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.roomTypeIntro" class="old-content">
+                    </div>
+                </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="roomTypeIntrosHeader"
+                      :items="editedItem.roomTypeIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deleteRoomTypeIntroByLang(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.roomTypeName}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.roomTypeIntro}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
                   <v-flex xs12 sm12 md12>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
@@ -194,6 +217,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -208,7 +233,8 @@ const AXIOS = axios.create({
 });
 export default {
   components: {
-    FileUpload
+    FileUpload,
+    VueTrixEditor
   },
   data: () => ({
     apiIP: apiIP,
@@ -219,6 +245,12 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
+    roomTypeIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "RoomTypeName", value: "roomTypeName" },
+      { text: "language", value: "lang" },
+      { text: "RoomTypeIntro", value: "roomTypeIntro" }
+    ],
     headers: [
       { text: "Actions", sortable: false },
       { text: "Supplier", value: "supplierId.supplierName" },
@@ -314,7 +346,8 @@ export default {
       createBy: "",
       modifyBy: "",
       roomImages: [],
-      removeImage:[]
+      removeImage:[],
+      roomTypeIntros:[]
     },
     defaultItem: {
       roomTypeCode: "",
@@ -330,7 +363,8 @@ export default {
       createBy: "",
       modifyBy: "",
       roomImages: [],
-      removeImage:[]
+      removeImage:[],
+      roomTypeIntros:[]
     },
     snackbar: {
       snackbar: false,
@@ -447,6 +481,16 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
+    },
+    addRoomTypeIntroByLang() {
+      this.editedItem.roomTypeIntros.push({
+        roomTypeName: this.editedItem.roomTypeName,
+        roomTypeIntro: this.editedItem.roomTypeIntro,
+        lang: this.editedItem.lang
+      });
+    },
+    deleteRoomTypeIntroByLang(item) {
+      this.editedItem.roomTypeIntros.splice(item, 1);
     }
   }
 };

@@ -11,7 +11,9 @@ var pakageSchema = new mongoose.Schema({
     createBy:String,
     createDate:Date,
     modifyBy:String,
-    modifyDate:Date
+    modifyDate:Date,
+    pacakageIntro:String,
+    packageIntros:[]
 });
 var Package =mongoose.model('Package',pakageSchema,'package');
 

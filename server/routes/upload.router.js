@@ -182,6 +182,34 @@ var carTripIntroUpload = multer.diskStorage({
 })
 const uploadTripIntro = multer({storage:carTripIntroUpload});
 
+//HOTEL INTRO IMAGE
+var hotelIntroUpload = multer.diskStorage({
+  destination: `./uploads/hotel/hotel/hotelintro`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadHotelIntro = multer({storage:hotelIntroUpload});
+
+//ROOM TYPE INTRO IMAGE
+var roomTypeIntroUpload = multer.diskStorage({
+  destination: `./uploads/hotel/roomtype/roomtypeintro`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadRoomTypeIntro = multer({storage:roomTypeIntroUpload});
+
+//PACKAGE INTRO IMAGE
+var packageIntroUpload = multer.diskStorage({
+  destination: `./uploads/hotel/roomtype/roomtypeintro`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadPackageIntro = multer({storage:packageIntroUpload});
+
+
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -209,6 +237,9 @@ router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploa
 router.post('/car/cartype/cartypeintro',uploadCarTypeIntro.single('image'),controller.uploadCarTypeIntroImg)
 router.post('/car/trans/cartranstypeintro',uploadCarTransTypeIntro.single('image'),controller.uploadCarTransTypeIntroImg)
 router.post('/car/trip/tripintro',uploadTripIntro.single('image'),controller.uploadCarTripIntroImg)
+router.post('/hotel/hotel/hotelintro',uploadHotelIntro.single('image'),controller.uploadHotelIntroImg)
+router.post('/hotel/roomtype/roomtypeintro',uploadRoomTypeIntro.single('image'),controller.uploadRoomTypeIntroImg)
+router.post('/hotel/package/packageintro',uploadPackageIntro.single('image'),controller.uploadPackageIntroImg)
 
 
 module.exports = router

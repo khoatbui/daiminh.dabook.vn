@@ -47,15 +47,18 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.packageName" label="packageName"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8 class="sub-add-component">
+                    <v-text-field v-model="editedItem.packageName" label="Package Name"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8 class="sub-add-component">
                     <v-text-field v-model="editedItem.note" label="Note"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
                     <v-select
                       v-model="editedItem.lang"
                       :items="language"
@@ -64,9 +67,36 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addPackageIntroByLang">Add</v-btn>
                   </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5><b>Package Introduce</b></h5>
+                  <VueTrixEditor v-model="editedItem.packageIntro" placeholder="Pakage Introduce" uniqueId="ipackageintro" v-bind:image-upload-path="`${apiIP}/upload/hotel/pacakge/packageintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.packageIntro" class="old-content">
+                    </div>
+                </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="packageIntrosHeader"
+                      :items="editedItem.packageIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deletePackageIntroByLang(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.packageName}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.note}}</td>
+                        <td>{{props.item.packageIntro}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -121,6 +151,8 @@
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS
 import axios from "axios";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -134,6 +166,9 @@ const AXIOS = axios.create({
   }
 });
 export default {
+   components: {
+    VueTrixEditor
+  },
   data: () => ({
         search: '',
     valid: true,
@@ -141,6 +176,13 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
+    packageIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "PackageName", value: "packageName" },
+      { text: "language", value: "lang" },
+      { text: "Note", value: "note" },
+      { text: "PackageIntro", value: "packageIntro" }
+    ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
       { text: "PackageId", align: "center", value: "_id" },
@@ -172,7 +214,9 @@ export default {
       isUsed: true,
       note: "",
       createBy: "",
-      modifyBy: ""
+      modifyBy: "",
+      packageIntro:"",
+      packageIntros:[]
     },
     defaultItem: {
       supplierId: "",
@@ -182,7 +226,9 @@ export default {
       isUsed: true,
       note: "",
       createBy: "",
-      modifyBy: ""
+      modifyBy: "",
+      packageIntro:"",
+      packageIntros:[]
     },
     snackbar: {
       snackbar: false,
@@ -275,6 +321,17 @@ export default {
                       this.initialize();
         this.close();
       }
+    },
+    addPackageIntroByLang() {
+      this.editedItem.packageIntros.push({
+        packageName: this.editedItem.packageName,
+        packageIntro: this.editedItem.packageIntro,
+        note: this.editedItem.note,
+        lang: this.editedItem.lang
+      });
+    },
+    deletePackageIntroByLang(item) {
+      this.editedItem.packageIntros.splice(item, 1);
     }
   }
 };

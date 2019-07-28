@@ -301,6 +301,54 @@ module.exports.uploadTourDetailImg=async (req, res) => {
     }
   }
 
+  module.exports.uploadHotelIntroImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.file)
+       var element=req.file;
+    copyFile(element.path, '../daiminh.dabook.vn/img/hotel/hotel/hotelintro');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/hotel/hotel/hotelintro');
+    result.push({'fileName':element.filename,'filePath':`img/hotel/hotel/hotelintro/${element.filename}`,'destination':element.destination,'src':`img/hotel/hotel/hotelintro/${element.filename}`})
+    console.log(result);
+    res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+
+  
+  module.exports.uploadRoomTypeIntroImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.file)
+       var element=req.file;
+    copyFile(element.path, '../daiminh.dabook.vn/img/hotel/roomtype/roomtypeintro');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/hotel/roomtype/roomtypeintro');
+    result.push({'fileName':element.filename,'filePath':`img/hotel/roomtype/roomtypeintro/${element.filename}`,'destination':element.destination,'src':`img/hotel/roomtype/roomtypeintro/${element.filename}`})
+    console.log(result);
+    res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+  
+  module.exports.uploadPackageIntroImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.file)
+       var element=req.file;
+    copyFile(element.path, '../daiminh.dabook.vn/img/hotel/package/packageintro');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/hotel/package/packageintro');
+    result.push({'fileName':element.filename,'filePath':`img/hotel/package/packageintro/${element.filename}`,'destination':element.destination,'src':`img/hotel/package/packageintro/${element.filename}`})
+    console.log(result);
+    res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 //moves the $file to $dir2
 var moveFile = (file, dir2)=>{
     //include the fs, path modules

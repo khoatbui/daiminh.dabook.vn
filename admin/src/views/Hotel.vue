@@ -51,19 +51,7 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.hotelName" label="HotelName"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.star" label="Star"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.lang"
-                      :items="language"
-                      item-text="langName"
-                      item-value="langCode"
-                      label="Language"
-                    ></v-select>
                   </v-flex>
                    <v-flex xs12 sm12 md12>
                     <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
@@ -77,15 +65,49 @@
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
                   </v-flex>
-                   <v-flex xs12 sm12 md12>
-                    <v-textarea
-                      name="input-7-1"
-                      label="Hotel Introduce"
-                      v-model="editedItem.hotelIntro"
-                    ></v-textarea>
+                  <v-flex xs12 sm12 md8 class="sub-add-component">
+                    <v-text-field v-model="editedItem.hotelName" label="Hotel Name"></v-text-field>
                   </v-flex>
+                  
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addHotelIntroByLang">Add</v-btn>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5><b>Hotel Introduce</b></h5>
+                  <VueTrixEditor v-model="editedItem.hotelIntro" placeholder="Hotel Introduce" uniqueId="ihotelintro" v-bind:image-upload-path="`${apiIP}/upload/hotel/hotel/hotelintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.hotelIntro" class="old-content">
+                    </div>
+                </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="hotelIntrosHeader"
+                      :items="editedItem.hotelIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deleteHotelIntroByLang(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.hotelName}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.hotelIntro}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
                   <v-flex xs12 sm12 md12>
-                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
                       v-bind:routerPath="apiIP+'/upload/hotel/hotel'"
@@ -158,6 +180,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -172,7 +196,8 @@ const AXIOS = axios.create({
 });
 export default {
   components: {
-    FileUpload
+    FileUpload,
+    VueTrixEditor
   },
   data: () => ({
     apiIP: apiIP,
@@ -183,6 +208,12 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
+    hotelIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "HotelName", value: "hotelName" },
+      { text: "language", value: "lang" },
+      { text: "HotelIntro", value: "hotelIntro" }
+    ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
       { text: "Supplier", value: "supplierId.supplierName" },
@@ -219,7 +250,8 @@ export default {
       isPromote: true,
       hotelImages: [],
       removeImage: [],
-      hotelIntro:""
+      hotelIntro:"",
+      hotelIntros:[]
     },
     defaultItem: {
       supplierId: "",
@@ -235,7 +267,8 @@ export default {
       isPromote: true,
       hotelImages: [],
       removeImage: [],
-      hotelIntro:""
+      hotelIntro:"",
+      hotelIntros:[]
     },
     snackbar: {
       snackbar: false,
@@ -339,6 +372,16 @@ export default {
       }
       this.uploadImg = [];
       this.editedItem.removeImage = [];
+    },
+    addHotelIntroByLang() {
+      this.editedItem.hotelIntros.push({
+        hotelName: this.editedItem.hotelName,
+        hotelIntro: this.editedItem.hotelIntro,
+        lang: this.editedItem.lang
+      });
+    },
+    deleteHotelIntroByLang(item) {
+      this.editedItem.hotelIntros.splice(item, 1);
     }
   }
 };
