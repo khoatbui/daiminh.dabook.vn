@@ -29,6 +29,8 @@ router.get('/m/getalltour',controller.getmAllTour)
 
 router.get('/m/getalltourbycity/:_id',controller.getmAllTourByCity)
 
+router.get('/m/gettourbytravelstyle/:_id',controller.getmTourByTravelStyle)
+
 router.delete('/:_id', controller.deleteTourList)
 
 router.post('/insert', jsonParser,controller.insertTourList)

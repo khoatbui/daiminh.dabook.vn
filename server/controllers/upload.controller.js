@@ -238,6 +238,38 @@ module.exports.uploadTourListImg=async (req, res) => {
     }
   }
 
+  module.exports.uploadMICEImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/tour/mice');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/mice');
+        result.push({'fileName':element.filename,'filePath':`img/tour/mice/${element.filename}`,'destination':element.destination,'src':`img/tour/mice/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+  module.exports.uploadTravelServiceImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/tour/travelservice');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/travelservice');
+        result.push({'fileName':element.filename,'filePath':`img/tour/travelservice/${element.filename}`,'destination':element.destination,'src':`img/tour/travelservice/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 //   =========================================
 module.exports.uploadTourDetailImg=async (req, res) => {
     try {

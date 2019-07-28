@@ -5,7 +5,7 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var controller=require('../controllers/city.controller')
+var controller=require('../controllers/mice.controller')
 var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
@@ -19,17 +19,11 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
-router.get('/m/getcitybyid/:_id',controller.getmCityById)
+router.get('/m/getmicebyid/:_id',controller.getmMICEById)
 
-router.get('/m/gettop10city',controller.getmTop10City)
+router.delete('/:_id', controller.deleteMICE)
 
-router.get('/m/getcitybyareacountry',controller.getmCityByAreaCountry)
+router.post('/insert', jsonParser,controller.insertMICE)
 
-router.get('/m/gettop10citybycountry/:_id',controller.getmTop10CityByCountry)
-
-router.delete('/:_id', controller.deleteCity)
-
-router.post('/insert', jsonParser,controller.insertCity)
-
-router.post('/update/:_id', jsonParser,controller.updateCity)
+router.post('/update/:_id', jsonParser,controller.updateMICE)
 module.exports = router

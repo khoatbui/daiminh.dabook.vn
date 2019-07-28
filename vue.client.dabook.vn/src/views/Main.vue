@@ -90,6 +90,7 @@
               </div>
             </div>
             </a>
+            <a href="/travelstyle">
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/general/travelstyle.jpg" alt="Card image cap" />
               <div class="card-body text-left">
@@ -97,6 +98,8 @@
                 <p class="card-text">{{$t("pmain_cardtext_travelstyle")}}</p>
               </div>
             </div>
+            </a>
+              <a href="/travelservice">
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/general/travelservice.jpg" alt="Card image cap" />
               <div class="card-body text-left">
@@ -104,6 +107,8 @@
                 <p class="card-text">{{$t("pmain_cardtext_travelservice")}}</p>
               </div>
             </div>
+            </a>
+              <a href="/mice">
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/general/MICE.jpg" alt="Card image cap" />
               <div class="card-body text-left">
@@ -111,6 +116,8 @@
                 <p class="card-text">{{$t("pmain_cardtext_MICE")}}</p>
               </div>
             </div>
+              </a>
+                <a href="/fit">
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/general/fit.jpg" alt="Card image cap" />
               <div class="card-body text-left">
@@ -118,6 +125,8 @@
                 <p class="card-text">{{$t("pmain_cardtext_FIT")}}</p>
               </div>
             </div>
+                </a>
+                  <a href="/aboutus">
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/general/aboutus.jpg" alt="Card image cap" />
               <div class="card-body text-left">
@@ -125,6 +134,7 @@
                 <p class="card-text">{{$t("pmain_cardtext_aboutus")}}</p>
               </div>
             </div>
+                  </a>
             <div class="card m-2 d-inline-block shadow-box">
               <img class="card-img-top" src="img/general/toptour.jpg" alt="Card image cap" />
               <div class="card-body text-left">

@@ -259,6 +259,9 @@ ol.carousel-indicators li.active {
 .close-btn svg {
   font-size: 1rem;
 }
+.margin-top-330{
+  margin-top: 330px !important;
+ }
 .margin-top-130{
   margin-top: 130px !important;
  }
@@ -326,4 +329,25 @@ ol.carousel-indicators li.active {
 }
 .hot-promotion-parent{
   position: relative;
+}
+.data-section{
+  background-color: #FFFFFF;
+}
+/* ============= */
+.hidden-background{
+  position: fixed;
+  top:0;
+  bottom: 0;
+  z-index: -1;
+  width:100vh;
+  height: 400px;
+}
+.hidden-background:after{
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+ background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0, #fff 100%);
+  z-index: 1;
 }

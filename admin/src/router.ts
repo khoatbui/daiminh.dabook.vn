@@ -189,6 +189,18 @@ const router = new Router({
       name: 'blogdetail',
       component: () => import(/* webpackChunkName: "about" */ './views/BlogDetail.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/mice',
+      name: 'mice',
+      component: () => import(/* webpackChunkName: "about" */ './views/MICE.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/travel-service',
+      name: 'travelservice',
+      component: () => import(/* webpackChunkName: "about" */ './views/TravelService.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })

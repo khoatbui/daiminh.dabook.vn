@@ -8,6 +8,12 @@ var cityservice = {
 
   getAllCity() {
     return Api().get('city/m/gettop10city')
+  },
+  getCityByAreaContry(){
+    return Api().get('city/m/getcitybyareacountry')
+  },
+  getTop10CityByContry(param){
+    return Api().get('city/m/gettop10citybycountry/'+param)
   }
 }
 

@@ -73,6 +73,9 @@
           <v-list-tile>
             <v-btn flat to="/travel-style">Travel Style</v-btn>
           </v-list-tile>
+          <v-list-tile>
+            <v-btn flat to="/travel-service">Travel Service</v-btn>
+          </v-list-tile>
            <v-list-tile>
             <v-btn flat to="/tour-supplier">Tour Supplier</v-btn>
           </v-list-tile>

@@ -108,6 +108,23 @@ var travelStyleUpload = multer.diskStorage({
 })
 const uploadTravelStyle = multer({storage:travelStyleUpload});
 
+//MICE IMAGE
+var miceUpload = multer.diskStorage({
+  destination: `./uploads/tour/mice`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadMICE = multer({storage:miceUpload});
+//TRAVEL SERVICE IMAGE
+var travelServiceUpload = multer.diskStorage({
+  destination: `./uploads/tour/travelservice`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadTravelService = multer({storage:travelServiceUpload});
+
 //TOUR LIST IMAGE
 var tourListUpload = multer.diskStorage({
   destination: `./uploads/tour/tourlist`,
@@ -231,6 +248,8 @@ router.post('/tour/tourlist',uploadTourList.array('photos', 12),controller.uploa
 router.post('/tour/document',uploadTourDocument.array('documents', 12),controller.uploadTourDocumentImg)
 
 router.post('/ads',uploadAds.array('photos', 12),controller.uploadAdsImg)
+router.post('/tour/travelservice',uploadTravelService.array('photos', 12),controller.uploadTravelServiceImg)
+router.post('/tour/mice',uploadMICE.array('photos', 12),controller.uploadMICEImg)
 
 
 router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploadTourDetailImg)

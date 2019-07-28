@@ -33,6 +33,16 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.miceId"
+                      :items="MICE"
+                      item-text="miceName"
+                      item-value="_id"
+                      v-bind:class="{ disabled: disableSelect }"
+                      label="MICE"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
                       :rules="[() => editedItem.blogCode.length > 0 || 'Required field']"

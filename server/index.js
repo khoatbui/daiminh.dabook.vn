@@ -48,6 +48,9 @@ const blogType=require('./routes/blogtype.router')
 const blogList=require('./routes/bloglist.router')
 const blogDetail=require('./routes/blogdetail.router')
 
+const mice=require('./routes/mice.router')
+const travelService=require('./routes/travelservice.router')
+
 app.set('view engine','pug');
 app.set('views','./views');
 
@@ -86,6 +89,9 @@ app.use('/ads',ads)
 app.use('/blogtype',blogType)
 app.use('/bloglist',blogList)
 app.use('/blogdetail',blogDetail)
+
+app.use('/mice',mice)
+app.use('/travelservice',travelService)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

@@ -23,6 +23,8 @@ import TourConfirmBooking from '@/components/TourConfirmBooking.vue'
 import TourDetailSection from '@/components/TourDetailSection.vue'
 import MainSearch from '@/views/MainSearch.vue'
 import Destination from '@/views/Destination.vue'
+import TravelStyle from '@/views/TravelStyle.vue'
+import TravelService from '@/views/TravelService.vue'
 
 Vue.use(Router)
 
@@ -151,7 +153,41 @@ export default new Router({
     {
       path: '/destination',
       name: 'destination',
-      component:Destination
+      component:Destination,
+      children: [
+        {
+          path: 'country',
+          name: 'country',
+          component: TourConfirmBooking
+        },
+        {
+          path: 'city',
+          name: 'city',
+          component: TourConfirmBooking,
+          props: true
+        },
+        {
+          path: 'destination',
+          name: 'destination',
+          component: TourConfirmBooking,
+          props: true
+        },
+        {
+          path: '',
+          name: 'destination',
+          component: Destination
+        }
+      ]
+    },
+    {
+      path: '/travelstyle',
+      name: 'travelstyle',
+      component:TravelStyle
+    },
+    {
+      path: '/travelservice',
+      name: 'travelservice',
+      component:TravelService
     }
   ]
 })

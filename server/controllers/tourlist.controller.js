@@ -22,6 +22,11 @@ module.exports.getmAllTour =function(req,res){
         res.send(tourlist)
     })
 };
+module.exports.getmTourByTravelStyle =function(req,res){
+    TourList.find({"isUsed":true,"travelStyleId":req.params._id}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
+        res.send(tourlist)
+    })
+};
 module.exports.getmAllTourByCity =function(req,res){
     var des=[];
     Destination.find({'cityId':req.params._id}).then(function(pac){
