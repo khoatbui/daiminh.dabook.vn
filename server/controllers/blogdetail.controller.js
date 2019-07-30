@@ -1,5 +1,6 @@
 var BlogDetail = require('../models/blogdetail.model')
-var Supplier=require('../models/supplier.model')
+var BlogList=require('../models/bloglist.model')
+var BlogType=require('../models/blogtype.model')
 var mongoose = require('mongoose');
 var UploadController=require('../controllers/upload.controller')
 
@@ -8,7 +9,21 @@ module.exports.index =function(req,res){
         res.send(blogdetail)
     })
 };
-
+module.exports.getBlogAboutUs =function(req,res){
+    BlogType.findOne({'blogTypeCode':'ABU'}).then(function(blogType){
+        BlogList.find({'blogTypeId':blogType._id}).then(function(blogLists){
+            var ids=[];
+            blogLists.forEach(element => {
+                ids.push(element._id)
+            });
+            console.log(ids)
+            BlogDetail.find({"blogId": { $in : ids }}).populate('blogId').then(function(blogdetail){
+                console.log(blogdetail)
+                res.send(blogdetail)
+            })
+        })
+    })
+};
 module.exports.getmBlogDetailById=(req,res,next) => {
     BlogDetail.findOne({"blogId":req.params._id}).populate('blogId').then(function(blogdetail){
         res.send(blogdetail)
@@ -53,20 +68,5 @@ module.exports.updateBlogDetail=function (req, res) {
                  res.status(200).send(blogdetail);
         }
      });
-};
-
-module.exports.getBlogDetailBySupplier=(req,res,next) => {
-    BlogDetail.find({supplierId:req.params.index}).then(function(blogdetail){
-        console.log(blogdetail);
-        res.send(blogdetail)
-    })
-};
-
-module.exports.getBlogDetailBySupplierCode=(req,res,next) => {
-    Supplier.findOne({supplierCode:req.params.index}).then(function(supp){
-        BlogDetail.find({supplierId:supp._id}).then(function(blogdetail){
-            res.send(blogdetail)
-        })
-    })
 };
 

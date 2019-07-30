@@ -254,6 +254,22 @@ module.exports.uploadTourListImg=async (req, res) => {
         res.sendStatus(400);
     }
   }
+  module.exports.uploadAboutUsImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/page/aboutus');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/page/aboutus');
+        result.push({'fileName':element.filename,'filePath':`img/page/aboutus/${element.filename}`,'destination':element.destination,'src':`img/page/aboutus/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
   module.exports.uploadTravelServiceImg=async (req, res) => {
     try {
         var result=[];

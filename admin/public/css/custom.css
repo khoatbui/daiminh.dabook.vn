@@ -8,3 +8,7 @@
 .text-supplerlarge{
     font-size: 5rem;
 }
+table.v-table tbody td, table.v-table tbody th {
+    max-height: 19px;
+    white-space: nowrap;
+}

@@ -25,7 +25,9 @@ import MainSearch from '@/views/MainSearch.vue'
 import Destination from '@/views/Destination.vue'
 import TravelStyle from '@/views/TravelStyle.vue'
 import TravelService from '@/views/TravelService.vue'
-
+import AboutUs from '@/views/About.vue'
+import MICE from '@/views/MICE.vue'
+import FIT from '@/views/FIT.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -188,6 +190,21 @@ export default new Router({
       path: '/travelservice',
       name: 'travelservice',
       component:TravelService
+    },
+    {
+      path: '/aboutus',
+      name: 'aboutus',
+      component:AboutUs
+    },
+    {
+      path: '/mice',
+      name: 'mice',
+      component:MICE
+    },
+    {
+      path: '/fit',
+      name: 'fit',
+      component:FIT
     }
   ]
 })

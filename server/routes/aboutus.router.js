@@ -5,7 +5,7 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var controller=require('../controllers/blogdetail.controller')
+var controller=require('../controllers/aboutUs.controller')
 var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
@@ -18,13 +18,12 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
 router.get('/',controller.index)
-router.get('/aboutus',controller.getBlogAboutUs)
 
-router.get('/m/getblogdetailbyid/:_id',controller.getmBlogDetailById)
+router.get('/m/getaboutUsbyid/:_id',controller.getmAboutUsById)
 
-router.delete('/:_id', controller.deleteBlogDetail)
+router.delete('/:_id', controller.deleteAboutUs)
 
-router.post('/insert', jsonParser,controller.insertBlogDetail)
+router.post('/insert', jsonParser,controller.insertAboutUs)
 
-router.post('/update/:_id', jsonParser,controller.updateBlogDetail)
+router.post('/update/:_id', jsonParser,controller.updateAboutUs)
 module.exports = router

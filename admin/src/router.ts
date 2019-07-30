@@ -201,6 +201,12 @@ const router = new Router({
       name: 'travelservice',
       component: () => import(/* webpackChunkName: "about" */ './views/TravelService.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/aboutus',
+      name: 'aboutus',
+      component: () => import(/* webpackChunkName: "about" */ './views/AboutUs.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })

@@ -17,11 +17,13 @@
       </div>
     </div>
      <div class="row p-0 m-0 hidden-background">
-      <img src="img/topdestination/quynhon_1.jpg" alt="" class="w-100 m-0 p-0">
+      <img src="img/general/travelstyle.jpg" alt="" class="w-100 h-100 m-0 p-0">
+      <h4 class="hidden-bg-text">Travel Style</h4>
       </div>
     <div class="data-section margin-top-330 w-100">
-     <TravelStyleSectionHorizontal v-on:forwardresult="travelStyle=$event"></TravelStyleSectionHorizontal>
-     <TourByStyleSectionHorizontal v-for="item in travelStyle" v-bind:travelStyleId="item._id"></TourByStyleSectionHorizontal>
+     <TravelStyleSectionHorizontal class="pt-4" v-on:forwardresult="travelStyle=$event"></TravelStyleSectionHorizontal>
+     <TourByStyleSectionHorizontal class="pt-4" v-for="item in travelStyle" v-bind:travelStyleId="item._id"></TourByStyleSectionHorizontal>
+     <RequestAdvice  class="pt-4"></RequestAdvice>
       <div class="col-12">
         <div class="row pb-4 ads-section">
           <div class="col-12 p-0 scroll-ngang">
@@ -58,7 +60,7 @@ import TourPromotionSection from "@/components/TourPromotionSection.vue";
 import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10PromotionSectionHorizontal.vue";
 import TravelStyleSectionHorizontal from "@/components/TravelStyleSectionHorizontal.vue";
 import TourByStyleSectionHorizontal from "@/components/TourByStyleSectionHorizontal.vue";
-
+import RequestAdvice from "@/components/RequestAdvice.vue"
 
 @Component({
   components: {
@@ -71,10 +73,11 @@ import TourByStyleSectionHorizontal from "@/components/TourByStyleSectionHorizon
     TourPromotionSection,
     HotelTop10PromotionSectionHorizontal,
     TravelStyleSectionHorizontal,
-    TourByStyleSectionHorizontal
+    TourByStyleSectionHorizontal,
+    RequestAdvice
   }
 })
-export default class Destination extends Vue {
+export default class TravelStyle extends Vue {
   travelStyle=[];
   naviBack() {
     this.$router.go(-1);

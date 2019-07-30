@@ -116,6 +116,16 @@ var miceUpload = multer.diskStorage({
 }
 })
 const uploadMICE = multer({storage:miceUpload});
+
+//ABOUT US IMAGE
+var aboutUsUpload = multer.diskStorage({
+  destination: `./uploads/page/aboutus`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadAboutUs = multer({storage:aboutUsUpload});
+
 //TRAVEL SERVICE IMAGE
 var travelServiceUpload = multer.diskStorage({
   destination: `./uploads/tour/travelservice`,
@@ -250,6 +260,7 @@ router.post('/tour/document',uploadTourDocument.array('documents', 12),controlle
 router.post('/ads',uploadAds.array('photos', 12),controller.uploadAdsImg)
 router.post('/tour/travelservice',uploadTravelService.array('photos', 12),controller.uploadTravelServiceImg)
 router.post('/tour/mice',uploadMICE.array('photos', 12),controller.uploadMICEImg)
+router.post('/page/aboutus',uploadAboutUs.array('photos', 12),controller.uploadAboutUsImg)
 
 
 router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploadTourDetailImg)

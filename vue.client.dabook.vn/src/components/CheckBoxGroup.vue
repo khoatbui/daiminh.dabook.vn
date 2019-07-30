@@ -3,7 +3,7 @@
   <div>
      <div class="scroll-ngang w-100 px-0 mx-0">
        <label  class="select-container"  v-for="item in data">
-         <input type="radio" :name="name"  @click="$emit('select', item)">
+         <input class="checkbox-group-input" type="radio" :name="name"  @click="$emit('select', item)">
          <span class="border-radius-100 scroll-select-item text-sm checkmark">
                     {{item.text}} <font-awesome-icon class="text-xs" :icon="icon" v-if="item.isIcon"/>
                 </span>
@@ -46,9 +46,9 @@ export default {
 
 /* Hide the browser's default radio button */
 .container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
+  position: absolute !important;
+  opacity: 0!important;
+  cursor: pointer!important;
 }
 
 /* Create a custom radio button */
@@ -65,7 +65,9 @@ export default {
   background-color: #2196F3;
   color:#FFFFFF;
 }
-
+.checkbox-group-input{
+  opacity: 0 !important;
+}
 /* Create the indicator (the dot/circle - hidden when not checked) */
 // .checkmark:after {
 //   content: "";

@@ -40,35 +40,35 @@
             <div class="container-fluid">
               <div class="row py-2 justify-content-start align-items-center">
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">{{$t("na_destination")}}</a>
+                  <a href="/destination">{{$t("na_destination")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">{{$t("na_travelstyle")}}</a>
+                  <a href="/travelstyle">{{$t("na_travelstyle")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">{{$t("na_travelservice")}}</a>
+                  <a href="/travelservice">{{$t("na_travelservice")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">{{$t("na_mice")}}</a>
+                  <a href="/mice">{{$t("na_mice")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 border-bottom text-left">
-                  <a href="/">{{$t("na_fit")}}</a>
+                  <a href="/fit">{{$t("na_fit")}}</a>
                 </div>
               </div>
               <div class="row py-2 justify-content-start align-items-center">
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">{{$t("na_privacypolicy")}}</a>
+                  <a href="/aboutus">{{$t("na_privacypolicy")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">{{$t("na_termofus")}}</a>
+                  <a href="/aboutus">{{$t("na_termofus")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 border-bottom text-left">
-                  <a href="/">{{$t("na_aboutus")}}</a>
+                  <a href="/aboutus">{{$t("na_aboutus")}}</a>
                 </div>
               </div>
               <div class="row py-2 justify-content-start align-items-center">
                 <div class="col-12 px-0 py-2 text-left">
-                  <a href="/">{{$t("na_help")}}</a>
+                  <a href="/aboutus">{{$t("na_help")}}</a>
                 </div>
                 <div class="col-12 px-0 py-2 text-left">
                   <a href="/">{{$t("na_signup")}}</a>

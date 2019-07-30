@@ -12,13 +12,13 @@ module.exports.index =function(req,res){
 
 
 module.exports.getmAllBlogPromotion =function(req,res){
-    BlogList.find({"isPromotion":true,"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
+    BlogList.find({"isPromotion":true,"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('travelServiceId').populate('miceId').populate('blogTypeId').then(function(bloglist){
         res.send(bloglist)
     })
 };
 
 module.exports.getmAllBlog =function(req,res){
-    BlogList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
+    BlogList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('travelServiceId').populate('miceId').populate('blogTypeId').then(function(bloglist){
         res.send(bloglist)
     })
 };
@@ -29,12 +29,12 @@ module.exports.getmAllBlogByCity =function(req,res){
             des.push(element._id)
         });
     })
-    BlogList.find({"isUsed":true,'destinationId':{ $in : des }}).populate('destinationId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
+    BlogList.find({"isUsed":true,'destinationId':{ $in : des }}).populate('destinationId').populate('travelStyleId').populate('travelServiceId').populate('miceId').populate('blogTypeId').then(function(bloglist){
         res.send(bloglist)
     })
 };
 module.exports.getmAllBlogBySearch =function(req,res){
-    BlogList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('blogTypeId').then(function(pac){
+    BlogList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('travelServiceId').populate('miceId').populate('blogTypeId').then(function(pac){
         var result=pac.filter(item =>{ 
             return xoa_dau(item.keyword).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
             xoa_dau(item.destinationId.destinationName).toLowerCase().indexOf(xoa_dau(req.body.keyword).toLowerCase())> -1 ||
@@ -51,7 +51,7 @@ module.exports.getmAllBlogBySearch =function(req,res){
 };
 
 module.exports.getmTop10AllBlogPromotion =function(req,res){
-    BlogList.find({"isPromotion":true,"isUsed":true}).limit(10).populate('destinationId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
+    BlogList.find({"isPromotion":true,"isUsed":true}).limit(10).populate('destinationId').populate('travelServiceId').populate('miceId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
         res.send(bloglist)
     })
 };
@@ -76,6 +76,7 @@ module.exports.deleteBlogList= function (req, res) {
 module.exports.insertBlogList= function (req, res) {
     req.body.createDate=new Date();
     delete req.body.modifyBy;
+    console.log(req.body);
         BlogList.create(req.body, function (err, bloglist) {
         if (err){
             console.log(err);

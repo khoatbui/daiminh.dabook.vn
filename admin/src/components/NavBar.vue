@@ -70,12 +70,7 @@
           <v-list-tile>
             <v-btn flat to="/city">City</v-btn>
           </v-list-tile>
-          <v-list-tile>
-            <v-btn flat to="/travel-style">Travel Style</v-btn>
-          </v-list-tile>
-          <v-list-tile>
-            <v-btn flat to="/travel-service">Travel Service</v-btn>
-          </v-list-tile>
+          <v-divider></v-divider>
            <v-list-tile>
             <v-btn flat to="/tour-supplier">Tour Supplier</v-btn>
           </v-list-tile>
@@ -89,13 +84,23 @@
             <v-btn flat to="/tour-detail">Tour Detail</v-btn>
           </v-list-tile>
           <v-list-tile>
+            <v-btn flat to="/tour-order">Tour Order</v-btn>
+          </v-list-tile>
+          <v-divider></v-divider>
+          <v-list-tile>
+            <v-btn flat to="/travel-style">Travel Style</v-btn>
+          </v-list-tile>
+          <v-list-tile>
+            <v-btn flat to="/travel-service">Travel Service</v-btn>
+          </v-list-tile>
+          <v-list-tile>
             <v-btn flat to="/mice">MICE</v-btn>
           </v-list-tile>
           <v-list-tile>
             <v-btn flat to="/fit">FIT</v-btn>
           </v-list-tile>
-          <v-list-tile>
-            <v-btn flat to="/tour-order">Tour Order</v-btn>
+            <v-list-tile>
+            <v-btn flat to="/aboutus">About Us</v-btn>
           </v-list-tile>
         </v-list>
       </v-menu>

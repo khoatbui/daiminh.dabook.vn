@@ -16,10 +16,14 @@
         </div>
       </div>
     </div>
-    <div class="data-section margin-top-130 w-100">
-     <AreaSectionHorizontal></AreaSectionHorizontal>
-     <Top10CityByCountrySectionHorizontal v-bind:countryId="'5d2955c872cb0e0df0fc7822'"></Top10CityByCountrySectionHorizontal>
-          <Top10CityByCountrySectionHorizontal v-bind:countryId="'5d29569f2455e216e89330e0'"></Top10CityByCountrySectionHorizontal>
+     <div class="row p-0 m-0 hidden-background">
+      <img src="img/general/MICE.jpg" alt="" class="w-100 h-100 m-0 p-0">
+      <h4 class="hidden-bg-text">MICE</h4>
+      </div>
+    <div class="data-section margin-top-330 w-100">
+     <TravelStyleSectionHorizontal class="pt-4" v-on:forwardresult="travelStyle=$event"></TravelStyleSectionHorizontal>
+     <TourByStyleSectionHorizontal class="pt-4" v-for="item in travelStyle" v-bind:travelStyleId="item._id"></TourByStyleSectionHorizontal>
+     <RequestAdvice  class="pt-4"></RequestAdvice>
       <div class="col-12">
         <div class="row pb-4 ads-section">
           <div class="col-12 p-0 scroll-ngang">
@@ -54,8 +58,9 @@ import LanguageComponent from "@/components/LanguageComponent.vue";
 import ComingSoonComponent from "@/components/ComingSoon.vue";
 import TourPromotionSection from "@/components/TourPromotionSection.vue";
 import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10PromotionSectionHorizontal.vue";
-import AreaSectionHorizontal from "@/components/AreaSectionHorizontal.vue";
-import Top10CityByCountrySectionHorizontal from "@/components/Top10CityByCountrySectionHorizontal.vue";
+import TravelStyleSectionHorizontal from "@/components/TravelStyleSectionHorizontal.vue";
+import TourByStyleSectionHorizontal from "@/components/TourByStyleSectionHorizontal.vue";
+import RequestAdvice from "@/components/RequestAdvice.vue"
 
 @Component({
   components: {
@@ -67,11 +72,13 @@ import Top10CityByCountrySectionHorizontal from "@/components/Top10CityByCountry
     ComingSoonComponent,
     TourPromotionSection,
     HotelTop10PromotionSectionHorizontal,
-    AreaSectionHorizontal,
-    Top10CityByCountrySectionHorizontal
+    TravelStyleSectionHorizontal,
+    TourByStyleSectionHorizontal,
+    RequestAdvice
   }
 })
-export default class Destination extends Vue {
+export default class TravelStyle extends Vue {
+  travelStyle=[];
   naviBack() {
     this.$router.go(-1);
   }
@@ -81,4 +88,5 @@ export default class Destination extends Vue {
 }
 </script>
 <style >
+
 </style>

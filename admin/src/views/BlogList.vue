@@ -30,16 +30,44 @@
                       item-value="_id"
                       v-bind:class="{ disabled: disableSelect }"
                       label="BlogType"
+                      return-object
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='MICE'">
                     <v-select
                       v-model="editedItem.miceId"
-                      :items="MICE"
+                      :items="mice"
                       item-text="miceName"
                       item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
                       label="MICE"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='TRS'">
+                    <v-select
+                    v-if="editedItem.blogTypeId.blogTypeCode=='TRS'"
+                      v-model="editedItem.travelStyleId"
+                      :items="travelStyle"
+                      item-text="travelStyleName"
+                      item-value="_id"
+                      label="Travel Style"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='TRV'">
+                    <v-select
+                      v-model="editedItem.travelServiceId"
+                      :items="travelService"
+                      item-text="travelServiceName"
+                      item-value="_id"
+                      label="Travel Service"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='ABU'">
+                    <v-select
+                      v-model="editedItem.aboutUsId"
+                      :items="aboutUs"
+                      item-text="aboutUsName"
+                      item-value="_id"
+                      label="AboutUs"
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
@@ -77,13 +105,13 @@
                   <v-flex xs12 sm12 md12 class="sub-add-component">
                     <v-text-field v-model="editedItem.blogName" label="Blog Name"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 class="sub-add-component">
-                    <v-textarea
-                      name="input-7-1"
-                      label="Blog Introduce"
-                      v-model="editedItem.blogIntro"
-                    ></v-textarea>
-                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5><b>Blog Introduce</b></h5>
+                  <VueTrixEditor v-model="editedItem.blogIntro" placeholder="Blog Introduce" uniqueId="iblogintro" v-bind:image-upload-path="`${apiIP}/upload/blog/blogintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.blogIntro" class="old-content">
+
+                    </div>
+                </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select
                       v-model="editedItem.lang"
@@ -164,7 +192,7 @@
         </v-layout>
       </v-card>
     </v-container>
-    <v-data-table :headers="headers" :items="itemsFilter"  :search="search"  class="elevation-1">
+    <v-data-table dense :headers="headers" :items="itemsFilter"  :search="search"  class="elevation-1">
       <template v-slot:items="props">
         <tr>
           <td class="justify-center layout px-0">
@@ -199,6 +227,7 @@ var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import moment from "moment";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
 
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -214,7 +243,8 @@ const AXIOS = axios.create({
 });
 export default {
   components: {
-    FileUpload
+    FileUpload,
+    VueTrixEditor
   },
   data: () => ({
     apiIP: apiIP,
@@ -225,6 +255,7 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
+    disableSelect:false,
     blogIntrosHeader: [
       { text: "Actions", value: "name", sortable: false },
       { text: "BlogName", value: "blogName" },
@@ -253,7 +284,11 @@ export default {
      search: "",
     blogList: [],
     blogType:[],
+    mice:[],
+    travelStyle:[],
+    travelService:[],
     blogTypeFilter:[],
+    aboutUs:[],
     menu1: false,
     menu2: false,
     language: [
@@ -290,7 +325,11 @@ export default {
       removeImage: [],
       blogIntros: [],
       star:3,
-      link:""
+      link:"",
+      travelStyleId:null,
+      travelServiceId:null,
+      miceId:null,
+      aboutUsId:null
     },
     defaultItem: {
       blogTypeId:"",
@@ -312,7 +351,11 @@ export default {
       removeImage: [],
       blogIntros: [],
       star:3,
-      link:""
+      link:"",
+      travelStyleId:null,
+      travelServiceId:null,
+      miceId:null,
+      aboutUsId:null
     }
   }),
 
@@ -354,7 +397,6 @@ export default {
         .finally(function() {});
          AXIOS.get(apiIP + "/blogtype/", { crossdomain: true })
         .then(response => {
-          console.log( response.data);
           this.blogType = response.data;
           this.blogTypeFilter = response.data;
           this.blogTypeFilter.unshift({
@@ -362,6 +404,34 @@ export default {
             blogTypeName: "ALL",
             blogTypeId: -1
           });
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+
+         AXIOS.get(apiIP + "/mice/", { crossdomain: true })
+        .then(response => {
+          this.mice = response.data;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+
+          AXIOS.get(apiIP + "/travelstyle/", { crossdomain: true })
+        .then(response => {
+          this.travelStyle = response.data;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+
+          AXIOS.get(apiIP + "/travelservice/", { crossdomain: true })
+        .then(response => {
+          this.travelService = response.data;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+
+          AXIOS.get(apiIP + "/aboutus/", { crossdomain: true })
+        .then(response => {
+          this.aboutUs = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});

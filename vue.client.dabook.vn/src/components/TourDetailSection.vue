@@ -242,7 +242,6 @@ export default {
       return this.$store.state.selectedCar;
     },
     tourDetailByLang(){
-      console.log(this.$store.state.currentLang);
       var result= this.tourDetail.filter(item =>{
         return item.lang.toUpperCase()==this.$store.state.currentLang.toUpperCase();
       })

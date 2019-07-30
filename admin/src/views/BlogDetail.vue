@@ -63,7 +63,7 @@
                     </div>
                 </v-flex>
                 <v-flex xs12 sm12 md12 class="group-card">
-                    <h5><b>Service Not Include</b></h5>
+                    <h5><b>Block04</b></h5>
                   <VueTrixEditor v-model="editedItem.block04" placeholder="Service Not Include" uniqueId="iservicenotinclude" v-bind:image-upload-path="`${apiIP}/upload/blog/blogdetail`" localStorage></VueTrixEditor>
                   <div v-html="editedItem.block04" class="old-content">
 
@@ -143,7 +143,7 @@
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
-          <td v-html="replace(props.item.blogId.blogName)"></td>
+          <td ><p v-html="props.item.blogId.blogName"></p></td>
           <td ><p v-html="props.item.block01"></p></td>
           <td ><p v-html="props.item.block02"></p></td>
           <td ><p v-html="props.item.block03"></p></td>

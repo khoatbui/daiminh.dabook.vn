@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div class="tour-confirm-component p-2">
+  <div class="tour-confirm-component p-2"  v-if="tourDetail.length>0">
     <div class="container m-0 p-0 w-100">
       <div class="row d-flex align-items-center border-bottom p-2 m-0">
         <div class="col-12 d-flex justify-content-between align-items-center">
@@ -8,10 +8,10 @@
             <h5>
               <span
                 class="font-weight-bolder text-lg"
-              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tourDetail.tourId.price)}}</span>
-              <span class="text-sm font-weight-bold">/ {{tourDetail.tourId.from}} / {{tourDetail.tourId.to}}</span>
+              >{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tourDetailByLang.tourId.price)}}</span>
+              <span class="text-sm font-weight-bold">/ {{tourDetailByLang.tourId.from}} / {{tourDetailByLang.tourId.to}}</span>
             </h5>
-            <p class="text-sm">{{tourDetail.tourId.tourName}}</p>
+            <p class="text-sm">{{tourDetailByLang.tourId.tourName}}</p>
           </div>
           <button
             type="button"
@@ -264,6 +264,23 @@ export default {
   computed: {
     selectedTour() {
       return this.$store.state.selectedTour;
+    },
+    tourDetailByLang(){
+      console.log(this.$store.state.currentLang);
+      var result= this.tourDetail.filter(item =>{
+        return item.lang.toUpperCase()==this.$store.state.currentLang.toUpperCase();
+      })
+      console.log('fileter result')
+      console.log(result);
+      result[0].tourId.tourIntros.forEach(intro => {
+          if (intro.lang.toUpperCase()===this.$store.state.currentLang.toUpperCase()) {
+            result[0].tourId.tourIntro=intro.tourIntro;
+             result[0].tourId.tourName=intro.tourName;
+              result[0].tourId.from=intro.from;
+              result[0].tourId.to=intro.to;
+          }
+        });
+      return result[0];
     }
   },
   mounted() {
@@ -362,7 +379,7 @@ export default {
           .format("DD-MM-YYYY")
       },
       isLoadding: false,
-      tourDetail: {},
+      tourDetail: [],
       destination: {},
       requestData:{
         translate:{},
@@ -455,9 +472,9 @@ export default {
       this.$store.commit("showHideLoading", true);
       var response = await TourService.getTourDetailById(id);
       this.tourDetail = response.data;
-
+      console.log(this.tourDetail);
       var desresp = await DestinationService.getDestinationById(
-        response.data.tourId.destinationId
+        response.data[0].tourId.destinationId
       );
       this.destination = desresp.data;
       this.$store.commit("showHideLoading", false);
