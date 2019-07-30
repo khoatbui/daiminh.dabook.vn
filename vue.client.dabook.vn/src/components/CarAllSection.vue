@@ -30,7 +30,7 @@
                 v-bind:class="{'active':index==0}"
               >
                 <img
-                  v-bind:data-src="item.priceByCarType[0].carImages.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
+                  v-bind:src="item.priceByCarType[0].carImages.length>0?`/${subitem.filePath}`:'/img/hotel/roomtype/default.jpg'"
                   class="d-block border-radius-5 lazy"
                   alt="..."
                 />
