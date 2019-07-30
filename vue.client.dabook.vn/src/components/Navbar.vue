@@ -13,7 +13,7 @@
         <font-awesome-icon class="nav-icon-fa" icon="hotel"/>
         <span>{{$t("nav_hotel")}}</span>
       </a>
-      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="http://www.dabook.vn" target="_blank" v-bind:class="{'active':current=='ticket'}">
+      <a class="nav-item d-flex flex-column justify-content-center align-items-center" href="http://dabook.vn" target="_blank" v-bind:class="{'active':current=='ticket'}">
         <font-awesome-icon class="nav-icon-fa" :icon="['fa', 'plane-departure']"/>
         <span>{{$t("nav_ticket")}}</span>
       </a>

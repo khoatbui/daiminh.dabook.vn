@@ -9,9 +9,12 @@
       </div>
       <div class="col-12 m-0 p-0" v-for="(caritem,i) in paginatedData"  @click="selectCar(caritem)">
         <div
-          class="card mx-2 my-4 p-0 border-0 border-radius-5 shadow-sm"
+          class="card m-2 p-0 border-0 border-radius-5 shadow-sm hot-promotion-parent"
           v-for="(item,j) in caritem.priceByCarType"
         >
+        <div class="hot-promotion-left hot-promotion-left-sm" v-if="item.isPromotion">
+          <font-awesome-icon icon="fire-alt" />
+        </div>
          <a @click="redirectToCarDetail(`/cardetail?cardetailpriceid=${item._id}&cartypeid=${item.carTypeId}`)" >
           <div class="row no-gutters">
             <div class="col-5 m-0 p-0">
@@ -69,7 +72,7 @@
                   <span>{{caritem.fromLocation}}</span>
                 </div>
                 <div class="col-2 p-0 text-center">
-                  <font-awesome-icon class="ml-1 text-default" icon="car-side" />
+                  <font-awesome-icon class="ml-1 text-default text-xs" icon="car-side" />
                 </div>
                 <div class="col-5 p-0 text-right">
                   <span>{{caritem.toLocation}}</span>
@@ -78,17 +81,17 @@
               <div class="row w-100 m-0">
                 <div class="col-12 p-0 text-left text-ssm">
                   <span>
-                    <b>Seats:</b>
+                    Seats:
                     {{item.seatNumber}}
-                  </span>
+                  </span> | 
                    <span>
-                    <b>Model:</b>
+                    Model:
                     {{item.carTypeName}}
                   </span>
                 </div>
                 <div class="col-12 p-0 text-left text-ssm">
                   <span>
-                    <b>Loại hình:</b>
+                    Loại hình:
                     {{caritem.carTransTypeId.carTransTypeName}}
                   </span>
                 </div>

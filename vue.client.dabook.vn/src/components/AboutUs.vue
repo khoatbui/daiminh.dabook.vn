@@ -1,7 +1,7 @@
 <template>
   <div>
        <CheckBoxGroup class="px-2 pt-4" v-bind:name="'aboutus'" v-bind:data="aboutus" v-bind:icon="'star'" @select="selectItem=$event"></CheckBoxGroup>
-    <div class="row text-left p-2" v-if="aboutdetail.length>0">
+    <div class="row text-left p-2 m-0" v-if="aboutdetail.length>0">
         <div class="col-12 m-0" v-html="tourDetailByLang.block01">
 
         </div>

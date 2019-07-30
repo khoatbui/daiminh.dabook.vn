@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>TravelService CRUD</v-toolbar-title>
+      <v-toolbar-title>FIT CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="900px">
@@ -20,8 +20,8 @@
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
                   <v-text-field required
-                    :rules="[() => editedItem.travelServiceCode.length > 0 || 'Required field']"
-                     v-model="editedItem.travelServiceCode" label="TravelServiceCode"></v-text-field>
+                    :rules="[() => editedItem.fitCode.length > 0 || 'Required field']"
+                     v-model="editedItem.fitCode" label="FITCode"></v-text-field>
                 </v-flex>
                  <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
@@ -33,12 +33,12 @@
                   <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm12 md12 class="sub-add-component">
-                    <v-text-field v-model="editedItem.travelServiceName" label="TravelService Name"></v-text-field>
+                    <v-text-field v-model="editedItem.fitName" label="Style Name"></v-text-field>
                   </v-flex>
                    <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>Travel Style Intro</b></h5>
-                  <VueTrixEditor v-model="editedItem.travelServiceIntro" placeholder="TravelService INtro" uniqueId="itravelstyle" v-bind:image-upload-path="`${apiIP}/upload/tour/travelService/travelServiceintro`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.travelServiceIntro" class="old-content">
+                  <VueTrixEditor v-model="editedItem.fitIntro" placeholder="Travel Style INtro" uniqueId="ifit" v-bind:image-upload-path="`${apiIP}/upload/tour/fit/fitintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.fitIntro" class="old-content">
 
                     </div>
                 </v-flex>
@@ -52,24 +52,24 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
-                    <v-btn color="blue darken-1" dark @click="addTravelServiceIntroByLang">Add</v-btn>
+                    <v-btn color="blue darken-1" dark @click="addFITIntroByLang">Add</v-btn>
                   </v-flex>
                 </v-layout>
                 <v-layout>
                   <v-flex xs12 sm12 md12 class="border-top">
                     <v-data-table
-                      :headers="travelServiceIntrosHeader"
-                      :items="editedItem.travelServiceIntros"
+                      :headers="fitIntrosHeader"
+                      :items="editedItem.fitIntros"
                       class="elevation-1"
                       width="100%"
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
-                          <v-icon small @click="deleteTravelServiceIntroByLang(props.index)">delete</v-icon>
+                          <v-icon small @click="deleteFITIntroByLang(props.index)">delete</v-icon>
                         </td>
-                        <td>{{props.item.travelServiceName}}</td>
+                        <td>{{props.item.fitName}}</td>
                         <td>{{props.item.lang}}</td>
-                        <td>{{props.item.travelServiceIntro}}</td>
+                        <td>{{props.item.fitIntro}}</td>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -78,7 +78,7 @@
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
-                      v-bind:routerPath="apiIP+'/upload/tour/travelservice'"
+                      v-bind:routerPath="apiIP+'/upload/tour/fit'"
                     ></file-upload>
                  </v-flex>
                  <v-flex xs12 sm12 md12>
@@ -87,7 +87,7 @@
                   <v-flex xs12 sm12 md12 class="scroll-ngang">
                     <img
                       class="room-img"
-                      v-for="(item,i) in editedItem.travelServiceImages"
+                      v-for="(item,i) in editedItem.fitImages"
                       v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
                       alt
                     />
@@ -105,16 +105,16 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="travelService" class="elevation-1">
+    <v-data-table :headers="headers" :items="fit" class="elevation-1">
       <template v-slot:items="props">
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
           </td>
-          <td>{{ props.item.travelServiceCode }}</td>
-          <td>{{ props.item.travelServiceName }}</td>
-           <td>{{ props.item.travelServiceNameEN }}</td>
+          <td>{{ props.item.fitCode }}</td>
+          <td>{{ props.item.fitName }}</td>
+           <td>{{ props.item.fitIntro }}</td>
           <td>{{ props.item.lang }}</td>
           <td>{{ props.item.isUsed }}</td>
           <td>{{ props.item.order }}</td>
@@ -159,27 +159,27 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
-    travelServiceIntrosHeader: [
+    fitIntrosHeader: [
       { text: "Actions", value: "name", sortable: false },
-      { text: "TravelServiceName", value: "travelServiceName" },
+      { text: "FITName", value: "fitName" },
       { text: "language", value: "lang" },
-      { text: "TravelServiceIntro", value: "travelServiceIntro" }
+      { text: "FITIntro", value: "fitIntro" }
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
       {
-        text: "TravelServiceCode",
+        text: "FITCode",
         sortable: false,
-        value: "travelServiceCode"
+        value: "fitCode"
       },
-      { text: "TravelServiceName", value: "travelServiceName" },
-       { text: "TravelServiceNameEN", value: "travelServiceNameEN" },
+      { text: "FITName", value: "fitName" },
+       { text: "FITNameEN", value: "fitNameEN" },
       { text: "Language", value: "lang" },
       { text: "isUsed", value: "isUsed" },
       { text: "order", value: "order" },
       { text: "keyword", value: "keyword" }
     ],
-    travelService: [],
+    fit: [],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
@@ -187,28 +187,28 @@ export default {
     ],
     editedIndex: -1,
     editedItem: {
-      travelServiceCode: "",
-      travelServiceName: "",
-      travelServiceIntro: "",
+      fitCode: "",
+      fitName: "",
+      fitIntro: "",
       lang: "EN",
-       travelServiceImages: [],
+       fitImages: [],
       removeImage: [],
       isUsed:true,
       keyword:"",
       order:0,
-      travelServiceIntros:[]
+      fitIntros:[]
     },
     defaultItem: {
-      travelServiceCode: "",
-      travelServiceName: "",
-      travelServiceIntro: "",
+      fitCode: "",
+      fitName: "",
+      fitIntro: "",
       lang: "EN",
-       travelServiceImages: [],
+       fitImages: [],
       removeImage: [],
       isUsed:true,
       keyword:"",
       order:0,
-      travelServiceIntros:[]
+      fitIntros:[]
     }
   }),
 
@@ -230,9 +230,9 @@ export default {
 
  methods: {
     initialize() {
-      AXIOS.get(apiIP + "/travelservice/", { crossdomain: true })
+      AXIOS.get(apiIP + "/fit/", { crossdomain: true })
         .then(response => {
-          this.travelService = response.data;
+          this.fit = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -249,7 +249,7 @@ export default {
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/travelservice/" + item._id)
+        AXIOS.delete(apiIP + "/fit/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
@@ -270,21 +270,21 @@ export default {
 
     save() {
        if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.travelServiceImages);
-        this.editedItem.removeImage = this.editedItem.travelServiceImages;
-        this.editedItem.travelServiceImages = this.uploadImg;
+        console.log(this.editedItem.fitImages);
+        this.editedItem.removeImage = this.editedItem.fitImages;
+        this.editedItem.fitImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/travelservice/update/" + this.editId, this.editedItem)
+          AXIOS.post(apiIP + "/fit/update/" + this.editId, this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/travelservice/insert", this.editedItem)
+          AXIOS.post(apiIP + "/fit/insert", this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
@@ -295,15 +295,15 @@ export default {
        this.uploadImg = [];
       this.editedItem.removeImage = [];
     },
-    addTravelServiceIntroByLang() {
-      this.editedItem.travelServiceIntros.push({
-        travelServiceName: this.editedItem.travelServiceName,
-        travelServiceIntro: this.editedItem.travelServiceIntro,
+    addFITIntroByLang() {
+      this.editedItem.fitIntros.push({
+        fitName: this.editedItem.fitName,
+        fitIntro: this.editedItem.fitIntro,
         lang: this.editedItem.lang
       });
     },
-    deleteTravelServiceIntroByLang(item) {
-      this.editedItem.travelServiceIntros.splice(item, 1);
+    deleteFITIntroByLang(item) {
+      this.editedItem.fitIntros.splice(item, 1);
     }
   }
 };

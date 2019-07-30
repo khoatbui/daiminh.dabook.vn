@@ -286,7 +286,38 @@ module.exports.uploadTourListImg=async (req, res) => {
         res.sendStatus(400);
     }
   }
+  module.exports.uploadFITImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/tour/fit');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/fit');
+        result.push({'fileName':element.filename,'filePath':`img/tour/fit/${element.filename}`,'destination':element.destination,'src':`img/tour/fit/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 //   =========================================
+module.exports.uploadFITIntroImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.file)
+     var element=req.file;
+  copyFile(element.path, '../daiminh.dabook.vn/img/tour/fit/fitintro');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/fit/fitintro');
+  result.push({'fileName':element.filename,'filePath':`img/tour/fit/fitintro/${element.filename}`,'destination':element.destination,'src':`img/tour/fit/fitintro/${element.filename}`})
+  console.log(result);
+  res.json(result);
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 module.exports.uploadTourDetailImg=async (req, res) => {
     try {
         var result=[];

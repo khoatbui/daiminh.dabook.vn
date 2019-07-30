@@ -197,6 +197,12 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: '/fit',
+      name: 'fit',
+      component: () => import(/* webpackChunkName: "about" */ './views/FIT.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/travel-service',
       name: 'travelservice',
       component: () => import(/* webpackChunkName: "about" */ './views/TravelService.vue'),

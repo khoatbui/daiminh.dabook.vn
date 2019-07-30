@@ -135,6 +135,15 @@ var travelServiceUpload = multer.diskStorage({
 })
 const uploadTravelService = multer({storage:travelServiceUpload});
 
+//FIT IMAGE
+var fitUpload = multer.diskStorage({
+  destination: `./uploads/tour/travelservice`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadFIT = multer({storage:fitUpload});
+
 //TOUR LIST IMAGE
 var tourListUpload = multer.diskStorage({
   destination: `./uploads/tour/tourlist`,
@@ -236,7 +245,14 @@ var packageIntroUpload = multer.diskStorage({
 })
 const uploadPackageIntro = multer({storage:packageIntroUpload});
 
-
+//FIT INTRO IMAGE
+var fitIntroUpload = multer.diskStorage({
+  destination: `./uploads/hotel/roomtype/roomtypeintro`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadFITIntro = multer({storage:fitIntroUpload});
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -253,13 +269,14 @@ router.post('/tour/area',uploadArea.array('photos', 12),controller.uploadAreaImg
 router.post('/tour/country',uploadCountry.array('photos', 12),controller.uploadCountryImg)
 router.post('/tour/destination',uploadDestination.array('photos', 12),controller.uploadDestinationImg)
 router.post('/tour/supplier',uploadTourSupplier.array('photos', 12),controller.uploadTourSupplierImg)
-router.post('/tour/travelstyle',uploadTravelStyle.array('photos', 12),controller.uploadTravelStyleImg)
 router.post('/tour/tourlist',uploadTourList.array('photos', 12),controller.uploadTourListImg)
 router.post('/tour/document',uploadTourDocument.array('documents', 12),controller.uploadTourDocumentImg)
 
 router.post('/ads',uploadAds.array('photos', 12),controller.uploadAdsImg)
+router.post('/tour/travelstyle',uploadTravelStyle.array('photos', 12),controller.uploadTravelStyleImg)
 router.post('/tour/travelservice',uploadTravelService.array('photos', 12),controller.uploadTravelServiceImg)
 router.post('/tour/mice',uploadMICE.array('photos', 12),controller.uploadMICEImg)
+router.post('/tour/fit',uploadFIT.array('photos', 12),controller.uploadFITImg)
 router.post('/page/aboutus',uploadAboutUs.array('photos', 12),controller.uploadAboutUsImg)
 
 
@@ -270,6 +287,7 @@ router.post('/car/trip/tripintro',uploadTripIntro.single('image'),controller.upl
 router.post('/hotel/hotel/hotelintro',uploadHotelIntro.single('image'),controller.uploadHotelIntroImg)
 router.post('/hotel/roomtype/roomtypeintro',uploadRoomTypeIntro.single('image'),controller.uploadRoomTypeIntroImg)
 router.post('/hotel/package/packageintro',uploadPackageIntro.single('image'),controller.uploadPackageIntroImg)
+router.post('/tour/fit/fitintro',uploadFITIntro.single('image'),controller.uploadFITIntroImg)
 
 
 module.exports = router

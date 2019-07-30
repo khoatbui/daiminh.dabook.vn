@@ -23,21 +23,6 @@
                     :rules="[() => editedItem.travelStyleCode.length > 0 || 'Required field']"
                      v-model="editedItem.travelStyleCode" label="TravelStyleCode"></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.travelStyleName" label="TravelStyleName"></v-text-field>
-                </v-flex>
-                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.travelStyleNameEN" label="TravelStyleNameEN"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-select
-                    v-model="editedItem.lang"
-                    :items="language"
-                    item-text="langName"
-                    item-value="langCode"
-                    label="Language"
-                  ></v-select>
-                </v-flex>
                  <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
                   </v-flex>
@@ -47,6 +32,48 @@
                  <v-flex xs12 sm12 md12>
                   <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
                 </v-flex>
+                <v-flex xs12 sm12 md12 class="sub-add-component">
+                    <v-text-field v-model="editedItem.travelStyleName" label="Style Name"></v-text-field>
+                  </v-flex>
+                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5><b>Travel Style Intro</b></h5>
+                  <VueTrixEditor v-model="editedItem.travelStyleIntro" placeholder="Travel Style INtro" uniqueId="itravelstyle" v-bind:image-upload-path="`${apiIP}/upload/tour/travelstyle/travelstyleintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.travelStyleIntro" class="old-content">
+
+                    </div>
+                </v-flex>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addTravelStyleIntroByLang">Add</v-btn>
+                  </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="travelStyleIntrosHeader"
+                      :items="editedItem.travelStyleIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deleteTravelStyleIntroByLang(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.travelStyleName}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.travelStyleIntro}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
                  <v-flex xs12 sm12 md12>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
@@ -87,7 +114,7 @@
           </td>
           <td>{{ props.item.travelStyleCode }}</td>
           <td>{{ props.item.travelStyleName }}</td>
-           <td>{{ props.item.travelStyleNameEN }}</td>
+           <td>{{ props.item.travelStyleIntro }}</td>
           <td>{{ props.item.lang }}</td>
           <td>{{ props.item.isUsed }}</td>
           <td>{{ props.item.order }}</td>
@@ -104,6 +131,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -118,7 +147,8 @@ const AXIOS = axios.create({
 });
 export default {
   components: {
-    FileUpload
+    FileUpload,
+    VueTrixEditor
   },
   data: () => ({
     apiIP: apiIP,
@@ -129,6 +159,12 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
+    travelStyleIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "TravelStyleName", value: "travelStyleName" },
+      { text: "language", value: "lang" },
+      { text: "TravelStyleIntro", value: "travelStyleIntro" }
+    ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
       {
@@ -153,24 +189,26 @@ export default {
     editedItem: {
       travelStyleCode: "",
       travelStyleName: "",
-      travelStyleNameEN: "",
+      travelStyleIntro: "",
       lang: "EN",
        travelStyleImages: [],
       removeImage: [],
       isUsed:true,
       keyword:"",
-      order:0
+      order:0,
+      travelStyleIntros:[]
     },
     defaultItem: {
       travelStyleCode: "",
       travelStyleName: "",
-      travelStyleNameEN: "",
+      travelStyleIntro: "",
       lang: "EN",
        travelStyleImages: [],
       removeImage: [],
       isUsed:true,
       keyword:"",
-      order:0
+      order:0,
+      travelStyleIntros:[]
     }
   }),
 
@@ -256,6 +294,16 @@ export default {
       }
        this.uploadImg = [];
       this.editedItem.removeImage = [];
+    },
+    addTravelStyleIntroByLang() {
+      this.editedItem.travelStyleIntros.push({
+        travelStyleName: this.editedItem.travelStyleName,
+        travelStyleIntro: this.editedItem.travelStyleIntro,
+        lang: this.editedItem.lang
+      });
+    },
+    deleteTravelStyleIntroByLang(item) {
+      this.editedItem.travelStyleIntros.splice(item, 1);
     }
   }
 };

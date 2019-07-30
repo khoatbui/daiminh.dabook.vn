@@ -8,7 +8,11 @@ module.exports.index =function(req,res){
         res.send(ads)
     })
 };
-
+module.exports.getUsed =function(req,res){
+    Ads.find({"isUsed":true}).then(function(ads){
+        res.send(ads)
+    })
+};
 module.exports.getmAdsById=(req,res,next) => {
     Ads.findOne({"_id":req.params._id}).then(function(ads){
         res.send(ads)

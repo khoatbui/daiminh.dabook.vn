@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var travelStyleSchema = new mongoose.Schema({
     travelStyleCode: String,
     travelStyleName: String,
-    travelStyleNameEN: String,
+    travelStyleIntro: String,
     lang:String,
     createBy:String,
     createDate:Date,
@@ -11,7 +11,8 @@ var travelStyleSchema = new mongoose.Schema({
     travelStyleImages:[{fileName:String,filePath:String,destination:String,size:Number}],
     isUsed:Boolean,
     order:Number,
-    keyword:String
+    keyword:String,
+    travelStyleIntros:[]
 });
 var TravelStyle =mongoose.model('TravelStyle',travelStyleSchema,'travelstyle');
 

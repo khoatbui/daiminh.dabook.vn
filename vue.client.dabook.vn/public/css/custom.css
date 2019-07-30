@@ -303,7 +303,7 @@ ol.carousel-indicators li.active {
 }
 
 /* ======================= */
-.hot-promotion{
+.hot-promotion,.hot-promotion-left{
   position: absolute;
   background-color: crimson;
   color: #FFFFFF;
@@ -314,7 +314,15 @@ ol.carousel-indicators li.active {
   border:1px solid crimson;
   box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px !important;
 }
-.hot-promotion::after{
+.hot-promotion-left{
+  right: initial;
+  left: 5px;
+  top: 0px;
+}
+.hot-promotion-sm, .hot-promotion-left-sm {
+  padding: 4px 3px;
+}
+.hot-promotion::after,.hot-promotion-left::after{
   content: "";
   position: absolute;
   bottom: -13px;
@@ -326,6 +334,19 @@ ol.carousel-indicators li.active {
   box-sizing: border-box;
   transform: translate(-50%);
   z-index: 20;
+}
+.hot-promotion-left::after{
+  right: 50%;
+  left: initial;
+  transform: translate(50%);
+}
+.hot-promotion-sm::after, .hot-promotion-left-sm::after {
+
+  bottom: -8px;
+  border: 9px solid crimson;
+  border-bottom-color:    rgba(0,0,0,0.01);
+  width: 18.2px;
+  height: 1px;
 }
 .hot-promotion-parent{
   position: relative;

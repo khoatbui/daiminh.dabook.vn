@@ -19,15 +19,21 @@ import CarConfirmBooking from '@/components/CarConfirmBooking.vue'
 import CarRequestBooking from '@/components/CarRequestBooking.vue'
 import CarDetailSection from '@/components/CarDetailSection.vue'
 import TourConfirmBooking from '@/components/TourConfirmBooking.vue'
-// import TourRequestBooking from '@/components/TourRequestBooking.vue'
 import TourDetailSection from '@/components/TourDetailSection.vue'
+import TravelStyleDetail from '@/components/TravelStyleDetail.vue'
+import TravelStyleAll from '@/components/TravelStyleAll.vue'
+import TravelServiceDetail from '@/components/TravelServiceDetail.vue'
+import TravelServiceAll from '@/components/TravelServiceAll.vue'
+import FITDetail from '@/components/FITDetail.vue'
+import FITAll from '@/components/FITAll.vue'
+// import TourRequestBooking from '@/components/TourRequestBooking.vue'
 import MainSearch from '@/views/MainSearch.vue'
 import Destination from '@/views/Destination.vue'
-import TravelStyle from '@/views/TravelStyle.vue'
-import TravelService from '@/views/TravelService.vue'
+import TravelStyleView from '@/views/TravelStyleView.vue'
+import TravelServiceView from '@/views/TravelServiceView.vue'
 import AboutUs from '@/views/About.vue'
 import MICE from '@/views/MICE.vue'
-import FIT from '@/views/FIT.vue'
+import FITView from '@/views/FITView.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -183,13 +189,35 @@ export default new Router({
     },
     {
       path: '/travelstyle',
-      name: 'travelstyle',
-      component:TravelStyle
+      component:TravelStyleView,
+      children: [
+        {
+          path: 'detail',
+          name: 'travelstyledetail',
+          component: TravelStyleDetail
+        },
+        {
+          path: '',
+          name: 'travelstyleAll',
+          component: TravelStyleAll
+        }
+      ]
     },
     {
       path: '/travelservice',
-      name: 'travelservice',
-      component:TravelService
+      component:TravelServiceView,
+      children: [
+        {
+          path: 'detail',
+          name: 'travelservicedetail',
+          component: TravelServiceDetail
+        },
+        {
+          path: '',
+          name: 'travelserviceAll',
+          component: TravelServiceAll
+        }
+      ]
     },
     {
       path: '/aboutus',
@@ -203,8 +231,19 @@ export default new Router({
     },
     {
       path: '/fit',
-      name: 'fit',
-      component:FIT
+      component:FITView,
+      children: [
+        {
+          path: 'detail',
+          name: 'fitdetail',
+          component: FITDetail
+        },
+        {
+          path: '',
+          name: 'fitall',
+          component: FITAll
+        }
+      ]
     }
   ]
 })

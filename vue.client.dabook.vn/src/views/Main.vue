@@ -161,6 +161,7 @@
             </h6>
           </div>
           <div class="col-12 scroll-ngang">
+            <a href="/aboutus">
             <div class="card m-2 text-white text-left border-radius-10">
               <img src="img/topdestination/phuquoc_1.jpg" class="card-img overlay-img" alt="..." />
               <div class="card-img-overlay">
@@ -169,6 +170,7 @@
                 <p class="card-text">{{$t("pmain_cardtitle_intro_text")}}</p>
               </div>
             </div>
+            </a>
           </div>
         </div>
 

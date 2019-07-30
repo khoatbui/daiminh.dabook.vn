@@ -9,7 +9,7 @@ To//src/components/Navbar.vue
           <div class="col-12 scroll-ngang px-0 mx-0 ">
             <div class="card m-2 text-white d-inline-block shadow-box" v-for="pac in packagelist">
               <a v-bind:href="`/promotiondetail?packagehotelrelid=${pac._id}`">
-              <img  v-bind:src="pac.roomTypeId.roomImages.length>0?pac.roomTypeId.roomImages[0].filePath:'img/hotel/roomtype/default.jpg'" class="card-img  overlay-img" alt="...">
+              <img  v-bind:src="pac.roomTypeId.roomImages.length>0?`/${pac.roomTypeId.roomImages[0].filePath}`:'/img/hotel/roomtype/default.jpg'" class="card-img  overlay-img" alt="...">
               <div class="card-img-overlay">
                 <h5 class="card-title text-white text-uppercase text-ssm hidden-outof-text">{{pac.hotelId.hotelName}}</h5>
                 <h6 class="card-title text-white text-sm hidden-outof-text">{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pac.price) }} per night</h6>

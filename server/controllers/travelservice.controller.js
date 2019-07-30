@@ -9,6 +9,13 @@ module.exports.index =function(req,res){
     })
 };
 
+module.exports.getUsed =function(req,res){
+    TravelService.find({"isUsed":true}).then(function(travelservice){
+        res.send(travelservice)
+    })
+};
+
+
 module.exports.getmTravelServiceById=(req,res,next) => {
     TravelService.findOne({"_id":req.params._id}).then(function(travelservice){
         res.send(travelservice)

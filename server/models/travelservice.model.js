@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var travelServiceSchema = new mongoose.Schema({
     travelServiceCode: String,
     travelServiceName: String,
-    travelServiceNameEN: String,
+    travelServiceIntro: String,
     lang:String,
     createBy:String,
     createDate:Date,
@@ -11,7 +11,8 @@ var travelServiceSchema = new mongoose.Schema({
     travelServiceImages:[{fileName:String,filePath:String,destination:String,size:Number}],
     isUsed:Boolean,
     order:Number,
-    keyword:String
+    keyword:String,
+    travelServiceIntros:[]
 });
 var TravelService =mongoose.model('TravelService',travelServiceSchema,'travelservice');
 

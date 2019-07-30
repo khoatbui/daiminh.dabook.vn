@@ -3,49 +3,49 @@ To//src/components/Navbar.vue
   <div class="row px-0 mx-0 pb-4 hot-destination">
     <div class="col-12 px-0 mx-0 text-left">
       <h6 class="pl-2">
-        <b>{{$t("ptravelstyle_h6_destination")}}</b>
+        <b>{{$t("pfit_h6_destination")}}</b>
       </h6>
     </div>
     <div class="col-12 scroll-ngang cicle-destination">
-      <a v-bind:href="`/travelstyle/detail?travelstyleid=${travelStyle._id}`"  v-for="(travelStyle,travelStylei) in travelStylelist">
-      <div class="card m-2 d-inline-block border-0" >
-        <div v-bind:id="`travelStyle-carousel-img-${travelStylei}`" class="carousel slide carousel-fade border-radius-100" data-ride="carousel">
+      <div class="card mx-1 my-2 p-0 d-inline-block border-0"  v-for="(fit,fiti) in fitlist">
+                <a class="m-0" v-bind:href="`/fit/detail?fitid=${fit._id}`">
+        <div v-bind:id="`fit-carousel-img-${fiti}`" class="carousel slide carousel-fade border-radius-100" data-ride="carousel">
           <div class="carousel-inner border-radius-100">
             <div
-              v-for="(subitem,travelStyleindex) in travelStyle.travelStyleImages"
-              v-bind:class="{'active':travelStyleindex==0}"
+              v-for="(subitem,fitindex) in fit.fitImages"
+              v-bind:class="{'active':fitindex==0}"
               class="carousel-item border-radius-100"
-              v-bind:data-interval="`${10000 * travelStylei}`"
+              v-bind:data-interval="`${10000 * fiti}`"
             >
               <img
                 class="card-img-top shadow border-radius-100"
-                v-bind:src="travelStyle.travelStyleImages.length>0?`/${subitem.filePath}`:'/img/hotel/roomtype/default.jpg'"
+                v-bind:src="fit.fitImages.length>0?subitem.filePath:'img/hotel/roomtype/default.jpg'"
                 alt="Card image cap"
               />
             </div>
           </div>
         </div>
-        <div class="card-body p-1 text-center">
-          <p class="card-text font-weight-bolder">{{travelStyle.travelStyleName}}</p>
+        <div class="card-body p-0 text-center">
+          <p class="badge badge-pill badge-primary px-4 py-2 card-text font-weight-bolder">{{fit.fitName}}</p>
         </div>
+              </a>
       </div>
-      </a>
     </div>
   </div>
 </template>
 <script>
-import TravelStyleService from "@/api/TravelStyleService";
+import FITService from "@/api/FITService";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 
 export default {
   components: {
     LoadingComponent
   },
-  name: "TravelStyleSectionHorizontal",
+  name: "FITSectionHorizontal",
   props: ["current", "showTitle"],
   data() {
     return {
-      travelStylelist: [],
+      fitlist: [],
       isLoadding: false
     };
   },
@@ -55,11 +55,11 @@ export default {
   methods: {
     async initial() {
       this.$store.commit("showHideLoading", true);
-      var response = await TravelStyleService.getAllTravelStyle();
-      this.travelStylelist = randomArray(response.data);
-      console.log(this.travelStylelist);
+      var response = await FITService.getAllFIT();
+      this.fitlist = randomArray(response.data);
+      console.log(this.fitlist);
       this.$store.commit("showHideLoading", false);
-      this.$emit('forwardresult',this.travelStylelist)
+      this.$emit('forwardresult',this.fitlist)
     }
   },
   computed: {}

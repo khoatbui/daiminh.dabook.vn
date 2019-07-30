@@ -2,7 +2,7 @@ import Api from '@/api/Api'
 
 var aboutUsservice = {
   getAllAboutUs () {
-    return Api().get('aboutus/')
+    return Api().get('aboutus/getused')
   }
 }
 

@@ -28,7 +28,6 @@
                       :items="destination"
                       item-text="destinationName"
                       item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
                       label="Destination"
                     ></v-select>
                   </v-flex>
@@ -38,7 +37,6 @@
                       :items="travelStyle"
                       item-text="travelStyleName"
                       item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
                       label="TravelStyle"
                     ></v-select>
                   </v-flex>
@@ -48,7 +46,6 @@
                       :items="tourType"
                       item-text="tourTypeName"
                       item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
                       label="TourType"
                     ></v-select>
                   </v-flex>

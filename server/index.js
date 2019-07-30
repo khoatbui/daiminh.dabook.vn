@@ -49,6 +49,7 @@ const blogList=require('./routes/bloglist.router')
 const blogDetail=require('./routes/blogdetail.router')
 
 const mice=require('./routes/mice.router')
+const fit=require('./routes/fit.router')
 const travelService=require('./routes/travelservice.router')
 const aboutUs=require('./routes/aboutus.router')
 
@@ -92,6 +93,7 @@ app.use('/bloglist',blogList)
 app.use('/blogdetail',blogDetail)
 
 app.use('/mice',mice)
+app.use('/fit',fit)
 app.use('/travelservice',travelService)
 app.use('/aboutus',aboutUs)
 

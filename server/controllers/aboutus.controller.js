@@ -9,6 +9,12 @@ module.exports.index =function(req,res){
     })
 };
 
+module.exports.getUsed =function(req,res){
+    AboutUs.find({"isUsed":true}).then(function(aboutUs){
+        res.send(aboutUs)
+    })
+};
+
 module.exports.getmAboutUsById=(req,res,next) => {
     AboutUs.findOne({"_id":req.params._id}).then(function(aboutUs){
         res.send(aboutUs)

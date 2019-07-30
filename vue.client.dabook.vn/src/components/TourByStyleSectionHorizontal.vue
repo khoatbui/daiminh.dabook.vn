@@ -9,7 +9,7 @@ To//src/components/Navbar.vue
     <div class="col-12 pl-2 pr-1 mx-0" v-if="tourlist.length==1">
       <div class="card w-100 h-100 text-white d-inline-block shadow-box">
         <img
-                 v-bind:src="tourlist[0].tourImages.length>0?tourlist[0].tourImages[0].filePath:'img/tour/roomtype/default.jpg'"
+                 v-bind:src="tourlist[0].tourImages.length>0?`/${tourlist[0].tourImages[0].filePath}`:'/img/tour/roomtype/default.jpg'"
           class="card-img overlay-img w-100 h-100"
           alt="..."
         />
@@ -23,7 +23,7 @@ To//src/components/Navbar.vue
     <div class="col-7 pl-2 pr-1 mx-0" v-if="tourlist.length>1">
       <div class="card w-100 h-100 text-white d-inline-block shadow-box">
         <img
-                 v-bind:src="tourlist[1].tourImages.length>0?tourlist[1].tourImages[0].filePath:'img/tour/roomtype/default.jpg'"
+                 v-bind:src="tourlist[1].tourImages.length>0?`/${tourlist[1].tourImages[0].filePath}`:'/img/tour/roomtype/default.jpg'"
           class="card-img overlay-img w-100 h-100"
           alt="..."
         />
@@ -39,7 +39,7 @@ To//src/components/Navbar.vue
         <div class="col-12 px-0 mx-0">
           <div class="card w-100 text-white d-inline-block shadow-box">
             <img
-              v-bind:src="tourlist[0].tourImages.length>0?tourlist[0].tourImages[0].filePath:'img/tour/roomtype/default.jpg'"
+              v-bind:src="tourlist[0].tourImages.length>0?`/${tourlist[0].tourImages[0].filePath}`:'/img/tour/roomtype/default.jpg'"
               class="card-img overlay-img w-100"
               alt="..."
             />
@@ -53,7 +53,7 @@ To//src/components/Navbar.vue
         <div class="col-12 px-0 mx-0">
           <div class="card w-100 text-white d-inline-block shadow-box">
             <img
-              v-bind:src="tourlist[3].tourImages.length>0?tourlist[3].tourImages[0].filePath:'img/tour/roomtype/default.jpg'"
+              v-bind:src="tourlist[3].tourImages.length>0?`/${tourlist[3].tourImages[0].filePath}`:'/img/tour/roomtype/default.jpg'"
               class="card-img overlay-img w-100"
               alt="..."
             />
@@ -70,7 +70,7 @@ To//src/components/Navbar.vue
       <div class="card m-2 text-white d-inline-block shadow-box" v-for="pac in tourlist">
         <a v-bind:href="`/promotiondetail?packagetourrelid=${pac._id}`">
           <img
-            v-bind:src="pac.tourImages.length>0?pac.tourImages[0].filePath:'img/tour/roomtype/default.jpg'"
+            v-bind:src="pac.tourImages.length>0?`/${pac.tourImages[0].filePath}`:'/img/tour/roomtype/default.jpg'"
             class="card-img overlay-img"
             alt="..."
           />

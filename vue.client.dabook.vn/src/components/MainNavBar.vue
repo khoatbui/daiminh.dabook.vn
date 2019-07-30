@@ -24,7 +24,7 @@
           <div class="modal-header p-4 d-flex align-items-center">
             <a href="/">
               <h5 class="modal-title" id="exampleModalLabel">
-                  <img class="main-nav-logo" src="img/main_logo_only_color.png" alt="">
+                  <img class="main-nav-logo" src="/img/main_logo_only_color.png" alt="">
               </h5>
             </a>
             <button

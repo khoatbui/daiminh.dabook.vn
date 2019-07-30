@@ -19,6 +19,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/m/gettravelstylebyid/:_id',controller.getmTravelStyleById)
 
 router.delete('/:_id', controller.deleteTravelStyle)

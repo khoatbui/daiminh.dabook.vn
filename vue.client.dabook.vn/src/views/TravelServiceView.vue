@@ -16,33 +16,15 @@
         </div>
       </div>
     </div>
-     <div class="row p-0 m-0 hidden-background">
-      <img src="img/general/travelstyle.jpg" alt="" class="w-100 h-100 m-0 p-0">
-      <h4 class="hidden-bg-text">Travel Style</h4>
-      </div>
+    <div class="row p-0 m-0 hidden-background">
+      <img src="/img/general/travelservice.jpg" alt class="w-100 h-100 m-0 p-0" />
+      <h4 class="hidden-bg-text">Travel Service</h4>
+    </div>
     <div class="data-section margin-top-330 w-100">
-     <TravelStyleSectionHorizontal class="pt-4" v-on:forwardresult="travelStyle=$event"></TravelStyleSectionHorizontal>
-     <TourByStyleSectionHorizontal class="pt-4" v-for="item in travelStyle" v-bind:travelStyleId="item._id"></TourByStyleSectionHorizontal>
-     <RequestAdvice  class="pt-4"></RequestAdvice>
-      <div class="col-12">
-        <div class="row pb-4 ads-section">
-          <div class="col-12 p-0 scroll-ngang">
-            <div class="card text-white text-left border-0">
-              <img src="/img/promotion/ads/korea02.jpg" class="card-img" alt="..." />
-            </div>
-          </div>
-        </div>
-      </div>
-      <HotelTop10PromotionSectionHorizontal></HotelTop10PromotionSectionHorizontal>
-      <div class="col-12">
-        <div class="row pb-4 ads-section">
-          <div class="col-12 p-0 scroll-ngang">
-            <div class="card text-white text-left border-0">
-              <img src="/img/promotion/ads/airasia.jpg" class="card-img" alt="..." />
-            </div>
-          </div>
-        </div>
-      </div>
+      <router-view></router-view>
+      <AdsSectionHorizontal class="pt-4"></AdsSectionHorizontal>
+      <HotelTop10PromotionSectionHorizontal class="pt-4"></HotelTop10PromotionSectionHorizontal>
+      <AdsSectionHorizontal class="pt-4"></AdsSectionHorizontal>
     </div>
     <Navbar v-bind:current="'home'"></Navbar>
   </div>
@@ -58,9 +40,8 @@ import LanguageComponent from "@/components/LanguageComponent.vue";
 import ComingSoonComponent from "@/components/ComingSoon.vue";
 import TourPromotionSection from "@/components/TourPromotionSection.vue";
 import HotelTop10PromotionSectionHorizontal from "@/components/HotelTop10PromotionSectionHorizontal.vue";
-import TravelStyleSectionHorizontal from "@/components/TravelStyleSectionHorizontal.vue";
-import TourByStyleSectionHorizontal from "@/components/TourByStyleSectionHorizontal.vue";
-import RequestAdvice from "@/components/RequestAdvice.vue"
+import AdsSectionHorizontal from "@/components/AdsSectionHorizontal.vue"
+
 
 @Component({
   components: {
@@ -72,13 +53,11 @@ import RequestAdvice from "@/components/RequestAdvice.vue"
     ComingSoonComponent,
     TourPromotionSection,
     HotelTop10PromotionSectionHorizontal,
-    TravelStyleSectionHorizontal,
-    TourByStyleSectionHorizontal,
-    RequestAdvice
+    AdsSectionHorizontal,
   }
 })
-export default class TravelStyle extends Vue {
-  travelStyle=[];
+export default class TravelService extends Vue {
+  travelStyle = [];
   naviBack() {
     this.$router.go(-1);
   }
@@ -88,5 +67,4 @@ export default class TravelStyle extends Vue {
 }
 </script>
 <style >
-
 </style>

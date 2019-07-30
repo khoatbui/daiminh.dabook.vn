@@ -9,7 +9,10 @@
       </div>
     </div>
     <div class="col-12 p-1 m-0" v-for="(item,i) in paginatedData"  @click="selectCar(item)">
-      <div class="card w-100 p-2 d-inline-block border-0">
+      <div class="card w-100 p-2 d-inline-block border-0 hot-promotion-parent">
+         <div class="hot-promotion" v-if="item.isPromotion">
+          <font-awesome-icon icon="fire-alt" />
+        </div>
         <a v-bind:href="`/cardetail?cardetailpriceid=${item._id}`">
           <div v-bind:id="`carousel-img-${i}`" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">

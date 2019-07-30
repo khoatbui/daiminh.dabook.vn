@@ -45,7 +45,7 @@ export default {
 }
 
 /* Hide the browser's default radio button */
-.container input {
+.select-container input {
   position: absolute !important;
   opacity: 0!important;
   cursor: pointer!important;
@@ -61,7 +61,7 @@ export default {
 }
 
 /* When the radio button is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.select-container input:checked ~ .checkmark {
   background-color: #2196F3;
   color:#FFFFFF;
 }

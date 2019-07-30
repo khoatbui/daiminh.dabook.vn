@@ -7,7 +7,8 @@ To//src/components/Navbar.vue
       </h6>
     </div>
     <div class="col-12 scroll-ngang cicle-destination">
-      <div class="card m-2 d-inline-block border-0" v-for="(travelService,travelServicei) in travelServicelist">
+      <a v-bind:href="`/travelservice/detail?travelserviceid=${travelService._id}`"  v-for="(travelService,travelServicei) in travelServicelist">
+      <div class="card m-2 d-inline-block border-0">
         <div v-bind:id="`travelService-carousel-img-${travelServicei}`" class="carousel slide carousel-fade border-radius-100" data-ride="carousel">
           <div class="carousel-inner border-radius-100">
             <div
@@ -28,6 +29,7 @@ To//src/components/Navbar.vue
           <p class="card-text font-weight-bolder">{{travelService.travelServiceName}}</p>
         </div>
       </div>
+      </a>
     </div>
   </div>
 </template>

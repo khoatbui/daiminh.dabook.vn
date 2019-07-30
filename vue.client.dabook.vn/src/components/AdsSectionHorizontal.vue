@@ -3,7 +3,7 @@ To//src/components/Navbar.vue
   <div class="card d-inline-block border-0 border-radius-none">
             <img
               class="card-img-top  border-radius-none"
-              src="img/car/trans/tourtrip.jpg"
+              src="/img/car/trans/tourtrip.jpg"
               alt="Card image cap"
             />
           </div>

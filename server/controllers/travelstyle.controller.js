@@ -9,6 +9,12 @@ module.exports.index =function(req,res){
     })
 };
 
+module.exports.getUsed =function(req,res){
+    TravelStyle.find({"isUsed":true}).then(function(travelstyle){
+        res.send(travelstyle)
+    })
+};
+
 module.exports.getmTravelStyleById=(req,res,next) => {
     TravelStyle.findOne({"_id":req.params._id}).then(function(travelstyle){
         res.send(travelstyle)
