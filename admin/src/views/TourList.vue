@@ -24,20 +24,24 @@
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
                     <v-select
-                      v-model="editedItem.destinationId"
+                      v-model="editedItem.destinationIds"
                       :items="destination"
                       item-text="destinationName"
                       item-value="_id"
                       label="Destination"
+                      multiple
+                      chips
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-select
-                      v-model="editedItem.travelStyleId"
+                      v-model="editedItem.travelStyleIds"
                       :items="travelStyle"
                       item-text="travelStyleName"
                       item-value="_id"
                       label="TravelStyle"
+                      multiple
+                      chips
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
@@ -377,6 +381,8 @@ export default {
     disableSelect: false,
     editedIndex: -1,
     editedItem: {
+      destinationIds:[],
+      travelStyleIds:[],
       destinationId: "",
       travelStyleId: "",
       tourTypeId:"",
@@ -406,6 +412,8 @@ export default {
       star:3
     },
     defaultItem: {
+      destinationIds:[],
+      travelStyleIds:[],
       destinationId: "",
       travelStyleId: "",
       tourTypeId:"",
@@ -537,6 +545,7 @@ export default {
     },
 
     close() {
+      console.log(this.editedItem.destinationId);
       this.dialog = false;
       this.disableSelect = false;
       setTimeout(() => {

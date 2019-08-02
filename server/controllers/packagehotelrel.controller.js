@@ -1,4 +1,5 @@
 var PackageHotelREL = require('../models/packagehotelrel.model')
+var Destination = require('../models/destination.model')
 var mongoose = require('mongoose');
 var moment =require('moment');
 moment().format();
@@ -120,6 +121,18 @@ module.exports.getmAllPromotePackageByCity = (req, res, next) => {
     })
         res.send(result)
     })
+};
+module.exports.getmAllPackageByDestination = (req, res, next) => {
+    Destination.findOne({"isUsed":true,"_id":req.params._id}).then(function (des){
+        
+        PackageHotelREL.find({"isUsed":true}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+            var result=pac.filter(item =>{ 
+                return item.hotelId.cityId == des.cityId
+        })
+            res.send(result)
+        })
+    })
+    
 };
 module.exports.getmAllPackageBySearch = (req, res, next) => {
     console.log(req.body.keyword);

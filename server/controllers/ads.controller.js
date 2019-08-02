@@ -18,7 +18,11 @@ module.exports.getmAdsById=(req,res,next) => {
         res.send(ads)
     })
 };
-
+module.exports.getmAdsByType=(req,res,next) => {
+    Ads.find({"adsType":req.params._id,"isUsed":true}).then(function(ads){
+        res.send(ads)
+    })
+};
 module.exports.deleteAds= function (req, res) {
     Ads.deleteOne({ _id: req.params._id }, function(err) {
         if (!err) {

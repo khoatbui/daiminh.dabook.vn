@@ -1,5 +1,7 @@
 var mongoose = require('mongoose')
 var tourListSchema = new mongoose.Schema({
+    destinationIds:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Destination' }],
+    travelStyleIds:[{ type: mongoose.Schema.Types.ObjectId, ref: 'TravelStyle' }],
     destinationId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Destination' },
     travelStyleId:{ type: mongoose.Schema.Types.ObjectId, ref: 'TravelStyle' },
     tourTypeId:{ type: mongoose.Schema.Types.ObjectId, ref: 'TourType' },

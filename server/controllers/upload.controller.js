@@ -118,6 +118,23 @@ module.exports.uploadAreaImg=async (req, res) => {
   }
 }
 
+module.exports.uploadAreaCountryImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/img/tour/areacountry');
+  copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/areacountry');
+      result.push({'fileName':element.filename,'filePath':`img/tour/areacountry/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
+
 module.exports.uploadCountryImg=async (req, res) => {
   try {
       var result=[];
@@ -294,6 +311,22 @@ module.exports.uploadTourListImg=async (req, res) => {
     copyFile(element.path, '../daiminh.dabook.vn/img/tour/fit');
     copyFile(element.path, '../m.daiminh.dabook.vn/img/tour/fit');
         result.push({'fileName':element.filename,'filePath':`img/tour/fit/${element.filename}`,'destination':element.destination,'src':`img/tour/fit/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+  module.exports.uploadPaymentImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/page/payment');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/page/payment');
+        result.push({'fileName':element.filename,'filePath':`img/page/payment/${element.filename}`,'destination':element.destination,'src':`img/page/payment/${element.filename}`})
     });
     console.log(result);
     res.json({'files':result});

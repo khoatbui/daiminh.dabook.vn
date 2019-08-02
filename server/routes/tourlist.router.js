@@ -29,6 +29,10 @@ router.get('/m/getalltour',controller.getmAllTour)
 
 router.get('/m/getalltourbycity/:_id',controller.getmAllTourByCity)
 
+router.get('/m/getalltourbydestination/:_id',controller.getmAllTourByDestination)
+
+router.get('/m/getalltourbystyle/:_id',controller.getmAllTourByStyle)
+
 router.get('/m/gettourbytravelstyle/:_id',controller.getmTourByTravelStyle)
 
 router.delete('/:_id', controller.deleteTourList)

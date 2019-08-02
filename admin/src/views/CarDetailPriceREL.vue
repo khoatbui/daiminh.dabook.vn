@@ -121,11 +121,11 @@
                         <td class="justify-center px-0">
                           <v-icon small @click="deleteTripIntroByLang(props.index)">delete</v-icon>
                         </td>
-                        <td>{{props.item.carTransTypeName}}</td>
-                         <td>{{props.item.from}}</td>
-                          <td>{{props.item.to}}</td>
+                        <td>{{props.item.tripName}}</td>
+                         <td>{{props.item.fromLocation}}</td>
+                          <td>{{props.item.toLocation}}</td>
                         <td>{{props.item.lang}}</td>
-                        <td>{{props.item.carTransTypeIntro}}</td>
+                        <td>{{props.item.tripIntro}}</td>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -479,11 +479,11 @@ export default {
     dialogPrice: false,
     tripIntrosHeader: [
       { text: "Actions", value: "name", sortable: false },
-      { text: "CarTransTypeName", value: "carTransTypeName" },
+      { text: "TripName", value: "tripName" },
       { text: "From", value: "fromLocation" },
       { text: "To", value: "toLocation" },
       { text: "language", value: "lang" },
-      { text: "CarTransTypeIntro", value: "carTransTypeIntro" }
+      { text: "TripIntro", value: "tripIntro" }
     ],
     headers: [
       { text: "Actions", sortable: false },
@@ -821,6 +821,8 @@ export default {
       this.editedItem.tripIntros.push({
         tripName: this.editedItem.tripName,
         tripIntro: this.editedItem.tripIntro,
+        fromLocation: this.editedItem.fromLocation,
+        toLocation: this.editedItem.toLocation,
         lang: this.editedItem.lang
       });
     },

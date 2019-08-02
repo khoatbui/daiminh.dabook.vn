@@ -67,6 +67,12 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: '/areacountry',
+      name: 'areacountry',
+      component: () => import(/* webpackChunkName: "about" */ './views/AreaCountry.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/tour-detail',
       name: 'tourdetail',
       component: () => import(/* webpackChunkName: "about" */ './views/TourDetail.vue'),
@@ -76,12 +82,6 @@ const router = new Router({
       path: '/travel-style',
       name: 'travelstyle',
       component: () => import(/* webpackChunkName: "about" */ './views/TravelStyle.vue'),
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/payment',
-      name: 'payment',
-      component: () => import(/* webpackChunkName: "about" */ './views/Payments.vue'),
       meta: { requiresAuth: true }
     },
     {
@@ -167,12 +167,6 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/adsmanager',
-      name: 'adsmanager',
-      component: () => import(/* webpackChunkName: "about" */ './views/Ads.vue'),
-      meta: { requiresAuth: true }
-    },
-    {
       path: '/blogtype',
       name: 'blogtype',
       component: () => import(/* webpackChunkName: "about" */ './views/BlogType.vue'),
@@ -212,6 +206,18 @@ const router = new Router({
       path: '/aboutus',
       name: 'aboutus',
       component: () => import(/* webpackChunkName: "about" */ './views/AboutUs.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/adsmanager',
+      name: 'adsmanager',
+      component: () => import(/* webpackChunkName: "about" */ './views/Ads.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: () => import(/* webpackChunkName: "about" */ './views/Payment.vue'),
       meta: { requiresAuth: true }
     }
   ]

@@ -5,7 +5,11 @@ module.exports.index =function(req,res){
         res.send(payments)
     })
 };
-
+module.exports.getUsed =function(req,res){
+    Payments.find({"isUsed":true}).then(function(payments){
+        res.send(payments)
+    })
+};
 module.exports.getPayments=(req,res,next) => {
     Payments.find().then(function(payments){
         res.send(payments)

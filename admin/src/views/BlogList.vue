@@ -33,6 +33,15 @@
                       return-object
                     ></v-select>
                   </v-flex>
+                   <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='DES'">
+                    <v-select
+                      v-model="editedItem.destinationId"
+                      :items="destination"
+                      item-text="destinationName"
+                      item-value="_id"
+                      label="DESTINATION"
+                    ></v-select>
+                  </v-flex>
                   <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='MICE'">
                     <v-select
                       v-model="editedItem.miceId"
@@ -285,6 +294,7 @@ export default {
     blogList: [],
     blogType:[],
     mice:[],
+    destination:[],
     travelStyle:[],
     travelService:[],
     blogTypeFilter:[],
@@ -329,7 +339,8 @@ export default {
       travelStyleId:null,
       travelServiceId:null,
       miceId:null,
-      aboutUsId:null
+      aboutUsId:null,
+      destinationId:null
     },
     defaultItem: {
       blogTypeId:"",
@@ -355,7 +366,8 @@ export default {
       travelStyleId:null,
       travelServiceId:null,
       miceId:null,
-      aboutUsId:null
+      aboutUsId:null,
+      destinationId:null
     }
   }),
 
@@ -432,6 +444,13 @@ export default {
           AXIOS.get(apiIP + "/aboutus/", { crossdomain: true })
         .then(response => {
           this.aboutUs = response.data;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+
+           AXIOS.get(apiIP + "/destination/", { crossdomain: true })
+        .then(response => {
+          this.destination = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});

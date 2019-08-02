@@ -29,8 +29,16 @@
                       :items="country"
                       item-text="countryName"
                       item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
                       label="Country"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.areaCountryId"
+                      :items="areaCountry"
+                      item-text="areaCountryName"
+                      item-value="_id"
+                      label="Area Country"
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
@@ -174,10 +182,12 @@ export default {
     ],
     city: [],
     country:[],
+    areaCountry:[],
     editedIndex: -1,
     disableSelect: false,
     editId: "",
     editedItem: {
+      areaCountryId:"",
       cityCode: "",
       cityName: "",
       cityNameEN: "",
@@ -188,6 +198,7 @@ export default {
       removeImage: []
     },
     defaultItem: {
+            areaCountryId:"",
       cityCode: "",
       cityName: "",
       cityNameEN: "",
@@ -230,6 +241,13 @@ export default {
       AXIOS.get(apiIP + "/country/", { crossdomain: true })
         .then(response => {
           this.country = response.data;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+
+        AXIOS.get(apiIP + "/areacountry/", { crossdomain: true })
+        .then(response => {
+          this.areaCountry = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});

@@ -41,23 +41,8 @@
                       label="destinationCode"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.destinationName" label="DestinationName"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.destinationNameEN" label="DestinationNameEN"></v-text-field>
-                  </v-flex>
                   <v-flex xs12 sm3 md2>
                     <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm3 md2>
-                    <v-select
-                      v-model="editedItem.lang"
-                      :items="language"
-                      item-text="langName"
-                      item-value="langCode"
-                      label="Language"
-                    ></v-select>
                   </v-flex>
                    <v-flex xs12 sm3 md2>
                     <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
@@ -68,6 +53,48 @@
                    <v-flex xs12 sm12 md12>
                      <v-checkbox v-model="editedItem.isPromotion" :label="`IsPromotion?`"></v-checkbox>
                   </v-flex>
+                  <v-flex xs12 sm12 md12 class="sub-add-component">
+                    <v-text-field v-model="editedItem.destinationName" label="Destination Name"></v-text-field>
+                  </v-flex>
+                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5><b>Destination Intro</b></h5>
+                  <VueTrixEditor v-model="editedItem.destinationIntro" placeholder="Destination Intro" uniqueId="itravelstyle" v-bind:image-upload-path="`${apiIP}/upload/tour/destination/destinationintro`" localStorage></VueTrixEditor>
+                  <div v-html="editedItem.destinationIntro" class="old-content">
+
+                    </div>
+                </v-flex>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addDestinationIntroByLang">Add</v-btn>
+                  </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="destinationIntrosHeader"
+                      :items="editedItem.destinationIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deleteDestinationIntroByLang(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.destinationName}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.destinationIntro}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
                   <v-flex xs12 sm12 md12>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
@@ -141,6 +168,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import VueTrixEditor from "@dymantic/vue-trix-editor";
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -155,7 +184,8 @@ const AXIOS = axios.create({
 });
 export default {
    components: {
-    FileUpload
+    FileUpload,    
+    VueTrixEditor
   },
   data: () => ({
     apiIP: apiIP,
@@ -166,6 +196,12 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
+    destinationIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "DestinationName", value: "destinationName" },
+      { text: "language", value: "lang" },
+      { text: "DestinationIntro", value: "destinationIntro" }
+    ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
        { text: "CityCode", value: "cityId.cityName" },
@@ -189,7 +225,7 @@ export default {
     editedItem: {
       destinationCode: "",
       destinationName: "",
-      destinationNameEN: "",
+      destinationIntro: "",
       createBy: "",
       modifyBy: "",
        lang: "EN",
@@ -198,12 +234,13 @@ export default {
       order:0,
       keyword:"",
       isUsed:true,
-      isPromotion:false
+      isPromotion:false,
+      destinationIntros:[]
     },
     defaultItem: {
       destinationCode: "",
       destinationName: "",
-      destinationNameEN: "",
+      destinationIntro: "",
       createBy: "",
       modifyBy: "",
        lang: "EN",
@@ -212,7 +249,8 @@ export default {
       order:0,
       keyword:"",
       isUsed:true,
-      isPromotion:false
+      isPromotion:false,
+      destinationIntros:[]
     },
     snackbar: {
       snackbar: false,
@@ -308,6 +346,16 @@ export default {
       }
        this.uploadImg = [];
       this.editedItem.removeImage = [];
+    },
+    addDestinationIntroByLang() {
+      this.editedItem.destinationIntros.push({
+        destinationName: this.editedItem.destinationName,
+        destinationIntro: this.editedItem.destinationIntro,
+        lang: this.editedItem.lang
+      });
+    },
+    deleteDestinationIntroByLang(item) {
+      this.editedItem.destinationIntros.splice(item, 1);
     }
   }
 };

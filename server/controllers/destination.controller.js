@@ -1,11 +1,33 @@
 var Destination = require('../models/destination.model')
 var Supplier=require('../models/supplier.model')
+var City=require('../models/city.model')
 var mongoose = require('mongoose');
 var UploadController=require('../controllers/upload.controller')
 
 module.exports.index =function(req,res){
     Destination.find().populate('cityId').then(function(destination){
         res.send(destination)
+    })
+};
+
+module.exports.getUsed =function(req,res){
+    Destination.find({'isUsed':true}).populate('cityId').then(function(destination){
+        res.send(destination)
+    })
+};
+
+module.exports.getmDestinationByAreaCountry =function(req,res){
+    console.log(req.params._id);
+    City.find({'areaCountryId':req.params._id}).then(function(pac){
+        var tempArray=[];
+        pac.forEach(element => {
+        tempArray.push(element._id);
+        tempArray.push(element._id);
+        });
+        Destination.find({'isUsed':true,"cityId": { $in: tempArray }}).populate('cityId').then(function(destination){
+            console.log(destination);
+            res.send(destination)
+        })
     })
 };
 

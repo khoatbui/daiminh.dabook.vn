@@ -81,6 +81,15 @@ var areaUpload = multer.diskStorage({
 })
 const uploadArea = multer({storage:areaUpload});
 
+//AREA IMAGE
+var areaCountryUpload = multer.diskStorage({
+  destination: `./uploads/tour/areacountry`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadAreaCountry = multer({storage:areaCountryUpload});
+
 //COUNTRY IMAGE
 var countryUpload = multer.diskStorage({
   destination: `./uploads/tour/country`,
@@ -143,6 +152,15 @@ var fitUpload = multer.diskStorage({
 }
 })
 const uploadFIT = multer({storage:fitUpload});
+
+//PAYMENT IMAGE
+var paymentUpload = multer.diskStorage({
+  destination: `./uploads/page/payment`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadPayment = multer({storage:paymentUpload});
 
 //TOUR LIST IMAGE
 var tourListUpload = multer.diskStorage({
@@ -266,6 +284,7 @@ router.post('/car/cartype',uploadCarType.array('photos', 12),controller.uploadCa
 
 router.post('/tour/city',uploadCity.array('photos', 12),controller.uploadCityImg)
 router.post('/tour/area',uploadArea.array('photos', 12),controller.uploadAreaImg)
+router.post('/tour/areacountry',uploadAreaCountry.array('photos', 12),controller.uploadAreaCountryImg)
 router.post('/tour/country',uploadCountry.array('photos', 12),controller.uploadCountryImg)
 router.post('/tour/destination',uploadDestination.array('photos', 12),controller.uploadDestinationImg)
 router.post('/tour/supplier',uploadTourSupplier.array('photos', 12),controller.uploadTourSupplierImg)
@@ -278,6 +297,7 @@ router.post('/tour/travelservice',uploadTravelService.array('photos', 12),contro
 router.post('/tour/mice',uploadMICE.array('photos', 12),controller.uploadMICEImg)
 router.post('/tour/fit',uploadFIT.array('photos', 12),controller.uploadFITImg)
 router.post('/page/aboutus',uploadAboutUs.array('photos', 12),controller.uploadAboutUsImg)
+router.post('/page/payment',uploadPayment.array('photos', 12),controller.uploadPaymentImg)
 
 
 router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploadTourDetailImg)

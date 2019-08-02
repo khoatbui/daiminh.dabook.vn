@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var citySchema = new mongoose.Schema({
     countryId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Country' },
+    areaCountryId:{ type: mongoose.Schema.Types.ObjectId, ref: 'AreaCountry' },
     cityCode: String,
     cityName: String,
     cityNameEN: String,

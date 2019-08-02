@@ -5,7 +5,7 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var controller=require('../controllers/ads.controller')
+var controller=require('../controllers/areacountry.controller')
 var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
@@ -19,15 +19,11 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
-router.get('/getused',controller.getUsed)
+router.get('/m/getareacountrybyid/:_id',controller.getmAreaCountryById)
 
-router.get('/m/getadsbyid/:_id',controller.getmAdsById)
+router.delete('/:_id', controller.deleteAreaCountry)
 
-router.get('/m/getadsbytype/:_id',controller.getmAdsByType)
+router.post('/insert', jsonParser,controller.insertAreaCountry)
 
-router.delete('/:_id', controller.deleteAds)
-
-router.post('/insert', jsonParser,controller.insertAds)
-
-router.post('/update/:_id', jsonParser,controller.updateAds)
+router.post('/update/:_id', jsonParser,controller.updateAreaCountry)
 module.exports = router

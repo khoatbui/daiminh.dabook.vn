@@ -22,7 +22,8 @@ var blogListSchema = new mongoose.Schema({
     travelStyleId:{ type: mongoose.Schema.Types.ObjectId, ref: 'TravelStyle' },
     travelServiceId:{ type: mongoose.Schema.Types.ObjectId, ref: 'TravelService' },
     miceId:{ type: mongoose.Schema.Types.ObjectId, ref: 'MICE' },
-    aboutUsId:{ type: mongoose.Schema.Types.ObjectId, ref: 'AboutUs' }
+    aboutUsId:{ type: mongoose.Schema.Types.ObjectId, ref: 'AboutUs' },
+    destinationId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Destination' }
 });
 var BlogList =mongoose.model('BlogList',blogListSchema,'bloglist');
 

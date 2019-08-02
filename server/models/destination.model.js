@@ -3,7 +3,7 @@ var destinationSchema = new mongoose.Schema({
     cityId:{ type: mongoose.Schema.Types.ObjectId, ref: 'City' },
     destinationCode: String,
     destinationName: String,
-    destinationNameEN: String,
+    destinationIntro: String,
     lang:String,
     createBy:String,
     createDate:Date,
@@ -13,7 +13,8 @@ var destinationSchema = new mongoose.Schema({
     order:Number,
     keyword:String,
     isUsed:Boolean,
-    isPromotion:Boolean
+    isPromotion:Boolean,
+    destinationIntros:[]
 });
 var Destination =mongoose.model('Destination',destinationSchema,'destination');
 

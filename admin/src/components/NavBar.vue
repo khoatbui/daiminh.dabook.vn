@@ -23,6 +23,9 @@
           <v-list-tile>
             <v-btn flat to="/adsmanager">AdsManager</v-btn>
           </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/payment">PaymentMethod</v-btn>
+          </v-list-tile>
         </v-list>
       </v-menu>
        <v-menu :nudge-width="100">
@@ -65,10 +68,13 @@
             <v-btn flat to="/country">Country</v-btn>
           </v-list-tile>
           <v-list-tile>
-            <v-btn flat to="/destination">Destination</v-btn>
+            <v-btn flat to="/areacountry">Area Country</v-btn>
           </v-list-tile>
           <v-list-tile>
             <v-btn flat to="/city">City</v-btn>
+          </v-list-tile>
+          <v-list-tile>
+            <v-btn flat to="/destination">Destination</v-btn>
           </v-list-tile>
           <v-divider></v-divider>
            <v-list-tile>

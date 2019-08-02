@@ -10,7 +10,12 @@ var paymentSchema = new mongoose.Schema({
     createBy:String,
     createDate:Date,
     modifyBy:String,
-    modifyDate:Date
+    modifyDate:Date,
+    bankIntros:[],
+    bankImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    isUsed:Boolean,
+    order:Number
+
 });
 var Payments =mongoose.model('Payments',paymentSchema,'payments');
 

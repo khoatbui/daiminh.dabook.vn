@@ -19,7 +19,11 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/m/getdestinationbyid/:_id',controller.getmDestinationById)
+
+router.get('/m/getdestinationbyareacountry/:_id',controller.getmDestinationByAreaCountry)
 
 router.get('/m/gettop10destination',controller.getmTop10Destination)
 

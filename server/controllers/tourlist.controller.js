@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var UploadController=require('../controllers/upload.controller')
 
 module.exports.index =function(req,res){
-    TourList.find().populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
+    TourList.find().populate('destinationId').populate('destinationIds').populate('travelStyleIds').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
         res.send(tourlist)
     })
 };
@@ -35,6 +35,22 @@ module.exports.getmAllTourByCity =function(req,res){
         });
     })
     TourList.find({"isUsed":true,'destinationId':{ $in : des }}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
+        res.send(tourlist)
+    })
+};
+module.exports.getmAllTourByDestination =function(req,res){
+    TourList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
+        var result=tourlist.filter(item =>{ 
+            return item.travelStyleId.includes(req.params._id)
+    })
+        res.send(tourlist)
+    })
+};
+module.exports.getmAllTourByStyle =function(req,res){
+    TourList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
+        var result=tourlist.filter(item =>{ 
+            return item.destinationIds.includes(req.params._id)
+    })
         res.send(tourlist)
     })
 };
