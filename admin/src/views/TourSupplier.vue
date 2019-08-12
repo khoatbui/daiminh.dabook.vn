@@ -4,13 +4,7 @@
       <v-toolbar-title>TOUR SUPPLIER CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -54,27 +48,37 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
-                  
+
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
+                  <v-flex xs12 sm12 md4>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
                       v-bind:routerPath="apiIP+'/upload/tour/supplier'"
+                      :title="`Upload High Quality`"
                     ></file-upload>
                   </v-flex>
-                   <v-flex xs12 sm12 md12>
-                    <h2>Old images.</h2>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.supplierImages"
+                      @getDeleteFile="deleteImage($event)"
+                    ></ImageListComponent>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 class="scroll-ngang">
-                    <img
-                      class="room-img"
-                      v-for="(item,i) in editedItem.supplierImages"
-                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
-                      alt
-                    />
+                  <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImgWebp = $event"
+                      v-bind:routerPath="apiIP+'/upload/tour/supplier/webmp'"
+                      :title="`Upload Webp Image`"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.supplierImagesWebp"
+                      @getDeleteFile="deleteImageWebp($event)"
+                    ></ImageListComponent>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -94,7 +98,7 @@
         <tr class="whitespace-nowrap">
           <td class="justify-start px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)" :disabled="true">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.supplierCode }}</td>
           <td>{{ props.item.supplierName }}</td>
@@ -108,28 +112,32 @@
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
-       <template v-slot:no-results>
-        <v-alert :value="true" color="error" icon="warning">
-          Your search for "{{ search }}" found no results.
-        </v-alert>
+      <template v-slot:no-results>
+        <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+        >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
     <v-snackbar v-model="snackbar.snackbar">
       {{ snackbar.text }}
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
-    
-      <v-btn absolute dark fab bottom right small color="pink">
-        <download-excel :data="supplier" name= "supplier.xls">
-<i class="far fa-file-excel"></i>
-        </download-excel>
-      </v-btn>
+
+    <v-btn absolute dark fab bottom right small color="pink">
+      <download-excel :data="supplier" name="supplier.xls">
+        <i class="far fa-file-excel"></i>
+      </download-excel>
+    </v-btn>
   </div>
 </template>
 <script>
-var apiIP = process.env.VUE_APP_API_IPADDRESS
+var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import ImageListComponent from "../components/ImageListComponent.vue"
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -144,19 +152,21 @@ const AXIOS = axios.create({
 });
 export default {
   components: {
-    FileUpload
+    FileUpload,
+    ImageListComponent
   },
   data: () => ({
-     apiIP: apiIP,
-     uploadImg: [],
-     search: '',
+    apiIP: apiIP,
+    uploadImg: [],
+    uploadImgWebp: [],
+    search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
     dialog: false,
     headers: [
-      { text: "Actions",align:"center", value: "name", sortable: false },
+      { text: "Actions", align: "center", value: "name", sortable: false },
       {
         text: "supplierCode",
         value: "supplierCode"
@@ -180,23 +190,27 @@ export default {
       supplierCode: "",
       supplierName: "",
       lang: "EN",
-      markUpPlus:200000,
-      markUpPercent:0,
+      markUpPlus: 200000,
+      markUpPercent: 0,
       createBy: "",
-      modifyBy:"",
+      modifyBy: "",
       supplierImages: [],
-      removeImage:[]
+      supplierImagesWebp: [],
+      removeImage: [],
+      removeImageWebp: []
     },
     defaultItem: {
       supplierCode: "",
       supplierName: "",
       lang: "EN",
-       markUpPlus:200000,
-      markUpPercent:0,
+      markUpPlus: 200000,
+      markUpPercent: 0,
       createBy: "",
-            modifyBy:"",
+      modifyBy: "",
       supplierImages: [],
-      removeImage:[]
+      supplierImagesWebp: [],
+      removeImage: [],
+      removeImageWebp: []
     },
     snackbar: {
       snackbar: false,
@@ -207,6 +221,11 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
     }
   },
 
@@ -236,6 +255,8 @@ export default {
       delete this.editedItem._id;
       this.editId = item._id;
       this.dialog = true;
+      this.editedItem.removeImage=[];
+      this.editedItem.removeImageWebp=[];
     },
 
     deleteItem(item) {
@@ -244,13 +265,27 @@ export default {
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
-                       this.initialize();
-
+            this.initialize();
           })
           .catch(function(error) {})
           .finally(function() {});
     },
-
+    deleteImage(image) {
+      this.editedItem.supplierImages.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImage.push(image);
+    },
+    deleteImageWebp() {
+      this.editedItem.supplierImagesWebp.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImageWebp.push(image);
+    },
     close() {
       this.dialog = false;
       setTimeout(() => {
@@ -260,29 +295,34 @@ export default {
     },
 
     save() {
-       if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.supplierImages);
-        this.editedItem.removeImage=this.editedItem.supplierImages;
-        this.editedItem.supplierImages = this.uploadImg;
-        console.log(this.editedItem.removeImage);
+      if (this.uploadImg.length > 0) {
+        this.uploadImg.forEach(element => {
+          this.editedItem.supplierImages.push(element);
+        });
+      }
+      if (this.uploadImgWebp.length > 0) {
+        this.uploadImgWebp.forEach(element => {
+          this.editedItem.supplierImagesWebp.push(element);
+        });
       }
       this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/toursupplier/update/"+ this.editId, this.editedItem)
-            .then(response => {
-            })
+          AXIOS.post(
+            apiIP + "/toursupplier/update/" + this.editId,
+            this.editedItem
+          )
+            .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
           AXIOS.post(apiIP + "/toursupplier/insert", this.editedItem)
-            .then(response => {
-            })
+            .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         }
-                    this.initialize();
+        this.initialize();
         this.close();
       }
     }
@@ -305,7 +345,7 @@ export default {
   background-color: #eef1f6;
   border-color: #d1dbe5;
 }
-.whitespace-nowrap td{
+.whitespace-nowrap td {
   white-space: nowrap;
 }
 </style>

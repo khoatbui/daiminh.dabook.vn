@@ -9,7 +9,9 @@ var areaSchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     areaImages:[{fileName:String,filePath:String,destination:String,size:Number}],
-    isUsed:Boolean
+    areaImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
+    isUsed:Boolean,
+    map:String
 });
 var Area =mongoose.model('Area',areaSchema,'area');
 

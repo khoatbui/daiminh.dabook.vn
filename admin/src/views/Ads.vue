@@ -168,7 +168,7 @@
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.adsCode }}</td>
           <td>{{ props.item.adsName }}</td>
@@ -299,6 +299,11 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    deletePermision () {
+    if (this.$store.state.user.login.permision === 'ADMIN') {
+      return true
+    }
     }
   },
 

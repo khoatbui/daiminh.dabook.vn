@@ -1,6 +1,6 @@
 require('dotenv').config();
 var clientPath=process.env.CLIENT_PATH
-
+var pathFile = require('path')
 module.exports.uploadRoomTypeImg=async (req, res) => {
     try {
         var result=[];
@@ -16,6 +16,21 @@ module.exports.uploadRoomTypeImg=async (req, res) => {
         console.log(err);
         res.sendStatus(400);
     }
+}
+module.exports.webpuploadRoomTypeImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/webmp/img/hotel/roomtype');
+      result.push({'fileName':element.filename,'filePath':`webmp/img/hotel/roomtype/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
 }
 module.exports.uploadHotelImg=async (req, res) => {
   try {
@@ -33,6 +48,23 @@ module.exports.uploadHotelImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
+
+module.exports.webpuploadHotelImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/webmp/img/hotel/hotel');
+      result.push({'fileName':element.filename,'filePath':`webmp/img/hotel/hotel/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
+
 module.exports.uploadSupplierImg=async (req, res) => {
   try {
       var result=[];
@@ -50,6 +82,21 @@ module.exports.uploadSupplierImg=async (req, res) => {
   }
 }
 
+module.exports.webpuploadSupplierImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/webmp/img/hotel/supplier');
+      result.push({'fileName':element.filename,'filePath':`webmp/img/hotel/supplier/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 module.exports.uploadCarSupplierImg=async (req, res) => {
   try {
       var result=[];
@@ -66,7 +113,21 @@ module.exports.uploadCarSupplierImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
-
+module.exports.webpuploadCarSupplierImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/webmp/img/car/supplier');
+        result.push({'fileName':element.filename,'filePath':`webmp/img/car/supplier/${element.filename}`,'destination':element.destination})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 module.exports.uploadCarTypeImg=async (req, res) => {
   try {
       var result=[];
@@ -83,7 +144,21 @@ module.exports.uploadCarTypeImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
-
+module.exports.webpuploadCarTypeImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/webmp/img/car/cartype');
+        result.push({'fileName':element.filename,'filePath':`webmp/img/car/cartype/${element.filename}`,'destination':element.destination})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 module.exports.uploadCityImg=async (req, res) => {
   try {
       var result=[];
@@ -101,6 +176,21 @@ module.exports.uploadCityImg=async (req, res) => {
   }
 }
 
+module.exports.webpuploadCityImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/webmp/img/tour/city');
+      result.push({'fileName':element.filename,'filePath':`webmp/img/tour/city/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 module.exports.uploadAreaImg=async (req, res) => {
   try {
       var result=[];
@@ -117,7 +207,21 @@ module.exports.uploadAreaImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
-
+module.exports.webpuploadAreaImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/webmp/img/tour/area');
+      result.push({'fileName':element.filename,'filePath':`webmp/img/tour/area/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 module.exports.uploadAreaCountryImg=async (req, res) => {
   try {
       var result=[];
@@ -135,6 +239,21 @@ module.exports.uploadAreaCountryImg=async (req, res) => {
   }
 }
 
+module.exports.webpuploadAreaCountryImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/webmp/img/tour/areacountry');
+      result.push({'fileName':element.filename,'filePath':`webmp/img/tour/areacountry/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 module.exports.uploadCountryImg=async (req, res) => {
   try {
       var result=[];
@@ -151,7 +270,21 @@ module.exports.uploadCountryImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
-
+module.exports.webpuploadCountryImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/webmp/img/tour/country');
+      result.push({'fileName':element.filename,'filePath':`webmp/img/tour/country/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 module.exports.uploadDestinationImg=async (req, res) => {
   try {
       var result=[];
@@ -168,7 +301,21 @@ module.exports.uploadDestinationImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
-
+module.exports.webpuploadDestinationImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/webmp/img/tour/destination');
+      result.push({'fileName':element.filename,'filePath':`webmp/img/tour/destination/${element.filename}`,'destination':element.destination})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
 module.exports.uploadTravelStyleImg=async (req, res) => {
   try {
       var result=[];
@@ -203,6 +350,21 @@ module.exports.uploadTourListImg=async (req, res) => {
   }
 }
 
+module.exports.webpuploadTourListImg=async (req, res) => {
+  try {
+      var result=[];
+     console.log(req.files)
+     req.files.forEach(element => {
+  copyFile(element.path, '../daiminh.dabook.vn/webmp/img/tour/tourlist');
+      result.push({'fileName':element.filename,'filePath':`webmp/img/tour/tourlist/${element.filename}`,'destination':element.destination,'src':`img/tour/tourlist/${element.filename}`})
+  });
+  console.log(result);
+  res.json({'files':result});
+  } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+  }
+}
   module.exports.uploadAdsImg=async (req, res) => {
     try {
         var result=[];
@@ -237,7 +399,21 @@ module.exports.uploadTourListImg=async (req, res) => {
     }
   }
 
-
+  module.exports.webpuploadTourSupplierImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/webmp/img/tour/supplier');
+        result.push({'fileName':element.filename,'filePath':`webmp/img/tour/supplier/${element.filename}`,'destination':element.destination,'src':`webmp/img/tour/supplier/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
   module.exports.uploadTourDocumentImg=async (req, res) => {
     try {
         var result=[];
@@ -503,6 +679,24 @@ var copyFile = (file, dir2)=>{
         try {
             fs.unlinkSync(`../daiminh.dabook.vn/${element.filePath}`);
             fs.unlinkSync(`../m.daiminh.dabook.vn/${element.filePath}`);
+            //file removed
+          } catch(err) {
+          }
+    });
+      
+  } catch (error) {
+    
+  }
+  };
+  
+  module.exports.removeImageWebp = function(imageList) {
+    try {
+    //include the fs, path modules
+    var fs = require("fs");
+  
+    imageList.forEach(element => {
+        try {
+            fs.unlinkSync(`../daiminh.dabook.vn/${element.filePath}`);
             //file removed
           } catch(err) {
           }

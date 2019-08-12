@@ -548,7 +548,7 @@
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td style="width:100px">
             <v-tooltip bottom>
@@ -935,6 +935,11 @@ export default {
               : obj.price * ((obj.markUpPercent + 100) / 100)
         })
       );
+    },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
     }
   },
 

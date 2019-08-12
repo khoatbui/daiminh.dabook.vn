@@ -12,7 +12,8 @@ var travelServiceSchema = new mongoose.Schema({
     isUsed:Boolean,
     order:Number,
     keyword:String,
-    travelServiceIntros:[]
+    travelServiceIntros:[],
+    travelServiceImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
 });
 var TravelService =mongoose.model('TravelService',travelServiceSchema,'travelservice');
 

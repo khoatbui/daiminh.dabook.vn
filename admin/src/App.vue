@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="main-app">
    <NavBar></NavBar>
     <v-content>
       <v-container fluid>
@@ -52,6 +52,9 @@ export default {
 };
 </script>
 <style>
+.main-app{
+  font-family: 'Quicksand', sans-serif !important;
+}
 .no-space{
   padding: 0 !important;
   margin:0 !important;

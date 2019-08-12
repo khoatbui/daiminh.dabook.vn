@@ -141,7 +141,7 @@
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td ><p v-html="props.item.blogId.blogName"></p></td>
           <td ><p v-html="props.item.block01"></p></td>
@@ -292,6 +292,11 @@ export default {
           );
         });
     },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
+    }
   },
 
   watch: {

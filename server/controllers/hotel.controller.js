@@ -44,7 +44,6 @@ module.exports.insertHotel= function (req, res) {
 module.exports.updateHotel=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         Hotel.updateOne({ _id: req.params._id },{$set:req.body},(err, hotel) =>{
         if(err) {
             console.log(err);
@@ -54,6 +53,8 @@ module.exports.updateHotel=function (req, res) {
                  res.status(200).send(hotel);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getHotelBySupplier=(req,res,next) => {
@@ -82,7 +83,13 @@ module.exports.getPromoteHotelBySupplierCode=(req,res,next) => {
 
 
 module.exports.getmListHotelWithPromotion=(req,res,next) => {
-    Hotel.find({isPromote:true,isUsed:true}).then(function(hotel){
+    Hotel.find({isPromote:true,isUsed:true}).populate('cityId').populate('supplierId').then(function(hotel){
+        console.log(hotel);
+        res.send(hotel)
+    })
+};
+module.exports.getmHotelById=(req,res,next) => {
+    Hotel.findOne({'_id':req.params._id,isUsed:true}).populate('cityId').populate('supplierId').then(function(hotel){
         console.log(hotel);
         res.send(hotel)
     })

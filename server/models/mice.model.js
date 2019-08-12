@@ -9,6 +9,7 @@ var miceSchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     miceImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    miceImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
     isUsed:Boolean,
     order:Number,
     keyword:String,

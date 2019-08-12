@@ -47,6 +47,10 @@ router.get('/m/gettop10promotionpackage',controller.getmAllPromotionPackage)
 
 router.get('/m/getpackagedetail/:_id', controller.getmPackageDetail)
 
+router.get('/m/getpackagebyhotel/:_id', controller.getPackageByHotel)
+
+router.get('/m/getpackagebyhotelroomtype/:hotelid&:roomtypeid', controller.getPackageByHotelRoomType)
+
 router.get('/m/getallpromotepackagebysupplier/:_id',controller.getmAllPromotePackageBySupplier)
 
 router.get('/m/getallpackagebysupplier/:_id',controller.getmAllPackageBySupplier)

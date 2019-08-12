@@ -10,8 +10,10 @@ var areaCountrySchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     areaCountryImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    areaCountryImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
     isUsed:Boolean,
-    areaCountryIntros:[]
+    areaCountryIntros:[],
+    map:String
 });
 var AreaCountry =mongoose.model('AreaCountry',areaCountrySchema,'areaCountry');
 

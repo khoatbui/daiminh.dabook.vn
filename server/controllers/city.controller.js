@@ -74,7 +74,6 @@ module.exports.insertCity= function (req, res) {
 module.exports.updateCity=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         City.updateOne({ _id: req.params._id },{$set:req.body},(err, city) =>{
         if(err) {
             console.log(err);
@@ -84,6 +83,8 @@ module.exports.updateCity=function (req, res) {
                  res.status(200).send(city);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getCityBySupplier=(req,res,next) => {

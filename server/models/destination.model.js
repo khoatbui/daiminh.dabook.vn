@@ -10,11 +10,13 @@ var destinationSchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     destinationImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    destinationImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
     order:Number,
     keyword:String,
     isUsed:Boolean,
     isPromotion:Boolean,
-    destinationIntros:[]
+    destinationIntros:[],
+    map:String
 });
 var Destination =mongoose.model('Destination',destinationSchema,'destination');
 

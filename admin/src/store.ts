@@ -9,7 +9,8 @@ export default new Vuex.Store({
     user:{
       login:{
         fullName:"Guest",
-        userName:"Guest"
+        userName:"Guest",
+        permision:'VIEW'
       },
       status:false
     }

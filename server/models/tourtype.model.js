@@ -9,7 +9,7 @@ var tourTypeSchema = new mongoose.Schema({
     createBy:String,
     createDate:Date,
     modifyBy:String,
-    modifyDate:Date
+    modifyDate:Date,
 });
 var TourType =mongoose.model('TourType',tourTypeSchema,'tourtype');
 

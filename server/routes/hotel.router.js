@@ -36,6 +36,8 @@ router.get('/m/getlisthotelpromotion',controller.getmListHotelWithPromotion)
 
 router.get('/m/getlisthotel',controller.getmListHotel)
 
+router.get('/m/gethotelbyid/:_id',controller.getmHotelById)
+
 router.get('/m/getlisthotelpromotebysuppliercode/:_id',controller.getmListHotelPromotionBySupplier)
 
 router.post('/m/posthotelbysearch', jsonParser,controller.getmHotelBySearch)

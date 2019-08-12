@@ -42,7 +42,6 @@ module.exports.insertArea= function (req, res) {
 module.exports.updateArea=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         Area.updateOne({ _id: req.params._id },{$set:req.body},(err, area) =>{
         if(err) {
             console.log(err);
@@ -52,6 +51,8 @@ module.exports.updateArea=function (req, res) {
                  res.status(200).send(area);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getAreaBySupplier=(req,res,next) => {

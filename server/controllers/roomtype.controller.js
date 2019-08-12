@@ -1,5 +1,5 @@
 var RoomType = require("../models/roomtype.model");
-var UploadController=require('../controllers/upload.controller')
+var UploadController = require("../controllers/upload.controller");
 var mongoose = require("mongoose");
 var moment = require("moment");
 moment().format();
@@ -47,7 +47,6 @@ module.exports.updateRoomType = function(req, res) {
   console.log(req.body);
   req.body.modifyDate = new Date();
   delete req.body.createBy;
-  UploadController.removeImage(req.body.removeImage);
   RoomType.updateOne(
     { _id: req.params._id },
     { $set: req.body },
@@ -62,14 +61,23 @@ module.exports.updateRoomType = function(req, res) {
       }
     }
   );
+  UploadController.removeImage(req.body.removeImage);
+  UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getRoomTypeByHotel = (req, res, next) => {
-  RoomType.find({ hotelId: req.params.index }).then(function(roomtype) {
+  RoomType.find({ hotelId: req.params._id }).then(function(roomtype) {
     res.send(roomtype);
   });
 };
-
+module.exports.getRoomTypeById = (req, res, next) => {
+  RoomType.findOne({ _id: req.params._id })
+    .populate("supplierId")
+    .populate("hotelId")
+    .then(function(roomtype) {
+      res.send(roomtype);
+    });
+};
 module.exports.getRoomTypeByHotelCode = (req, res, next) => {
   RoomType.find({ hotelId: req.params.index }).then(function(roomtype) {
     res.send(roomtype);

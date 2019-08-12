@@ -110,7 +110,7 @@ module.exports.insertTourList= function (req, res) {
 module.exports.updateTourList=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
+    
         TourList.updateOne({ _id: req.params._id },{$set:req.body},(err, tourlist) =>{
         if(err) {
             console.log(err);
@@ -120,6 +120,8 @@ module.exports.updateTourList=function (req, res) {
                  res.status(200).send(tourlist);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getTourListBySupplier=(req,res,next) => {

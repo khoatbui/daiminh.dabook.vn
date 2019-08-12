@@ -71,7 +71,6 @@ module.exports.insertDestination= function (req, res) {
 module.exports.updateDestination=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         Destination.updateOne({ _id: req.params._id },{$set:req.body},(err, destination) =>{
         if(err) {
             console.log(err);
@@ -81,6 +80,8 @@ module.exports.updateDestination=function (req, res) {
                  res.status(200).send(destination);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getDestinationBySupplier=(req,res,next) => {

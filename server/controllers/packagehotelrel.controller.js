@@ -61,6 +61,11 @@ module.exports.getPackageByHotelRoomType = (req, res, next) => {
         res.send(pac)
     })
 };
+module.exports.getPackageByHotel = (req, res, next) => {
+    PackageHotelREL.find({"hotelId":req.params._id}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+        res.send(pac)
+    })
+};
 module.exports.getPackageBySingleHotelRoomType=(req, res, next) => {
     PackageHotelREL.find({"hotelId":req.body.hotelId._id,"roomTypeId":req.body.roomTypeId._id}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
         console.log(pac);
@@ -108,7 +113,11 @@ module.exports.getmAllPackageBySupplier = (req, res, next) => {
         res.send(pac)
     })
 };
-
+module.exports.getPackageByHotelRoomType = (req, res, next) => {
+    PackageHotelREL.find({"isUsed":true,"hotelId":req.params.hotelid,"roomTypeId":req.params.roomtypeid}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+        res.send(pac)
+    })
+};
 module.exports.getmPackageDetail = (req, res, next) => {
     PackageHotelREL.findOne({"isUsed":true,"_id":req.params._id}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
         res.send(pac)

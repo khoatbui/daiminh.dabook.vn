@@ -81,7 +81,7 @@ var areaUpload = multer.diskStorage({
 })
 const uploadArea = multer({storage:areaUpload});
 
-//AREA IMAGE
+//AREA COUNTRY IMAGE
 var areaCountryUpload = multer.diskStorage({
   destination: `./uploads/tour/areacountry`,
   filename: function (req, file, cb) {
@@ -276,19 +276,31 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.post('/hotel/supplier',uploadSupplier.array('photos', 12),controller.uploadSupplierImg)
+router.post('/hotel/supplier/webmp',uploadSupplier.array('photos', 12),controller.webpuploadSupplierImg)
 router.post('/hotel/hotel',uploadHotel.array('photos', 12),controller.uploadHotelImg)
+router.post('/hotel/hotel/webmp',uploadHotel.array('photos', 12),controller.webpuploadHotelImg)
 router.post('/hotel/roomtype', uploadRoomType.array('photos', 12), controller.uploadRoomTypeImg)
+router.post('/hotel/roomtype/webmp', uploadRoomType.array('photos', 12), controller.webpuploadRoomTypeImg)
 
 router.post('/car/supplier',uploadCarSupplier.array('photos', 12),controller.uploadCarSupplierImg)
+router.post('/car/supplier/webmp',uploadCarSupplier.array('photos', 12),controller.webpuploadCarSupplierImg)
 router.post('/car/cartype',uploadCarType.array('photos', 12),controller.uploadCarTypeImg)
+router.post('/car/cartype/webmp',uploadCarType.array('photos', 12),controller.webpuploadCarTypeImg)
 
 router.post('/tour/city',uploadCity.array('photos', 12),controller.uploadCityImg)
+router.post('/tour/city/webmp',uploadCity.array('photos', 12),controller.webpuploadCityImg)
 router.post('/tour/area',uploadArea.array('photos', 12),controller.uploadAreaImg)
+router.post('/tour/area/webmp',uploadArea.array('photos', 12),controller.webpuploadAreaImg)
 router.post('/tour/areacountry',uploadAreaCountry.array('photos', 12),controller.uploadAreaCountryImg)
+router.post('/tour/areacountry/webmp',uploadAreaCountry.array('photos', 12),controller.webpuploadAreaCountryImg)
 router.post('/tour/country',uploadCountry.array('photos', 12),controller.uploadCountryImg)
+router.post('/tour/country/webmp',uploadCountry.array('photos', 12),controller.webpuploadCountryImg)
 router.post('/tour/destination',uploadDestination.array('photos', 12),controller.uploadDestinationImg)
+router.post('/tour/destination/webmp',uploadDestination.array('photos', 12),controller.webpuploadDestinationImg)
 router.post('/tour/supplier',uploadTourSupplier.array('photos', 12),controller.uploadTourSupplierImg)
+router.post('/tour/supplier/webmp',uploadTourSupplier.array('photos', 12),controller.webpuploadTourSupplierImg)
 router.post('/tour/tourlist',uploadTourList.array('photos', 12),controller.uploadTourListImg)
+router.post('/tour/tourlist/webmp',uploadTourList.array('photos', 12),controller.webpuploadTourListImg)
 router.post('/tour/document',uploadTourDocument.array('documents', 12),controller.uploadTourDocumentImg)
 
 router.post('/ads',uploadAds.array('photos', 12),controller.uploadAdsImg)

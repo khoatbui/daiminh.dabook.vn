@@ -12,7 +12,8 @@ var travelStyleSchema = new mongoose.Schema({
     isUsed:Boolean,
     order:Number,
     keyword:String,
-    travelStyleIntros:[]
+    travelStyleIntros:[],
+    travelStyleImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
 });
 var TravelStyle =mongoose.model('TravelStyle',travelStyleSchema,'travelstyle');
 

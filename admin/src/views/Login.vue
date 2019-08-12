@@ -107,7 +107,8 @@ export default {
             localStorage.loginStatus = false;
             this.$store.dispatch("updateUserAction", {
               login: {
-                userName: "Please login"
+                userName: "Please login",
+                permision:'VIEW'
               },
               status: false
             });

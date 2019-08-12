@@ -13,7 +13,8 @@ var carTypeSchema = new mongoose.Schema({
     createDate:Date,
     modifyBy:String,
     modifyDate:Date,
-    carImages:[{fileName:String,filePath:String,destination:String,size:Number}]
+    carImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    carImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
 });
 var CarType =mongoose.model('CarType',carTypeSchema,'carType');
 

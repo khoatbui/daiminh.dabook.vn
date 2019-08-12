@@ -24,10 +24,14 @@ var tourListSchema = new mongoose.Schema({
     voteScore:String,
     discount:Number,
     price:Number,
+    priceChild04:Number,
+    priceChild48:Number,
     isUsed:Boolean,
     isPromotion:Boolean,
     tourIntros:[],
-    star:Number
+    star:Number,
+    map:String,
+    tourImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
 });
 var TourList =mongoose.model('TourList',tourListSchema,'tourlist');
 

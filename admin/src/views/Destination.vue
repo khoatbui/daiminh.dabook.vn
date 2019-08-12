@@ -29,7 +29,6 @@
                       :items="city"
                       item-text="cityName"
                       item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
                       label="City"
                     ></v-select>
                   </v-flex>
@@ -44,25 +43,34 @@
                   <v-flex xs12 sm3 md2>
                     <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
                   </v-flex>
-                   <v-flex xs12 sm3 md2>
+                  <v-flex xs12 sm3 md2>
                     <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
                   </v-flex>
-                   <v-flex xs12 sm3 md2>
-                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                  <v-flex xs12 sm3 md2>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
-                   <v-flex xs12 sm12 md12>
-                     <v-checkbox v-model="editedItem.isPromotion" :label="`IsPromotion?`"></v-checkbox>
+                  <v-flex xs12 sm12 md12>
+                    <v-checkbox v-model="editedItem.isPromotion" :label="`IsPromotion?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs12 sm6 md12>
+                    <v-text-field v-model="editedItem.map" label="Map"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="sub-add-component">
                     <v-text-field v-model="editedItem.destinationName" label="Destination Name"></v-text-field>
                   </v-flex>
-                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
-                    <h5><b>Destination Intro</b></h5>
-                  <VueTrixEditor v-model="editedItem.destinationIntro" placeholder="Destination Intro" uniqueId="itravelstyle" v-bind:image-upload-path="`${apiIP}/upload/tour/destination/destinationintro`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.destinationIntro" class="old-content">
-
-                    </div>
-                </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5>
+                      <b>Destination Intro</b>
+                    </h5>
+                    <VueTrixEditor
+                      v-model="editedItem.destinationIntro"
+                      placeholder="Destination Intro"
+                      uniqueId="itravelstyle"
+                      v-bind:image-upload-path="`${apiIP}/upload/tour/destination/destinationintro`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.destinationIntro" class="old-content"></div>
+                  </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select
                       v-model="editedItem.lang"
@@ -95,23 +103,34 @@
                     </v-data-table>
                   </v-flex>
                 </v-layout>
-                  <v-flex xs12 sm12 md12>
+                <v-layout wrap>
+                  <v-flex xs12 sm12 md4>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
                       v-bind:routerPath="apiIP+'/upload/tour/destination'"
+                      :title="`Upload High Quality`"
                     ></file-upload>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <h2>Old images.</h2>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.destinationImages"
+                      @getDeleteFile="deleteImage($event)"
+                    ></ImageListComponent>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 class="scroll-ngang">
-                    <img
-                      class="room-img"
-                      v-for="(item,i) in editedItem.destinationImages"
-                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
-                      alt
-                    />
+                  <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImgWebp = $event"
+                      v-bind:routerPath="apiIP+'/upload/tour/destination/webmp'"
+                      :title="`Upload Webp Image`"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.destinationImagesWebp"
+                      @getDeleteFile="deleteImageWebp($event)"
+                    ></ImageListComponent>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -131,15 +150,16 @@
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.cityId.cityName }}</td>
           <td>{{ props.item.destinationCode }}</td>
           <td>{{ props.item.destinationName }}</td>
-          <td>{{ props.item.destinationNameEN }}</td>
           <td>{{ props.item.order }}</td>
           <td>{{ props.item.createBy }}</td>
           <td>{{ props.item.createDate }}</td>
+          <td>{{ props.item.modifyBy }}</td>
+          <td>{{ props.item.modifyDate }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -157,11 +177,11 @@
       {{ snackbar.text }}
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
-      <v-btn absolute dark fab bottom right small color="pink">
-        <download-excel :data="destination" name= "destination.xls">
-<i class="far fa-file-excel"></i>
-        </download-excel>
-      </v-btn>
+    <v-btn absolute dark fab bottom right small color="pink">
+      <download-excel :data="destination" name="destination.xls">
+        <i class="far fa-file-excel"></i>
+      </download-excel>
+    </v-btn>
   </div>
 </template>
 <script>
@@ -169,6 +189,7 @@ var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import VueTrixEditor from "@dymantic/vue-trix-editor";
+import ImageListComponent from "../components/ImageListComponent.vue";
 
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -183,13 +204,15 @@ const AXIOS = axios.create({
   }
 });
 export default {
-   components: {
-    FileUpload,    
-    VueTrixEditor
+  components: {
+    FileUpload,
+    VueTrixEditor,
+    ImageListComponent
   },
   data: () => ({
     apiIP: apiIP,
-        uploadImg: [],
+    uploadImg: [],
+    uploadImgWebp: [],
     search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -204,13 +227,14 @@ export default {
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
-       { text: "CityCode", value: "cityId.cityName" },
+      { text: "CityCode", value: "cityId.cityName" },
       { text: "destinationCode", value: "destinationCode" },
       { text: "destinationName", value: "destinationName" },
-      { text: "destinationNameEN", value: "destinationNameEN" },
       { text: "Order", value: "order" },
       { text: "Create By", value: "createBy" },
-      { text: "Create Date", value: "createDate" }
+      { text: "Create Date", value: "createDate" },
+      { text: "Modify By", value: "modifyBy" },
+      { text: "Modify Date", value: "modifyDate" }
     ],
     language: [
       { langCode: "EN", langName: "English" },
@@ -218,7 +242,7 @@ export default {
       { langCode: "VI", langName: "VietNam" }
     ],
     destination: [],
-    city:[],
+    city: [],
     editedIndex: -1,
     disableSelect: false,
     editId: "",
@@ -228,14 +252,17 @@ export default {
       destinationIntro: "",
       createBy: "",
       modifyBy: "",
-       lang: "EN",
-        destinationImages: [],
+      lang: "EN",
+      destinationImages: [],
       removeImage: [],
-      order:0,
-      keyword:"",
-      isUsed:true,
-      isPromotion:false,
-      destinationIntros:[]
+      destinationImagesWebp: [],
+      removeImageWebp: [],
+      order: 0,
+      keyword: "",
+      isUsed: true,
+      isPromotion: false,
+      destinationIntros: [],
+      map: ""
     },
     defaultItem: {
       destinationCode: "",
@@ -243,14 +270,17 @@ export default {
       destinationIntro: "",
       createBy: "",
       modifyBy: "",
-       lang: "EN",
-        destinationImages: [],
+      lang: "EN",
+      destinationImages: [],
       removeImage: [],
-      order:0,
-      keyword:"",
-      isUsed:true,
-      isPromotion:false,
-      destinationIntros:[]
+      destinationImagesWebp: [],
+      removeImageWebp: [],
+      order: 0,
+      keyword: "",
+      isUsed: true,
+      isPromotion: false,
+      destinationIntros: [],
+      map: ""
     },
     snackbar: {
       snackbar: false,
@@ -261,6 +291,11 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
     }
   },
 
@@ -297,6 +332,8 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
+      this.editedItem.removeImage = [];
+      this.editedItem.removeImageWebp = [];
     },
 
     deleteItem(item) {
@@ -310,6 +347,26 @@ export default {
           .catch(function(error) {})
           .finally(function() {});
     },
+    deleteImage(image) {
+      this.editedItem.destinationImages.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImage.push(image);
+    },
+    deleteImageWebp() {
+      this.editedItem.destinationImagesWebp.forEach(function(
+        item,
+        index,
+        object
+      ) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImageWebp.push(image);
+    },
 
     close() {
       this.dialog = false;
@@ -321,17 +378,24 @@ export default {
     },
 
     save() {
-       if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.destinationImages);
-        this.editedItem.removeImage = this.editedItem.destinationImages;
-        this.editedItem.destinationImages = this.uploadImg;
-        console.log(this.editedItem.removeImage);
+      if (this.uploadImg.length > 0) {
+        this.uploadImg.forEach(element => {
+          this.editedItem.destinationImages.push(element);
+        });
       }
-     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      if (this.uploadImgWebp.length > 0) {
+        this.uploadImgWebp.forEach(element => {
+          this.editedItem.destinationImagesWebp.push(element);
+        });
+      }
+      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/destination/update/" + this.editId, this.editedItem)
+          AXIOS.post(
+            apiIP + "/destination/update/" + this.editId,
+            this.editedItem
+          )
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
@@ -344,7 +408,7 @@ export default {
         this.initialize();
         this.close();
       }
-       this.uploadImg = [];
+      this.uploadImg = [];
       this.editedItem.removeImage = [];
     },
     addDestinationIntroByLang() {
@@ -376,7 +440,7 @@ export default {
   background-color: #eef1f6;
   border-color: #d1dbe5;
 }
-.whitespace-nowrap td{
+.whitespace-nowrap td {
   white-space: nowrap;
 }
 </style>

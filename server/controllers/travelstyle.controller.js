@@ -48,7 +48,6 @@ module.exports.insertTravelStyle= function (req, res) {
 module.exports.updateTravelStyle=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         TravelStyle.updateOne({ _id: req.params._id },{$set:req.body},(err, travelstyle) =>{
         if(err) {
             console.log(err);
@@ -58,6 +57,8 @@ module.exports.updateTravelStyle=function (req, res) {
                  res.status(200).send(travelstyle);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getTravelStyleBySupplier=(req,res,next) => {

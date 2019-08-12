@@ -12,6 +12,7 @@ var blogListSchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     blogImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    blogImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
     order:Number,
     keyword:String,
     isUsed:Boolean,

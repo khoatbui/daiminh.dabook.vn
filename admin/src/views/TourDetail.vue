@@ -9,74 +9,105 @@
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
         </template>
-         <v-form  ref="form" v-model="valid">
-        <v-card>
-          <v-card-title class="pink white--text">
-            <span class="headline">{{ formTitle }}</span>
-          </v-card-title>
+        <v-form ref="form" v-model="valid">
+          <v-card>
+            <v-card-title class="pink white--text">
+              <span class="headline">{{ formTitle }}</span>
+            </v-card-title>
 
-          <v-card-text>
-            <v-subheader>KEY</v-subheader>
-            <v-container grid-list-xl>
-              <v-layout wrap>
-                <v-flex xs12 sm6 md4>
-                  <v-select
-                    v-model="editedItem.tourId"
-                    :items="tourlist"
-                    item-text="tourName"
-                    item-value="_id"
-                     v-bind:class="{ disabled: disableSelect }"
-                    label="Tour"
-                    return-object></v-select>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-select
-                    v-model="editedItem.lang"
-                    :items="language"
-                    item-text="langName"
-                    item-value="langCode"
-                    label="Language"
-                  ></v-select>
-                </v-flex>
-                <v-flex xs12 sm12 md12 class="group-card">
-                  <h5><b>Program</b></h5>
-                    <VueTrixEditor v-model="editedItem.program" v-bind:initial-content="editedItem.program" placeholder="Program" uniqueId="iprogram" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
-                    <div v-html="editedItem.program" class="old-content">
+            <v-card-text>
+              <v-subheader>KEY</v-subheader>
+              <v-container grid-list-xl>
+                <v-layout wrap>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.tourId"
+                      :items="tourlist"
+                      item-text="tourName"
+                      item-value="_id"
+                      v-bind:class="{ disabled: disableSelect }"
+                      label="Tour"
+                      return-object
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card">
+                    <h5>
+                      <b>Program</b>
+                    </h5>
+                    <VueTrixEditor
+                      v-model="editedItem.program"
+                      v-bind:initial-content="editedItem.program"
+                      placeholder="Program"
+                      uniqueId="iprogram"
+                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.program" class="old-content"></div>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card">
+                    <h5>
+                      <b>Transport</b>
+                    </h5>
+                    <VueTrixEditor
+                      v-model="editedItem.transport"
+                      placeholder="Transport"
+                      uniqueId="itransport"
+                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.transport" class="old-content"></div>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card">
+                    <h5>
+                      <b>Service Include</b>
+                    </h5>
+                    <VueTrixEditor
+                      v-model="editedItem.serviceInclude"
+                      placeholder="Service Include"
+                      uniqueId="iserviceinclude"
+                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.serviceInclude" class="old-content"></div>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card">
+                    <h5>
+                      <b>Service Not Include</b>
+                    </h5>
+                    <VueTrixEditor
+                      v-model="editedItem.serviceNotInclude"
+                      placeholder="Service Not Include"
+                      uniqueId="iservicenotinclude"
+                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.serviceNotInclude" class="old-content"></div>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card">
+                    <h5>
+                      <b>Should Take</b>
+                    </h5>
+                    <VueTrixEditor
+                      v-model="editedItem.shouldTake"
+                      placeholder="Should Take"
+                      uniqueId="ishouldtake"
+                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.shouldTake" class="old-content"></div>
+                  </v-flex>
+                </v-layout>
 
-                    </div>
-                </v-flex>
-                 <v-flex xs12 sm12 md12 class="group-card">
-                  <h5><b>Transport</b></h5>
-                    <VueTrixEditor v-model="editedItem.transport" placeholder="Transport" uniqueId="itransport" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
-                    <div v-html="editedItem.transport" class="old-content">
-
-                    </div>
-                </v-flex>
-                <v-flex xs12 sm12 md12 class="group-card">
-                    <h5><b>Service Include</b></h5>
-                  <VueTrixEditor v-model="editedItem.serviceInclude" placeholder="Service Include" uniqueId="iserviceinclude" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.serviceInclude" class="old-content">
-
-                    </div>
-                </v-flex>
-                <v-flex xs12 sm12 md12 class="group-card">
-                    <h5><b>Service Not Include</b></h5>
-                  <VueTrixEditor v-model="editedItem.serviceNotInclude" placeholder="Service Not Include" uniqueId="iservicenotinclude" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.serviceNotInclude" class="old-content">
-
-                    </div>
-                </v-flex>
-                <v-flex xs12 sm12 md12 class="group-card">
-                    <h5><b>Should Take</b></h5>
-                  <VueTrixEditor v-model="editedItem.shouldTake" placeholder="Should Take" uniqueId="ishouldtake" v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.shouldTake" class="old-content">
-
-                    </div>
-                </v-flex>
-              </v-layout>
-              
-
-                 <v-layout wrap>
+                <v-layout wrap>
                   <v-flex xs12 sm12 md12>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <doc-upload
@@ -88,26 +119,29 @@
                     <h2>Old Document.</h2>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="scroll-ngang">
-                    <a  v-for="(item,i) in editedItem.detailDocs"
-                      v-bind:href="`http://mdaiminh.dabook.vn/${item.filePath}`">
-                    <font-awesome-icon icon="file-pdf" class="text-supplerlarge" />
-                    <span style="display:block">{{item.fileName}}</span>
+                    <a
+                      v-for="(item,i) in editedItem.detailDocs"
+                      v-bind:key="i"
+                      v-bind:href="`http://daiminh.dabook.vn/${item.filePath}`"
+                    >
+                      <font-awesome-icon icon="file-pdf" class="text-supplerlarge" />
+                      <span style="display:block">{{item.fileName}}</span>
                     </a>
                   </v-flex>
                 </v-layout>
-            </v-container>
-          </v-card-text>
+              </v-container>
+            </v-card-text>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-         </v-form>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
       </v-dialog>
     </v-toolbar>
-     <v-container fluid grid-list-xl pl-0 pr-0>
+    <v-container fluid grid-list-xl pl-0 pr-0>
       <v-card>
         <v-layout pl-2 pr-2>
           <v-flex xs12 sm6 md3 p-2>
@@ -138,21 +172,33 @@
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td v-html="replace(props.item.tourId.tourName)"></td>
-          <td ><p v-html="props.item.program"></p></td>
-          <td ><p v-html="props.item.transport"></p></td>
-          <td ><p v-html="props.item.serviceInclude"></p></td>
-          <td ><p v-html="props.item.serviceNotInclude"></p></td>
-          <td ><p v-html="props.item.shouldTake"></p></td>
-          <td ><p v-html="props.item.lang"></p></td>
+          <td>
+            <p v-html="props.item.program"></p>
+          </td>
+          <td>
+            <p v-html="props.item.transport"></p>
+          </td>
+          <td>
+            <p v-html="props.item.serviceInclude"></p>
+          </td>
+          <td>
+            <p v-html="props.item.serviceNotInclude"></p>
+          </td>
+          <td>
+            <p v-html="props.item.shouldTake"></p>
+          </td>
+          <td>
+            <p v-html="props.item.lang"></p>
+          </td>
         </tr>
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
-       <template v-slot:no-results>
+      <template v-slot:no-results>
         <v-alert
           :value="true"
           color="error"
@@ -184,16 +230,16 @@ const AXIOS = axios.create({
   }
 });
 export default {
-  components:{
+  components: {
     FileUpload,
     // VueTrix
     VueTrixEditor,
     DocUpload
   },
   data: () => ({
-    apiIP:apiIP,
+    apiIP: apiIP,
     valid: true,
-        uploadDocument:[],
+    uploadDocument: [],
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
@@ -224,11 +270,11 @@ export default {
         langCode: "ALL"
       }
     },
-        search: "",
+    search: "",
     tourlist: [],
     tourdetail: [],
     tourlistFilter: [],
-    uploadImg:[],
+    uploadImg: [],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
@@ -248,13 +294,13 @@ export default {
       createDate: moment(new Date()).format("YYYY-MM-DD"),
       modifyBy: "",
       modifyDate: moment(new Date()).format("YYYY-MM-DD"),
-            tourDetailImages: [],
-            removeImage: [],
-                  removeDoc:[],
-                        detailDocs:[]
+      tourDetailImages: [],
+      removeImage: [],
+      removeDoc: [],
+      detailDocs: []
     },
     defaultItem: {
-       tourId: "",
+      tourId: "",
       program: "",
       transport: "",
       serviceInclude: "",
@@ -266,9 +312,9 @@ export default {
       modifyBy: "",
       modifyDate: moment(new Date()).format("YYYY-MM-DD"),
       tourDetailImages: [],
-            removeImage: [],
-                  removeDoc:[],
-                        detailDocs:[]
+      removeImage: [],
+      removeDoc: [],
+      detailDocs: []
     }
   }),
 
@@ -281,14 +327,19 @@ export default {
       // then calculates `fullAddress` and copies that entry into it
 
       return this.tourdetail.filter(i => {
-          return (
-            (this.filterByCombo.tourId.tourCode === "ALL" ||
-              i.tourId._id === this.filterByCombo.tourId._id) &&
-            (this.filterByCombo.language.langCode === "ALL" ||
-              i.lang === this.filterByCombo.language.langCode)
-          );
-        });
+        return (
+          (this.filterByCombo.tourId.tourCode === "ALL" ||
+            i.tourId._id === this.filterByCombo.tourId._id) &&
+          (this.filterByCombo.language.langCode === "ALL" ||
+            i.lang === this.filterByCombo.language.langCode)
+        );
+      });
     },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
+    }
   },
 
   watch: {
@@ -302,7 +353,7 @@ export default {
   },
 
   methods: {
-     initialize() {
+    initialize() {
       AXIOS.get(apiIP + "/tourlist/", { crossdomain: true })
         .then(response => {
           this.tourlist = response.data;
@@ -331,7 +382,7 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
-      console.log('edit show')
+      console.log("edit show");
       console.log(this.editedItem);
     },
 
@@ -365,11 +416,14 @@ export default {
         this.editedItem.removeDoc = this.editedItem.detailDocs;
         this.editedItem.detailDocs = this.uploadDocument;
       }
-     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/tourdetail/update/" + this.editId, this.editedItem)
+          AXIOS.post(
+            apiIP + "/tourdetail/update/" + this.editId,
+            this.editedItem
+          )
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
@@ -385,8 +439,8 @@ export default {
       this.uploadImg = [];
       this.editedItem.removeImage = [];
     },
-    replace(item){
-      return item.replace('block','');
+    replace(item) {
+      return item.replace("block", "");
     }
   }
 };
@@ -407,15 +461,15 @@ export default {
   background-color: #eef1f6;
   border-color: #d1dbe5;
 }
-.old-content{
-  margin-top:10px;
+.old-content {
+  margin-top: 10px;
   background-color: #e2e9f1;
 }
-.group-card{
-  background-color: #FFFFFF;
+.group-card {
+  background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 2px 4px #c1c1c1;
   margin-bottom: 40px;
-  border:1px solid #01b3fa;
+  border: 1px solid #01b3fa;
 }
 </style>

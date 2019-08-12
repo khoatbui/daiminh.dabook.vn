@@ -12,6 +12,7 @@ var blogDetailSchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     blogDetailImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    blogDetailImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
     isUsed:Boolean,
     detailDocs:[{fileName:String,filePath:String,destination:String,size:Number}]
 });

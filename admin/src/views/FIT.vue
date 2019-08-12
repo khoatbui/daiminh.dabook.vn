@@ -74,23 +74,34 @@
                     </v-data-table>
                   </v-flex>
                 </v-layout>
-                 <v-flex xs12 sm12 md12>
+                <v-layout wrap>
+                  <v-flex xs12 sm12 md4>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
                       v-bind:routerPath="apiIP+'/upload/tour/fit'"
+                      :title="`Upload High Quality`"
                     ></file-upload>
-                 </v-flex>
-                 <v-flex xs12 sm12 md12>
-                    <h2>Old images.</h2>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 class="scroll-ngang">
-                    <img
-                      class="room-img"
-                      v-for="(item,i) in editedItem.fitImages"
-                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
-                      alt
-                    />
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.fitImages"
+                      @getDeleteFile="deleteImage($event)"
+                    ></ImageListComponent>
+                  </v-flex>
+                  <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImgWebp = $event"
+                      v-bind:routerPath="apiIP+'/upload/tour/fit/webmp'"
+                      :title="`Upload Webp Image`"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.fitImagesWebp"
+                      @getDeleteFile="deleteImageWebp($event)"
+                    ></ImageListComponent>
                   </v-flex>
               </v-layout>
             </v-container>
@@ -110,7 +121,7 @@
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.fitCode }}</td>
           <td>{{ props.item.fitName }}</td>
@@ -132,6 +143,7 @@ var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import VueTrixEditor from "@dymantic/vue-trix-editor";
+import ImageListComponent from "../components/ImageListComponent.vue";
 
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -148,11 +160,13 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    VueTrixEditor
+    VueTrixEditor,
+    ImageListComponent
   },
   data: () => ({
     apiIP: apiIP,
      uploadImg: [],
+    uploadImgWebp: [],
       search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -193,6 +207,8 @@ export default {
       lang: "EN",
        fitImages: [],
       removeImage: [],
+      fitImagesWebp: [],
+      removeImageWebp: [],
       isUsed:true,
       keyword:"",
       order:0,
@@ -205,6 +221,8 @@ export default {
       lang: "EN",
        fitImages: [],
       removeImage: [],
+      fitImagesWebp: [],
+      removeImageWebp: [],
       isUsed:true,
       keyword:"",
       order:0,
@@ -215,6 +233,11 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
     }
   },
 
@@ -245,6 +268,8 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
+      this.editedItem.removeImage = [];
+      this.editedItem.removeImageWebp = [];
     },
 
     deleteItem(item) {
@@ -258,6 +283,22 @@ export default {
           .catch(function(error) {})
           .finally(function() {});
     },
+    deleteImage(image) {
+      this.editedItem.fitImages.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImage.push(image);
+    },
+    deleteImageWebp() {
+      this.editedItem.fitImagesWebp.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImageWebp.push(image);
+    },
 
     close() {
       this.dialog = false;
@@ -269,11 +310,15 @@ export default {
     },
 
     save() {
-       if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.fitImages);
-        this.editedItem.removeImage = this.editedItem.fitImages;
-        this.editedItem.fitImages = this.uploadImg;
-        console.log(this.editedItem.removeImage);
+      if (this.uploadImg.length > 0) {
+        this.uploadImg.forEach(element => {
+          this.editedItem.fitImages.push(element);
+        });
+      }
+      if (this.uploadImgWebp.length > 0) {
+        this.uploadImgWebp.forEach(element => {
+          this.editedItem.fitImagesWebp.push(element);
+        });
       }
      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;

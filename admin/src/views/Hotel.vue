@@ -53,9 +53,6 @@
                   <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.star" label="Star"></v-text-field>
                   </v-flex>
-                   <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
-                  </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
@@ -65,10 +62,19 @@
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
                   </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isPackage" :label="`isPackage?`"></v-checkbox>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md12>
+                    <v-text-field v-model="editedItem.map" label="Map"></v-text-field>
+                  </v-flex>
                   <v-flex xs12 sm12 md8 class="sub-add-component">
                     <v-text-field v-model="editedItem.hotelName" label="Hotel Name"></v-text-field>
                   </v-flex>
-                  
+
                   <v-flex xs12 sm6 md2 class="sub-add-component">
                     <v-select
                       v-model="editedItem.lang"
@@ -82,11 +88,18 @@
                     <v-btn color="blue darken-1" dark @click="addHotelIntroByLang">Add</v-btn>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
-                    <h5><b>Hotel Introduce</b></h5>
-                  <VueTrixEditor v-model="editedItem.hotelIntro" placeholder="Hotel Introduce" uniqueId="ihotelintro" v-bind:image-upload-path="`${apiIP}/upload/hotel/hotel/hotelintro`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.hotelIntro" class="old-content">
-                    </div>
-                </v-flex>
+                    <h5>
+                      <b>Hotel Introduce</b>
+                    </h5>
+                    <VueTrixEditor
+                      v-model="editedItem.hotelIntro"
+                      placeholder="Hotel Introduce"
+                      uniqueId="ihotelintro"
+                      v-bind:image-upload-path="`${apiIP}/upload/hotel/hotel/hotelintro`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.hotelIntro" class="old-content"></div>
+                  </v-flex>
                 </v-layout>
                 <v-layout>
                   <v-flex xs12 sm12 md12 class="border-top">
@@ -107,22 +120,34 @@
                     </v-data-table>
                   </v-flex>
                 </v-layout>
-                  <v-flex xs12 sm12 md12>
+                <v-layout wrap>
+                   <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
                       v-bind:routerPath="apiIP+'/upload/hotel/hotel'"
+                      :title="`Upload High Quality`"
                     ></file-upload>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <h2>Old images.</h2>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.hotelImages"
+                      @getDeleteFile="deleteImage($event)"
+                    ></ImageListComponent>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 class="scroll-ngang">
-                    <img
-                      class="room-img"
-                      v-for="(item,i) in editedItem.hotelImages"
-                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
-                      alt
-                    />
+                  <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImgWebp = $event"
+                      v-bind:routerPath="apiIP+'/upload/hotel/hotel/webmp'"
+                      :title="`Upload Webp Image`"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.hotelImagesWebp"
+                      @getDeleteFile="deleteImageWebp($event)"
+                    ></ImageListComponent>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -142,7 +167,7 @@
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)" :disabled="true">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.supplierId.supplierName }}</td>
           <td>{{ props.item.cityId.cityName }}</td>
@@ -181,6 +206,7 @@ var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import VueTrixEditor from "@dymantic/vue-trix-editor";
+import ImageListComponent from "../components/ImageListComponent.vue";
 
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -197,13 +223,15 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    VueTrixEditor
+    VueTrixEditor,
+    ImageListComponent
   },
   data: () => ({
     apiIP: apiIP,
     search: "",
     valid: true,
     uploadImg: [],
+    uploadImgWebp: [],
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
@@ -244,14 +272,18 @@ export default {
       createBy: "",
       modifyBy: "",
       hotelCode: "",
-      keyword:"",
+      keyword: "",
       isUsed: true,
       isHot: true,
       isPromote: true,
       hotelImages: [],
       removeImage: [],
-      hotelIntro:"",
-      hotelIntros:[]
+      hotelImagesWebp: [],
+      removeImageWebp: [],
+      hotelIntro: "",
+      hotelIntros: [],
+      map: "",
+      isPackage:true,
     },
     defaultItem: {
       supplierId: "",
@@ -261,14 +293,18 @@ export default {
       createBy: "",
       modifyBy: "",
       hotelCode: "",
-      keyword:"",
+      keyword: "",
       isUsed: true,
       isHot: true,
       isPromote: true,
       hotelImages: [],
       removeImage: [],
-      hotelIntro:"",
-      hotelIntros:[]
+      hotelImagesWebp: [],
+      removeImageWebp: [],
+      hotelIntro: "",
+      hotelIntros: [],
+      map: "",
+      isPackage:true,
     },
     snackbar: {
       snackbar: false,
@@ -279,6 +315,11 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
     }
   },
 
@@ -310,7 +351,7 @@ export default {
       AXIOS.get(apiIP + "/city/", { crossdomain: true })
         .then(response => {
           this.city = response.data;
-                    console.log(this.city);
+          console.log(this.city);
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -323,6 +364,8 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
+      this.editedItem.removeImage = [];
+      this.editedItem.removeImageWebp = [];
     },
 
     deleteItem(item) {
@@ -336,6 +379,22 @@ export default {
           .catch(function(error) {})
           .finally(function() {});
     },
+    deleteImage(image) {
+      this.editedItem.hotelImages.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImage.push(image);
+    },
+    deleteImageWebp() {
+      this.editedItem.hotelImagesWebp.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImageWebp.push(image);
+    },
 
     close() {
       this.dialog = false;
@@ -348,12 +407,16 @@ export default {
 
     save() {
       if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.hotelImages);
-        this.editedItem.removeImage = this.editedItem.hotelImages;
-        this.editedItem.hotelImages = this.uploadImg;
-        console.log(this.editedItem.removeImage);
+        this.uploadImg.forEach(element => {
+          this.editedItem.hotelImages.push(element);
+        });
       }
-     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      if (this.uploadImgWebp.length > 0) {
+        this.uploadImgWebp.forEach(element => {
+          this.editedItem.hotelImagesWebp.push(element);
+        });
+      }
+      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
