@@ -10,7 +10,12 @@ module.exports.index =function(req,res){
     })
 };
 
-
+module.exports.getUsed =function(req,res){
+    BlogList.find({"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
+        res.send(bloglist)
+    })
+  };
+  
 module.exports.getmAllBlogPromotion =function(req,res){
     BlogList.find({"isPromotion":true,"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('travelServiceId').populate('miceId').populate('blogTypeId').then(function(bloglist){
         res.send(bloglist)
@@ -90,7 +95,6 @@ module.exports.insertBlogList= function (req, res) {
 module.exports.updateBlogList=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         BlogList.updateOne({ _id: req.params._id },{$set:req.body},(err, bloglist) =>{
         if(err) {
             console.log(err);
@@ -100,6 +104,8 @@ module.exports.updateBlogList=function (req, res) {
                  res.status(200).send(bloglist);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getBlogListBySupplier=(req,res,next) => {

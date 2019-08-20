@@ -111,6 +111,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editHotelIntroByLang(props.item)">edit</v-icon>
                           <v-icon small @click="deleteHotelIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.hotelName}}</td>
@@ -342,13 +343,13 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/supplier/getused", { crossdomain: true })
         .then(response => {
           this.supplier = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/city/", { crossdomain: true })
+      AXIOS.get(apiIP + "/city/getused", { crossdomain: true })
         .then(response => {
           this.city = response.data;
           console.log(this.city);
@@ -437,14 +438,30 @@ export default {
       this.editedItem.removeImage = [];
     },
     addHotelIntroByLang() {
+      var isFound=false;
+      this.editedItem.hotelIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+        element.hotelName= this.editedItem.hotelName;
+        element.hotelIntro= this.editedItem.hotelIntro;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.hotelIntros.push({
         hotelName: this.editedItem.hotelName,
         hotelIntro: this.editedItem.hotelIntro,
         lang: this.editedItem.lang
       });
+      }
     },
     deleteHotelIntroByLang(item) {
       this.editedItem.hotelIntros.splice(item, 1);
+    },
+    editHotelIntroByLang(item) {
+      this.editedItem.hotelName=item.hotelName;
+      this.editedItem.hotelIntro=item.hotelIntro;
+      this.editedItem.lang=item.lang;
     }
   }
 };

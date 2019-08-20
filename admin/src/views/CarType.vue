@@ -82,6 +82,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editCarTypeIntroByLang(props.item)">edit</v-icon>
                           <v-icon small @click="deleteCarTypeIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.carTypeName}}</td>
@@ -305,7 +306,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/carsupplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/carsupplier/getused", { crossdomain: true })
         .then(response => {
                 console.log(response.data)
           this.supplier = response.data;
@@ -406,14 +407,30 @@ export default {
         .finally(function() {});
     },
     addCarTypeIntroByLang() {
+      var isFound=false;
+      this.editedItem.carTypeIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+        element.carTypeName= this.editedItem.carTypeName;
+        element.carTypeIntro= this.editedItem.carTypeIntro;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.carTypeIntros.push({
         carTypeName: this.editedItem.carTypeName,
         carTypeIntro: this.editedItem.carTypeIntro,
         lang: this.editedItem.lang
       });
+      }
     },
     deleteCarTypeIntroByLang(item) {
       this.editedItem.carTypeIntros.splice(item, 1);
+    },
+    editCarTypeIntroByLang(item) {
+      this.editedItem.carTypeName=item.carTypeName;
+      this.editedItem.carTypeIntro=item.carTypeIntro;
+      this.editedItem.lang=item.lang;
     }
   }
 };

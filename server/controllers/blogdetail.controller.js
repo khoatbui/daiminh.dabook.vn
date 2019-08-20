@@ -9,6 +9,12 @@ module.exports.index =function(req,res){
         res.send(blogdetail)
     })
 };
+module.exports.getUsed =function(req,res){
+    BlogDetail.find({"isUsed":true}).then(function(blogdetail){
+        res.send(blogdetail)
+    })
+  };
+  
 module.exports.getBlogAboutUs =function(req,res){
     BlogType.findOne({'blogTypeCode':'ABU'}).then(function(blogType){
         BlogList.find({'blogTypeId':blogType._id}).then(function(blogLists){

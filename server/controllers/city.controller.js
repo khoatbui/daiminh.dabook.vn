@@ -11,6 +11,12 @@ module.exports.index =function(req,res){
     })
 };
 
+module.exports.getUsed =function(req,res){
+    City.find({"isUsed":true}).populate('countryId').then(function(city){
+        res.send(city)
+    })
+};
+
 module.exports.getmTop10City =function(req,res){
     City.find().sort('order')
     .limit(10).populate('countryId').then(function(city){

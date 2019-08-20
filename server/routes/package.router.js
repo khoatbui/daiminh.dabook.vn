@@ -18,6 +18,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.delete('/:_id', controller.deletePackage)
 
 router.post('/insert', jsonParser, controller.insertPackage)
@@ -25,4 +27,5 @@ router.post('/insert', jsonParser, controller.insertPackage)
 router.post('/update/:_id', jsonParser, controller.updatePackage)
 
 router.get('/combobox/package/:_id',controller.getPackageBySupplier)
+router.get('/combobox/packagewithdefault/:_id',controller.getPackageBySupplierWithDefault)
 module.exports = router

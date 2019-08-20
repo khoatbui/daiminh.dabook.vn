@@ -65,6 +65,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editFITIntroByLang(props.item)">edit</v-icon>
                           <v-icon small @click="deleteFITIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.fitName}}</td>
@@ -341,14 +342,30 @@ export default {
       this.editedItem.removeImage = [];
     },
     addFITIntroByLang() {
+      var isFound=false;
+      this.editedItem.fitIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+        element.fitName= this.editedItem.fitName;
+        element.fitIntro= this.editedItem.fitIntro;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.fitIntros.push({
         fitName: this.editedItem.fitName,
         fitIntro: this.editedItem.fitIntro,
         lang: this.editedItem.lang
       });
+      }
     },
     deleteFITIntroByLang(item) {
       this.editedItem.fitIntros.splice(item, 1);
+    },
+    editFITIntroByLang(item) {
+      this.editedItem.fitName=item.fitName;
+      this.editedItem.fitIntro=item.fitIntro;
+      this.editedItem.lang=item.lang;
     }
   }
 };

@@ -25,6 +25,8 @@ router.get('/m/getdestinationbyid/:_id',controller.getmDestinationById)
 
 router.get('/m/getdestinationbyareacountry/:_id',controller.getmDestinationByAreaCountry)
 
+router.get('/m/getdestinationbycity/:_id',controller.getmDestinationByCity)
+
 router.get('/m/gettop10destination',controller.getmTop10Destination)
 
 router.delete('/:_id', controller.deleteDestination)
@@ -32,4 +34,6 @@ router.delete('/:_id', controller.deleteDestination)
 router.post('/insert', jsonParser,controller.insertDestination)
 
 router.post('/update/:_id', jsonParser,controller.updateDestination)
+
+router.post('/m/postdestinationbysearch', jsonParser,controller.getDestinationBySearrch)
 module.exports = router

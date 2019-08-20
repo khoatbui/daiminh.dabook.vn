@@ -264,7 +264,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/country/", { crossdomain: true })
+      AXIOS.get(apiIP + "/country/getused", { crossdomain: true })
         .then(response => {
           this.country = response.data;
         })

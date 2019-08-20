@@ -9,6 +9,12 @@ module.exports.index = function (req, res) {
     })
 };
 
+module.exports.getUsed = function (req, res) {
+    OptionService.find({"isUsed":true}).populate('supplierId').populate('hotelId').populate('roomTypeId').then(function (optionService) {
+        res.send(optionService)
+    })
+};
+
 module.exports.getOptionService = (req, res, next) => {
     OptionService.find().then(function (optionService) {
         res.send(optionService)

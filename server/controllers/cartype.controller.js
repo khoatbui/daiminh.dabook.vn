@@ -12,6 +12,14 @@ module.exports.index = function(req, res) {
     });
 };
 
+module.exports.getUsed = function(req, res) {
+  CarType.find({"isUsed":true})
+    .populate("supplierId")
+    .then(function(cartype) {
+      res.send(cartype);
+    });
+};
+
 module.exports.getCarType = (req, res, next) => {
   CarType.find().then(function(cartype) {
     res.send(cartype);

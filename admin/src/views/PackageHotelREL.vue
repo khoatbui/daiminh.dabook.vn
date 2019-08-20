@@ -41,7 +41,6 @@
                       item-text="hotelName"
                       item-value="_id"
                       label="Hotel"
-                      v-bind:class="{ disabled: disableSelect }"
                       @input="changedHotelCombobox"
                       return-object
                     ></v-select>
@@ -965,7 +964,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/supplier/getused", { crossdomain: true })
         .then(response => {
           this.supplier = response.data;
           this.supplierFilter = response.data;
@@ -978,7 +977,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/hotel/", { crossdomain: true })
+      AXIOS.get(apiIP + "/hotel/getused", { crossdomain: true })
         .then(response => {
           this.hotel = response.data;
           this.hotelFilter = response.data;
@@ -991,7 +990,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/roomtype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/roomtype/getused", { crossdomain: true })
         .then(response => {
           this.roomtype = response.data;
           this.roomtypeFilter = response.data;
@@ -1004,7 +1003,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/package/", { crossdomain: true })
+      AXIOS.get(apiIP + "/package/getused", { crossdomain: true })
         .then(response => {
           this.packages = response.data;
           this.packagesFilter = response.data;
@@ -1128,7 +1127,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/package/combobox/package/" + event._id, {
+      AXIOS.get(apiIP + "/package/combobox/packagewithdefault/" + event._id, {
         crossdomain: true
       })
         .then(response => {

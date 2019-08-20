@@ -12,6 +12,14 @@ module.exports.index = function(req, res) {
       res.send(roomtype);
     });
 };
+module.exports.getUsed = function(req, res) {
+  RoomType.find({"isUsed":true})
+    .populate("supplierId")
+    .populate("hotelId")
+    .then(function(roomtype) {
+      res.send(roomtype);
+    });
+};
 
 module.exports.getRoomType = (req, res, next) => {
   RoomType.find().then(function(roomtype) {
@@ -80,6 +88,12 @@ module.exports.getRoomTypeById = (req, res, next) => {
 };
 module.exports.getRoomTypeByHotelCode = (req, res, next) => {
   RoomType.find({ hotelId: req.params.index }).then(function(roomtype) {
+    res.send(roomtype);
+  });
+};
+
+module.exports.getRoomTypeBySupplier = (req, res, next) => {
+  RoomType.find({ supplierId: req.params._id }).then(function(roomtype) {
     res.send(roomtype);
   });
 };

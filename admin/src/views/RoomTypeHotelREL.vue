@@ -224,7 +224,7 @@ export default {
         })
         .finally(function() {});
 
-         AXIOS.get(apiIP +"/hotel/", { crossdomain: true })
+         AXIOS.get(apiIP +"/hotel/getused", { crossdomain: true })
         .then(response => {
           this.hotel = response.data;
         })
@@ -232,7 +232,7 @@ export default {
         })
         .finally(function() {});
 
-        AXIOS.get(apiIP +"/supplier/", { crossdomain: true })
+        AXIOS.get(apiIP +"/supplier/getused", { crossdomain: true })
         .then(response => {
           this.supplier = response.data;
         })

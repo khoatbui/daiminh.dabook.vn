@@ -6,6 +6,7 @@ var supplierSchema = new mongoose.Schema({
     markUpPlus:Number,
     markUpPercent:Number,
     isPromote:Boolean,
+    isUsed:Boolean,
     lang: String,
     isActive:Boolean,
     createBy:String,

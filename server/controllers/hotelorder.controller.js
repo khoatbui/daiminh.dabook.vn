@@ -8,7 +8,13 @@ module.exports.index =function(req,res){
         res.send(hotel)
     })
 };
-
+module.exports.getUsed =function(req,res){
+    res.setHeader('Cache-Control', 'private');
+    res.cookie('__session', "sessionCookie");
+    HotelOrder.find({"isUsed":true}).populate('supplierId').populate('cityId').then(function(hotel){
+        res.send(hotel)
+    })
+};
 module.exports.getHotelOrder=(req,res,next) => {
     res.cookie('__session', "sessionCookie");
     HotelOrder.find().populate('supplierId').populate('cityId').then(function(hotel){

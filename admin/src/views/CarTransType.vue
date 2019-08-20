@@ -68,6 +68,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editCarTransTypeIntroByLang(props.item)">edit</v-icon>
                           <v-icon small @click="deleteCarTransTypeIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.carTransTypeName}}</td>
@@ -367,14 +368,30 @@ export default {
       this.editedItem.removeImage=[];
     },
     addCarTransTypeIntroByLang() {
+      var isFound=false;
+      this.editedItem.carTransTypeIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+        element.carTransTypeName= this.editedItem.carTransTypeName;
+        element.carTransTypeIntro= this.editedItem.carTransTypeIntro;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.carTransTypeIntros.push({
         carTransTypeName: this.editedItem.carTransTypeName,
         carTransTypeIntro: this.editedItem.carTransTypeIntro,
         lang: this.editedItem.lang
       });
+      }
     },
     deleteCarTransTypeIntroByLang(item) {
       this.editedItem.carTransTypeIntros.splice(item, 1);
+    },
+    editCarTransTypeIntroByLang(item) {
+      this.editedItem.carTransTypeName=item.carTransTypeName;
+      this.editedItem.carTransTypeIntro=item.carTransTypeIntro;
+      this.editedItem.lang=item.lang;
     }
   }
 };

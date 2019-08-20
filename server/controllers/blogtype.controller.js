@@ -8,7 +8,11 @@ module.exports.index =function(req,res){
         res.send(blogType)
     })
 };
-
+module.exports.getUsed =function(req,res){
+    BlogType.find({'isUsed':true}).then(function(blogType){
+        res.send(blogType)
+    })
+};
 module.exports.getmBlogTypeById=(req,res,next) => {
     BlogType.findOne({"_id":req.params._id}).then(function(blogType){
         res.send(blogType)

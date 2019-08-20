@@ -74,6 +74,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editTravelStyleIntroByLang(props.item)">edit</v-icon>
                           <v-icon small @click="deleteTravelStyleIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.travelStyleName}}</td>
@@ -353,14 +354,30 @@ export default {
       this.editedItem.removeImage = [];
     },
     addTravelStyleIntroByLang() {
+      var isFound=false;
+      this.editedItem.travelStyleIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+          element.travelStyleName= this.editedItem.travelStyleName;
+        element.travelStyleIntro= this.editedItem.travelStyleIntro;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.travelStyleIntros.push({
         travelStyleName: this.editedItem.travelStyleName,
         travelStyleIntro: this.editedItem.travelStyleIntro,
         lang: this.editedItem.lang
       });
+      }
     },
     deleteTravelStyleIntroByLang(item) {
       this.editedItem.travelStyleIntros.splice(item, 1);
+    },
+    editTravelStyleIntroByLang(item) {
+      this.editedItem.travelStyleName=item.travelStyleName;
+      this.editedItem.travelStyleIntro=item.travelStyleIntro;
+      this.editedItem.lang=item.lang;
     }
   }
 };

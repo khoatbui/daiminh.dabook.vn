@@ -20,6 +20,8 @@ router.get('/',controller.index)
 
 router.get('/getused',controller.getUsed)
 
+router.get('/getused',controller.getUsed)
+
 router.delete('/:_id', controller.deletePayments)
 
 router.post('/insert', jsonParser, controller.insertPayments)

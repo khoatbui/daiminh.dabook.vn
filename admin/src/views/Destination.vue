@@ -68,7 +68,8 @@
                       uniqueId="itravelstyle"
                       v-bind:image-upload-path="`${apiIP}/upload/tour/destination/destinationintro`"
                       localStorage
-                    ></VueTrixEditor>
+                    >
+                    </VueTrixEditor>
                     <div v-html="editedItem.destinationIntro" class="old-content"></div>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
@@ -94,6 +95,10 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-3"
+                            small
+                            @click="editDestinationIntroByLang(props.index,props.item)"
+                          >edit</v-icon>
                           <v-icon small @click="deleteDestinationIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.destinationName}}</td>
@@ -317,7 +322,7 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/city/", { crossdomain: true })
+      AXIOS.get(apiIP + "/city/getused", { crossdomain: true })
         .then(response => {
           this.city = response.data;
         })
@@ -412,14 +417,39 @@ export default {
       this.editedItem.removeImage = [];
     },
     addDestinationIntroByLang() {
+      var isFound=false;
+      this.editedItem.destinationIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+          element.destinationName= this.editedItem.destinationName;
+        element.destinationIntro= this.editedItem.destinationIntro;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.destinationIntros.push({
         destinationName: this.editedItem.destinationName,
         destinationIntro: this.editedItem.destinationIntro,
         lang: this.editedItem.lang
       });
+      }
+    },
+    modifyDestinationIntroByLang() {
+      this.editedItem.destinationIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+          element.destinationName= this.editedItem.destinationName;
+        element.destinationIntro= this.editedItem.destinationIntro;
+        }
+      });
     },
     deleteDestinationIntroByLang(item) {
       this.editedItem.destinationIntros.splice(item, 1);
+    },
+    editDestinationIntroByLang(index,item) {
+      this.editedItem.destinationName=item.destinationName;
+      this.editedItem.destinationIntro=item.destinationIntro;
+      this.editedItem.lang=item.lang;
+      document.getElementById('itravelstyle').value=item.destinationIntro;
     }
   }
 };

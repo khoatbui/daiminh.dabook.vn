@@ -19,6 +19,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/m/gettourlistbyid/:_id',controller.getmTourListById)
 
 router.get('/m/getalltourpromotion',controller.getmAllTourPromotion)

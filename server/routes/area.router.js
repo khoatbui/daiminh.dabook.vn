@@ -19,6 +19,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/m/getareabyid/:_id',controller.getmAreaById)
 
 router.delete('/:_id', controller.deleteArea)

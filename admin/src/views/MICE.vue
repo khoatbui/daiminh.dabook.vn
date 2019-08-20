@@ -74,6 +74,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editMICEIntroByLang(props.item)">edit</v-icon>
                           <v-icon small @click="deleteMICEIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.miceName}}</td>
@@ -350,14 +351,30 @@ export default {
       this.editedItem.removeImage = [];
     },
     addMICEIntroByLang() {
+      var isFound=false;
+      this.editedItem.miceIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+          element.miceName= this.editedItem.miceName;
+        element.miceIntro= this.editedItem.miceIntro;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.miceIntros.push({
         miceName: this.editedItem.miceName,
         miceIntro: this.editedItem.miceIntro,
         lang: this.editedItem.lang
       });
+      }
     },
     deleteMICEIntroByLang(item) {
       this.editedItem.miceIntros.splice(item, 1);
+    },
+    editMICEIntroByLang(item) {
+      this.editedItem.miceName=item.miceName;
+      this.editedItem.miceIntro=item.miceIntro;
+      this.editedItem.lang=item.lang;
     }
   }
 };

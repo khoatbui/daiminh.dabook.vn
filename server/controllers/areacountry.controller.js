@@ -9,6 +9,12 @@ module.exports.index = function(req, res) {
   });
 };
 
+module.exports.getUsed =function(req,res){
+  AreaCountry.find({"isUsed":true}).then(function(areaCountry){
+      res.send(areaCountry)
+  })
+};
+
 module.exports.getmAreaCountryById = (req, res, next) => {
   AreaCountry.findOne({ _id: req.params._id }).then(function(areaCountry) {
     res.send(areaCountry);

@@ -10,6 +10,12 @@ module.exports.index =function(req,res){
     })
 };
 
+module.exports.getUsed =function(req,res){
+    TourList.find({"isUsed":true}).populate('destinationId').populate('destinationIds').populate('travelStyleIds').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){
+        res.send(tourlist)
+    })
+};
+
 
 module.exports.getmAllTourPromotion =function(req,res){
     TourList.find({"isPromotion":true,"isUsed":true}).populate('destinationId').populate('travelStyleId').populate('tourTypeId').then(function(tourlist){

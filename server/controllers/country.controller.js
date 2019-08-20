@@ -8,6 +8,11 @@ module.exports.index =function(req,res){
         res.send(country)
     })
 };
+module.exports.getUsed =function(req,res){
+    Country.find({"isUsed":true}).populate('areaId').then(function(country){
+        res.send(country)
+    })
+};
 
 module.exports.getmCountryById=(req,res,next) => {
     Country.findOne({"_id":req.params._id}).populate('areaId').then(function(country){

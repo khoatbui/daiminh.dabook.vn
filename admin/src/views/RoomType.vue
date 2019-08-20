@@ -26,6 +26,7 @@
                   <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.supplierId"
+                      :rules="[() => typeof (editedItem.supplierId) !== 'undefined' || 'Required field']"
                       :items="supplier"
                       item-text="supplierName"
                       item-value="_id"
@@ -37,6 +38,7 @@
                   <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.hotelId"
+                      :rules="[() => typeof (editedItem.hotelId) !== 'undefined' || 'Required field']"
                       :items="hotel"
                       item-text="hotelName"
                       item-value="_id"
@@ -128,6 +130,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editRoomTypeIntroByLang(props.item)">edit</v-icon>
                           <v-icon small @click="deleteRoomTypeIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.roomTypeName}}</td>
@@ -527,14 +530,30 @@ export default {
         .finally(function() {});
     },
     addRoomTypeIntroByLang() {
+      var isFound=false;
+      this.editedItem.roomTypeIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+        element.roomTypeName= this.editedItem.roomTypeName;
+        element.roomTypeIntro= this.editedItem.roomTypeIntro;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.roomTypeIntros.push({
         roomTypeName: this.editedItem.roomTypeName,
         roomTypeIntro: this.editedItem.roomTypeIntro,
         lang: this.editedItem.lang
       });
+      }
     },
     deleteRoomTypeIntroByLang(item) {
       this.editedItem.roomTypeIntros.splice(item, 1);
+    },
+    editRoomTypeIntroByLang (item) {
+    this.editedItem.roomTypeName=item.roomTypeName;
+      this.editedItem.roomTypeIntro=item.roomTypeIntro;
+      this.editedItem.lang=item.lang; 
     }
   }
 };

@@ -19,6 +19,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.delete('/:_id', controller.deleteCarType)
 
 router.post('/insert', jsonParser, controller.insertCarType)

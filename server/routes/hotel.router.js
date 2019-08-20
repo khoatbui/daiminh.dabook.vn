@@ -18,6 +18,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/combobox/hotel/:index',controller.getHotelBySupplier)
 
 router.get('/combobox/hotelbysuppliercode/:index',controller.getHotelBySupplierCode)

@@ -188,6 +188,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editTourIntroByLang(props.item)">edit</v-icon>
                           <v-icon small @click="deleteTourIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.tourName}}</td>
@@ -510,7 +511,7 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/destination/", { crossdomain: true })
+      AXIOS.get(apiIP + "/destination/getused", { crossdomain: true })
         .then(response => {
           this.destination = response.data;
           this.destinationFilter = response.data;
@@ -522,7 +523,7 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/travelstyle/", { crossdomain: true })
+      AXIOS.get(apiIP + "/travelstyle/getused", { crossdomain: true })
         .then(response => {
           this.travelStyle = response.data;
           this.travelStyleFilter = response.data;
@@ -534,7 +535,7 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/tourtype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/tourtype/getused", { crossdomain: true })
         .then(response => {
           console.log(response.data);
           this.tourType = response.data;
@@ -637,6 +638,18 @@ export default {
       this.editedItem.removeImageWebp = [];
     },
     addTourIntroByLang() {
+      var isFound=false;
+      this.editedItem.tourIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+          element.tourName= this.editedItem.tourName;
+        element.tourIntro= this.editedItem.tourIntro;
+        element.from= this.editedItem.from;
+        element.to= this.editedItem.to;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.tourIntros.push({
         tourName: this.editedItem.tourName,
         tourIntro: this.editedItem.tourIntro,
@@ -644,6 +657,14 @@ export default {
         to: this.editedItem.to,
         lang: this.editedItem.lang
       });
+      }
+    },
+     editTourIntroByLang(item) {
+      this.editedItem.tourName=item.tourName;
+      this.editedItem.tourIntro=item.tourIntro;
+      this.editedItem.from=item.from;
+      this.editedItem.to=item.to;
+      this.editedItem.lang=item.lang;
     },
     deleteTourIntroByLang(item) {
       this.editedItem.tourIntros.splice(item, 1);

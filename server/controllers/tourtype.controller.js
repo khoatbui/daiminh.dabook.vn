@@ -8,6 +8,11 @@ module.exports.index = function (req, res) {
         res.send(tourtype)
     })
 };
+module.exports.getUsed = function (req, res) {
+    TourType.find({"isUsed":true}).then(function (tourtype) {
+        res.send(tourtype)
+    })
+};
 
 module.exports.getPromoteTourType = (req, res, next) => {
     TourType.find({"isPromote":true}).then(function (tourtype) {

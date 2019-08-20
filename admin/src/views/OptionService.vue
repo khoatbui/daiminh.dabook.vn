@@ -289,21 +289,21 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/hotel/", { crossdomain: true })
+      AXIOS.get(apiIP + "/hotel/getused", { crossdomain: true })
         .then(response => {
           this.hotel = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/supplier/getused", { crossdomain: true })
         .then(response => {
           this.supplier = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/roomtype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/roomtype/getused", { crossdomain: true })
         .then(response => {
           this.roomType = response.data;
         })

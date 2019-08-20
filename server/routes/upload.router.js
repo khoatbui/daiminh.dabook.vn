@@ -199,6 +199,15 @@ var tourSupplierUpload = multer.diskStorage({
 })
 const uploadTourSupplier = multer({storage:tourSupplierUpload});
 
+//TOUR SUPPLIER IMAGE
+var blogListUpload = multer.diskStorage({
+  destination: `./uploads/blog/bloglist`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadBlogList = multer({storage:blogListUpload});
+
 //TOUR DOCUMENT
 var tourDocumentUpload = multer.diskStorage({
   destination: `./uploads/tour/supplier`,
@@ -275,6 +284,18 @@ const uploadFITIntro = multer({storage:fitIntroUpload});
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
+//BLOG DETAIL INTRO IMAGE
+var blogDetailIntroUpload = multer.diskStorage({
+  destination: `./uploads/blog/blogdetail/blogdetailintro`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadBlogDetailIntro = multer({storage:blogDetailIntroUpload});
+
+var jsonParser = bodyParser.json()
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 router.post('/hotel/supplier',uploadSupplier.array('photos', 12),controller.uploadSupplierImg)
 router.post('/hotel/supplier/webmp',uploadSupplier.array('photos', 12),controller.webpuploadSupplierImg)
 router.post('/hotel/hotel',uploadHotel.array('photos', 12),controller.uploadHotelImg)
@@ -311,6 +332,8 @@ router.post('/tour/fit',uploadFIT.array('photos', 12),controller.uploadFITImg)
 router.post('/page/aboutus',uploadAboutUs.array('photos', 12),controller.uploadAboutUsImg)
 router.post('/page/payment',uploadPayment.array('photos', 12),controller.uploadPaymentImg)
 
+router.post('/blog/bloglist',uploadBlogList.array('photos', 12),controller.uploadBlogListImg)
+
 
 router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploadTourDetailImg)
 router.post('/car/cartype/cartypeintro',uploadCarTypeIntro.single('image'),controller.uploadCarTypeIntroImg)
@@ -320,6 +343,7 @@ router.post('/hotel/hotel/hotelintro',uploadHotelIntro.single('image'),controlle
 router.post('/hotel/roomtype/roomtypeintro',uploadRoomTypeIntro.single('image'),controller.uploadRoomTypeIntroImg)
 router.post('/hotel/package/packageintro',uploadPackageIntro.single('image'),controller.uploadPackageIntroImg)
 router.post('/tour/fit/fitintro',uploadFITIntro.single('image'),controller.uploadFITIntroImg)
+router.post('/blog/blogdetail/blogdetailintro',uploadBlogDetailIntro.single('image'),controller.uploadBlogDetailIntroImg)
 
 
 module.exports = router

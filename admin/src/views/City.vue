@@ -265,14 +265,14 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/country/", { crossdomain: true })
+      AXIOS.get(apiIP + "/country/getused", { crossdomain: true })
         .then(response => {
           this.country = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/areacountry/", { crossdomain: true })
+      AXIOS.get(apiIP + "/areacountry/getused", { crossdomain: true })
         .then(response => {
           this.areaCountry = response.data;
         })

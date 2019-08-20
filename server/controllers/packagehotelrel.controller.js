@@ -10,6 +10,13 @@ module.exports.index = function (req, res) {
     })
 };
 
+module.exports.getUsed = function (req, res) {
+    PackageHotelREL.find({"isUsed":true}).populate('supplierId').populate('hotelId').populate('roomTypeId').populate('packageId').then(function (package) {
+        res.send(package)
+    })
+};
+
+
 module.exports.getPackageHotelREL = (req, res, next) => {
     PackageHotelREL.find().then(function (package) {
         res.send(package)

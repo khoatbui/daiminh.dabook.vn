@@ -10,7 +10,12 @@ module.exports.index = function(req, res) {
       res.send(roomtype);
     });
 };
-
+module.exports.getUsed = function(req, res) {
+  CarTransType.find({"isUsed":true})
+    .then(function(roomtype) {
+      res.send(roomtype);
+    });
+};
 module.exports.getCarTransType = (req, res, next) => {
   CarTransType.find().then(function(roomtype) {
     res.send(roomtype);

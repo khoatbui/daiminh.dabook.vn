@@ -31,6 +31,7 @@ var tourListSchema = new mongoose.Schema({
     tourIntros:[],
     star:Number,
     map:String,
+    time:{},
     tourImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
 });
 var TourList =mongoose.model('TourList',tourListSchema,'tourlist');

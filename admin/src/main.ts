@@ -23,6 +23,9 @@ Vue.use(Vuetify, {
  })
  Vue.use(Vuex) 
 Vue.config.productionTip = false
+Vue.config.ignoredElements = [
+  'trix-editor',
+];
 // inject a handler for `myOption` custom option
 Vue.mixin(User)
 import 'babel-polyfill'

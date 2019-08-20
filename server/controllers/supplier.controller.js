@@ -8,7 +8,11 @@ module.exports.index = function (req, res) {
         res.send(supplier)
     })
 };
-
+module.exports.getUsed = function (req, res) {
+    Supplier.find({"isUsed":true}).then(function (supplier) {
+        res.send(supplier)
+    })
+};
 module.exports.getPromoteSupplier = (req, res, next) => {
     Supplier.find({"isPromote":true}).then(function (supplier) {
         res.send(supplier)

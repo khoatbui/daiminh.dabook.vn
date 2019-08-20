@@ -701,7 +701,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/carsupplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/carsupplier/getused", { crossdomain: true })
         .then(response => {
           this.carSupplier = response.data;
           this.carSupplierFilter = response.data;
@@ -714,7 +714,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/cartranstype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/cartranstype/getused", { crossdomain: true })
         .then(response => {
           this.carTransType = response.data;
           this.carTransTypeFilter = response.data;
@@ -727,7 +727,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/cartype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/cartype/getused", { crossdomain: true })
         .then(response => {
           this.carType = JSON.parse(JSON.stringify(response.data));
           this.carTypeFilter = response.data;
@@ -741,7 +741,7 @@ export default {
         .finally(function() {});
 
         
-      AXIOS.get(apiIP + "/city/", { crossdomain: true })
+      AXIOS.get(apiIP + "/city/getused", { crossdomain: true })
         .then(response => {
           this.city = JSON.parse(JSON.stringify(response.data));
         })

@@ -8,6 +8,11 @@ module.exports.index =function(req,res){
         res.send(area)
     })
 };
+module.exports.getUsed =function(req,res){
+    Area.find({"isUsed":true}).then(function(area){
+        res.send(area)
+    })
+};
 
 module.exports.getmAreaById=(req,res,next) => {
     Area.findOne({"_id":req.params._id}).then(function(area){

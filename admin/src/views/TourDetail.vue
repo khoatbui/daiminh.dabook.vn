@@ -22,7 +22,7 @@
                   <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.tourId"
-                      :items="tourlist"
+                      :items="tourListByLang"
                       item-text="tourName"
                       item-value="_id"
                       v-bind:class="{ disabled: disableSelect }"
@@ -242,6 +242,7 @@ export default {
     uploadDocument: [],
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
+    componentLoaded:false,
     endDateModal: false,
     dialog: false,
     headers: [
@@ -339,7 +340,20 @@ export default {
       if (this.$store.state.user.login.permision === "ADMIN") {
         return true;
       }
-    }
+    },
+    tourListByLang(){
+      if (this.componentLoaded === false) {
+        return;
+      }
+      this.tourlist.forEach(element => {
+        element.tourIntros.forEach(area => {
+          if (area.lang.toUpperCase() === 'EN') {
+            element.tourName = area.tourName;
+          }
+        });
+      });
+      return this.tourlist;
+    },
   },
 
   watch: {
@@ -354,15 +368,20 @@ export default {
 
   methods: {
     initialize() {
-      AXIOS.get(apiIP + "/tourlist/", { crossdomain: true })
+      AXIOS.get(apiIP + "/tourlist/getused", { crossdomain: true })
         .then(response => {
           this.tourlist = response.data;
           this.tourlistFilter = response.data;
           this.tourlistFilter.unshift({
             tourCode: "ALL",
             tourName: "ALL",
+            tourIntros:[{
+              tourName:'ALL',
+              lang:'EN'
+            }],
             tourId: -1
           });
+          this.componentLoaded = true;
         })
         .catch(function(error) {})
         .finally(function() {});

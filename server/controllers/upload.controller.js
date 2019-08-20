@@ -175,7 +175,22 @@ module.exports.uploadCityImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
-
+module.exports.uploadBlogListImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/blog/bloglist');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/blog/bloglist');
+        result.push({'fileName':element.filename,'filePath':`img/blog/bloglist/${element.filename}`,'destination':element.destination})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 module.exports.webpuploadCityImg=async (req, res) => {
   try {
       var result=[];
@@ -512,6 +527,21 @@ module.exports.webpuploadTourListImg=async (req, res) => {
     }
   }
 //   =========================================
+module.exports.uploadBlogDetailIntroImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.file)
+       var element=req.file;
+    copyFile(element.path, '../daiminh.dabook.vn/img/blog/blogdetail/blogdetailintro');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/blog/blogdetail/blogdetailintro');
+    result.push({'fileName':element.filename,'filePath':`img/blog/blogdetail/blogdetailintro/${element.filename}`,'destination':element.destination,'src':`img/blog/blogdetail/blogdetailintro/${element.filename}`})
+    console.log(result);
+    res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 module.exports.uploadFITIntroImg=async (req, res) => {
   try {
       var result=[];

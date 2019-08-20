@@ -19,6 +19,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/m/getcitybyid/:_id',controller.getmCityById)
 
 router.get('/m/gettop10city',controller.getmTop10City)

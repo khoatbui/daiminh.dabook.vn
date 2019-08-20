@@ -8,7 +8,11 @@ module.exports.index =function(req,res){
         res.send(mice)
     })
 };
-
+module.exports.getUsed =function(req,res){
+    MICE.find({"isUsed":true}).then(function(mice){
+        res.send(mice)
+    })
+};
 module.exports.getmMICEById=(req,res,next) => {
     MICE.findOne({"_id":req.params._id}).then(function(mice){
         res.send(mice)

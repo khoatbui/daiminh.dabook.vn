@@ -223,7 +223,7 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/area/", { crossdomain: true })
+      AXIOS.get(apiIP + "/area/getused", { crossdomain: true })
         .then(response => {
           this.area = response.data;
         })

@@ -19,6 +19,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.delete('/:_id', controller.deleteRoomType)
 
 router.post('/insert', jsonParser, controller.insertRoomType)
@@ -32,4 +34,6 @@ router.get('/combobox/roomtypebyhotelcode/:index',controller.getRoomTypeByHotelC
 router.get('/m/getroomtypebyhotel/:_id',controller.getRoomTypeByHotel)
 
 router.get('/m/getroomtypebyid/:_id',controller.getRoomTypeById)
+
+router.get('/getroomtypebysupplier/:_id',controller.getRoomTypeBySupplier)
 module.exports = router
