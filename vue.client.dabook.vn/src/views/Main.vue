@@ -70,7 +70,7 @@
         <div class="row pb-4 ads-section">
           <div class="col-12 p-0 scroll-ngang">
             <div class="card text-white text-left border-0">
-              <img src="img/promotion/ads/airasia.jpg" class="card-img" alt="..." />
+              <img src="img/promotion/promotion_gif.gif" class="card-img" alt="..." />
             </div>
           </div>
         </div>
