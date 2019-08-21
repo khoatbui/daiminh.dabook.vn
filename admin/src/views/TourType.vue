@@ -4,13 +4,7 @@
       <v-toolbar-title>CAR SUPPLIER CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -48,7 +42,7 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
-                  
+
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
                   </v-flex>
@@ -73,7 +67,7 @@
         <tr class="whitespace-nowrap">
           <td class="justify-start px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)" :disabled="true">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.tourTypeCode }}</td>
           <td>{{ props.item.tourTypeName }}</td>
@@ -87,26 +81,28 @@
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
-       <template v-slot:no-results>
-        <v-alert :value="true" color="error" icon="warning">
-          Your search for "{{ search }}" found no results.
-        </v-alert>
+      <template v-slot:no-results>
+        <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+        >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
     <v-snackbar v-model="snackbar.snackbar">
       {{ snackbar.text }}
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
-    
-      <v-btn absolute dark fab bottom right small color="pink">
-        <download-excel :data="tourType" name= "tourType.xls">
-<i class="far fa-file-excel"></i>
-        </download-excel>
-      </v-btn>
+
+    <v-btn absolute dark fab bottom right small color="pink">
+      <download-excel :data="tourType" name="tourType.xls">
+        <i class="far fa-file-excel"></i>
+      </download-excel>
+    </v-btn>
   </div>
 </template>
 <script>
-var apiIP = process.env.VUE_APP_API_IPADDRESS
+var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -122,21 +118,21 @@ const AXIOS = axios.create({
 });
 export default {
   data: () => ({
-     apiIP: apiIP,
-     uploadImg: [],
-     search: '',
+    apiIP: apiIP,
+    uploadImg: [],
+    search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
     dialog: false,
     headers: [
-      { text: "Actions",align:"center", value: "name", sortable: false },
+      { text: "Actions", align: "center", value: "name", sortable: false },
       {
         text: "tourTypeCode",
         value: "tourTypeCode"
       },
-       { text: "Tour Type Name", value: "tourTypeName" },
+      { text: "Tour Type Name", value: "tourTypeName" },
       { text: "Language", value: "lang" },
       { text: "Promotion", value: "isPromotion" },
       { text: "Used", value: "isUsed" },
@@ -155,19 +151,19 @@ export default {
       tourTypeCode: "",
       tourTypeName: "",
       lang: "EN",
-      isPromotion:false,
-      isUsed:true,
+      isPromotion: false,
+      isUsed: true,
       createBy: "",
-      modifyBy:""
+      modifyBy: ""
     },
     defaultItem: {
       tourTypeCode: "",
       tourTypeName: "",
       lang: "EN",
-      isPromotion:false,
-      isUsed:true,
+      isPromotion: false,
+      isUsed: true,
       createBy: "",
-      modifyBy:""
+      modifyBy: ""
     },
     snackbar: {
       snackbar: false,
@@ -178,6 +174,11 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
     }
   },
 
@@ -215,8 +216,7 @@ export default {
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
-                       this.initialize();
-
+            this.initialize();
           })
           .catch(function(error) {})
           .finally(function() {});
@@ -231,9 +231,9 @@ export default {
     },
 
     save() {
-       if (this.uploadImg.length > 0) {
+      if (this.uploadImg.length > 0) {
         console.log(this.editedItem.tourTypeImages);
-        this.editedItem.removeImage=this.editedItem.tourTypeImages;
+        this.editedItem.removeImage = this.editedItem.tourTypeImages;
         this.editedItem.tourTypeImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
@@ -241,19 +241,17 @@ export default {
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/tourtype/update/"+ this.editId, this.editedItem)
-            .then(response => {
-            })
+          AXIOS.post(apiIP + "/tourtype/update/" + this.editId, this.editedItem)
+            .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
           AXIOS.post(apiIP + "/tourtype/insert", this.editedItem)
-            .then(response => {
-            })
+            .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         }
-                    this.initialize();
+        this.initialize();
         this.close();
       }
     }
@@ -276,7 +274,7 @@ export default {
   background-color: #eef1f6;
   border-color: #d1dbe5;
 }
-.whitespace-nowrap td{
+.whitespace-nowrap td {
   white-space: nowrap;
 }
 </style>

@@ -8,6 +8,11 @@ module.exports.index =function(req,res){
         res.send(country)
     })
 };
+module.exports.getUsed =function(req,res){
+    Country.find({"isUsed":true}).populate('areaId').then(function(country){
+        res.send(country)
+    })
+};
 
 module.exports.getmCountryById=(req,res,next) => {
     Country.findOne({"_id":req.params._id}).populate('areaId').then(function(country){
@@ -42,7 +47,6 @@ module.exports.insertCountry= function (req, res) {
 module.exports.updateCountry=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         Country.updateOne({ _id: req.params._id },{$set:req.body},(err, country) =>{
         if(err) {
             console.log(err);
@@ -52,6 +56,8 @@ module.exports.updateCountry=function (req, res) {
                  res.status(200).send(country);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getCountryBySupplier=(req,res,next) => {

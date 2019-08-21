@@ -19,13 +19,21 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.delete('/:_id', controller.deleteRoomType)
 
 router.post('/insert', jsonParser, controller.insertRoomType)
 
 router.post('/update/:_id', jsonParser, controller.updateRoomType)
 
-router.get('/combobox/roomtype/:index',controller.getRoomTypeByHotel)
+router.get('/combobox/roomtype/:_id',controller.getRoomTypeByHotel)
 
 router.get('/combobox/roomtypebyhotelcode/:index',controller.getRoomTypeByHotelCode)
+
+router.get('/m/getroomtypebyhotel/:_id',controller.getRoomTypeByHotel)
+
+router.get('/m/getroomtypebyid/:_id',controller.getRoomTypeById)
+
+router.get('/getroomtypebysupplier/:_id',controller.getRoomTypeBySupplier)
 module.exports = router

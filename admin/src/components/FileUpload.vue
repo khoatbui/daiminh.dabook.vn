@@ -1,8 +1,8 @@
 <template>
-   <div class="container">
+   <div class="file-upload">
       <!--UPLOAD-->
       <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-        <h1>Upload images</h1>
+        <h3>{{title}}</h3>
         <div class="dropbox">
           <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
             accept="image/*" class="input-file">
@@ -22,7 +22,7 @@
           <a href="javascript:void(0)" @click="reset()">Upload again</a>
         </p>
         <ul class="list-unstyled img-list scroll-ngang">
-          <li v-for="item in uploadedFiles">
+          <li v-for="(item,i) in uploadedFiles" v-bind:key="'asf'+i">
             <img :src="`http://mdaiminh.dabook.vn/${item.filePath}`" class="img-responsive img-thumbnail" :alt="item.originalName">
           </li>
         </ul>
@@ -45,7 +45,7 @@
   const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
   export default {
-    props: ["routerPath","destinationPath", "value", "label"],
+    props: ["routerPath","destinationPath", "value", "label","title"],
      name: "FileUpload",
     data() {
       return {

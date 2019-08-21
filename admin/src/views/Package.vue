@@ -87,6 +87,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editPackageIntroByLang(props.index)">edit</v-icon>
                           <v-icon small @click="deletePackageIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.packageName}}</td>
@@ -115,7 +116,7 @@
         <tr class="whitespace-nowrap">
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)" :disabled="true">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.supplierId.supplierName }}</td>
           <td>{{ props.item.packageCode}}</td>
@@ -239,6 +240,11 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
     }
   },
 
@@ -261,7 +267,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/supplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/supplier/getused", { crossdomain: true })
         .then(response => {
           this.supplier = response.data;
         })
@@ -323,15 +329,31 @@ export default {
       }
     },
     addPackageIntroByLang() {
+      var isFound=false;
+      this.editedItem.packageIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+        element.packageName= this.editedItem.packageName;
+        element.packageIntro= this.editedItem.packageIntro;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.packageIntros.push({
         packageName: this.editedItem.packageName,
         packageIntro: this.editedItem.packageIntro,
         note: this.editedItem.note,
         lang: this.editedItem.lang
       });
+      }
     },
     deletePackageIntroByLang(item) {
       this.editedItem.packageIntros.splice(item, 1);
+    },
+    editPackageIntroByLang (item) {
+    this.editedItem.packageName=item.packageName;
+      this.editedItem.packageIntro=item.packageIntro;
+      this.editedItem.lang=item.lang; 
     }
   }
 };

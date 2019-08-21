@@ -23,6 +23,8 @@ router.get('/getused',controller.getUsed)
 
 router.get('/m/getadsbyid/:_id',controller.getmAdsById)
 
+router.get('/m/getadsbytype/:_id',controller.getmAdsByType)
+
 router.delete('/:_id', controller.deleteAds)
 
 router.post('/insert', jsonParser,controller.insertAds)

@@ -8,6 +8,11 @@ module.exports.index =function(req,res){
         res.send(tourdetail)
     })
 };
+module.exports.getUsed =function(req,res){
+    TourDetail.find({"isUsed":true}).populate('tourId').then(function(tourdetail){
+        res.send(tourdetail)
+    })
+};
 
 module.exports.getmTourDetailById=(req,res,next) => {
     TourDetail.find({"tourId":req.params._id}).populate('tourId').then(function(tourdetail){

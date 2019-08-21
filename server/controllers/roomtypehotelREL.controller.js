@@ -8,7 +8,11 @@ module.exports.index = function (req, res) {
         res.send(roomtype)
     })
 };
-
+module.exports.getUsed = function (req, res) {
+    RoomType.find({"isUsed":true}).populate('supplierId').populate('hotelId').then(function (roomtype) {
+        res.send(roomtype)
+    })
+};
 module.exports.getRoomType = (req, res, next) => {
     RoomType.find().then(function (roomtype) {
         res.send(roomtype)

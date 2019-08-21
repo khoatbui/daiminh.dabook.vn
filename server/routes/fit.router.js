@@ -21,6 +21,8 @@ router.get('/',controller.index)
 
 router.get('/getused',controller.getUsed)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/m/getfitbyid/:_id',controller.getmFITById)
 
 router.delete('/:_id', controller.deleteFIT)

@@ -18,6 +18,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/combobox/hotel/:index',controller.getHotelBySupplier)
 
 router.get('/combobox/hotelbysuppliercode/:index',controller.getHotelBySupplierCode)
@@ -35,6 +37,8 @@ router.post('/update/:_id', jsonParser, controller.updateHotel)
 router.get('/m/getlisthotelpromotion',controller.getmListHotelWithPromotion)
 
 router.get('/m/getlisthotel',controller.getmListHotel)
+
+router.get('/m/gethotelbyid/:_id',controller.getmHotelById)
 
 router.get('/m/getlisthotelpromotebysuppliercode/:_id',controller.getmListHotelPromotionBySupplier)
 

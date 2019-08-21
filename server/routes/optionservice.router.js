@@ -18,6 +18,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.delete('/:_id', controller.deleteOptionService)
 
 router.post('/insert', jsonParser,controller.insertOptionService)

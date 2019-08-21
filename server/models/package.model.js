@@ -12,8 +12,9 @@ var pakageSchema = new mongoose.Schema({
     createDate:Date,
     modifyBy:String,
     modifyDate:Date,
-    pacakageIntro:String,
-    packageIntros:[]
+    packageIntro:String,
+    packageIntros:[],
+    packageImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
 });
 var Package =mongoose.model('Package',pakageSchema,'package');
 

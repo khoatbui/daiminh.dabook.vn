@@ -8,16 +8,16 @@
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
         </template>
-        <v-form  ref="form" v-model="valid">
-        <v-card>
-          <v-card-title class="pink white--text">
-            <span class="headline">{{ formTitle }}</span>
-          </v-card-title>
+        <v-form ref="form" v-model="valid">
+          <v-card>
+            <v-card-title class="pink white--text">
+              <span class="headline">{{ formTitle }}</span>
+            </v-card-title>
 
-          <v-card-text>
-            <v-subheader>KEY</v-subheader>
-            <v-container grid-list-xl>
-              <v-layout wrap>
+            <v-card-text>
+              <v-subheader>KEY</v-subheader>
+              <v-container grid-list-xl>
+                <v-layout wrap>
                   <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.areaId"
@@ -28,53 +28,70 @@
                       label="Area"
                     ></v-select>
                   </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field required
-                    :rules="[() => editedItem.countryCode.length > 0 || 'Required field']"
-                     v-model="editedItem.countryCode" label="CountryCode"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.countryName" label="CountryName"></v-text-field>
-                </v-flex>
-                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.countryNameEN" label="CountryNameEN"></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-select
-                    v-model="editedItem.lang"
-                    :items="language"
-                    item-text="langName"
-                    item-value="langCode"
-                    label="Language"
-                  ></v-select>
-                </v-flex>
-                 <v-flex xs12 sm12 md12>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field
+                      required
+                      :rules="[() => editedItem.countryCode.length > 0 || 'Required field']"
+                      v-model="editedItem.countryCode"
+                      label="CountryCode"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.countryName" label="CountryName"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.countryNameEN" label="CountryNameEN"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md12>
+                    <v-text-field v-model="editedItem.map" label="Map"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
                       v-bind:routerPath="apiIP+'/upload/tour/country'"
+                      :title="`Upload High Quality`"
                     ></file-upload>
-                    </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <h2>Old images.</h2>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 class="scroll-ngang">
-                    <img
-                      class="room-img"
-                      v-for="(item,i) in editedItem.countryImages"
-                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
-                      alt
-                    />
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.countryImages"
+                      @getDeleteFile="deleteImage($event)"
+                    ></ImageListComponent>
                   </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card-text>
+                  <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImgWebp = $event"
+                      v-bind:routerPath="apiIP+'/upload/tour/country/webmp'"
+                      :title="`Upload Webp Image`"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.countryImagesWebp"
+                      @getDeleteFile="deleteImageWebp($event)"
+                    ></ImageListComponent>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-text>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
-          </v-card-actions>
-        </v-card>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
+            </v-card-actions>
+          </v-card>
         </v-form>
       </v-dialog>
     </v-toolbar>
@@ -83,12 +100,12 @@
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.areaId.areaName }}</td>
           <td>{{ props.item.countryCode }}</td>
           <td>{{ props.item.countryName }}</td>
-           <td>{{ props.item.countryNameEN }}</td>
+          <td>{{ props.item.countryNameEN }}</td>
           <td>{{ props.item.lang }}</td>
         </tr>
       </template>
@@ -102,6 +119,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import ImageListComponent from "../components/ImageListComponent.vue";
+
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -115,13 +134,15 @@ const AXIOS = axios.create({
   }
 });
 export default {
-     components: {
-    FileUpload
+  components: {
+    FileUpload,
+    ImageListComponent
   },
   data: () => ({
-      apiIP: apiIP,
-     uploadImg: [],
-      search: "",
+    apiIP: apiIP,
+    uploadImg: [],
+    uploadImgWebp: [],
+    search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
@@ -129,18 +150,18 @@ export default {
     dialog: false,
     headers: [
       { text: "Actions", value: "name", sortable: false },
-       { text: "Area", value: "areaId.areaName" },
+      { text: "Area", value: "areaId.areaName" },
       {
         text: "CountryCode",
         sortable: false,
         value: "countryCode"
       },
       { text: "CountryName", value: "countryName" },
-       { text: "CountryNameEN", value: "countryNameEN" },
+      { text: "CountryNameEN", value: "countryNameEN" },
       { text: "Language", value: "lang" }
     ],
     country: [],
-    area:[],
+    area: [],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
@@ -148,28 +169,39 @@ export default {
     ],
     editedIndex: -1,
     editedItem: {
-        areaId: "",
+      areaId: "",
       countryCode: "",
       countryName: "",
       countryNameEN: "",
       lang: "EN",
-       countryImages: [],
-      removeImage: []
+      countryImages: [],
+      removeImage: [],
+      countryImagesWebp: [],
+      removeImageWebp: [],
+      map: ""
     },
     defaultItem: {
-        areaId: "",
+      areaId: "",
       countryCode: "",
       countryName: "",
       countryNameEN: "",
       lang: "EN",
-       countryImages: [],
-      removeImage: []
+      countryImages: [],
+      removeImage: [],
+      countryImagesWebp: [],
+      removeImageWebp: [],
+      map: ""
     }
   }),
 
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
     }
   },
 
@@ -183,7 +215,7 @@ export default {
     this.initialize();
   },
 
- methods: {
+  methods: {
     initialize() {
       AXIOS.get(apiIP + "/country/", { crossdomain: true })
         .then(response => {
@@ -191,7 +223,7 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-        AXIOS.get(apiIP + "/area/", { crossdomain: true })
+      AXIOS.get(apiIP + "/area/getused", { crossdomain: true })
         .then(response => {
           this.area = response.data;
         })
@@ -206,6 +238,8 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
+      this.editedItem.removeImage = [];
+      this.editedItem.removeImageWebp = [];
     },
 
     deleteItem(item) {
@@ -219,6 +253,22 @@ export default {
           .catch(function(error) {})
           .finally(function() {});
     },
+    deleteImage(image) {
+      this.editedItem.countryImages.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImage.push(image);
+    },
+    deleteImageWebp() {
+      this.editedItem.countryImagesWebp.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImageWebp.push(image);
+    },
 
     close() {
       this.dialog = false;
@@ -230,13 +280,17 @@ export default {
     },
 
     save() {
-       if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.countryImages);
-        this.editedItem.removeImage = this.editedItem.countryImages;
-        this.editedItem.countryImages = this.uploadImg;
-        console.log(this.editedItem.removeImage);
+      if (this.uploadImg.length > 0) {
+        this.uploadImg.forEach(element => {
+          this.editedItem.countryImages.push(element);
+        });
       }
-     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      if (this.uploadImgWebp.length > 0) {
+        this.uploadImgWebp.forEach(element => {
+          this.editedItem.countryImagesWebp.push(element);
+        });
+      }
+      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
@@ -253,7 +307,7 @@ export default {
         this.initialize();
         this.close();
       }
-       this.uploadImg = [];
+      this.uploadImg = [];
       this.editedItem.removeImage = [];
     }
   }

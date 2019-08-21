@@ -8,7 +8,11 @@ module.exports.index =function(req,res){
         res.send(mice)
     })
 };
-
+module.exports.getUsed =function(req,res){
+    MICE.find({"isUsed":true}).then(function(mice){
+        res.send(mice)
+    })
+};
 module.exports.getmMICEById=(req,res,next) => {
     MICE.findOne({"_id":req.params._id}).then(function(mice){
         res.send(mice)
@@ -42,7 +46,6 @@ module.exports.insertMICE= function (req, res) {
 module.exports.updateMICE=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         MICE.updateOne({ _id: req.params._id },{$set:req.body},(err, mice) =>{
         if(err) {
             console.log(err);
@@ -52,6 +55,8 @@ module.exports.updateMICE=function (req, res) {
                  res.status(200).send(mice);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getMICEBySupplier=(req,res,next) => {

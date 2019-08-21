@@ -4,7 +4,7 @@
       <v-toolbar-title>TOUR LIST CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
-       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -13,7 +13,7 @@
           <v-card>
             <v-card-title class="pink white--text">
               <span class="headline">{{ formTitle }}</span>
-               <v-spacer></v-spacer>
+              <v-spacer></v-spacer>
               <v-btn color="white darken-1" flat @click="close">Cancel</v-btn>
               <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
             </v-card-title>
@@ -22,25 +22,29 @@
               <v-subheader>KEY</v-subheader>
               <v-container grid-list-xl>
                 <v-layout wrap>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-select
-                      v-model="editedItem.destinationId"
+                      v-model="editedItem.destinationIds"
                       :items="destination"
                       item-text="destinationName"
                       item-value="_id"
                       label="Destination"
+                      multiple
+                      chips
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-select
-                      v-model="editedItem.travelStyleId"
+                      v-model="editedItem.travelStyleIds"
                       :items="travelStyle"
                       item-text="travelStyleName"
                       item-value="_id"
                       label="TravelStyle"
+                      multiple
+                      chips
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-select
                       v-model="editedItem.tourTypeId"
                       :items="tourType"
@@ -49,7 +53,7 @@
                       label="TourType"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12 sm6 md3>
                     <v-text-field
                       required
                       :rules="[() => editedItem.tourCode.length > 0 || 'Required field']"
@@ -66,7 +70,7 @@
                   <v-flex xs12 sm6 md3>
                     <v-checkbox v-model="editedItem.isPromotion" :label="`IsPromotion?`"></v-checkbox>
                   </v-flex>
-                   <v-flex xs12 sm6 md3>
+                  <v-flex xs12 sm6 md3>
                     <v-select
                       v-model="editedItem.star"
                       :items="stars"
@@ -131,10 +135,19 @@
                     <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md3>
+                    <v-text-field v-model="editedItem.priceChild04" label="Price Child (0 ~ 4)"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md3>
+                    <v-text-field v-model="editedItem.priceChild48" label="Price Child (4 ~ 8)"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md3>
                     <v-text-field v-model="editedItem.discount" label="Discount"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
                     <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md12>
+                    <v-text-field v-model="editedItem.map" label="Map"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="sub-add-component">
                     <v-text-field v-model="editedItem.tourName" label="Tour Name"></v-text-field>
@@ -175,6 +188,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editTourIntroByLang(props.item)">edit</v-icon>
                           <v-icon small @click="deleteTourIntroByLang(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.tourName}}</td>
@@ -187,23 +201,27 @@
                   </v-flex>
                 </v-layout>
                 <v-layout wrap>
-                  <v-flex xs12 sm12 md12>
+                  <v-flex xs12 sm12 md4>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
                       v-bind:routerPath="apiIP+'/upload/tour/tourlist'"
+                      :title="`Upload High Quality`"
                     ></file-upload>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <h2>Old images.</h2>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent :data="editedItem.tourImages" @getDeleteFile="deleteImage($event)"></ImageListComponent>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 class="scroll-ngang">
-                    <img
-                      class="room-img"
-                      v-for="(item,i) in editedItem.tourImages"
-                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
-                      alt
-                    />
+                  <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImgWebp = $event"
+                      v-bind:routerPath="apiIP+'/upload/tour/tourlist/webmp'"
+                      :title="`Upload Webp Image`"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8 >
+                    <ImageListComponent :data="editedItem.tourImagesWebp" @getDeleteFile="deleteImageWebp($event)"></ImageListComponent>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -254,14 +272,14 @@
         </v-layout>
       </v-card>
     </v-container>
-    <v-data-table :headers="headers" :items="itemsFilter"  :search="search"  class="elevation-1">
+    <v-data-table :headers="headers" :items="itemsFilter" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
-           <td>{{ props.item.destinationId.destinationName }}</td>
+          <td>{{ props.item.destinationId.destinationName }}</td>
           <td>{{ props.item.travelStyleId.travelStyleName }}</td>
           <td>{{ props.item.tourTypeId.tourTypeName }}</td>
           <td>{{ props.item.tourCode }}</td>
@@ -276,7 +294,7 @@
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
-       <template v-slot:no-results>
+      <template v-slot:no-results>
         <v-alert
           :value="true"
           color="error"
@@ -290,6 +308,7 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
+import ImageListComponent from "../components/ImageListComponent.vue";
 import moment from "moment";
 
 const AXIOS = axios.create({
@@ -306,11 +325,13 @@ const AXIOS = axios.create({
 });
 export default {
   components: {
-    FileUpload
+    FileUpload,
+    ImageListComponent
   },
   data: () => ({
     apiIP: apiIP,
     uploadImg: [],
+    uploadImgWebp:[],
     search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -327,9 +348,9 @@ export default {
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
-       { text: "Destination", value: "destinationId.destinationName" },
-        { text: "Travel Style", value: "travelStyleId.travelStyleName" },
-        { text: "Tour Type", value: "tourTypeId.tourTypeName" },
+      { text: "Destination", value: "destinationId.destinationName" },
+      { text: "Travel Style", value: "travelStyleId.travelStyleName" },
+      { text: "Tour Type", value: "tourTypeId.tourTypeName" },
       {
         text: "TourCode",
         value: "tourCode"
@@ -348,18 +369,18 @@ export default {
       travelStyleId: {
         langCode: "ALL"
       },
-      tourTypeId:{
-        tourTypeCode:"ALL"
+      tourTypeId: {
+        tourTypeCode: "ALL"
       }
     },
-     search: "",
+    search: "",
     tourList: [],
     destination: [],
     travelStyle: [],
-    tourType:[],
+    tourType: [],
     destinationFilter: [],
     travelStyleFilter: [],
-    tourTypeFilter:[],
+    tourTypeFilter: [],
     menu1: false,
     menu2: false,
     language: [
@@ -367,19 +388,15 @@ export default {
       { langCode: "KO", langName: "Korea" },
       { langCode: "VI", langName: "VietNam" }
     ],
-    stars:[
-      {star:1},
-      {star:2},
-      {star:3},
-      {star:4},
-      {star:5}
-    ],
+    stars: [{ star: 1 }, { star: 2 }, { star: 3 }, { star: 4 }, { star: 5 }],
     disableSelect: false,
     editedIndex: -1,
     editedItem: {
+      destinationIds: [],
+      travelStyleIds: [],
       destinationId: "",
       travelStyleId: "",
-      tourTypeId:"",
+      tourTypeId: "",
       tourCode: "",
       tourName: "",
       tourIntro: "",
@@ -402,13 +419,18 @@ export default {
       isUsed: true,
       isPromotion: false,
       removeImage: [],
+      removeImageWebp: [],
       tourIntros: [],
-      star:3
+      star: 3,
+      map: "",
+      tourImagesWebp:[],
     },
     defaultItem: {
+      destinationIds: [],
+      travelStyleIds: [],
       destinationId: "",
       travelStyleId: "",
-      tourTypeId:"",
+      tourTypeId: "",
       tourCode: "",
       tourName: "",
       tourIntro: "",
@@ -432,7 +454,10 @@ export default {
       isPromotion: false,
       removeImage: [],
       tourIntros: [],
-      star:3
+      star: 3,
+      map: "",
+      removeImageWebp: [],
+      tourImagesWebp:[],
     }
   }),
 
@@ -445,16 +470,26 @@ export default {
       // then calculates `fullAddress` and copies that entry into it
 
       return this.tourList.filter(i => {
-          return (
-            (this.filterByCombo.destinationId.destinationCode === "ALL" || typeof( this.filterByCombo.destinationId.destinationCode) === "undefined" ||
-              i.destinationId._id === this.filterByCombo.destinationId._id) &&
-            (this.filterByCombo.travelStyleId.travelStyleCode === "ALL" || typeof( this.filterByCombo.travelStyleId.travelStyleCode) === "undefined" ||
-              i.travelStyleId._id === this.filterByCombo.travelStyleId._id) &&
-              (this.filterByCombo.tourTypeId.tourTypeCode === "ALL" || typeof( this.filterByCombo.tourTypeId.tourTypeCode) === "undefined" ||
-              i.tourTypeId._id === this.filterByCombo.tourTypeId._id)
-          );
-        });
+        return (
+          (this.filterByCombo.destinationId.destinationCode === "ALL" ||
+            typeof this.filterByCombo.destinationId.destinationCode ===
+              "undefined" ||
+            i.destinationId._id === this.filterByCombo.destinationId._id) &&
+          (this.filterByCombo.travelStyleId.travelStyleCode === "ALL" ||
+            typeof this.filterByCombo.travelStyleId.travelStyleCode ===
+              "undefined" ||
+            i.travelStyleId._id === this.filterByCombo.travelStyleId._id) &&
+          (this.filterByCombo.tourTypeId.tourTypeCode === "ALL" ||
+            typeof this.filterByCombo.tourTypeId.tourTypeCode === "undefined" ||
+            i.tourTypeId._id === this.filterByCombo.tourTypeId._id)
+        );
+      });
     },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
+    }
   },
 
   watch: {
@@ -476,7 +511,7 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/destination/", { crossdomain: true })
+      AXIOS.get(apiIP + "/destination/getused", { crossdomain: true })
         .then(response => {
           this.destination = response.data;
           this.destinationFilter = response.data;
@@ -488,7 +523,7 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/travelstyle/", { crossdomain: true })
+      AXIOS.get(apiIP + "/travelstyle/getused", { crossdomain: true })
         .then(response => {
           this.travelStyle = response.data;
           this.travelStyleFilter = response.data;
@@ -500,9 +535,9 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-         AXIOS.get(apiIP + "/tourtype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/tourtype/getused", { crossdomain: true })
         .then(response => {
-          console.log( response.data);
+          console.log(response.data);
           this.tourType = response.data;
           this.tourTypeFilter = response.data;
           this.tourTypeFilter.unshift({
@@ -522,6 +557,8 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
+      this.editedItem.removeImage=[];
+      this.editedItem.removeImageWebp=[];
     },
 
     deleteItem(item) {
@@ -535,8 +572,28 @@ export default {
           .catch(function(error) {})
           .finally(function() {});
     },
-
+    deleteImage(image) {
+      this.editedItem.tourImages.forEach(function(item, index, object){
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImage.push(image);
+      console.log(this.editedItem.removeImage);
+      console.log(this.editedItem.tourImages);
+    },
+    deleteImageWebp(){
+        this.editedItem.tourImagesWebp.forEach(function(item, index, object){
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImageWebp.push(image);
+      console.log(this.editedItem.removeImageWebp);
+      console.log(this.editedItem.tourImagesWebp);
+    },
     close() {
+      console.log(this.editedItem.removeImage);
       this.dialog = false;
       this.disableSelect = false;
       setTimeout(() => {
@@ -547,11 +604,19 @@ export default {
 
     save() {
       if (this.uploadImg.length > 0) {
-        this.editedItem.removeImage = this.editedItem.tourImages;
-        this.editedItem.tourImages = this.uploadImg;
+        this.uploadImg.forEach(element => {
+           this.editedItem.tourImages.push(element);
+        });
       }
-     this.editedItem.modifyBy = this.$store.state.user.login.userName;
+      if (this.uploadImgWebp.length > 0) {
+        this.uploadImgWebp.forEach(element => {
+          this.editedItem.tourImagesWebp.push(element);
+        });
+      }
+      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
+      this.editedItem.destinationId=this.editedItem.destinationIds[0];
+      this.editedItem.travelStyleId=this.editedItem.travelStyleIds[0];
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(apiIP + "/tourlist/update/" + this.editId, this.editedItem)
@@ -569,8 +634,22 @@ export default {
       }
       this.uploadImg = [];
       this.editedItem.removeImage = [];
+      this.uploadImgWebp = [];
+      this.editedItem.removeImageWebp = [];
     },
     addTourIntroByLang() {
+      var isFound=false;
+      this.editedItem.tourIntros.forEach(element => {
+        if (element.lang === this.editedItem.lang) {
+          element.tourName= this.editedItem.tourName;
+        element.tourIntro= this.editedItem.tourIntro;
+        element.from= this.editedItem.from;
+        element.to= this.editedItem.to;
+        isFound=true;
+        return;
+        }
+      });
+      if (isFound===false) {
       this.editedItem.tourIntros.push({
         tourName: this.editedItem.tourName,
         tourIntro: this.editedItem.tourIntro,
@@ -578,6 +657,14 @@ export default {
         to: this.editedItem.to,
         lang: this.editedItem.lang
       });
+      }
+    },
+     editTourIntroByLang(item) {
+      this.editedItem.tourName=item.tourName;
+      this.editedItem.tourIntro=item.tourIntro;
+      this.editedItem.from=item.from;
+      this.editedItem.to=item.to;
+      this.editedItem.lang=item.lang;
     },
     deleteTourIntroByLang(item) {
       this.editedItem.tourIntros.splice(item, 1);

@@ -12,7 +12,8 @@ var carsupplierSchema = new mongoose.Schema({
     createDate:Date,
     modifyBy:String,
     modifyDate:Date,
-    supplierImages:[{fileName:String,filePath:String,destination:String,size:Number}]
+    supplierImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    supplierImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
 });
 var CarSupplier =mongoose.model('CarSupplier',carsupplierSchema,'carSupplier');
 

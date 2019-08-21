@@ -18,6 +18,7 @@ const travelStyleRoute = require('./routes/travelstyle.router')
 const cityRoute = require('./routes/city.router')
 const countryRoute = require('./routes/country.router')
 const areaRouter = require('./routes/area.router')
+const areaCountryRouter = require('./routes/areacountry.router')
 const tourSupplierRoute = require('./routes/toursupplier.router')
 const tourTypeRoute = require('./routes/tourtype.router')
 const tourListRoute = require('./routes/tourlist.router')
@@ -62,6 +63,7 @@ app.use('/destination',destinationRoute);
 app.use('/travelstyle',travelStyleRoute);
 app.use('/city',cityRoute);
 app.use('/country',countryRoute);
+app.use('/areacountry',areaCountryRouter);
 app.use('/toursupplier',tourSupplierRoute);
 app.use('/tourtype',tourTypeRoute);
 app.use('/tourlist',tourListRoute);
@@ -75,7 +77,7 @@ app.use('/package',packageRoute);
 app.use('/roomtype',roomtypeRoute);
 app.use('/optionservice',optionServiceRoute);
 app.use('/packagehotelrel',packageHotelRELRouter);
-app.use('/payments',paymentsRouter);
+app.use('/payment',paymentsRouter);
 app.use('/user',userRouter)
 app.use('/hotelorder',hotelOrderRouter)
 app.use('/tourorder',tourOrderRouter)

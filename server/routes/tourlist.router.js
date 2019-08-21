@@ -19,6 +19,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/m/gettourlistbyid/:_id',controller.getmTourListById)
 
 router.get('/m/getalltourpromotion',controller.getmAllTourPromotion)
@@ -28,6 +30,10 @@ router.get('/m/gettop10tourpromotion',controller.getmTop10AllTourPromotion)
 router.get('/m/getalltour',controller.getmAllTour)
 
 router.get('/m/getalltourbycity/:_id',controller.getmAllTourByCity)
+
+router.get('/m/getalltourbydestination/:_id',controller.getmAllTourByDestination)
+
+router.get('/m/getalltourbystyle/:_id',controller.getmAllTourByStyle)
 
 router.get('/m/gettourbytravelstyle/:_id',controller.getmTourByTravelStyle)
 

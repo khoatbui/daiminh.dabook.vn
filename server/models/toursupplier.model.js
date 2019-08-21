@@ -12,7 +12,8 @@ var toursupplierSchema = new mongoose.Schema({
     createDate:Date,
     modifyBy:String,
     modifyDate:Date,
-    supplierImages:[{fileName:String,filePath:String,destination:String,size:Number}]
+    supplierImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    supplierImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
 });
 var TourSupplier =mongoose.model('TourSupplier',toursupplierSchema,'tourSupplier');
 

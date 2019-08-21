@@ -48,7 +48,6 @@ module.exports.insertFIT= function (req, res) {
 module.exports.updateFIT=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         FIT.updateOne({ _id: req.params._id },{$set:req.body},(err, fit) =>{
         if(err) {
             console.log(err);
@@ -58,6 +57,8 @@ module.exports.updateFIT=function (req, res) {
                  res.status(200).send(fit);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getFITBySupplier=(req,res,next) => {

@@ -21,6 +21,8 @@ router.get('/',controller.index)
 
 router.get('/getused',controller.getUsed)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/m/gettravelservicebyid/:_id',controller.getmTravelServiceById)
 
 router.delete('/:_id', controller.deleteTravelService)

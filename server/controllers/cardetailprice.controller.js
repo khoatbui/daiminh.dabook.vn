@@ -15,6 +15,16 @@ module.exports.index = function(req, res) {
     });
 };
 
+module.exports.getUsed = function(req, res) {
+  CarDetailPrice.find({"isUsed":true})
+    .populate("supplierId")
+    .populate("carTransTypeId")
+    .populate("cityId")
+    .then(function(carDetailPrice) {
+      res.send(carDetailPrice);
+    });
+};
+
 module.exports.getCarDetailPrice = (req, res, next) => {
   CarDetailPrice.find()
     .populate("supplierId")

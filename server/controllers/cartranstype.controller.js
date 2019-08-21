@@ -10,7 +10,12 @@ module.exports.index = function(req, res) {
       res.send(roomtype);
     });
 };
-
+module.exports.getUsed = function(req, res) {
+  CarTransType.find({"isUsed":true})
+    .then(function(roomtype) {
+      res.send(roomtype);
+    });
+};
 module.exports.getCarTransType = (req, res, next) => {
   CarTransType.find().then(function(roomtype) {
     res.send(roomtype);
@@ -45,7 +50,6 @@ module.exports.updateCarTransType = function(req, res) {
   console.log(req.body);
   req.body.modifyDate = new Date();
   delete req.body.createBy;
-  UploadController.removeImage(req.body.removeImage);
   CarTransType.updateOne(
     { _id: req.params._id },
     { $set: req.body },
@@ -60,6 +64,8 @@ module.exports.updateCarTransType = function(req, res) {
       }
     }
   );
+  UploadController.removeImage(req.body.removeImage);
+  UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getCarTransTypeByHotel = (req, res, next) => {

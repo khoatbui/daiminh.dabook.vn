@@ -33,6 +33,15 @@
                       return-object
                     ></v-select>
                   </v-flex>
+                   <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='DES'">
+                    <v-select
+                      v-model="editedItem.destinationId"
+                      :items="destinationByLang"
+                      item-text="destinationName"
+                      item-value="_id"
+                      label="DESTINATION"
+                    ></v-select>
+                  </v-flex>
                   <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='MICE'">
                     <v-select
                       v-model="editedItem.miceId"
@@ -145,23 +154,33 @@
                   </v-flex>
                 </v-layout>
                 <v-layout wrap>
-                  <v-flex xs12 sm12 md12>
+                  <v-flex xs12 sm12 md4>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
                       v-bind:routerPath="apiIP+'/upload/blog/bloglist'"
+                      :title="`Upload High Quality`"
                     ></file-upload>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <h2>Old images.</h2>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.blogImages"
+                      @getDeleteFile="deleteImage($event)"
+                    ></ImageListComponent>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 class="scroll-ngang">
-                    <img
-                      class="room-img"
-                      v-for="(item,i) in editedItem.blogImages"
-                      v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
-                      alt
-                    />
+                   <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImgWebp = $event"
+                      v-bind:routerPath="apiIP+'/upload/blog/bloglist/webmp'"
+                      :title="`Upload Webp Image`"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.blogImagesWebp"
+                      @getDeleteFile="deleteImageWebp($event)"
+                    ></ImageListComponent>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -197,7 +216,7 @@
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.blogTypeId.blogTypeName }}</td>
           <td>{{ props.item.blogCode }}</td>
@@ -228,6 +247,7 @@ import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import moment from "moment";
 import VueTrixEditor from "@dymantic/vue-trix-editor";
+import ImageListComponent from "../components/ImageListComponent.vue";
 
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -244,11 +264,13 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    VueTrixEditor
+    VueTrixEditor,
+    ImageListComponent
   },
   data: () => ({
     apiIP: apiIP,
     uploadImg: [],
+    uploadImgWebp: [],
     search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
@@ -285,6 +307,7 @@ export default {
     blogList: [],
     blogType:[],
     mice:[],
+    destination:[],
     travelStyle:[],
     travelService:[],
     blogTypeFilter:[],
@@ -323,13 +346,16 @@ export default {
       isUsed: true,
       isPromotion: false,
       removeImage: [],
+      blogImagesWebp: [],
+      removeImageWebp: [],
       blogIntros: [],
       star:3,
       link:"",
       travelStyleId:null,
       travelServiceId:null,
       miceId:null,
-      aboutUsId:null
+      aboutUsId:null,
+      destinationId:null
     },
     defaultItem: {
       blogTypeId:"",
@@ -349,14 +375,18 @@ export default {
       isUsed: true,
       isPromotion: false,
       removeImage: [],
+      blogImagesWebp: [],
+      removeImageWebp: [],
       blogIntros: [],
       star:3,
       link:"",
       travelStyleId:null,
       travelServiceId:null,
       miceId:null,
-      aboutUsId:null
-    }
+      aboutUsId:null,
+      destinationId:null
+    },
+    componentLoaded:false
   }),
 
   computed: {
@@ -364,16 +394,52 @@ export default {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
     itemsFilter() {
+      if (this.componentLoaded==false) {
+        return ;
+      }
       // This creates a new empty object, copies the item into it,
       // then calculates `fullAddress` and copies that entry into it
 
-      return this.blogList.filter(i => {
+      return this.blogListByLang.filter(i => {
           return (
               (this.filterByCombo.blogTypeId.blogTypeCode === "ALL" || typeof( this.filterByCombo.blogTypeId.blogTypeCode) === "undefined" ||
               i.blogTypeId._id === this.filterByCombo.blogTypeId._id)
           );
         });
     },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
+    },
+    blogListByLang() {
+      if (this.componentLoaded === false) {
+        return;
+      }
+      this.blogList.forEach(element => {
+        element.blogIntros.forEach(area => {
+          if (area.lang.toUpperCase() === 'EN') {
+            element.blogName = area.blogName;
+            element.blogIntro= area.blogIntro;
+          }
+        });
+      });
+      return this.blogList;
+    },
+    destinationByLang() {
+      if (this.componentLoaded === false) {
+        return;
+      }
+      this.destination.forEach(element => {
+        element.destinationIntros.forEach(area => {
+          if (area.lang.toUpperCase() === 'EN') {
+            element.destinationName = area.destinationName;
+            element.destinationIntro= area.destinationIntro;
+          }
+        });
+      });
+      return this.destination;
+    }
   },
 
   watch: {
@@ -395,7 +461,7 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-         AXIOS.get(apiIP + "/blogtype/", { crossdomain: true })
+         AXIOS.get(apiIP + "/blogtype/getused", { crossdomain: true })
         .then(response => {
           this.blogType = response.data;
           this.blogTypeFilter = response.data;
@@ -404,34 +470,42 @@ export default {
             blogTypeName: "ALL",
             blogTypeId: -1
           });
+          this.componentLoaded = true;
         })
         .catch(function(error) {})
         .finally(function() {});
 
-         AXIOS.get(apiIP + "/mice/", { crossdomain: true })
+         AXIOS.get(apiIP + "/mice/getused", { crossdomain: true })
         .then(response => {
           this.mice = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
 
-          AXIOS.get(apiIP + "/travelstyle/", { crossdomain: true })
+          AXIOS.get(apiIP + "/travelstyle/getused", { crossdomain: true })
         .then(response => {
           this.travelStyle = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
 
-          AXIOS.get(apiIP + "/travelservice/", { crossdomain: true })
+          AXIOS.get(apiIP + "/travelservice/getused", { crossdomain: true })
         .then(response => {
           this.travelService = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
 
-          AXIOS.get(apiIP + "/aboutus/", { crossdomain: true })
+          AXIOS.get(apiIP + "/aboutus/getused", { crossdomain: true })
         .then(response => {
           this.aboutUs = response.data;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+
+           AXIOS.get(apiIP + "/destination/", { crossdomain: true })
+        .then(response => {
+          this.destination = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -444,6 +518,24 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
+      this.editedItem.removeImage = [];
+      this.editedItem.removeImageWebp = [];
+    },
+    deleteImage(image) {
+      this.editedItem.blogImages.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImage.push(image);
+    },
+    deleteImageWebp() {
+      this.editedItem.blogImagesWebp.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImageWebp.push(image);
     },
 
     deleteItem(item) {
@@ -469,8 +561,14 @@ export default {
 
     save() {
       if (this.uploadImg.length > 0) {
-        this.editedItem.removeImage = this.editedItem.blogImages;
-        this.editedItem.blogImages = this.uploadImg;
+        this.uploadImg.forEach(element => {
+          this.editedItem.blogImages.push(element);
+        });
+      }
+      if (this.uploadImgWebp.length > 0) {
+        this.uploadImgWebp.forEach(element => {
+          this.editedItem.blogImagesWebp.push(element);
+        });
       }
      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
@@ -502,7 +600,7 @@ export default {
     deleteBlogIntroByLang(item) {
       this.editedItem.blogIntros.splice(item, 1);
     }
-  }
+  },
 };
 </script>
 <style>

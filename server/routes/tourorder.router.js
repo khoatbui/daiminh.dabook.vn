@@ -18,6 +18,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.get('/gettourbytrans/:_id',controller.getTourOrderByTransactionCode)
 
 module.exports = router

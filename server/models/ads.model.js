@@ -9,6 +9,7 @@ var adsSchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     adsImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    adsImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
     adsType:String,
     adsLink: String,
     adsTitle:String,

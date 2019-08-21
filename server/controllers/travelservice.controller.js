@@ -49,7 +49,6 @@ module.exports.insertTravelService= function (req, res) {
 module.exports.updateTravelService=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         TravelService.updateOne({ _id: req.params._id },{$set:req.body},(err, travelservice) =>{
         if(err) {
             console.log(err);
@@ -59,6 +58,8 @@ module.exports.updateTravelService=function (req, res) {
                  res.status(200).send(travelservice);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getTravelServiceBySupplier=(req,res,next) => {

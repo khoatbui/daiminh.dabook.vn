@@ -1,4 +1,5 @@
 var PackageHotelREL = require('../models/packagehotelrel.model')
+var Destination = require('../models/destination.model')
 var mongoose = require('mongoose');
 var moment =require('moment');
 moment().format();
@@ -8,6 +9,13 @@ module.exports.index = function (req, res) {
         res.send(package)
     })
 };
+
+module.exports.getUsed = function (req, res) {
+    PackageHotelREL.find({"isUsed":true}).populate('supplierId').populate('hotelId').populate('roomTypeId').populate('packageId').then(function (package) {
+        res.send(package)
+    })
+};
+
 
 module.exports.getPackageHotelREL = (req, res, next) => {
     PackageHotelREL.find().then(function (package) {
@@ -60,6 +68,11 @@ module.exports.getPackageByHotelRoomType = (req, res, next) => {
         res.send(pac)
     })
 };
+module.exports.getPackageByHotel = (req, res, next) => {
+    PackageHotelREL.find({"hotelId":req.params._id}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+        res.send(pac)
+    })
+};
 module.exports.getPackageBySingleHotelRoomType=(req, res, next) => {
     PackageHotelREL.find({"hotelId":req.body.hotelId._id,"roomTypeId":req.body.roomTypeId._id}).populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
         console.log(pac);
@@ -107,7 +120,11 @@ module.exports.getmAllPackageBySupplier = (req, res, next) => {
         res.send(pac)
     })
 };
-
+module.exports.getPackageByHotelRoomType = (req, res, next) => {
+    PackageHotelREL.find({"isUsed":true,"hotelId":req.params.hotelid,"roomTypeId":req.params.roomtypeid}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+        res.send(pac)
+    })
+};
 module.exports.getmPackageDetail = (req, res, next) => {
     PackageHotelREL.findOne({"isUsed":true,"_id":req.params._id}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
         res.send(pac)
@@ -120,6 +137,18 @@ module.exports.getmAllPromotePackageByCity = (req, res, next) => {
     })
         res.send(result)
     })
+};
+module.exports.getmAllPackageByDestination = (req, res, next) => {
+    Destination.findOne({"isUsed":true,"_id":req.params._id}).then(function (des){
+        
+        PackageHotelREL.find({"isUsed":true}).populate('supplierId').populate('packageId').populate('hotelId').populate('roomTypeId').then(function (pac) {
+            var result=pac.filter(item =>{ 
+                return item.hotelId.cityId == des.cityId
+        })
+            res.send(result)
+        })
+    })
+    
 };
 module.exports.getmAllPackageBySearch = (req, res, next) => {
     console.log(req.body.keyword);

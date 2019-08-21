@@ -8,6 +8,13 @@ module.exports.index =function(req,res){
         res.send(tour)
     })
 };
+module.exports.getUsed =function(req,res){
+    res.setHeader('Cache-Control', 'private');
+    res.cookie('__session', "sessionCookie");
+    TourOrder.find({"isUsed":true}).populate('supplierId').populate('cityId').then(function(tour){
+        res.send(tour)
+    })
+};
 
 module.exports.getTourOrder=(req,res,next) => {
     res.cookie('__session', "sessionCookie");

@@ -9,6 +9,7 @@ var fitSchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     fitImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    fitImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
     isUsed:Boolean,
     order:Number,
     keyword:String,

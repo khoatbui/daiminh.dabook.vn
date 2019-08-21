@@ -18,6 +18,9 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
 router.get('/',controller.index)
+
+router.get('/getused',controller.getUsed)
+
 router.get('/aboutus',controller.getBlogAboutUs)
 
 router.get('/m/getblogdetailbyid/:_id',controller.getmBlogDetailById)

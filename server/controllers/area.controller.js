@@ -8,6 +8,11 @@ module.exports.index =function(req,res){
         res.send(area)
     })
 };
+module.exports.getUsed =function(req,res){
+    Area.find({"isUsed":true}).then(function(area){
+        res.send(area)
+    })
+};
 
 module.exports.getmAreaById=(req,res,next) => {
     Area.findOne({"_id":req.params._id}).then(function(area){
@@ -42,7 +47,6 @@ module.exports.insertArea= function (req, res) {
 module.exports.updateArea=function (req, res) {
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
         Area.updateOne({ _id: req.params._id },{$set:req.body},(err, area) =>{
         if(err) {
             console.log(err);
@@ -52,6 +56,8 @@ module.exports.updateArea=function (req, res) {
                  res.status(200).send(area);
         }
      });
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getAreaBySupplier=(req,res,next) => {

@@ -11,6 +11,7 @@ var carTransTypeSchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     carTransImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    carTransImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
     carTransTypeIntros:[]
 });
 var CarTransType =mongoose.model('CarTransType',carTransTypeSchema,'carTransType');

@@ -8,7 +8,11 @@ module.exports.index = function (req, res) {
         res.send(supplier)
     })
 };
-
+module.exports.getUsed = function (req, res) {
+    Supplier.find({"isUsed":true}).then(function (supplier) {
+        res.send(supplier)
+    })
+};
 module.exports.getPromoteSupplier = (req, res, next) => {
     Supplier.find({"isPromote":true}).then(function (supplier) {
         res.send(supplier)
@@ -45,7 +49,6 @@ module.exports.updateSupplier = function (req, res) {
     console.log(req.body);
     req.body.modifyDate=new Date();
     delete req.body.createBy;
-    UploadController.removeImage(req.body.removeImage);
     Supplier.updateOne({ _id: req.params._id }, { $set: req.body }, (err, supplier) => {
         if (err) {
             console.log(err);
@@ -55,5 +58,7 @@ module.exports.updateSupplier = function (req, res) {
             res.status(200).send(supplier);
         }
     });
+    UploadController.removeImage(req.body.removeImage);
+    UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 

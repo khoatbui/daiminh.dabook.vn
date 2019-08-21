@@ -12,6 +12,14 @@ module.exports.index = function(req, res) {
     });
 };
 
+module.exports.getUsed = function(req, res) {
+  CarType.find({"isUsed":true})
+    .populate("supplierId")
+    .then(function(cartype) {
+      res.send(cartype);
+    });
+};
+
 module.exports.getCarType = (req, res, next) => {
   CarType.find().then(function(cartype) {
     res.send(cartype);
@@ -46,7 +54,6 @@ module.exports.updateCarType = function(req, res) {
   console.log(req.body);
   req.body.modifyDate = new Date();
   delete req.body.createBy;
-  UploadController.removeImage(req.body.removeImage);
   CarType.updateOne(
     { _id: req.params._id },
     { $set: req.body },
@@ -61,6 +68,8 @@ module.exports.updateCarType = function(req, res) {
       }
     }
   );
+  UploadController.removeImage(req.body.removeImage);
+  UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
 module.exports.getCarTypeBySupplier = (req, res, next) => {

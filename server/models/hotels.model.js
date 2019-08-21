@@ -14,9 +14,14 @@ var hotelSchema = new mongoose.Schema({
     isHot:Boolean,
     isPromote:Boolean,
     hotelImages:[{fileName:String,filePath:String,destination:String,size:Number}],
+    hotelImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
     keyword:String,
     hotelIntro:String,
-    hotelIntros:[]
+    hotelIntros:[],
+    booked:Number,
+    view:Number,
+    map:String,
+    isPackage:Boolean
 });
 var Hotel =mongoose.model('Hotel',hotelSchema,'hotel');
 

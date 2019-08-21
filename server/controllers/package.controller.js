@@ -8,7 +8,11 @@ module.exports.index = function (req, res) {
         res.send(package)
     })
 };
-
+module.exports.getUsed = function (req, res) {
+    Package.find({'isUsed':true}).populate('supplierId').then(function (package) {
+        res.send(package)
+    })
+};
 module.exports.getPackage = (req, res, next) => {
     Package.find().then(function (package) {
         res.send(package)
@@ -58,6 +62,12 @@ module.exports.updatePackage = function (req, res) {
 
 module.exports.getPackageBySupplier=(req,res,next) => {
     Package.find({supplierId:req.params._id}).then(function(packages){
+        console.log(packages);
+        res.send(packages)
+    })
+};
+module.exports.getPackageBySupplierWithDefault=(req,res,next) => {
+    Package.find({$or:[{supplierId:req.params._id},{supplierId:'5d5a64789dd3c51ee06f54bd'}]}).then(function(packages){
         console.log(packages);
         res.send(packages)
     })

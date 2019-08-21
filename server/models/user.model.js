@@ -9,7 +9,8 @@ var userSchema = new mongoose.Schema({
     createBy:String,
     createDate:Date,
     modifyBy:String,
-    modifyDate:Date
+    modifyDate:Date,
+    permision:String
 });
 var User =mongoose.model('User',userSchema,'user');
 

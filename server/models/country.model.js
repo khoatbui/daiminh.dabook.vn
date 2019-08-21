@@ -10,7 +10,9 @@ var countrySchema = new mongoose.Schema({
     modifyBy:String,
     modifyDate:Date,
     countryImages:[{fileName:String,filePath:String,destination:String,size:Number}],
-    isUsed:Boolean
+    countryImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
+    isUsed:Boolean,
+    map:String
 });
 var Country =mongoose.model('Country',countrySchema,'country');
 

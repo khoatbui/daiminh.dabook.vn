@@ -121,11 +121,11 @@
                         <td class="justify-center px-0">
                           <v-icon small @click="deleteTripIntroByLang(props.index)">delete</v-icon>
                         </td>
-                        <td>{{props.item.carTransTypeName}}</td>
-                         <td>{{props.item.from}}</td>
-                          <td>{{props.item.to}}</td>
+                        <td>{{props.item.tripName}}</td>
+                         <td>{{props.item.fromLocation}}</td>
+                          <td>{{props.item.toLocation}}</td>
                         <td>{{props.item.lang}}</td>
-                        <td>{{props.item.carTransTypeIntro}}</td>
+                        <td>{{props.item.tripIntro}}</td>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -327,7 +327,7 @@
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td style="width:100px">
             <v-tooltip bottom>
@@ -479,11 +479,11 @@ export default {
     dialogPrice: false,
     tripIntrosHeader: [
       { text: "Actions", value: "name", sortable: false },
-      { text: "CarTransTypeName", value: "carTransTypeName" },
+      { text: "TripName", value: "tripName" },
       { text: "From", value: "fromLocation" },
       { text: "To", value: "toLocation" },
       { text: "language", value: "lang" },
-      { text: "CarTransTypeIntro", value: "carTransTypeIntro" }
+      { text: "TripIntro", value: "tripIntro" }
     ],
     headers: [
       { text: "Actions", sortable: false },
@@ -670,6 +670,11 @@ export default {
       );
       console.log('computed')
       console.log(this.editedItem.priceByCarType);
+    },
+    deletePermision() {
+      if (this.$store.state.user.login.permision === "ADMIN") {
+        return true;
+      }
     }
   },
 
@@ -696,7 +701,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/carsupplier/", { crossdomain: true })
+      AXIOS.get(apiIP + "/carsupplier/getused", { crossdomain: true })
         .then(response => {
           this.carSupplier = response.data;
           this.carSupplierFilter = response.data;
@@ -709,7 +714,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/cartranstype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/cartranstype/getused", { crossdomain: true })
         .then(response => {
           this.carTransType = response.data;
           this.carTransTypeFilter = response.data;
@@ -722,7 +727,7 @@ export default {
         .catch(function(error) {})
         .finally(function() {});
 
-      AXIOS.get(apiIP + "/cartype/", { crossdomain: true })
+      AXIOS.get(apiIP + "/cartype/getused", { crossdomain: true })
         .then(response => {
           this.carType = JSON.parse(JSON.stringify(response.data));
           this.carTypeFilter = response.data;
@@ -736,7 +741,7 @@ export default {
         .finally(function() {});
 
         
-      AXIOS.get(apiIP + "/city/", { crossdomain: true })
+      AXIOS.get(apiIP + "/city/getused", { crossdomain: true })
         .then(response => {
           this.city = JSON.parse(JSON.stringify(response.data));
         })
@@ -821,6 +826,8 @@ export default {
       this.editedItem.tripIntros.push({
         tripName: this.editedItem.tripName,
         tripIntro: this.editedItem.tripIntro,
+        fromLocation: this.editedItem.fromLocation,
+        toLocation: this.editedItem.toLocation,
         lang: this.editedItem.lang
       });
     },

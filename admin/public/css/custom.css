@@ -12,3 +12,7 @@ table.v-table tbody td, table.v-table tbody th {
     max-height: 19px;
     white-space: nowrap;
 }
+.v-select.v-select--chips .v-select__selections{
+    flex-wrap: nowrap;
+    overflow: hidden;
+}

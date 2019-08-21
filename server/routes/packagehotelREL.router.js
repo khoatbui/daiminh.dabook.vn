@@ -18,6 +18,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/',controller.index)
 
+router.get('/getused',controller.getUsed)
+
 router.delete('/:_id',controller.deletePackageHotelREL)
 
 router.post('/insert', jsonParser, controller.insertPackageHotelREL)
@@ -47,11 +49,17 @@ router.get('/m/gettop10promotionpackage',controller.getmAllPromotionPackage)
 
 router.get('/m/getpackagedetail/:_id', controller.getmPackageDetail)
 
+router.get('/m/getpackagebyhotel/:_id', controller.getPackageByHotel)
+
+router.get('/m/getpackagebyhotelroomtype/:hotelid&:roomtypeid', controller.getPackageByHotelRoomType)
+
 router.get('/m/getallpromotepackagebysupplier/:_id',controller.getmAllPromotePackageBySupplier)
 
 router.get('/m/getallpackagebysupplier/:_id',controller.getmAllPackageBySupplier)
 
 router.get('/m/getallpackagebycity/:_id',controller.getmAllPromotePackageByCity)
+
+router.get('/m/getallpackagebydestination/:_id',controller.getmAllPackageByDestination)
 
 router.post('/m/postpackagebysearch', jsonParser,controller.getmAllPackageBySearch)
 

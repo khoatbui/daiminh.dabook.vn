@@ -36,13 +36,15 @@ var pakageHotelRELSchema = new mongoose.Schema({
             day:String,
         }]
     }],
-    optionServices: [{
+    optionService:{
         optionPrice: Number,
         optionServiceCode: String,
         optionServiceName: String,
         optionNote: String,
         isUsed: Boolean
-    }],
+    }
+    ,
+    optionServices: [],
     utilities:{
         isWifi:Boolean,
         isTivi:Boolean,
