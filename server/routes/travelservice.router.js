@@ -11,15 +11,15 @@ var bodyParser = require('body-parser')
 
 var router = express.Router()
 // create application/json parser
-var jsonParser = bodyParser.json()
+var jsonParser = bodyParser.json({limit: '50mb', extended: true})
 
 // create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true})
 
 
 router.get('/',controller.index)
 
-router.get('/getused',controller.getUsed)
+router.get('/m/gettravelservicebycode/:_id',controller.getmTravelServiceByCode)
 
 router.get('/getused',controller.getUsed)
 

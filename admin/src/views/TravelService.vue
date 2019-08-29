@@ -35,6 +35,9 @@
                   <v-flex xs12 sm12 md12>
                     <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
                   </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <v-text-field v-model="editedItem.router" label="Router"></v-text-field>
+                  </v-flex>
                   <v-flex xs12 sm12 md12 class="sub-add-component">
                     <v-text-field v-model="editedItem.travelServiceName" label="TravelService Name"></v-text-field>
                   </v-flex>
@@ -222,7 +225,8 @@ export default {
       isUsed: true,
       keyword: "",
       order: 0,
-      travelServiceIntros: []
+      travelServiceIntros: [],
+      router:"",
     },
     defaultItem: {
       travelServiceCode: "",
@@ -236,7 +240,8 @@ export default {
       isUsed: true,
       keyword: "",
       order: 0,
-      travelServiceIntros: []
+      travelServiceIntros: [],
+      router:"",
     }
   }),
 

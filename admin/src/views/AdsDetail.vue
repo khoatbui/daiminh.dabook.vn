@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>BLOG DETAIL CRUD</v-toolbar-title>
+      <v-toolbar-title>ADS DETAIL CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
@@ -24,12 +24,12 @@
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
                     <v-select
-                      v-model="editedItem.blogId"
-                      :items="blogListByLang"
-                      item-text="blogName"
+                      v-model="editedItem.adsId"
+                      :items="adsListByLang"
+                      item-text="adsName"
                       item-value="_id"
                       v-bind:class="{ disabled: disableSelect }"
-                      label="Blog"
+                      label="Ads"
                       return-object
                     ></v-select>
                   </v-flex>
@@ -49,31 +49,69 @@
                     <h5>
                       <b>Block01</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block01" v-on:childtoparent="editedItem.block01=$event"></CustomEditForm>
+                    <VueTrixEditor
+                      v-model="editedItem.block01"
+                      v-bind:initial-content="editedItem.block01"
+                      placeholder="Block01"
+                      uniqueId="iblock01"
+                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
+                      localStorage
+                      @image-attached="getInlineImage($event)"
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.block01" class="old-content"></div>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block02</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block02" v-on:childtoparent="editedItem.block02=$event"></CustomEditForm>
+                    <VueTrixEditor
+                      v-model="editedItem.block02"
+                      placeholder="Block02"
+                      uniqueId="iblock02"
+                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.block02" class="old-content"></div>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block03</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block03" v-on:childtoparent="editedItem.block03=$event"></CustomEditForm>
+                    <VueTrixEditor
+                      v-model="editedItem.block03"
+                      placeholder="Block03"
+                      uniqueId="iserviceinclude"
+                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.block03" class="old-content"></div>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block04</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block04" v-on:childtoparent="editedItem.block04=$event"></CustomEditForm>
+                    <VueTrixEditor
+                      v-model="editedItem.block04"
+                      placeholder="Service Not Include"
+                      uniqueId="iservicenotinclude"
+                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.block04" class="old-content"></div>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block05</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block05" v-on:childtoparent="editedItem.block05=$event"></CustomEditForm>
+                    <VueTrixEditor
+                      v-model="editedItem.block05"
+                      placeholder="Block05"
+                      uniqueId="ishouldtake"
+                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
+                      @image-attached="console.log($event)"
+                      localStorage
+                    ></VueTrixEditor>
+                    <div v-html="editedItem.block05" class="old-content"></div>
                   </v-flex>
                 </v-layout>
 
@@ -82,7 +120,7 @@
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <doc-upload
                       @getUploadFilesURL="uploadDocument = $event"
-                      v-bind:routerPath="apiIP+'/upload/blog/document'"
+                      v-bind:routerPath="apiIP+'/upload/ads/document'"
                     ></doc-upload>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
@@ -96,6 +134,17 @@
                       <font-awesome-icon icon="file-pdf" class="text-supplerlarge" />
                       <span style="display:block">{{item.fileName}}</span>
                     </a>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <div>
+                      <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+                        <button
+                          :class="{ 'is-active': isActive.bold() }"
+                          @click="commands.bold"
+                        >Bold</button>
+                      </editor-menu-bar>
+                      <editor-content :editor="editor" />
+                    </div>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -115,11 +164,11 @@
         <v-layout pl-2 pr-2>
           <v-flex xs12 sm6 md3 p-2>
             <v-select
-              v-model="filterByCombo.blogId"
-              :items="bloglistFilter"
-              item-text="blogName"
+              v-model="filterByCombo.adsId"
+              :items="adslistFilter"
+              item-text="adsName"
               item-value="_id"
-              label="Blog"
+              label="Ads"
               return-object
             ></v-select>
           </v-flex>
@@ -156,10 +205,10 @@
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>
-            <p v-html="props.item.blogId.blogName"></p>
+            <p v-html="props.item.adsId.adsName"></p>
           </td>
           <td>
-            <p v-html="props.item.blogId.blogCode"></p>
+            <p v-html="props.item.adsId.adsCode"></p>
           </td>
           <td class="w-25">
             <p class="one-row" v-html="props.item.block01"></p>
@@ -195,7 +244,7 @@
     <v-dialog v-model="dialog_detail" width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline">Blog detail</span>
+          <span class="headline">Ads detail</span>
         </v-card-title>
         <v-card-text>
           <div v-html="selectedItem.block01"></div>
@@ -217,7 +266,25 @@ var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import DocUpload from "../components/DocUpload.vue";
-import CustomEditForm from "../components/CustomEditForm.vue"
+import { Editor, EditorContent, EditorMenuBar } from "tiptap";
+import {
+  Blockquote,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  OrderedList,
+  BulletList,
+  ListItem,
+  TodoItem,
+  TodoList,
+  Bold,
+  Code,
+  Italic,
+  Link,
+  Strike,
+  Underline,
+  History
+} from "tiptap-extensions";
 
 import moment from "moment";
 // import VueTrix from "vue-trix";
@@ -240,7 +307,8 @@ export default {
     // VueTrix
     VueTrixEditor,
     DocUpload,
-    CustomEditForm
+    EditorMenuBar,
+    EditorContent
   },
   data: () => ({
     dialog_detail: false,
@@ -255,14 +323,14 @@ export default {
     headers: [
       { text: "Actions", value: "name", sortable: false },
       {
-        text: "Blog",
+        text: "Ads",
         align: "left",
-        value: "blogId.blogName"
+        value: "adsId.adsName"
       },
       {
-        text: "Blog",
+        text: "Ads",
         align: "left",
-        value: "blogId.blogCode"
+        value: "adsId.adsCode"
       },
       { text: "Block01", align: "left", value: "block01" },
       { text: "Block02", align: "left", value: "block02" },
@@ -276,17 +344,17 @@ export default {
       { text: "Language", align: "left", value: "lang" }
     ],
     filterByCombo: {
-      blogId: {
-        blogCode: "ALL"
+      adsId: {
+        adsCode: "ALL"
       },
       language: {
         langCode: "ALL"
       }
     },
     search: "",
-    bloglist: [],
-    blogdetail: [],
-    bloglistFilter: [],
+    adslist: [],
+    adsdetail: [],
+    adslistFilter: [],
     uploadImg: [],
     language: [
       { langCode: "EN", langName: "English" },
@@ -296,44 +364,66 @@ export default {
     editedIndex: -1,
     disableSelect: false,
     editedItem: {
-      blogId: "",
+      adsId: "",
       block01: "",
       block02: "",
       block03: "",
       block04: "",
       block05: "",
-      block06:"",
       lang: "EN",
       createBy: "",
       createDate: moment(new Date()).format("YYYY-MM-DD"),
       modifyBy: "",
       modifyDate: moment(new Date()).format("YYYY-MM-DD"),
-      blogDetailImages: [],
+      adsDetailImages: [],
       removeImage: [],
       removeDoc: [],
       detailDocs: [],
       isUsed:true
     },
     defaultItem: {
-      blogId: "",
+      adsId: "",
       block01: "",
       block02: "",
       block03: "",
       block04: "",
       block05: "",
-      block06:"",
       lang: "EN",
       createBy: "",
       createDate: moment(new Date()).format("YYYY-MM-DD"),
       modifyBy: "",
       modifyDate: moment(new Date()).format("YYYY-MM-DD"),
-      blogDetailImages: [],
+      adsDetailImages: [],
       removeImage: [],
       removeDoc: [],
       detailDocs: [],
       isUsed:true
     },
     componentLoaded: false,
+    editor: new Editor({
+        extensions: [
+          new Blockquote(),
+          new CodeBlock(),
+          new HardBreak(),
+          new Heading({ levels: [1, 2, 3] }),
+          new BulletList(),
+          new OrderedList(),
+          new ListItem(),
+          new TodoItem(),
+          new TodoList(),
+          new Bold(),
+          new Code(),
+          new Italic(),
+          new Link(),
+          new Strike(),
+          new Underline(),
+          new History(),
+        ],
+        content: `
+          <h1>Yay Headlines!</h1>
+          <p>All these <strong>cool tags</strong> are working now.</p>
+        `,
+      }),
   }),
 
   computed: {
@@ -344,10 +434,10 @@ export default {
       // This creates a new empty object, copies the item into it,
       // then calculates `fullAddress` and copies that entry into it
 
-      return this.blogdetail.filter(i => {
+      return this.adsdetail.filter(i => {
         return (
-          (this.filterByCombo.blogId.blogCode === "ALL" ||
-            i.blogId._id === this.filterByCombo.blogId._id) &&
+          (this.filterByCombo.adsId.adsCode === "ALL" ||
+            i.adsId._id === this.filterByCombo.adsId._id) &&
           (this.filterByCombo.language.langCode === "ALL" ||
             i.lang === this.filterByCombo.language.langCode)
         );
@@ -358,26 +448,26 @@ export default {
         return true;
       }
     },
-    blogListByLang() {
+    adsListByLang() {
       if (this.componentLoaded === false) {
         return;
       }
-      this.bloglist.forEach(element => {
-        element.blogIntros.forEach(area => {
+      this.adslist.forEach(element => {
+        element.adsIntros.forEach(area => {
           if (area.lang.toUpperCase() === "EN") {
-            element.blogName = area.blogName;
-            element.blogIntro = area.blogIntro;
+            element.adsName = area.adsName;
+            element.adsIntro = area.adsIntro;
           }
         });
       });
-      return this.bloglist;
+      return this.adslist;
     }
   },
 
   watch: {
     dialog(val) {
       val || this.close();
-    },
+    }
   },
 
   created() {
@@ -385,30 +475,35 @@ export default {
   },
   mounted() {
   },
+  beforeDestroy() {
+    this.editor.destroy();
+  },
   methods: {
     initialize() {
-      AXIOS.get(apiIP + "/bloglist/getused", { crossdomain: true })
+      AXIOS.get(apiIP + "/adslist/getused", { crossdomain: true })
         .then(response => {
-          this.bloglist = response.data;
-          this.bloglistFilter = response.data;
-          this.bloglistFilter.unshift({
-            blogCode: "ALL",
-            blogName: "ALL",
-            blogId: -1,
-            blogIntros: []
+          this.adslist = response.data;
+          this.adslistFilter = response.data;
+          this.adslistFilter.unshift({
+            adsCode: "ALL",
+            adsName: "ALL",
+            adsId: -1,
+            adsIntros: []
           });
           this.componentLoaded = true;
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/blogdetail/", { crossdomain: true })
+      AXIOS.get(apiIP + "/adsdetail/", { crossdomain: true })
         .then(response => {
-          this.blogdetail = response.data;
+          this.adsdetail = response.data;
+          console.log(this.adsdetail);
         })
         .catch(function(error) {})
         .finally(function() {});
     },
     getInlineImage(event) {
+      console.log(event);
     },
     editItem(item) {
       this.editedIndex = 100;
@@ -417,11 +512,13 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
+      console.log("edit show");
+      console.log(this.editedItem);
     },
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/blogdetail/" + item._id)
+        AXIOS.delete(apiIP + "/adsdetail/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
@@ -432,7 +529,6 @@ export default {
     },
 
     close() {
-      console.log(this.editedItem.block05);
       this.dialog = false;
       this.disableSelect = false;
       setTimeout(() => {
@@ -443,8 +539,8 @@ export default {
 
     save() {
       if (this.uploadImg.length > 0) {
-        this.editedItem.removeImage = this.editedItem.blogDetailImages;
-        this.editedItem.blogDetailImages = this.uploadImg;
+        this.editedItem.removeImage = this.editedItem.adsDetailImages;
+        this.editedItem.adsDetailImages = this.uploadImg;
       }
       if (this.uploadDocument.length > 0) {
         this.editedItem.removeDoc = this.editedItem.detailDocs;
@@ -455,14 +551,14 @@ export default {
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(
-            apiIP + "/blogdetail/update/" + this.editId,
+            apiIP + "/adsdetail/update/" + this.editId,
             this.editedItem
           )
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/blogdetail/insert", this.editedItem)
+          AXIOS.post(apiIP + "/adsdetail/insert", this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});

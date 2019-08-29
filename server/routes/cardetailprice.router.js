@@ -11,15 +11,17 @@ var controller=require('../controllers/cardetailprice.controller')
 var router = express.Router()
 
 // create application/json parser
-var jsonParser = bodyParser.json()
+var jsonParser = bodyParser.json({limit: '50mb', extended: true})
 
 // create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true})
 
 
 router.get('/',controller.index)
 
 router.get('/getused',controller.getUsed)
+
+router.get('/getcarpricebyid/:_id',controller.getCarDetailPriceById)
 
 router.delete('/:_id', controller.deleteCarDetailPrice)
 

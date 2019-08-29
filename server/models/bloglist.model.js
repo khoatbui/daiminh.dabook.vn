@@ -17,6 +17,7 @@ var blogListSchema = new mongoose.Schema({
     keyword:String,
     isUsed:Boolean,
     isPromotion:Boolean,
+    isHot:Boolean,
     blogIntros:[],
     star:Number,
     link:String,
@@ -24,7 +25,10 @@ var blogListSchema = new mongoose.Schema({
     travelServiceId:{ type: mongoose.Schema.Types.ObjectId, ref: 'TravelService' },
     miceId:{ type: mongoose.Schema.Types.ObjectId, ref: 'MICE' },
     aboutUsId:{ type: mongoose.Schema.Types.ObjectId, ref: 'AboutUs' },
-    destinationId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Destination' }
+    destinationId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Destination' },
+    ctaId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Cta' },
+    cta:{},
+    isBlog:Boolean
 });
 var BlogList =mongoose.model('BlogList',blogListSchema,'bloglist');
 

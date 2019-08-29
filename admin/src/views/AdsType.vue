@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>BLOGTYPE CRUD</v-toolbar-title>
+      <v-toolbar-title>ADSTYPE CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="900px">
@@ -20,14 +20,14 @@
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
                   <v-text-field required
-                    :rules="[() => editedItem.blogTypeCode.length > 0 || 'Required field']"
-                     v-model="editedItem.blogTypeCode" label="BlogTypeId"></v-text-field>
+                    :rules="[() => editedItem.adsTypeCode.length > 0 || 'Required field']"
+                     v-model="editedItem.adsTypeCode" label="AdsTypeId"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.blogTypeName" label="BlogTypeName"></v-text-field>
+                  <v-text-field v-model="editedItem.adsTypeName" label="AdsTypeName"></v-text-field>
                 </v-flex>
                  <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.blogTypeNameEN" label="BlogTypeNameEN"></v-text-field>
+                  <v-text-field v-model="editedItem.adsTypeNameEN" label="AdsTypeNameEN"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-select
@@ -45,7 +45,7 @@
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
-                      v-bind:routerPath="apiIP+'/upload/tour/blogType'"
+                      v-bind:routerPath="apiIP+'/upload/tour/adsType'"
                     ></file-upload>
                  </v-flex>
                  <v-flex xs12 sm12 md12>
@@ -54,7 +54,7 @@
                   <v-flex xs12 sm12 md12 class="scroll-ngang">
                     <img
                       class="room-img"
-                      v-for="(item,i) in editedItem.blogTypeImages"
+                      v-for="(item,i) in editedItem.adsTypeImages"
                       v-bind:src="`http://mdaiminh.dabook.vn/${item.filePath}`"
                       alt
                     />
@@ -72,16 +72,16 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="blogType" class="elevation-1">
+    <v-data-table :headers="headers" :items="adsType" class="elevation-1">
       <template v-slot:items="props">
         <tr>
           <td class="justify-center layout px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
-          <td>{{ props.item.blogTypeCode }}</td>
-          <td>{{ props.item.blogTypeName }}</td>
-           <td>{{ props.item.blogTypeNameEN }}</td>
+          <td>{{ props.item.adsTypeCode }}</td>
+          <td>{{ props.item.adsTypeName }}</td>
+           <td>{{ props.item.adsTypeNameEN }}</td>
           <td>{{ props.item.lang }}</td>
         </tr>
       </template>
@@ -123,15 +123,15 @@ export default {
     headers: [
       { text: "Actions", value: "name", sortable: false },
       {
-        text: "BlogTypeCode",
+        text: "AdsTypeCode",
         sortable: false,
-        value: "blogTypeCode"
+        value: "adsTypeCode"
       },
-      { text: "BlogTypeName", value: "blogTypeName" },
-       { text: "BlogTypeNameEN", value: "blogTypeNameEN" },
+      { text: "AdsTypeName", value: "adsTypeName" },
+       { text: "AdsTypeNameEN", value: "adsTypeNameEN" },
       { text: "Language", value: "lang" }
     ],
-    blogType: [],
+    adsType: [],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
@@ -139,20 +139,20 @@ export default {
     ],
     editedIndex: -1,
     editedItem: {
-      blogTypeCode: "",
-      blogTypeName: "",
-      blogTypeNameEN: "",
+      adsTypeCode: "",
+      adsTypeName: "",
+      adsTypeNameEN: "",
       lang: "EN",
-       blogTypeImages: [],
+       adsTypeImages: [],
       removeImage: [],
       isUsed:true
     },
     defaultItem: {
-      blogTypeCode: "",
-      blogTypeName: "",
-      blogTypeNameEN: "",
+      adsTypeCode: "",
+      adsTypeName: "",
+      adsTypeNameEN: "",
       lang: "EN",
-       blogTypeImages: [],
+       adsTypeImages: [],
       removeImage: [],
       isUsed:true
     }
@@ -181,9 +181,9 @@ export default {
 
  methods: {
     initialize() {
-      AXIOS.get(apiIP + "/blogType/", { crossdomain: true })
+      AXIOS.get(apiIP + "/adsType/", { crossdomain: true })
         .then(response => {
-          this.blogType = response.data;
+          this.adsType = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -200,7 +200,7 @@ export default {
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/blogType/" + item._id)
+        AXIOS.delete(apiIP + "/adsType/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
@@ -221,21 +221,21 @@ export default {
 
     save() {
        if (this.uploadImg.length > 0) {
-        console.log(this.editedItem.blogTypeImages);
-        this.editedItem.removeImage = this.editedItem.blogTypeImages;
-        this.editedItem.blogTypeImages = this.uploadImg;
+        console.log(this.editedItem.adsTypeImages);
+        this.editedItem.removeImage = this.editedItem.adsTypeImages;
+        this.editedItem.adsTypeImages = this.uploadImg;
         console.log(this.editedItem.removeImage);
       }
      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/blogType/update/" + this.editId, this.editedItem)
+          AXIOS.post(apiIP + "/adsType/update/" + this.editId, this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/blogType/insert", this.editedItem)
+          AXIOS.post(apiIP + "/adsType/insert", this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});

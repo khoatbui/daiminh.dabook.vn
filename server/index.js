@@ -53,6 +53,11 @@ const mice=require('./routes/mice.router')
 const fit=require('./routes/fit.router')
 const travelService=require('./routes/travelservice.router')
 const aboutUs=require('./routes/aboutus.router')
+const cta=require('./routes/cta.router')
+
+const adsType=require('./routes/adstype.router')
+const adsList=require('./routes/adslist.router')
+const adsDetail=require('./routes/adsdetail.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -98,6 +103,11 @@ app.use('/mice',mice)
 app.use('/fit',fit)
 app.use('/travelservice',travelService)
 app.use('/aboutus',aboutUs)
+app.use('/cta',cta)
+
+app.use('/adstype',adsType)
+app.use('/adslist',adsList)
+app.use('/adsdetail',adsDetail)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

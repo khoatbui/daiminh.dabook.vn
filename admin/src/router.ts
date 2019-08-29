@@ -219,6 +219,24 @@ const router = new Router({
       name: 'payment',
       component: () => import(/* webpackChunkName: "about" */ './views/Payment.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/adstype',
+      name: 'adstype',
+      component: () => import(/* webpackChunkName: "about" */ './views/AdsType.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/adslist',
+      name: 'adslist',
+      component: () => import(/* webpackChunkName: "about" */ './views/AdsList.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/adsdetail',
+      name: 'adsdetail',
+      component: () => import(/* webpackChunkName: "about" */ './views/AdsDetail.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })

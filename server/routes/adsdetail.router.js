@@ -1,12 +1,13 @@
-/*=======SUPPLIER======
+/*=======GET TRAVEL STYLE LIST======
 + Duong dan hinh anh
 + Link
 + Title
 + Noi dung
 ==================================*/
 var express = require('express')
+var controller=require('../controllers/adsdetail.controller')
+var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
-var controller=require('../controllers/toursupplier.controller')
 
 var router = express.Router()
 // create application/json parser
@@ -20,11 +21,13 @@ router.get('/',controller.index)
 
 router.get('/getused',controller.getUsed)
 
-router.get('/getpromotesupplier',controller.getPromoteSupplier)
+router.get('/aboutus',controller.getAdsAboutUs)
 
-router.delete('/:_id', controller.deleteSupplier)
+router.get('/m/getadsdetailbyid/:_id',controller.getmAdsDetailById)
 
-router.post('/insert',jsonParser, controller.insertSupplier)
+router.delete('/:_id', controller.deleteAdsDetail)
 
-router.post('/update/:_id', jsonParser,controller.updateSupplier)
+router.post('/insert', jsonParser,controller.insertAdsDetail)
+
+router.post('/update/:_id', jsonParser,controller.updateAdsDetail)
 module.exports = router

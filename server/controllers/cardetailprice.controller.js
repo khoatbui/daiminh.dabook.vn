@@ -24,7 +24,15 @@ module.exports.getUsed = function(req, res) {
       res.send(carDetailPrice);
     });
 };
-
+module.exports.getCarDetailPriceById = function(req, res) {
+  CarDetailPrice.findOne({"isUsed":true,"_id":req.params._id})
+    .populate("supplierId")
+    .populate("carTransTypeId")
+    .populate("cityId")
+    .then(function(carDetailPrice) {
+      res.send(carDetailPrice);
+    });
+};
 module.exports.getCarDetailPrice = (req, res, next) => {
   CarDetailPrice.find()
     .populate("supplierId")

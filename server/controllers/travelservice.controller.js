@@ -22,6 +22,12 @@ module.exports.getmTravelServiceById=(req,res,next) => {
     })
 };
 
+module.exports.getmTravelServiceByCode=(req,res,next) => {
+    TravelService.findOne({"travelServiceCode":req.params._id}).then(function(travelservice){
+        res.send(travelservice)
+    })
+};
+
 module.exports.deleteTravelService= function (req, res) {
     TravelService.deleteOne({ _id: req.params._id }, function(err) {
         if (!err) {

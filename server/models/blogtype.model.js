@@ -10,6 +10,7 @@ var blogTypeSchema = new mongoose.Schema({
     modifyDate:Date,
     blogTypeImages:[{fileName:String,filePath:String,destination:String,size:Number}],
     blogTypeImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
+    isUsed:Boolean,
 });
 var BlogType =mongoose.model('BlogType',blogTypeSchema,'blogType');
 

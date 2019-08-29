@@ -48,7 +48,54 @@ module.exports.uploadHotelImg=async (req, res) => {
       res.sendStatus(400);
   }
 }
-
+module.exports.uploadAdsTypeImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/ads/adstype');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/ads/adstype');
+        result.push({'fileName':element.filename,'filePath':`img/ads/adstype/${element.filename}`,'destination':element.destination})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+  module.exports.uploadAdsListImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/ads/adslist');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/ads/adslist');
+        result.push({'fileName':element.filename,'filePath':`img/ads/adslist/${element.filename}`,'destination':element.destination})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+  module.exports.uploadAdsDetailImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/ads/adsdetail');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/ads/adsdetail');
+        result.push({'fileName':element.filename,'filePath':`img/ads/adsdetail/${element.filename}`,'destination':element.destination})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
 module.exports.webpuploadHotelImg=async (req, res) => {
   try {
       var result=[];

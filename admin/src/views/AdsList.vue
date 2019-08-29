@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>BLOG LIST CRUD</v-toolbar-title>
+      <v-toolbar-title>ADS LIST CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
@@ -24,89 +24,74 @@
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
                     <v-select
-                      v-model="editedItem.blogTypeId"
-                      :items="blogType"
-                      item-text="blogTypeName"
+                      v-model="editedItem.adsTypeId"
+                      :items="adsType"
+                      item-text="adsTypeName"
                       item-value="_id"
                       v-bind:class="{ disabled: disableSelect }"
-                      label="BlogType"
+                      label="AdsType"
                       return-object
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='DES'">
-                    <v-select
-                      v-model="editedItem.destinationId"
-                      :items="destinationByLang"
-                      item-text="destinationName"
-                      item-value="_id"
-                      label="DESTINATION"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='MICE'">
-                    <v-select
-                      v-model="editedItem.miceId"
-                      :items="mice"
-                      item-text="miceName"
-                      item-value="_id"
-                      label="MICE"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='TRS'">
-                    <v-select
-                      v-if="editedItem.blogTypeId.blogTypeCode=='TRS'"
-                      v-model="editedItem.travelStyleId"
-                      :items="travelStyle"
-                      item-text="travelStyleName"
-                      item-value="_id"
-                      label="Travel Style"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='TRV'">
-                    <v-select
-                      v-model="editedItem.travelServiceId"
-                      :items="travelService"
-                      item-text="travelServiceName"
-                      item-value="_id"
-                      label="Travel Service"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4 v-if="editedItem.blogTypeId.blogTypeCode=='ABU'">
-                    <v-select
-                      v-model="editedItem.aboutUsId"
-                      :items="aboutUs"
-                      item-text="aboutUsName"
-                      item-value="_id"
-                      label="AboutUs"
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
-                      :rules="[() => editedItem.blogCode.length > 0 || 'Required field']"
-                      v-model="editedItem.blogCode"
-                      label="Blog Code"
+                      :rules="[() => editedItem.adsCode.length > 0 || 'Required field']"
+                      v-model="editedItem.adsCode"
+                      label="Ads Code"
                     ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md3>
+                  <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md3>
+                  <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs12 sm6 md3>
-                    <v-checkbox v-model="editedItem.isHot" :label="`IsHot?`"></v-checkbox>
+                  <v-flex xs12 sm6 md4>
+                    <v-menu
+                      v-model="menu1"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      lazy
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="editedItem.startDate"
+                          label="StartDate"
+                          prepend-icon="event"
+                          readonly
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker v-model="editedItem.startDate" @input="menu1 = false"></v-date-picker>
+                    </v-menu>
                   </v-flex>
-                  <v-flex xs12 sm6 md3>
-                    <v-checkbox v-model="editedItem.isBlog" :label="`Is Show on Blog?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs12 sm6 md3>
-                    <v-select
-                      v-model="editedItem.star"
-                      :items="stars"
-                      item-text="star"
-                      item-value="start"
-                      label="Star"
-                    ></v-select>
+                  <v-flex xs12 sm6 md4>
+                    <v-menu
+                      v-model="menu2"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      lazy
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="editedItem.endDate"
+                          label="EndDate"
+                          prepend-icon="event"
+                          readonly
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker v-model="editedItem.endDate" @input="menu2 = false"></v-date-picker>
+                    </v-menu>
                   </v-flex>
                   <v-flex xs12 sm12 md12>
                     <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
@@ -125,20 +110,20 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="sub-add-component">
-                    <v-text-field v-model="editedItem.blogName" label="Blog Name"></v-text-field>
+                    <v-text-field v-model="editedItem.adsName" label="Ads Name"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5>
-                      <b>Blog Introduce</b>
+                      <b>Ads Introduce</b>
                     </h5>
                     <VueTrixEditor
-                      v-model="editedItem.blogIntro"
-                      placeholder="Blog Introduce"
-                      uniqueId="iblogintro"
-                      v-bind:image-upload-path="`${apiIP}/upload/blog/blogintro`"
+                      v-model="editedItem.adsIntro"
+                      placeholder="Ads Introduce"
+                      uniqueId="iadsintro"
+                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsintro`"
                       localStorage
                     ></VueTrixEditor>
-                    <div v-html="editedItem.blogIntro" class="old-content"></div>
+                    <div v-html="editedItem.adsIntro" class="old-content"></div>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select
@@ -150,25 +135,25 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
-                    <v-btn color="blue darken-1" dark @click="addBlogIntroByLang">Add</v-btn>
+                    <v-btn color="blue darken-1" dark @click="addAdsIntroByLang">Add</v-btn>
                   </v-flex>
                 </v-layout>
                 <v-layout>
                   <v-flex xs12 sm12 md12 class="border-top">
                     <v-data-table
-                      :headers="blogIntrosHeader"
-                      :items="editedItem.blogIntros"
+                      :headers="adsIntrosHeader"
+                      :items="editedItem.adsIntros"
                       class="elevation-1"
                       width="100%"
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
-                          <v-icon small @click="editBlogIntroByLang(props.item)">edit</v-icon>
-                          <v-icon small @click="deleteBlogIntroByLang(props.index)">delete</v-icon>
+                          <v-icon small @click="editAdsIntroByLang(props.item)">edit</v-icon>
+                          <v-icon small @click="deleteAdsIntroByLang(props.index)">delete</v-icon>
                         </td>
-                        <td>{{props.item.blogName}}</td>
+                        <td>{{props.item.adsName}}</td>
                         <td>{{props.item.lang}}</td>
-                        <td>{{props.item.blogIntro}}</td>
+                        <td>{{props.item.adsIntro}}</td>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -178,13 +163,13 @@
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
-                      v-bind:routerPath="apiIP+'/upload/blog/bloglist'"
+                      v-bind:routerPath="apiIP+'/upload/ads/adslist'"
                       :title="`Upload High Quality`"
                     ></file-upload>
                   </v-flex>
                   <v-flex xs12 sm12 md8>
                     <ImageListComponent
-                      :data="editedItem.blogImages"
+                      :data="editedItem.adsImages"
                       @getDeleteFile="deleteImage($event)"
                     ></ImageListComponent>
                   </v-flex>
@@ -192,13 +177,13 @@
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImgWebp = $event"
-                      v-bind:routerPath="apiIP+'/upload/blog/bloglist/webmp'"
+                      v-bind:routerPath="apiIP+'/upload/ads/adslist/webmp'"
                       :title="`Upload Webp Image`"
                     ></file-upload>
                   </v-flex>
                   <v-flex xs12 sm12 md8>
                     <ImageListComponent
-                      :data="editedItem.blogImagesWebp"
+                      :data="editedItem.adsImagesWebp"
                       @getDeleteFile="deleteImageWebp($event)"
                     ></ImageListComponent>
                   </v-flex>
@@ -220,11 +205,11 @@
         <v-layout pl-2 pr-2>
           <v-flex xs12 sm6 md3 p-2>
             <v-select
-              v-model="filterByCombo.blogTypeId"
-              :items="blogTypeFilter"
-              item-text="blogTypeName"
+              v-model="filterByCombo.adsTypeId"
+              :items="adsTypeFilter"
+              item-text="adsTypeName"
               item-value="_id"
-              label="Blog Type"
+              label="Ads Type"
               return-object
             ></v-select>
           </v-flex>
@@ -244,14 +229,14 @@
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
-          <td>{{ props.item.blogTypeId.blogTypeName }}</td>
-          <td>{{ props.item.blogCode }}</td>
-          <td>{{ props.item.blogName }}</td>
+          <td>{{ props.item.adsTypeId.adsTypeName }}</td>
+          <td>{{ props.item.adsCode }}</td>
+          <td>{{ props.item.adsName }}</td>
           <td>{{ props.item.lang }}</td>
           <td>{{ props.item.isUsed }}</td>
           <td>{{ props.item.order }}</td>
           <td>{{ props.item.keyword }}</td>
-          <td>{{ props.item.blogIntro }}</td>
+          <td>{{ props.item.adsIntro }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -269,6 +254,7 @@
 </template>
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
+// var apiIP='http://localhost:3001'
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import moment from "moment";
@@ -304,40 +290,35 @@ export default {
     endDateModal: false,
     dialog: false,
     disableSelect: false,
-    blogIntrosHeader: [
+    adsIntrosHeader: [
       { text: "Actions", value: "name", sortable: false },
-      { text: "BlogName", value: "blogName" },
+      { text: "AdsName", value: "adsName" },
       { text: "language", value: "lang" },
-      { text: "BlogIntro", value: "blogIntro" }
+      { text: "AdsIntro", value: "adsIntro" }
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
-      { text: "Blog Type", value: "blogTypeId.blogTypeName" },
+      { text: "Ads Type", value: "adsTypeId.adsTypeName" },
       {
-        text: "BlogCode",
-        value: "blogCode"
+        text: "AdsCode",
+        value: "adsCode"
       },
-      { text: "BlogName", value: "blogName" },
+      { text: "AdsName", value: "adsName" },
       { text: "Language", value: "lang" },
       { text: "isUsed", value: "isUsed" },
       { text: "order", value: "order" },
       { text: "keyword", value: "keyword" },
-      { text: "Intro", value: "blogIntro" }
+      { text: "Intro", value: "adsIntro" }
     ],
     filterByCombo: {
-      blogTypeId: {
-        blogTypeCode: "ALL"
+      adsTypeId: {
+        adsTypeCode: "ALL"
       }
     },
     search: "",
-    blogList: [],
-    blogType: [],
-    mice: [],
-    destination: [],
-    travelStyle: [],
-    travelService: [],
-    blogTypeFilter: [],
-    aboutUs: [],
+    adsList: [],
+    adsType: [],
+    adsTypeFilter: [],
     menu1: false,
     menu2: false,
     language: [
@@ -350,10 +331,10 @@ export default {
     disableSelect: false,
     editedIndex: -1,
     editedItem: {
-      blogTypeId: "",
-      blogCode: "",
-      blogName: "",
-      blogIntro: "",
+      adsTypeId: "",
+      adsCode: "",
+      adsName: "",
+      adsIntro: "",
       startDate: moment(new Date()).format("YYYY-MM-DD"),
       endDate: moment(new Date()).format("YYYY-MM-DD"),
       lang: "EN",
@@ -361,30 +342,23 @@ export default {
       createDate: moment(new Date()).format("YYYY-MM-DD"),
       modifyBy: "",
       modifyDate: moment(new Date()).format("YYYY-MM-DD"),
-      blogImages: [],
+      adsImages: [],
       order: 0,
       keyword: "",
       isUsed: true,
-      isHot: false,
       removeImage: [],
-      blogImagesWebp: [],
+      adsImagesWebp: [],
       removeImageWebp: [],
-      blogIntros: [],
-      star: 3,
+      adsIntros: [],
       link: "",
-      travelStyleId: null,
-      travelServiceId: null,
-      miceId: null,
-      aboutUsId: null,
-      destinationId: null,
       cta:"",
-      isBlog:true,
+      isAds:true,
     },
     defaultItem: {
-      blogTypeId: "",
-      blogCode: "",
-      blogName: "",
-      blogIntro: "",
+      adsTypeId: "",
+      adsCode: "",
+      adsName: "",
+      adsIntro: "",
       startDate: moment(new Date()).format("YYYY-MM-DD"),
       endDate: moment(new Date()).format("YYYY-MM-DD"),
       lang: "EN",
@@ -392,24 +366,17 @@ export default {
       createDate: moment(new Date()).format("YYYY-MM-DD"),
       modifyBy: "",
       modifyDate: moment(new Date()).format("YYYY-MM-DD"),
-      blogImages: [],
+      adsImages: [],
       order: 0,
       keyword: "",
       isUsed: true,
-      isHot: false,
       removeImage: [],
-      blogImagesWebp: [],
+      adsImagesWebp: [],
       removeImageWebp: [],
-      blogIntros: [],
-      star: 3,
+      adsIntros: [],
       link: "",
-      travelStyleId: null,
-      travelServiceId: null,
-      miceId: null,
-      aboutUsId: null,
-      destinationId: null,
       cta:"",
-      isBlog:true,
+      isAds:true,
     },
     componentLoaded: false
   }),
@@ -425,11 +392,11 @@ export default {
       // This creates a new empty object, copies the item into it,
       // then calculates `fullAddress` and copies that entry into it
 
-      return this.blogListByLang.filter(i => {
+      return this.adsListByLang.filter(i => {
         return (
-          this.filterByCombo.blogTypeId.blogTypeCode === "ALL" ||
-          typeof this.filterByCombo.blogTypeId.blogTypeCode === "undefined" ||
-          i.blogTypeId._id === this.filterByCombo.blogTypeId._id
+          this.filterByCombo.adsTypeId.adsTypeCode === "ALL" ||
+          typeof this.filterByCombo.adsTypeId.adsTypeCode === "undefined" ||
+          i.adsTypeId._id === this.filterByCombo.adsTypeId._id
         );
       });
     },
@@ -438,34 +405,20 @@ export default {
         return true;
       }
     },
-    blogListByLang() {
+    adsListByLang() {
       if (this.componentLoaded === false) {
         return;
       }
-      this.blogList.forEach(element => {
-        element.blogIntros.forEach(area => {
+      this.adsList.forEach(element => {
+        element.adsIntros.forEach(area => {
           if (area.lang.toUpperCase() === "EN") {
-            element.blogName = area.blogName;
-            element.blogIntro = area.blogIntro;
+            element.adsName = area.adsName;
+            element.adsIntro = area.adsIntro;
           }
         });
       });
-      return this.blogList;
+      return this.adsList;
     },
-    destinationByLang() {
-      if (this.componentLoaded === false) {
-        return;
-      }
-      this.destination.forEach(element => {
-        element.destinationIntros.forEach(area => {
-          if (area.lang.toUpperCase() === "EN") {
-            element.destinationName = area.destinationName;
-            element.destinationIntro = area.destinationIntro;
-          }
-        });
-      });
-      return this.destination;
-    }
   },
 
   watch: {
@@ -479,11 +432,15 @@ export default {
   },
 
   methods: {
+    moment: function() {
+      return moment();
+    },
     initialize() {
-      AXIOS.get(apiIP + "/bloglist/", { crossdomain: true })
+      AXIOS.get(apiIP + "/adslist", { crossdomain: true })
         .then(response => {
-          this.blogList = response.data;
-          console.log(this.blogList);
+          this.adsList = response.data;
+          console.log(this.adsList);
+          this.componentLoaded=true;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -493,51 +450,16 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/blogtype/getused", { crossdomain: true })
+      AXIOS.get(apiIP + "/adstype/getused", { crossdomain: true })
         .then(response => {
-          this.blogType = response.data;
-          this.blogTypeFilter = response.data;
-          this.blogTypeFilter.unshift({
-            blogTypeCode: "ALL",
-            blogTypeName: "ALL",
-            blogTypeId: -1
+          this.adsType = response.data;
+          this.adsTypeFilter = response.data;
+          this.adsTypeFilter.unshift({
+            adsTypeCode: "ALL",
+            adsTypeName: "ALL",
+            adsTypeId: -1
           });
           this.componentLoaded = true;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-
-      AXIOS.get(apiIP + "/mice/getused", { crossdomain: true })
-        .then(response => {
-          this.mice = response.data;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-
-      AXIOS.get(apiIP + "/travelstyle/getused", { crossdomain: true })
-        .then(response => {
-          this.travelStyle = response.data;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-
-      AXIOS.get(apiIP + "/travelservice/getused", { crossdomain: true })
-        .then(response => {
-          this.travelService = response.data;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-
-      AXIOS.get(apiIP + "/aboutus/getused", { crossdomain: true })
-        .then(response => {
-          this.aboutUs = response.data;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-
-      AXIOS.get(apiIP + "/destination/", { crossdomain: true })
-        .then(response => {
-          this.destination = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -552,9 +474,15 @@ export default {
       this.disableSelect = true;
       this.editedItem.removeImage = [];
       this.editedItem.removeImageWebp = [];
+      this.editedItem.startDate = moment(item.startDate)
+        .utc()
+        .format("YYYY-MM-DD");
+      this.editedItem.endDate = moment(item.endDate)
+        .utc()
+        .format("YYYY-MM-DD");
     },
     deleteImage(image) {
-      this.editedItem.blogImages.forEach(function(item, index, object) {
+      this.editedItem.adsImages.forEach(function(item, index, object) {
         if (image.fileName == item.fileName) {
           object.splice(index, 1);
         }
@@ -562,7 +490,7 @@ export default {
       this.editedItem.removeImage.push(image);
     },
     deleteImageWebp() {
-      this.editedItem.blogImagesWebp.forEach(function(item, index, object) {
+      this.editedItem.adsImagesWebp.forEach(function(item, index, object) {
         if (image.fileName == item.fileName) {
           object.splice(index, 1);
         }
@@ -572,7 +500,7 @@ export default {
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/bloglist/" + item._id)
+        AXIOS.delete(apiIP + "/adslist/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
@@ -594,24 +522,24 @@ export default {
     save() {
       if (this.uploadImg.length > 0) {
         this.uploadImg.forEach(element => {
-          this.editedItem.blogImages.push(element);
+          this.editedItem.adsImages.push(element);
         });
       }
       if (this.uploadImgWebp.length > 0) {
         this.uploadImgWebp.forEach(element => {
-          this.editedItem.blogImagesWebp.push(element);
+          this.editedItem.adsImagesWebp.push(element);
         });
       }
       this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/bloglist/update/" + this.editId, this.editedItem)
+          AXIOS.post(apiIP + "/adslist/update/" + this.editId, this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/bloglist/insert", this.editedItem)
+          AXIOS.post(apiIP + "/adslist/insert", this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
@@ -622,30 +550,30 @@ export default {
       this.uploadImg = [];
       this.editedItem.removeImage = [];
     },
-    addBlogIntroByLang() {
+    addAdsIntroByLang() {
       var isFound = false;
-      this.editedItem.blogIntros.forEach(element => {
+      this.editedItem.adsIntros.forEach(element => {
         if (element.lang === this.editedItem.lang) {
-          element.blogName = this.editedItem.blogName;
-          element.blogIntro = this.editedItem.blogIntro;
+          element.adsName = this.editedItem.adsName;
+          element.adsIntro = this.editedItem.adsIntro;
           isFound = true;
           return;
         }
       });
       if (isFound === false) {
-        this.editedItem.blogIntros.push({
-          blogName: this.editedItem.blogName,
-          blogIntro: this.editedItem.blogIntro,
+        this.editedItem.adsIntros.push({
+          adsName: this.editedItem.adsName,
+          adsIntro: this.editedItem.adsIntro,
           lang: this.editedItem.lang
         });
       }
     },
-    deleteBlogIntroByLang(item) {
-      this.editedItem.blogIntros.splice(item, 1);
+    deleteAdsIntroByLang(item) {
+      this.editedItem.adsIntros.splice(item, 1);
     },
-    editBlogIntroByLang(item) {
-      this.editedItem.blogName = item.blogName;
-      this.editedItem.blogIntro = item.blogIntro;
+    editAdsIntroByLang(item) {
+      this.editedItem.adsName = item.adsName;
+      this.editedItem.adsIntro = item.adsIntro;
       this.editedItem.lang = item.lang;
     }
   }

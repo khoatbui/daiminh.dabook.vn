@@ -30,12 +30,16 @@ module.exports.getBlogAboutUs =function(req,res){
         })
     })
 };
-module.exports.getmBlogDetailById=(req,res,next) => {
+module.exports.getmBlogDetailLangById=(req,res,next) => {
     BlogDetail.findOne({"blogId":req.params._id}).populate('blogId').then(function(blogdetail){
         res.send(blogdetail)
     })
 };
-
+module.exports.getmBlogDetailById=(req,res,next) => {
+    BlogDetail.find({"blogId":req.params._id}).populate('blogId').then(function(blogdetail){
+        res.send(blogdetail)
+    })
+};
 module.exports.deleteBlogDetail= function (req, res) {
     BlogDetail.deleteOne({ _id: req.params._id }, function(err) {
         if (!err) {

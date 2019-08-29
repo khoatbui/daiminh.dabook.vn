@@ -75,6 +75,12 @@
                       label="Total Night"
                     ></v-text-field>
                   </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <v-text-field
+                      v-model="editedItem.map"
+                      label="Map URL"
+                    ></v-text-field>
+                  </v-flex>
                     <v-flex xs6 sm3 md2>
                       <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                     </v-flex>
@@ -595,7 +601,8 @@ export default {
       removeImages:[],
       isPriceUsed:true,
       isPricePromotion:false,
-      tripIntros:[]
+      tripIntros:[],
+      map:""
     },
     defaultItem: {
             cityId:"",
@@ -630,7 +637,8 @@ export default {
       removeImages:[],
       isPriceUsed:true,
       isPricePromotion:false,
-      tripIntros:[]
+      tripIntros:[],
+      map:""
     },
     snackbar: {
       snackbar: false,

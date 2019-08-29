@@ -11,15 +11,19 @@ var bodyParser = require('body-parser')
 
 var router = express.Router()
 // create application/json parser
-var jsonParser = bodyParser.json()
+var jsonParser = bodyParser.json({limit: '50mb', extended: true})
 
 // create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true})
 
 
 router.get('/',controller.index)
 
 router.get('/getused',controller.getUsed)
+
+router.get('/getusedblog',controller.getUsedBlog)
+
+router.get('/getusedhotblog',controller.getUsedHotBlog)
 
 router.get('/m/getbloglistbyid/:_id',controller.getmBlogListById)
 
@@ -30,6 +34,8 @@ router.get('/m/gettop10blogpromotion',controller.getmTop10AllBlogPromotion)
 router.get('/m/getallblog',controller.getmAllBlog)
 
 router.get('/m/getallblogbycity/:_id',controller.getmAllBlogByCity)
+
+router.get('/m/getbloglistbymiceid/:_id',controller.getmBlogListByMICEId)
 
 router.delete('/:_id', controller.deleteBlogList)
 

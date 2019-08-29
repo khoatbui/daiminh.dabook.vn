@@ -20,11 +20,30 @@
         </template>
 
         <v-list>
-          <v-list-tile>
-            <v-btn flat to="/adsmanager">AdsManager</v-btn>
-          </v-list-tile>
            <v-list-tile>
             <v-btn flat to="/payment">PaymentMethod</v-btn>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+       <v-menu :nudge-width="100">
+        <template v-slot:activator="{ on }">
+          <v-toolbar-title v-on="on">
+            <v-btn flat>
+              <span>Ads Setting</span>
+              <v-icon dark>arrow_drop_down</v-icon>
+            </v-btn>
+          </v-toolbar-title>
+        </template>
+
+        <v-list>
+           <v-list-tile>
+            <v-btn flat to="/adstype">Ads Type</v-btn>
+          </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/adslist">Ads List</v-btn>
+          </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/adsdetail">Ads Detail</v-btn>
           </v-list-tile>
         </v-list>
       </v-menu>

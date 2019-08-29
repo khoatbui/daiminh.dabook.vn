@@ -190,6 +190,33 @@ var adsUpload = multer.diskStorage({
 })
 const uploadAds = multer({storage:adsUpload});
 
+// ADS TYPE
+var adsTypeUpload = multer.diskStorage({
+  destination: `./uploads/ads/adstype`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadAdsType = multer({storage:adsTypeUpload});
+
+// ADS LIST
+var adsListUpload = multer.diskStorage({
+  destination: `./uploads/ads/adslist`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadAdsList = multer({storage:adsListUpload});
+
+// ADS DETAIL
+var adsDetailUpload = multer.diskStorage({
+  destination: `./uploads/ads/adslist`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadAdsDetail = multer({storage:adsDetailUpload});
+
 //TOUR SUPPLIER IMAGE
 var tourSupplierUpload = multer.diskStorage({
   destination: `./uploads/tour/supplier`,
@@ -333,6 +360,10 @@ router.post('/page/aboutus',uploadAboutUs.array('photos', 12),controller.uploadA
 router.post('/page/payment',uploadPayment.array('photos', 12),controller.uploadPaymentImg)
 
 router.post('/blog/bloglist',uploadBlogList.array('photos', 12),controller.uploadBlogListImg)
+
+router.post('/ads/adstype',uploadAdsType.array('photos', 12),controller.uploadAdsTypeImg)
+router.post('/ads/adslist',uploadAdsList.array('photos', 12),controller.uploadAdsListImg)
+router.post('/ads/adsdetail',uploadAdsDetail.array('photos', 12),controller.uploadAdsDetailImg)
 
 
 router.post('/tour/tourdetail',uploadTourDetail.single('image'),controller.uploadTourDetailImg)

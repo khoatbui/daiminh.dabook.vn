@@ -13,6 +13,7 @@ var carDetailPriceSchema = new mongoose.Schema({
     nightTotal:Number,
     isUsed:Boolean,
     isPromotion:Boolean,
+    smallPrice:Number,
     lang:String,
     priceByCarType:[{
         carTypeId:{ type: mongoose.Schema.Types.ObjectId, ref: 'CarType' },
@@ -38,7 +39,8 @@ var carDetailPriceSchema = new mongoose.Schema({
         isUsed: Boolean
     }],
     carDetailsImages:[{fileName:String,filePath:String,destination:String,size:Number}],
-    tripIntros:[]
+    tripIntros:[],
+    map:String
 });
 var CarDetailPrice =mongoose.model('CarDetailPrice',carDetailPriceSchema,'carDetailPrice');
 

@@ -10,10 +10,10 @@ var controller=require('../controllers/optionservice.controller')
 
 var router = express.Router()
 // create application/json parser
-var jsonParser = bodyParser.json()
+var jsonParser = bodyParser.json({limit: '50mb', extended: true})
 
 // create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true})
 
 
 router.get('/',controller.index)

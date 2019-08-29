@@ -6,9 +6,10 @@ var express = require('express')
 var controller=require('../controllers/mail.controller')
 var router = express.Router()
 var bodyParser = require('body-parser')
-var jsonParser = bodyParser.json()
+var jsonParser = bodyParser.json({limit: '50mb', extended: true})
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true})
 
 router.post('/hotel-booking', jsonParser,controller.sendHotelBookingEmail )
 
