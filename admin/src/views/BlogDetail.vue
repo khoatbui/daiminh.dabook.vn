@@ -217,11 +217,9 @@ var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import DocUpload from "../components/DocUpload.vue";
-import CustomEditForm from "../components/CustomEditForm.vue"
+import CustomEditForm from "../components/CustomEditForm.vue";
 
 import moment from "moment";
-// import VueTrix from "vue-trix";
-import VueTrixEditor from "@dymantic/vue-trix-editor";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -237,10 +235,7 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    // VueTrix
-    VueTrixEditor,
     DocUpload,
-    CustomEditForm
   },
   data: () => ({
     dialog_detail: false,

@@ -49,69 +49,31 @@
                     <h5>
                       <b>Block01</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.block01"
-                      v-bind:initial-content="editedItem.block01"
-                      placeholder="Block01"
-                      uniqueId="iblock01"
-                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
-                      localStorage
-                      @image-attached="getInlineImage($event)"
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.block01" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.block01" v-on:childtoparent="editedItem.block01=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block02</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.block02"
-                      placeholder="Block02"
-                      uniqueId="iblock02"
-                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
-                      localStorage
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.block02" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.block02" v-on:childtoparent="editedItem.block02=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block03</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.block03"
-                      placeholder="Block03"
-                      uniqueId="iserviceinclude"
-                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
-                      localStorage
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.block03" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.block03" v-on:childtoparent="editedItem.block03=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block04</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.block04"
-                      placeholder="Service Not Include"
-                      uniqueId="iservicenotinclude"
-                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
-                      localStorage
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.block04" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.block04" v-on:childtoparent="editedItem.block04=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block05</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.block05"
-                      placeholder="Block05"
-                      uniqueId="ishouldtake"
-                      v-bind:image-upload-path="`${apiIP}/upload/ads/adsdetail/adsdetailintro`"
-                      @image-attached="console.log($event)"
-                      localStorage
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.block05" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.block05" v-on:childtoparent="editedItem.block05=$event"></CustomEditForm>
                   </v-flex>
                 </v-layout>
 
@@ -266,29 +228,8 @@ var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import DocUpload from "../components/DocUpload.vue";
-import { Editor, EditorContent, EditorMenuBar } from "tiptap";
-import {
-  Blockquote,
-  CodeBlock,
-  HardBreak,
-  Heading,
-  OrderedList,
-  BulletList,
-  ListItem,
-  TodoItem,
-  TodoList,
-  Bold,
-  Code,
-  Italic,
-  Link,
-  Strike,
-  Underline,
-  History
-} from "tiptap-extensions";
-
+import CustomEditForm from "../components/CustomEditForm.vue"
 import moment from "moment";
-// import VueTrix from "vue-trix";
-import VueTrixEditor from "@dymantic/vue-trix-editor";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -304,11 +245,7 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    // VueTrix
-    VueTrixEditor,
     DocUpload,
-    EditorMenuBar,
-    EditorContent
   },
   data: () => ({
     dialog_detail: false,
@@ -400,30 +337,6 @@ export default {
       isUsed:true
     },
     componentLoaded: false,
-    editor: new Editor({
-        extensions: [
-          new Blockquote(),
-          new CodeBlock(),
-          new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
-          new BulletList(),
-          new OrderedList(),
-          new ListItem(),
-          new TodoItem(),
-          new TodoList(),
-          new Bold(),
-          new Code(),
-          new Italic(),
-          new Link(),
-          new Strike(),
-          new Underline(),
-          new History(),
-        ],
-        content: `
-          <h1>Yay Headlines!</h1>
-          <p>All these <strong>cool tags</strong> are working now.</p>
-        `,
-      }),
   }),
 
   computed: {

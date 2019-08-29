@@ -115,9 +115,7 @@
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>RoomType Introduce</b></h5>
-                  <VueTrixEditor v-model="editedItem.roomTypeIntro" placeholder="RoomType Introduce" uniqueId="iroomtypeintro" v-bind:image-upload-path="`${apiIP}/upload/hotel/roomtype/roomtypeintro`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.roomTypeIntro" class="old-content">
-                    </div>
+                    <CustomEditForm :dataParent="editedItem.roomTypeIntro" v-on:childtoparent="editedItem.roomTypeIntro=$event"></CustomEditForm>
                 </v-flex>
                 </v-layout>
                 <v-layout>
@@ -231,7 +229,6 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
-import VueTrixEditor from "@dymantic/vue-trix-editor";
 import ImageListComponent from "../components/ImageListComponent.vue";
 
 const AXIOS = axios.create({
@@ -249,7 +246,6 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    VueTrixEditor,
     ImageListComponent
   },
   data: () => ({

@@ -62,15 +62,7 @@
                     <h5>
                       <b>Destination Intro</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.destinationIntro"
-                      placeholder="Destination Intro"
-                      uniqueId="itravelstyle"
-                      v-bind:image-upload-path="`${apiIP}/upload/tour/destination/destinationintro`"
-                      localStorage
-                    >
-                    </VueTrixEditor>
-                    <div v-html="editedItem.destinationIntro" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.destinationIntro" v-on:childtoparent="editedItem.destinationIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select
@@ -193,7 +185,6 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
-import VueTrixEditor from "@dymantic/vue-trix-editor";
 import ImageListComponent from "../components/ImageListComponent.vue";
 
 const AXIOS = axios.create({
@@ -211,7 +202,6 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    VueTrixEditor,
     ImageListComponent
   },
   data: () => ({

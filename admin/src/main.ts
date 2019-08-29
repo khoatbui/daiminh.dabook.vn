@@ -13,11 +13,13 @@ import 'es6-promise/auto'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret,faUser, faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import CustomEditForm from "@/components/CustomEditForm.vue"
 
 library.add(faUserSecret,faUser,faFilePdf)
  
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('downloadExcel', JsonExcel)
+Vue.component('CustomEditForm', CustomEditForm)
 Vue.use(Vuetify, {
   iconfont: 'fa'
  })
@@ -26,11 +28,13 @@ Vue.config.productionTip = false
 Vue.config.ignoredElements = [
   'trix-editor',
 ];
+
 // inject a handler for `myOption` custom option
 Vue.mixin(User)
 import 'babel-polyfill'
 new Vue({
   router,
   store,
+  components:{CustomEditForm},
   render: h => h(App)
 }).$mount('#app')

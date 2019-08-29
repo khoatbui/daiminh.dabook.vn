@@ -43,67 +43,31 @@
                     <h5>
                       <b>Program</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.program"
-                      v-bind:initial-content="editedItem.program"
-                      placeholder="Program"
-                      uniqueId="iprogram"
-                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
-                      localStorage
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.program" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.program" v-on:childtoparent="editedItem.program=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Transport</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.transport"
-                      placeholder="Transport"
-                      uniqueId="itransport"
-                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
-                      localStorage
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.transport" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.transport" v-on:childtoparent="editedItem.transport=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Service Include</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.serviceInclude"
-                      placeholder="Service Include"
-                      uniqueId="iserviceinclude"
-                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
-                      localStorage
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.serviceInclude" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.serviceInclude" v-on:childtoparent="editedItem.serviceInclude=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Service Not Include</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.serviceNotInclude"
-                      placeholder="Service Not Include"
-                      uniqueId="iservicenotinclude"
-                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
-                      localStorage
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.serviceNotInclude" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.shouldTake" v-on:childtoparent="editedItem.shouldTake=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Should Take</b>
                     </h5>
-                    <VueTrixEditor
-                      v-model="editedItem.shouldTake"
-                      placeholder="Should Take"
-                      uniqueId="ishouldtake"
-                      v-bind:image-upload-path="`${apiIP}/upload/tour/tourdetail`"
-                      localStorage
-                    ></VueTrixEditor>
-                    <div v-html="editedItem.shouldTake" class="old-content"></div>
+                    <CustomEditForm :dataParent="editedItem.shouldTake" v-on:childtoparent="editedItem.shouldTake=$event"></CustomEditForm>
                   </v-flex>
                 </v-layout>
 
@@ -215,8 +179,6 @@ import FileUpload from "../components/FileUpload.vue";
 import DocUpload from "../components/DocUpload.vue";
 
 import moment from "moment";
-// import VueTrix from "vue-trix";
-import VueTrixEditor from "@dymantic/vue-trix-editor";
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
   withCredentials: false,
@@ -232,9 +194,7 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    // VueTrix
-    VueTrixEditor,
-    DocUpload
+    DocUpload,
   },
   data: () => ({
     apiIP: apiIP,

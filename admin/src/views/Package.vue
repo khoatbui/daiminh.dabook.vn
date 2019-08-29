@@ -72,9 +72,7 @@
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>Package Introduce</b></h5>
-                  <VueTrixEditor v-model="editedItem.packageIntro" placeholder="Pakage Introduce" uniqueId="ipackageintro" v-bind:image-upload-path="`${apiIP}/upload/hotel/pacakge/packageintro`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.packageIntro" class="old-content">
-                    </div>
+                    <CustomEditForm :dataParent="editedItem.packageIntro" v-on:childtoparent="editedItem.packageIntro=$event"></CustomEditForm>
                 </v-flex>
                 </v-layout>
                 <v-layout>
@@ -152,7 +150,6 @@
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS
 import axios from "axios";
-import VueTrixEditor from "@dymantic/vue-trix-editor";
 
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -167,9 +164,6 @@ const AXIOS = axios.create({
   }
 });
 export default {
-   components: {
-    VueTrixEditor
-  },
   data: () => ({
         search: '',
     valid: true,
