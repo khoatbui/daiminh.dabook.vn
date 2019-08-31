@@ -58,6 +58,9 @@
                   <v-flex xs12 sm6 md4>
                     <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
                   </v-flex>
+                   <v-flex xs12 sm6 md4>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`isUsed?`"></v-checkbox>
+                  </v-flex>
                    <v-flex xs12 sm12 md4>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
@@ -202,6 +205,8 @@ export default {
       removeImage:[],
       supplierImagesWebp: [],
       removeImageWebp: [],
+      isPromote:false,
+      isUsed:true
     },
     defaultItem: {
       supplierCode: "",
@@ -215,6 +220,8 @@ export default {
       removeImage:[],
       supplierImagesWebp: [],
       removeImageWebp: [],
+      isPromote:false,
+      isUsed:true
     },
     snackbar: {
       snackbar: false,

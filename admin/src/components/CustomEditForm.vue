@@ -1,5 +1,93 @@
 <template>
   <div class="editor">
+    <editor-menu-bubble
+      :editor="editor"
+      :keep-in-bounds="keepInBounds"
+      v-slot="{ commands, isActive, menu }"
+    >
+      <div
+        class="menububble"
+        :class="{ 'is-active': menu.isActive }"
+        :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`"
+      >
+        <button
+          class="menububble__button"
+          :class="{ 'is-active': isActive.bold() }"
+          @click="commands.bold"
+        >
+          <span>
+            <b>B</b>
+          </span>
+        </button>
+
+        <button
+          class="menububble__button"
+          :class="{ 'is-active': isActive.italic() }"
+          @click="commands.italic"
+        >
+          <span>
+            <i>I</i>
+          </span>
+        </button>
+        <button
+          type="button"
+          class="menububble__button"
+          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+          @click="commands.heading({ level: 1 })"
+        >
+          <span>H1</span>
+        </button>
+
+        <button
+          type="button"
+          class="menububble__button"
+          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+          @click="commands.heading({ level: 2 })"
+        >
+          <span>H2</span>
+        </button>
+
+        <button
+          type="button"
+          class="menububble__button"
+          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+          @click="commands.heading({ level: 3 })"
+        >
+          <span>H3</span>
+        </button>
+        <button
+          type="button"
+          class="menububble__button"
+          :class="{ 'is-active': isActive.heading({ level: 4 }) }"
+          @click="commands.heading({ level: 4 })"
+        >
+          <span>H4</span>
+        </button>
+        <button
+          type="button"
+          class="menububble__button"
+          :class="{ 'is-active': isActive.heading({ level: 5 }) }"
+          @click="commands.heading({ level: 5 })"
+        >
+          <span>H5</span>
+        </button>
+        <button
+          type="button"
+          class="menububble__button"
+          :class="{ 'is-active': isActive.heading({ level: 6 }) }"
+          @click="commands.heading({ level: 6 })"
+        >
+          <span>H6</span>
+        </button>
+        <button
+          class="menububble__button"
+          :class="{ 'is-active': isActive.code() }"
+          @click="commands.code"
+        >
+          <span>< ></span>
+        </button>
+      </div>
+    </editor-menu-bubble>
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div class="menubar">
         <button
@@ -147,6 +235,10 @@
           <span>hr</span>
         </button>
         <span class="divided"></span>
+
+        <button class="menubar__button" type="button" @click="openDialog">
+          <i class="material-icons">image</i>
+        </button>
         <button type="button" class="menubar__button" @click="commands.undo">
           <i class="material-icons">undo</i>
         </button>
@@ -172,28 +264,120 @@
         v-model="replaceWith"
         class="input"
       />
-      <button class="button" type="button" @click="editor.commands.find(searchTerm)">
-        Find
-      </button>
-      <button class="button" type="button" @click="editor.commands.clearSearch()">
-        Clear
-      </button>
-      <button class="button" type="button" @click="editor.commands.replace(replaceWith)">
-        Replace
-      </button>
-      <button class="button" type="button" @click="editor.commands.replaceAll(replaceWith)">
-        Replace All
-      </button>
-      <button class="button" type="button" @click="getOldData">
-        Get old data
-      </button>
+      <button class="button" type="button" @click="editor.commands.find(searchTerm)">Find</button>
+      <button class="button" type="button" @click="editor.commands.clearSearch()">Clear</button>
+      <button class="button" type="button" @click="editor.commands.replace(replaceWith)">Replace</button>
+      <button
+        class="button"
+        type="button"
+        @click="editor.commands.replaceAll(replaceWith)"
+      >Replace All</button>
+      <span class="divided"></span>
+      <button class="button" type="button" @click="getOldData">Get old data</button>
     </div>
-    <editor-content class="editor__content" :editor="editor"/>
+    <editor-floating-menu :editor="editor" v-slot="{ commands, isActive, menu }">
+      <div
+        class="editor__floating-menu"
+        :class="{ 'is-active': menu.isActive }"
+        :style="`top: ${menu.top}px`"
+      >
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+          @click="commands.heading({ level: 1 })"
+        >H1</button>
+
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+          @click="commands.heading({ level: 2 })"
+        >H2</button>
+
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+          @click="commands.heading({ level: 3 })"
+        >H3</button>
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.heading({ level: 4 }) }"
+          @click="commands.heading({ level: 4 })"
+        >H4</button>
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.heading({ level: 5 }) }"
+          @click="commands.heading({ level: 5 })"
+        >H5</button>
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.heading({ level: 6 }) }"
+          @click="commands.heading({ level: 6 })"
+        >H6</button>
+
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.bullet_list() }"
+          @click="commands.bullet_list"
+        >
+          <i class="material-icons">format_list_bulleted</i>
+        </button>
+
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.ordered_list() }"
+          @click="commands.ordered_list"
+        >
+          <i class="material-icons">format_list_numbered</i>
+        </button>
+
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.blockquote() }"
+          @click="commands.blockquote"
+        >
+          <i class="material-icons">format_quote</i>
+        </button>
+
+        <button
+          class="menubar__button"
+          type="button"
+          :class="{ 'is-active': isActive.code_block() }"
+          @click="commands.code_block"
+        >
+          <i class="material-icons">code</i>
+        </button>
+      </div>
+    </editor-floating-menu>
+    <editor-content class="editor__content" :editor="editor" />
+    <input
+      type="file"
+      id="imgupload"
+      style="visibility: hidden"
+      v-on:change="previewFile(editor.commands.image)"
+    />
+    <div class="note">
+      <p>Dung lượng ảnh từ 50kb ~500kb. Nếu dung lượng lớn vui lòng convert ảnh bằng <a href="https://bulkresizephotos.com/en" target="_blank">https://bulkresizephotos.com/en</a> trước khi upload lên hệ thống</p>
+    </div>
   </div>
 </template>
 
 <script>
-import { Editor, EditorContent, EditorMenuBar, EditorMenuBubble } from "tiptap";
+import {
+  Editor,
+  EditorContent,
+  EditorMenuBar,
+  EditorMenuBubble,
+  EditorFloatingMenu
+} from "tiptap";
 import {
   Blockquote,
   CodeBlock,
@@ -213,24 +397,33 @@ import {
   Underline,
   History,
   Image,
-  Search,
+  Search
 } from "tiptap-extensions";
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 export default {
-    name:"CustomEditForm",
+  name: "CustomEditForm",
   props: {
     dataParent: String
   },
   components: {
     EditorContent,
     EditorMenuBar,
-    EditorMenuBubble
+    EditorMenuBubble,
+    EditorFloatingMenu
   },
-  beforeMount () {
-   this.editor.setContent(this.dataParent);
-},
+  beforeMount() {
+    this.editor.setContent(this.dataParent);
+  },
   data() {
     return {
-       searchTerm: null,
+      searchTerm: null,
       replaceWith: null,
       keepInBounds: true,
       editor: new Editor({
@@ -254,22 +447,38 @@ export default {
           new History(),
           new Image(),
           new Search({
-            disableRegex: false,
-          }),
+            disableRegex: false
+          })
         ],
         content: ``,
-        onUpdate: ({getHTML}) => {
+        onUpdate: ({ getHTML }) => {
           this.$emit("childtoparent", getHTML());
         }
       })
     };
   },
   beforeDestroy() {
-     this.editor.destroy();
+    this.editor.destroy();
   },
   methods: {
+    openDialog() {
+      window.document.getElementById("imgupload").click();
+      return false;
+    },
     getOldData() {
       this.editor.setContent(this.dataParent);
+      console.log(this.editor);
+    },
+    showImageModal(command) {
+      this.$refs.imageModal.showModal({ command });
+    },
+    previewFile(commands) {
+      var preview = document.querySelector("img");
+      getBase64(document.getElementById("imgupload").files[0]).then(data =>{
+        console.log(data);
+        commands({src: data })
+      }
+      );
     }
   }
 };
@@ -280,12 +489,14 @@ export default {
   border: 1px solid seagreen;
   padding: 5px;
 }
-.menubar {
+.menubar,
+.search {
   padding-bottom: 5px;
   border-bottom: 1px solid seagreen;
   display: flex;
 }
-.menubar button,.button {
+.menubar button,
+.button {
   padding: 2px 4px !important;
   background-color: seagreen !important;
   color: #fff !important;
@@ -293,6 +504,20 @@ export default {
   height: 30px;
   border-right: 1px solid white;
   font-size: 14px;
+}
+.editor__floating-menu {
+  display: flex;
+  left: 30px;
+}
+.editor__floating-menu .menubar__button {
+  padding: 2px !important;
+  background-color: #ddd !important;
+  color: #333 !important;
+  width: 30px;
+  height: 30px;
+  border-right: 1px solid white;
+  font-size: 14px;
+  border-radius: 50% !important;
 }
 .editor__content {
   width: 100% !important;
@@ -314,13 +539,52 @@ export default {
   margin: 0 10px;
   flex-grow: 1;
 }
-.search{
+.search {
   padding: 5px 0;
 }
-.input{
-  padding:5px;
-  border:0.5px solid gray;
+.input {
+  padding: 5px;
+  border: 0.5px solid gray;
   border-radius: 2px;
-  margin:0 5px;
+  margin: 0 3px 0 0;
+}
+.editor {
+  position: relative;
+}
+.editor__floating-menu {
+  position: absolute;
+  z-index: 1;
+  margin-top: -0.25rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+.editor__floating-menu.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+.menububble {
+  opacity: 0;
+  position: absolute;
+  z-index: 100;
+  background: #333;
+  color: #fff;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.menububble__button {
+  margin: 4px;
+  width: 30px;
+}
+.menububble.is-active {
+  opacity: 1 !important;
+}
+.note{
+  position: absolute;
+  bottom: -10px;
+  color: red;
+  font-size: 0.8rem;
 }
 </style>

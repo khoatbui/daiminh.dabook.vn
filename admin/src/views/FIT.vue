@@ -37,10 +37,7 @@
                   </v-flex>
                    <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>Travel Style Intro</b></h5>
-                  <VueTrixEditor v-model="editedItem.fitIntro" placeholder="Travel Style INtro" uniqueId="ifit" v-bind:image-upload-path="`${apiIP}/upload/tour/fit/fitintro`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.fitIntro" class="old-content">
-
-                    </div>
+                    <CustomEditForm :dataParent="editedItem.fitIntro" v-on:childtoparent="editedItem.fitIntro=$event"></CustomEditForm>
                 </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select
@@ -143,7 +140,6 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
-import VueTrixEditor from "@dymantic/vue-trix-editor";
 import ImageListComponent from "../components/ImageListComponent.vue";
 
 const AXIOS = axios.create({
@@ -161,7 +157,6 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    VueTrixEditor,
     ImageListComponent
   },
   data: () => ({

@@ -495,11 +495,11 @@ export default {
   background-color: #e2e9f1;
 }
 .group-card {
-  background-color: #ffffff;
+  /* background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0px 2px 4px #c1c1c1;
+  box-shadow: 0px 2px 4px #c1c1c1; */
   margin-bottom: 40px;
-  border: 1px solid #01b3fa;
+  /* border: 1px solid #01b3fa; */
 }
 .w-25 {
   width: 25% !important;

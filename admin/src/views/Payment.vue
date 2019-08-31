@@ -43,10 +43,7 @@
                   </v-flex>
                    <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>Note</b></h5>
-                  <VueTrixEditor v-model="editedItem.note" placeholder="Payment INtro" uniqueId="itravelstyle" v-bind:image-upload-path="`${apiIP}/upload/tour/payment/paymentintro`" localStorage></VueTrixEditor>
-                  <div v-html="editedItem.note" class="old-content">
-
-                    </div>
+                    <CustomEditForm :dataParent="editedItem.note" v-on:childtoparent="editedItem.note=$event"></CustomEditForm>
                 </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select
@@ -140,7 +137,6 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
-import VueTrixEditor from "@dymantic/vue-trix-editor";
 
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -157,7 +153,6 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    VueTrixEditor
   },
   data: () => ({
     apiIP: apiIP,

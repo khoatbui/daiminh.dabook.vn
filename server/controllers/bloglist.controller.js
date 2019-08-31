@@ -75,7 +75,11 @@ module.exports.getmBlogListById=(req,res,next) => {
         res.send(bloglist)
     })
 };
-
+module.exports.getmBlogListByTypeId=(req,res,next) => {
+    BlogList.find({"blogTypeId":req.params._id}).populate('destinationId').populate('ctaId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
+        res.send(bloglist)
+    })
+};
 module.exports.getmBlogListByMICEId=(req,res,next) => {
     BlogList.find({"miceId":req.params._id}).populate('destinationId').populate('ctaId').populate('travelStyleId').populate('miceId').populate('blogTypeId').then(function(bloglist){
         res.send(bloglist)

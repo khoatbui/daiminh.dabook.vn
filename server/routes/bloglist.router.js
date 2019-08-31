@@ -27,6 +27,8 @@ router.get('/getusedhotblog',controller.getUsedHotBlog)
 
 router.get('/m/getbloglistbyid/:_id',controller.getmBlogListById)
 
+router.get('/m/getbloglistbytypeid/:_id',controller.getmBlogListByTypeId)
+
 router.get('/m/getallblogpromotion',controller.getmAllBlogPromotion)
 
 router.get('/m/gettop10blogpromotion',controller.getmTop10AllBlogPromotion)
