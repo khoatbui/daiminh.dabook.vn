@@ -81,7 +81,7 @@
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
                           <v-icon class="px-2" small @click="editCarTypeIntroByLang(props.item)">edit</v-icon>
-                          <v-icon small @click="deleteCarTypeIntroByLang(props.index)">delete</v-icon>
+                          <v-icon small @click="deleteCarTypeIntroByLang(props.item)">delete</v-icon>
                         </td>
                         <td>{{props.item.carTypeName}}</td>
                         <td>{{props.item.lang}}</td>
@@ -421,7 +421,9 @@ export default {
       }
     },
     deleteCarTypeIntroByLang(item) {
-      this.editedItem.carTypeIntros.splice(item, 1);
+      const index = this.editedItem.carTypeIntros.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.carTypeIntros.splice(index, 1);
     },
     editCarTypeIntroByLang(item) {
       this.editedItem.carTypeName=item.carTypeName;

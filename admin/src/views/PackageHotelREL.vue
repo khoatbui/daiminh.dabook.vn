@@ -225,7 +225,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
-                          <v-icon small @click="deletepriceRangeItem(props.index)">delete</v-icon>
+                          <v-icon small @click="deletepriceRangeItem(props.item)">delete</v-icon>
                         </td>
                         <td
                           class="text-xs-right"
@@ -304,7 +304,7 @@
                       <template v-slot:items="props">
                         <tr v-if="props.item.groupCode=='checkbox'">
                           <td class="justify-center px-0">
-                            <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
+                            <v-icon small @click="deleteOptionServiceItem(props.item)">delete</v-icon>
                           </td>
                           <td class="text-xs-right">{{props.item.data.optionServiceCode}}</td>
                           <td class="text-xs-right">{{props.item.data.optionServiceName}}</td>
@@ -317,7 +317,7 @@
                         </tr>
                         <tr v-if="props.item.groupCode!='checkbox'" v-for="(itemdata,i) in props.item.data" v-bind:key="i">
                             <td class="justify-center px-0">
-                              <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
+                              <v-icon small @click="deleteOptionServiceItem(props.item)">delete</v-icon>
                             </td>
                             <td class="text-xs-right">{{itemdata.optionServiceCode}}</td>
                             <td class="text-xs-right">{{itemdata.optionServiceName}}</td>
@@ -1238,10 +1238,14 @@ export default {
     },
 
     deletepriceRangeItem(item) {
-      this.editedItem.priceRanges.splice(item, 1);
+      const index = this.editedItem.priceRanges.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.priceRanges.splice(index, 1);
     },
     deleteOptionServiceItem(item) {
-      this.editedItem.optionServices.splice(item, 1);
+      const index = this.editedItem.optionServices.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.optionServices.splice(index, 1);
     },
     deleteAllOldOptionPriceRange() {
       var r = confirm("Are you sure you want to delete all option service?");

@@ -68,7 +68,7 @@
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
                           <v-icon class="px-2" small @click="editMICEIntroByLang(props.item)">edit</v-icon>
-                          <v-icon small @click="deleteMICEIntroByLang(props.index)">delete</v-icon>
+                          <v-icon small @click="deleteMICEIntroByLang(props.item)">delete</v-icon>
                         </td>
                         <td>{{props.item.miceName}}</td>
                         <td>{{props.item.lang}}</td>
@@ -360,7 +360,9 @@ export default {
       }
     },
     deleteMICEIntroByLang(item) {
-      this.editedItem.miceIntros.splice(item, 1);
+      const index = this.editedItem.miceIntros.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.miceIntros.splice(index, 1);
     },
     editMICEIntroByLang(item) {
       this.editedItem.miceName=item.miceName;

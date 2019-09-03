@@ -71,7 +71,7 @@
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
                           <v-icon class="px-2" small @click="editTravelServiceIntroByLang(props.item)">edit</v-icon>
-                          <v-icon small @click="deleteTravelServiceIntroByLang(props.index)">delete</v-icon>
+                          <v-icon small @click="deleteTravelServiceIntroByLang(props.item)">delete</v-icon>
                         </td>
                         <td>{{props.item.travelServiceName}}</td>
                         <td>{{props.item.lang}}</td>
@@ -376,7 +376,9 @@ export default {
       }
     },
     deleteTravelServiceIntroByLang(item) {
-      this.editedItem.travelServiceIntros.splice(item, 1);
+      const index = this.editedItem.travelServiceIntros.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.travelServiceIntros.splice(index, 1);
     },
     editTravelServiceIntroByLang(item) {
       this.editedItem.travelServiceName=item.travelServiceName;

@@ -59,6 +59,11 @@ const adsType=require('./routes/adstype.router')
 const adsList=require('./routes/adslist.router')
 const adsDetail=require('./routes/adsdetail.router')
 
+const pricepackage=require('./routes/pricepackage.router')
+const priceType=require('./routes/pricetype.router')
+const unitType=require('./routes/unittype.router')
+const product=require('./routes/product.router')
+
 app.set('view engine','pug');
 app.set('views','./views');
 
@@ -108,6 +113,11 @@ app.use('/cta',cta)
 app.use('/adstype',adsType)
 app.use('/adslist',adsList)
 app.use('/adsdetail',adsDetail)
+
+app.use('/pricepackage',pricepackage)
+app.use('/pricetype',priceType)
+app.use('/unittype',unitType)
+app.use('/product',product)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

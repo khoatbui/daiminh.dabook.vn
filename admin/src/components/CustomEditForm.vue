@@ -29,7 +29,7 @@
             <i>I</i>
           </span>
         </button>
-        <button
+        <!-- <button
           type="button"
           class="menububble__button"
           :class="{ 'is-active': isActive.heading({ level: 1 }) }"
@@ -62,7 +62,7 @@
           @click="commands.heading({ level: 4 })"
         >
           <span>H4</span>
-        </button>
+        </button> -->
         <button
           type="button"
           class="menububble__button"
@@ -144,7 +144,7 @@
           <i class="material-icons">format_textdirection_r_to_l</i>
         </button>
 
-        <button
+        <!-- <button
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.heading({ level: 1 }) }"
@@ -169,7 +169,7 @@
           @click="commands.heading({ level: 3 })"
         >
           <span>H3</span>
-        </button>
+        </button> -->
         <button
           type="button"
           class="menubar__button"
@@ -281,7 +281,7 @@
         :class="{ 'is-active': menu.isActive }"
         :style="`top: ${menu.top}px`"
       >
-        <button
+        <!-- <button
           class="menubar__button"
           type="button"
           :class="{ 'is-active': isActive.heading({ level: 1 }) }"
@@ -306,7 +306,7 @@
           type="button"
           :class="{ 'is-active': isActive.heading({ level: 4 }) }"
           @click="commands.heading({ level: 4 })"
-        >H4</button>
+        >H4</button> -->
         <button
           class="menubar__button"
           type="button"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>DESTINATION CRUD</v-toolbar-title>
+      <v-toolbar-title>PRICE TYPE CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
@@ -24,45 +24,24 @@
               <v-container grid-list-xl>
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.cityId"
-                      :items="city"
-                      item-text="cityName"
-                      item-value="_id"
-                      label="City"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
-                      :rules="[() => editedItem.destinationCode.length > 0 || 'Required field']"
-                      v-model="editedItem.destinationCode"
-                      label="destinationCode"
+                      :rules="[() => editedItem.priceTypeCode.length > 0 || 'Required field']"
+                      v-model="editedItem.priceTypeCode"
+                      label="priceTypeCode"
                     ></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm3 md2>
-                    <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm3 md2>
-                    <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm3 md2>
                     <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <v-checkbox v-model="editedItem.isPromotion" :label="`IsPromotion?`"></v-checkbox>
-                  </v-flex>
-                  <v-flex xs12 sm6 md12>
-                    <v-text-field v-model="editedItem.map" label="Map"></v-text-field>
-                  </v-flex>
                   <v-flex xs12 sm12 md12 class="sub-add-component">
-                    <v-text-field v-model="editedItem.destinationName" label="Destination Name"></v-text-field>
+                    <v-text-field v-model="editedItem.priceTypeName" label="PriceType Name"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5>
-                      <b>Destination Intro</b>
+                      <b>PriceType Intro</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.destinationIntro" v-on:childtoparent="editedItem.destinationIntro=$event"></CustomEditForm>
+                    <CustomEditForm :dataParent="editedItem.priceTypeIntro" v-on:childtoparent="editedItem.priceTypeIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select
@@ -74,14 +53,14 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
-                    <v-btn color="blue darken-1" dark @click="addDestinationIntroByLang">Add</v-btn>
+                    <v-btn color="blue darken-1" dark @click="addPriceTypeIntroByLang">Add</v-btn>
                   </v-flex>
                 </v-layout>
                 <v-layout>
                   <v-flex xs12 sm12 md12 class="border-top">
                     <v-data-table
-                      :headers="destinationIntrosHeader"
-                      :items="editedItem.destinationIntros"
+                      :headers="priceTypeIntrosHeader"
+                      :items="editedItem.priceTypeIntros"
                       class="elevation-1"
                       width="100%"
                     >
@@ -89,45 +68,15 @@
                         <td class="justify-center px-0">
                           <v-icon class="px-3"
                             small
-                            @click="editDestinationIntroByLang(props.index,props.item)"
+                            @click="editPriceTypeIntroByLang(props.index,props.item)"
                           >edit</v-icon>
-                          <v-icon small @click="deleteDestinationIntroByLang(props.item)">delete</v-icon>
+                          <v-icon small @click="deletePriceTypeIntroByLang(props.item)">delete</v-icon>
                         </td>
-                        <td>{{props.item.destinationName}}</td>
+                        <td>{{props.item.priceTypeName}}</td>
                         <td>{{props.item.lang}}</td>
-                        <td>{{props.item.destinationIntro}}</td>
+                        <td>{{props.item.priceTypeIntro}}</td>
                       </template>
                     </v-data-table>
-                  </v-flex>
-                </v-layout>
-                <v-layout wrap>
-                  <v-flex xs12 sm12 md4>
-                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
-                    <file-upload
-                      @getUploadFilesURL="uploadImg = $event"
-                      v-bind:routerPath="apiIP+'/upload/tour/destination'"
-                      :title="`Upload High Quality`"
-                    ></file-upload>
-                  </v-flex>
-                  <v-flex xs12 sm12 md8>
-                    <ImageListComponent
-                      :data="editedItem.destinationImages"
-                      @getDeleteFile="deleteImage($event)"
-                    ></ImageListComponent>
-                  </v-flex>
-                  <v-flex xs12 sm12 md4>
-                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
-                    <file-upload
-                      @getUploadFilesURL="uploadImgWebp = $event"
-                      v-bind:routerPath="apiIP+'/upload/tour/destination/webmp'"
-                      :title="`Upload Webp Image`"
-                    ></file-upload>
-                  </v-flex>
-                  <v-flex xs12 sm12 md8>
-                    <ImageListComponent
-                      :data="editedItem.destinationImagesWebp"
-                      @getDeleteFile="deleteImageWebp($event)"
-                    ></ImageListComponent>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -142,17 +91,15 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="destination" :search="search" class="elevation-1">
+    <v-data-table :headers="headers" :items="priceType" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
-          <td>{{ props.item.cityId.cityName }}</td>
-          <td>{{ props.item.destinationCode }}</td>
-          <td>{{ props.item.destinationName }}</td>
-          <td>{{ props.item.order }}</td>
+          <td>{{ props.item.priceTypeCode }}</td>
+          <td>{{ props.item.priceTypeName }}</td>
           <td>{{ props.item.createBy }}</td>
           <td>{{ props.item.createDate }}</td>
           <td>{{ props.item.modifyBy }}</td>
@@ -175,7 +122,7 @@
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
     <v-btn absolute dark fab bottom right small color="pink">
-      <download-excel :data="destination" name="destination.xls">
+      <download-excel :data="priceType" name="priceType.xls">
         <i class="far fa-file-excel"></i>
       </download-excel>
     </v-btn>
@@ -184,8 +131,6 @@
 <script>
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
-import FileUpload from "../components/FileUpload.vue";
-import ImageListComponent from "../components/ImageListComponent.vue";
 
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -200,10 +145,6 @@ const AXIOS = axios.create({
   }
 });
 export default {
-  components: {
-    FileUpload,
-    ImageListComponent
-  },
   data: () => ({
     apiIP: apiIP,
     uploadImg: [],
@@ -211,20 +152,18 @@ export default {
     search: "",
     valid: true,
     date: new Date().toISOString().substr(0, 10),
-    startDateModal: false,
-    endDateModal: false,
     dialog: false,
-    destinationIntrosHeader: [
+    priceTypeIntrosHeader: [
       { text: "Actions", value: "name", sortable: false },
-      { text: "DestinationName", value: "destinationName" },
+      { text: "PriceTypeName", value: "priceTypeName" },
       { text: "language", value: "lang" },
-      { text: "DestinationIntro", value: "destinationIntro" }
+      { text: "PriceTypeIntro", value: "priceTypeIntro" }
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
       { text: "CityCode", value: "cityId.cityName" },
-      { text: "destinationCode", value: "destinationCode" },
-      { text: "destinationName", value: "destinationName" },
+      { text: "priceTypeCode", value: "priceTypeCode" },
+      { text: "priceTypeName", value: "priceTypeName" },
       { text: "Order", value: "order" },
       { text: "Create By", value: "createBy" },
       { text: "Create Date", value: "createDate" },
@@ -236,46 +175,30 @@ export default {
       { langCode: "KO", langName: "Korea" },
       { langCode: "VI", langName: "VietNam" }
     ],
-    destination: [],
+    priceType: [],
     city: [],
     editedIndex: -1,
     disableSelect: false,
     editId: "",
     editedItem: {
-      destinationCode: "",
-      destinationName: "",
-      destinationIntro: "",
+      priceTypeCode: "",
+      priceTypeName: "",
+      priceTypeIntro: "",
       createBy: "",
       modifyBy: "",
       lang: "EN",
-      destinationImages: [],
-      removeImage: [],
-      destinationImagesWebp: [],
-      removeImageWebp: [],
-      order: 0,
-      keyword: "",
       isUsed: true,
-      isPromotion: false,
-      destinationIntros: [],
-      map: ""
+      priceTypeIntros: [],
     },
     defaultItem: {
-      destinationCode: "",
-      destinationName: "",
-      destinationIntro: "",
+      priceTypeCode: "",
+      priceTypeName: "",
+      priceTypeIntro: "",
       createBy: "",
       modifyBy: "",
       lang: "EN",
-      destinationImages: [],
-      removeImage: [],
-      destinationImagesWebp: [],
-      removeImageWebp: [],
-      order: 0,
-      keyword: "",
       isUsed: true,
-      isPromotion: false,
-      destinationIntros: [],
-      map: ""
+      priceTypeIntros: [],
     },
     snackbar: {
       snackbar: false,
@@ -306,9 +229,9 @@ export default {
 
   methods: {
     initialize() {
-      AXIOS.get(apiIP + "/destination/", { crossdomain: true })
+      AXIOS.get(apiIP + "/priceType/", { crossdomain: true })
         .then(response => {
-          this.destination = response.data;
+          this.priceType = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -327,13 +250,11 @@ export default {
       this.editId = item._id;
       this.dialog = true;
       this.disableSelect = true;
-      this.editedItem.removeImage = [];
-      this.editedItem.removeImageWebp = [];
     },
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/destination/" + item._id)
+        AXIOS.delete(apiIP + "/pricetype/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
@@ -343,7 +264,7 @@ export default {
           .finally(function() {});
     },
     deleteImage(image) {
-      this.editedItem.destinationImages.forEach(function(item, index, object) {
+      this.editedItem.priceTypeImages.forEach(function(item, index, object) {
         if (image.fileName == item.fileName) {
           object.splice(index, 1);
         }
@@ -351,7 +272,7 @@ export default {
       this.editedItem.removeImage.push(image);
     },
     deleteImageWebp() {
-      this.editedItem.destinationImagesWebp.forEach(function(
+      this.editedItem.priceTypeImagesWebp.forEach(function(
         item,
         index,
         object
@@ -373,29 +294,19 @@ export default {
     },
 
     save() {
-      if (this.uploadImg.length > 0) {
-        this.uploadImg.forEach(element => {
-          this.editedItem.destinationImages.push(element);
-        });
-      }
-      if (this.uploadImgWebp.length > 0) {
-        this.uploadImgWebp.forEach(element => {
-          this.editedItem.destinationImagesWebp.push(element);
-        });
-      }
       this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
           AXIOS.post(
-            apiIP + "/destination/update/" + this.editId,
+            apiIP + "/pricetype/update/" + this.editId,
             this.editedItem
           )
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/destination/insert", this.editedItem)
+          AXIOS.post(apiIP + "/pricetype/insert", this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
@@ -406,42 +317,41 @@ export default {
       this.uploadImg = [];
       this.editedItem.removeImage = [];
     },
-    addDestinationIntroByLang() {
+    addPriceTypeIntroByLang() {
       var isFound=false;
-      this.editedItem.destinationIntros.forEach(element => {
+      this.editedItem.priceTypeIntros.forEach(element => {
         if (element.lang === this.editedItem.lang) {
-          element.destinationName= this.editedItem.destinationName;
-        element.destinationIntro= this.editedItem.destinationIntro;
+          element.priceTypeName= this.editedItem.priceTypeName;
+        element.priceTypeIntro= this.editedItem.priceTypeIntro;
         isFound=true;
         return;
         }
       });
       if (isFound===false) {
-      this.editedItem.destinationIntros.push({
-        destinationName: this.editedItem.destinationName,
-        destinationIntro: this.editedItem.destinationIntro,
+      this.editedItem.priceTypeIntros.push({
+        priceTypeName: this.editedItem.priceTypeName,
+        priceTypeIntro: this.editedItem.priceTypeIntro,
         lang: this.editedItem.lang
       });
       }
     },
-    modifyDestinationIntroByLang() {
-      this.editedItem.destinationIntros.forEach(element => {
+    modifyPriceTypeIntroByLang() {
+      this.editedItem.priceTypeIntros.forEach(element => {
         if (element.lang === this.editedItem.lang) {
-          element.destinationName= this.editedItem.destinationName;
-        element.destinationIntro= this.editedItem.destinationIntro;
+          element.priceTypeName= this.editedItem.priceTypeName;
+        element.priceTypeIntro= this.editedItem.priceTypeIntro;
         }
       });
     },
-    deleteDestinationIntroByLang(item) {
-      const index = this.editedItem.destinationIntros.indexOf(item);
+    deletePriceTypeIntroByLang(item) {
+      const index = this.editedItem.priceTypeIntros.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.editedItem.destinationIntros.splice(index, 1);
+        this.editedItem.priceTypeIntros.splice(index, 1);
     },
-    editDestinationIntroByLang(index,item) {
-      this.editedItem.destinationName=item.destinationName;
-      this.editedItem.destinationIntro=item.destinationIntro;
+    editPriceTypeIntroByLang(index,item) {
+      this.editedItem.priceTypeName=item.priceTypeName;
+      this.editedItem.priceTypeIntro=item.priceTypeIntro;
       this.editedItem.lang=item.lang;
-      document.getElementById('itravelstyle').value=item.destinationIntro;
     }
   }
 };

@@ -123,7 +123,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
-                          <v-icon small @click="deleteTripIntroByLang(props.index)">delete</v-icon>
+                          <v-icon small @click="deleteTripIntroByLang(props.item)">delete</v-icon>
                         </td>
                         <td>{{props.item.tripName}}</td>
                          <td>{{props.item.fromLocation}}</td>
@@ -187,7 +187,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
-                          <v-icon small @click="deletepriceRangeItem(props.index)">delete</v-icon>
+                          <v-icon small @click="deletepriceRangeItem(props.item)">delete</v-icon>
                         </td>
                         <td class="text-xs-right">{{props.item.carTypeName}}</td>
                         <td
@@ -258,7 +258,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
-                          <v-icon small @click="deleteOptionServiceItem(props.index)">delete</v-icon>
+                          <v-icon small @click="deleteOptionServiceItem(props.item)">delete</v-icon>
                         </td>
                         <td class="text-xs-right">{{props.item.optionServiceCode}}</td>
                         <td class="text-xs-right">{{props.item.optionServiceName}}</td>
@@ -834,7 +834,9 @@ export default {
       });
     },
     deleteTripIntroByLang(item) {
-      this.editedItem.tripIntros.splice(item, 1);
+      const index = this.editedItem.tripIntros.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.tripIntros.splice(index, 1);
     },
     changedSupplierCombobox(event) {
       this.defaultItem.markUpPlus = event.markUpPlus;
@@ -934,10 +936,14 @@ export default {
     },
 
     deletepriceRangeItem(item) {
-      this.editedItem.priceByCarType.splice(item, 1);
+      const index = this.editedItem.priceByCarType.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.priceByCarType.splice(index, 1);
     },
     deleteOptionServiceItem(item) {
-      this.editedItem.optionServices.splice(item, 1);
+       const index = this.editedItem.optionServices.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.optionServices.splice(index, 1);
     },
     deleteAllOldOptionPriceRange() {
       var r = confirm("Are you sure you want to delete all option service?");

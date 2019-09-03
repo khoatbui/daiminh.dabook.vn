@@ -188,7 +188,7 @@
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
                           <v-icon class="px-2" small @click="editTourIntroByLang(props.item)">edit</v-icon>
-                          <v-icon small @click="deleteTourIntroByLang(props.index)">delete</v-icon>
+                          <v-icon small @click="deleteTourIntroByLang(props.item)">delete</v-icon>
                         </td>
                         <td>{{props.item.tourName}}</td>
                         <td>{{props.item.from}}</td>
@@ -666,7 +666,9 @@ export default {
       this.editedItem.lang=item.lang;
     },
     deleteTourIntroByLang(item) {
-      this.editedItem.tourIntros.splice(item, 1);
+      const index = this.editedItem.tourIntros.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.tourIntros.splice(index, 1);
     }
   }
 };

@@ -97,7 +97,7 @@
                   >
                     <template v-slot:items="props">
                       <td class="justify-center px-0">
-                        <v-icon small @click="deleteServiceItem(props.index)">delete</v-icon>
+                        <v-icon small @click="deleteServiceItem(props.item)">delete</v-icon>
                       </td>
                       <td
                         class="text-xs-right"
@@ -321,7 +321,9 @@ addNewServiceList() {
       });
     },
     deleteServiceItem(item) {
-      this.editedItem.serviceList.splice(item, 1);
+      const index = this.editedItem.serviceList.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.serviceList.splice(index, 1);
     },
     editItem(item) {
       this.editedIndex = 100;

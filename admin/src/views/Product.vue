@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>hotel CRUD</v-toolbar-title>
+      <v-toolbar-title>product CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
@@ -34,20 +34,11 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-select
-                      v-model="editedItem.cityId"
-                      :items="city"
-                      item-text="cityName"
-                      item-value="_id"
-                      label="City"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
-                      :rules="[() => editedItem.hotelCode.length > 0 || 'Required field']"
-                      v-model="editedItem.hotelCode"
-                      label="hotelCode"
+                      :rules="[() => editedItem.productCode.length > 0 || 'Required field']"
+                      v-model="editedItem.productCode"
+                      label="productCode"
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
@@ -68,11 +59,10 @@
                   <v-flex xs12 sm12 md12>
                     <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md12>
-                    <v-text-field v-model="editedItem.map" label="Map"></v-text-field>
-                  </v-flex>
+                </v-layout>
+                <v-layout wrap class="sub-add-component my-4">
                   <v-flex xs12 sm12 md8 class="sub-add-component">
-                    <v-text-field v-model="editedItem.hotelName" label="Hotel Name"></v-text-field>
+                    <v-text-field v-model="editedItem.productName" label="Product Name"></v-text-field>
                   </v-flex>
 
                   <v-flex xs12 sm6 md2 class="sub-add-component">
@@ -85,47 +75,131 @@
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md2 class="sub-add-component">
-                    <v-btn color="blue darken-1" dark @click="addHotelIntroByLang">Add</v-btn>
+                    <v-btn color="blue darken-1" dark @click="addProductIntroByLang">Add</v-btn>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5>
-                      <b>Hotel Introduce</b>
+                      <b>Product Introduce</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.hotelIntro" v-on:childtoparent="editedItem.hotelIntro=$event"></CustomEditForm>
+                    <CustomEditForm
+                      :dataParent="editedItem.productIntro"
+                      v-on:childtoparent="editedItem.productIntro=$event"
+                    ></CustomEditForm>
                   </v-flex>
-                </v-layout>
-                <v-layout>
                   <v-flex xs12 sm12 md12 class="border-top">
                     <v-data-table
-                      :headers="hotelIntrosHeader"
-                      :items="editedItem.hotelIntros"
+                      :headers="productIntrosHeader"
+                      :items="editedItem.productIntros"
                       class="elevation-1"
                       width="100%"
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
-                          <v-icon class="px-2" small @click="editHotelIntroByLang(props.item)">edit</v-icon>
-                          <v-icon small @click="deleteHotelIntroByLang(props.item)">delete</v-icon>
+                          <v-icon
+                            class="px-2"
+                            small
+                            @click="editProductIntroByLang(props.item)"
+                          >edit</v-icon>
+                          <v-icon small @click="deleteProductIntroByLang(props.index)">delete</v-icon>
                         </td>
-                        <td>{{props.item.hotelName}}</td>
+                        <td>{{props.item.productName}}</td>
                         <td>{{props.item.lang}}</td>
-                        <td>{{props.item.hotelIntro}}</td>
+                        <td>{{props.item.productIntro}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
+                <v-layout wrap class="sub-add-component my-4">
+                  <v-flex xs12 sm12 md8 class="sub-add-component">
+                    <v-text-field v-model="editedItem.blockIntro.blockName" label="BlockName"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8 class="sub-add-component">
+                    <v-text-field v-model="editedItem.blockIntro.order" label="Order"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-select
+                      v-model="editedItem.blockIntro.lang"
+                      :items="language"
+                      item-text="langName"
+                      item-value="langCode"
+                      label="Language"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addBlockIntroByLang">Add</v-btn>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5>
+                      <b>Block Introduce</b>
+                    </h5>
+                    <CustomEditForm
+                      :dataParent="editedItem.blockIntro.blockIntro"
+                      v-on:childtoparent="editedItem.blockIntro.blockIntro=$event"
+                    ></CustomEditForm>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="blockIntrosHeader"
+                      :items="editedItem.blockIntros"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editBlockIntroByLang(props.item)">edit</v-icon>
+                          <v-icon small @click="deleteBlockIntroByLang(props.item)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.blockName}}</td>
+                        <td>{{props.item.lang}}</td>
+                        <td>{{props.item.blockIntro}}</td>
+                        <td>{{props.item.order}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
+                <v-layout wrap class="sub-add-component">
+                  <v-flex xs12 sm6 md10>
+                    <v-select
+                      v-model="editedItem.pricePackage"
+                      :items="pricePackage"
+                      item-text="pricePackageCode"
+                      item-value="_id"
+                      label="Price Package"
+                      return-object
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addPricePackage">Add</v-btn>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="pricePackageIntrosHeader"
+                      :items="editedItem.pricePackages"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon small @click="deletePricePackage(props.item)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.pricePackageCode}}</td>
+                        <td>{{props.item.pricePackageName}}</td>
                       </template>
                     </v-data-table>
                   </v-flex>
                 </v-layout>
                 <v-layout wrap>
-                   <v-flex xs12 sm12 md4>
+                  <v-flex xs12 sm12 md4>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
-                      v-bind:routerPath="apiIP+'/upload/hotel/hotel'"
+                      v-bind:routerPath="apiIP+'/upload/product/product'"
                       :title="`Upload High Quality`"
                     ></file-upload>
                   </v-flex>
                   <v-flex xs12 sm12 md8>
                     <ImageListComponent
-                      :data="editedItem.hotelImages"
+                      :data="editedItem.productImages"
                       @getDeleteFile="deleteImage($event)"
                     ></ImageListComponent>
                   </v-flex>
@@ -133,13 +207,13 @@
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImgWebp = $event"
-                      v-bind:routerPath="apiIP+'/upload/hotel/hotel/webmp'"
+                      v-bind:routerPath="apiIP+'/upload/product/product/webmp'"
                       :title="`Upload Webp Image`"
                     ></file-upload>
                   </v-flex>
                   <v-flex xs12 sm12 md8>
                     <ImageListComponent
-                      :data="editedItem.hotelImagesWebp"
+                      :data="editedItem.productImagesWebp"
                       @getDeleteFile="deleteImageWebp($event)"
                     ></ImageListComponent>
                   </v-flex>
@@ -156,7 +230,7 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="hotel" :search="search" class="elevation-1">
+    <v-data-table :headers="headers" :items="product" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
@@ -164,13 +238,12 @@
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
           <td>{{ props.item.supplierId.supplierName }}</td>
-          <td>{{ props.item.cityId.cityName }}</td>
-          <td>{{ props.item.hotelCode }}</td>
-          <td>{{ props.item.hotelName }}</td>
+          <td>{{ props.item.productCode }}</td>
+          <td>{{ props.item.productName }}</td>
           <td>{{ props.item.star }}</td>
           <td>{{ props.item.createBy }}</td>
           <td>{{ props.item.createDate }}</td>
-          <td>{{ props.item.hotelIntro }}</td>
+          <td>{{ props.item.productIntro }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -189,7 +262,7 @@
       <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
     </v-snackbar>
     <v-btn absolute dark fab bottom right small color="pink">
-      <download-excel :data="hotel" name="hotel.xls">
+      <download-excel :data="product" name="product.xls">
         <i class="far fa-file-excel"></i>
       </download-excel>
     </v-btn>
@@ -228,22 +301,34 @@ export default {
     startDateModal: false,
     endDateModal: false,
     dialog: false,
-    hotelIntrosHeader: [
+    pricePackageIntrosHeader: [
       { text: "Actions", value: "name", sortable: false },
-      { text: "HotelName", value: "hotelName" },
+      { text: "PricePackageCode", value: "pricePackageCode" },
+      { text: "PricePackageName", value: "pricePackageName" },
+    ],
+    productIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "ProductName", value: "productName" },
       { text: "language", value: "lang" },
-      { text: "HotelIntro", value: "hotelIntro" }
+      { text: "ProductIntro", value: "productIntro" }
+    ],
+    blockIntrosHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "BlockName", value: "blockName" },
+      { text: "Order", value: "order" },
+      { text: "language", value: "lang" },
+      { text: "BlockIntro", value: "blockIntro" }
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
       { text: "Supplier", value: "supplierId.supplierName" },
       { text: "City", value: "city.cityName" },
-      { text: "hotelCode", value: "hotelCode" },
-      { text: "HotelName", value: "hotelName" },
+      { text: "productCode", value: "productCode" },
+      { text: "ProductName", value: "productName" },
       { text: "Star", value: "star" },
       { text: "Create By", value: "createBy" },
       { text: "Create Date", value: "createDate" },
-      { text: "Hotel Intro", value: "hotelIntro" }
+      { text: "Product Intro", value: "productIntro" }
     ],
     language: [
       { langCode: "EN", langName: "English" },
@@ -251,52 +336,68 @@ export default {
       { langCode: "VI", langName: "VietNam" }
     ],
     supplier: [],
-    city: [],
-    hotel: [],
+    pricePackage: [],
+    product: [],
     editedIndex: -1,
     disableSelect: false,
     editId: "",
     editedItem: {
       supplierId: "",
-      cityId: "",
-      hotelName: "",
+      productCode: "",
+      productName: "",
+      lang: "EN",
+      productIntro: "",
+      productIntros: [],
+      blockIntro: {
+        blockName: "",
+        order: 0,
+        blockIntro: "",
+        lang: "EN"
+      },
+      blockIntros: [],
+      pricePackage:'',
+      pricePackages:[],
       star: "5",
-      createBy: "",
-      modifyBy: "",
-      hotelCode: "",
       keyword: "",
       isUsed: true,
       isHot: true,
       isPromote: true,
-      hotelImages: [],
+      productImages: [],
       removeImage: [],
-      hotelImagesWebp: [],
+      productImagesWebp: [],
       removeImageWebp: [],
-      hotelIntro: "",
-      hotelIntros: [],
-      map: "",
-      isPackage:true,
+      isPackage: true,
+      createBy: "",
+      modifyBy: ""
     },
     defaultItem: {
       supplierId: "",
-      cityId: "",
-      hotelName: "",
+      productCode: "",
+      productName: "",
+      productIntro: "",
+      lang: "EN",
+      productIntros: [],
+      blockIntro: {
+        blockName: "",
+        order: 0,
+        blockIntro: "",
+        lang: "EN"
+      },
+      blockIntros: [],
+      pricePackage:'',
+      pricePackages:[],
       star: "5",
-      createBy: "",
-      modifyBy: "",
-      hotelCode: "",
       keyword: "",
       isUsed: true,
       isHot: true,
       isPromote: true,
-      hotelImages: [],
+      productImages: [],
       removeImage: [],
-      hotelImagesWebp: [],
+      productImagesWebp: [],
       removeImageWebp: [],
-      hotelIntro: "",
-      hotelIntros: [],
-      map: "",
-      isPackage:true,
+      isPackage: true,
+      createBy: "",
+      modifyBy: ""
     },
     snackbar: {
       snackbar: false,
@@ -327,10 +428,9 @@ export default {
 
   methods: {
     initialize() {
-      AXIOS.get(apiIP + "/hotel/", { crossdomain: true })
+      AXIOS.get(apiIP + "/product/", { crossdomain: true })
         .then(response => {
-          console.log(this.city);
-          this.hotel = response.data;
+          this.product = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -340,10 +440,9 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/city/getused", { crossdomain: true })
+      AXIOS.get(apiIP + "/pricepackage/getused", { crossdomain: true })
         .then(response => {
-          this.city = response.data;
-          console.log(this.city);
+          this.pricePackage = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -362,7 +461,7 @@ export default {
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/hotel/" + item._id)
+        AXIOS.delete(apiIP + "/product/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
@@ -372,7 +471,7 @@ export default {
           .finally(function() {});
     },
     deleteImage(image) {
-      this.editedItem.hotelImages.forEach(function(item, index, object) {
+      this.editedItem.productImages.forEach(function(item, index, object) {
         if (image.fileName == item.fileName) {
           object.splice(index, 1);
         }
@@ -380,7 +479,7 @@ export default {
       this.editedItem.removeImage.push(image);
     },
     deleteImageWebp() {
-      this.editedItem.hotelImagesWebp.forEach(function(item, index, object) {
+      this.editedItem.productImagesWebp.forEach(function(item, index, object) {
         if (image.fileName == item.fileName) {
           object.splice(index, 1);
         }
@@ -400,24 +499,24 @@ export default {
     save() {
       if (this.uploadImg.length > 0) {
         this.uploadImg.forEach(element => {
-          this.editedItem.hotelImages.push(element);
+          this.editedItem.productImages.push(element);
         });
       }
       if (this.uploadImgWebp.length > 0) {
         this.uploadImgWebp.forEach(element => {
-          this.editedItem.hotelImagesWebp.push(element);
+          this.editedItem.productImagesWebp.push(element);
         });
       }
       this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/hotel/update/" + this.editId, this.editedItem)
+          AXIOS.post(apiIP + "/product/update/" + this.editId, this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/hotel/insert", this.editedItem)
+          AXIOS.post(apiIP + "/product/insert", this.editedItem)
             .then(response => {})
             .catch(function(error) {})
             .finally(function() {});
@@ -428,33 +527,60 @@ export default {
       this.uploadImg = [];
       this.editedItem.removeImage = [];
     },
-    addHotelIntroByLang() {
-      var isFound=false;
-      this.editedItem.hotelIntros.forEach(element => {
+    addProductIntroByLang() {
+      var isFound = false;
+      this.editedItem.productIntros.forEach(element => {
         if (element.lang === this.editedItem.lang) {
-        element.hotelName= this.editedItem.hotelName;
-        element.hotelIntro= this.editedItem.hotelIntro;
-        isFound=true;
-        return;
+          element.productName = this.editedItem.productName;
+          element.productIntro = this.editedItem.productIntro;
+          isFound = true;
+          return;
         }
       });
-      if (isFound===false) {
-      this.editedItem.hotelIntros.push({
-        hotelName: this.editedItem.hotelName,
-        hotelIntro: this.editedItem.hotelIntro,
-        lang: this.editedItem.lang
-      });
+      if (isFound === false) {
+        this.editedItem.productIntros.push({
+          productName: this.editedItem.productName,
+          productIntro: this.editedItem.productIntro,
+          lang: this.editedItem.lang
+        });
       }
     },
-    deleteHotelIntroByLang(item) {
-      const index = this.editedItem.hotelIntros.indexOf(item);
+    deleteProductIntroByLang(item) {
+      const index = this.editedItem.productIntros.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.editedItem.hotelIntros.splice(index, 1);
+        this.editedItem.productIntros.splice(index, 1);
     },
-    editHotelIntroByLang(item) {
-      this.editedItem.hotelName=item.hotelName;
-      this.editedItem.hotelIntro=item.hotelIntro;
-      this.editedItem.lang=item.lang;
+    editProductIntroByLang(item) {
+      this.editedItem.productName = item.productName;
+      this.editedItem.productIntro = item.productIntro;
+      this.editedItem.lang = item.lang;
+    },
+    addBlockIntroByLang() {
+      this.editedItem.blockIntros.push({
+        blockName: this.editedItem.blockIntro.blockName,
+        blockIntro: this.editedItem.blockIntro.blockIntro,
+        lang: this.editedItem.blockIntro.lang,
+        order: this.editedItem.blockIntro.order
+      });
+    },
+    deleteBlockIntroByLang(item) {
+      const index = this.editedItem.blockIntros.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.blockIntros.splice(index, 1);
+    },
+    editBlockIntroByLang(item) {
+      this.editedItem.blockIntro.blockName = item.blockName;
+      this.editedItem.blockIntro.blockIntro = item.blockIntro;
+      this.editedItem.blockIntro.lang = item.lang;
+      this.editedItem.blockIntro.order = item.order;
+    },
+    deletePricePackage(item) {
+      const index = this.editedItem.pricePackages.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.pricePackages.splice(index, 1);
+    },
+    addPricePackage() {
+      this.editedItem.pricePackages.push(this.editedItem.pricePackage);
     }
   }
 };

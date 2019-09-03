@@ -63,7 +63,7 @@
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
                           <v-icon class="px-2" small @click="editFITIntroByLang(props.item)">edit</v-icon>
-                          <v-icon small @click="deleteFITIntroByLang(props.index)">delete</v-icon>
+                          <v-icon small @click="deleteFITIntroByLang(props.item)">delete</v-icon>
                         </td>
                         <td>{{props.item.fitName}}</td>
                         <td>{{props.item.lang}}</td>
@@ -355,7 +355,9 @@ export default {
       }
     },
     deleteFITIntroByLang(item) {
-      this.editedItem.fitIntros.splice(item, 1);
+      const index = this.editedItem.fitIntros.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.fitIntros.splice(index, 1);
     },
     editFITIntroByLang(item) {
       this.editedItem.fitName=item.fitName;

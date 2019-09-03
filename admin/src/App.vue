@@ -54,6 +54,8 @@ export default {
 <style>
 .main-app{
   font-family: 'Quicksand', sans-serif !important;
+  font-weight: 400;
+  color: #333;
 }
 .no-space{
   padding: 0 !important;

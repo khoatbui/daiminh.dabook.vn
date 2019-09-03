@@ -23,6 +23,18 @@
            <v-list-tile>
             <v-btn flat to="/payment">PaymentMethod</v-btn>
           </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/pricetype">PriceType</v-btn>
+          </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/unittype">UnitType</v-btn>
+          </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/product">Product</v-btn>
+          </v-list-tile>
+           <v-list-tile>
+            <v-btn flat to="/pricepackage">Price Package</v-btn>
+          </v-list-tile>
         </v-list>
       </v-menu>
        <v-menu :nudge-width="100">
