@@ -19,7 +19,7 @@ input:focus,input:active{
   outline: none !important;
 }
 a:hover,a,a:active,a:visited,a:focus{
-  color: #475776 !important;
+  color: #475776 ;
   text-decoration: none !important;
 }
 ol.carousel-indicators {
@@ -117,6 +117,30 @@ ol.carousel-indicators li.active {
   font-size: 2rem !important;
 }
 .text-ssl{
+  font-size: 4rem !important;
+}
+.text-06 {
+  font-size: 0.6rem !important;
+}
+.text-07 {
+  font-size: 0.7rem !important;
+}
+.text-08 {
+  font-size: 0.8rem !important;
+}
+.text-x1 {
+  font-size: 1rem !important;
+}
+.text-xh1 {
+  font-size: 1.5rem !important;
+}
+.text-x2 {
+  font-size: 2rem !important;
+}
+.text-x3 {
+  font-size: 3rem !important;
+}
+.text-x4 {
   font-size: 4rem !important;
 }
 .scroll-ngang {
@@ -382,4 +406,13 @@ ol.carousel-indicators li.active {
   border: 3px solid #FFFFFF;
   border-radius: 100px;
   font-weight: bold;
+}
+/* LOADING */
+.small-loading-img {
+  width: 30px !important;
+  min-width: 30px !important;
+  height: 30px !important;
+}
+.full-img img {
+  width: 100% !important;
 }
