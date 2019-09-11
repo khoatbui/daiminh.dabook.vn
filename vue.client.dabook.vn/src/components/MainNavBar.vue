@@ -78,13 +78,13 @@
                 </div>
                 <div class="col-12 px-0 py-2 d-flex justify-content-start align-items-center">
                   <span class="btn-lang shadow-sm mr-1" @click="changeLocale('vi')">
-                      <img src="img/language/vietnam.png" alt="Language">
+                      <img src="/img/language/vietnam.png" alt="Language">
                   </span>
                   <span class="btn-lang shadow-sm mr-1" @click="changeLocale('ko')">
-                      <img src="img/language/south-korea.png" alt="Language">
+                      <img src="/img/language/south-korea.png" alt="Language">
                   </span>
                   <span class="btn-lang shadow-sm" @click="changeLocale('en')">
-                      <img src="img/language/united-kingdom.png" alt="Language">
+                      <img src="/img/language/united-kingdom.png" alt="Language">
                   </span>
                 </div>
               </div>

@@ -26,6 +26,10 @@ import TravelServiceDetail from '@/components/TravelServiceDetail.vue'
 import TravelServiceAll from '@/components/TravelServiceAll.vue'
 import FITDetail from '@/components/FITDetail.vue'
 import FITAll from '@/components/FITAll.vue'
+import BlogDetail from '@/components/BlogDetail.vue'
+import BlogAll from '@/components/BlogAll.vue'
+import AdsAllComponent from '@/components/AdsAllComponent.vue'
+import AdsDetailComponent from '@/components/AdsDetailComponent.vue'
 // import TourRequestBooking from '@/components/TourRequestBooking.vue'
 import MainSearch from '@/views/MainSearch.vue'
 import Destination from '@/views/Destination.vue'
@@ -34,6 +38,8 @@ import TravelServiceView from '@/views/TravelServiceView.vue'
 import AboutUs from '@/views/About.vue'
 import MICE from '@/views/MICE.vue'
 import FITView from '@/views/FITView.vue'
+import BlogView from '@/views/BlogView.vue'
+import AdsView from '@/views/AdsView.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -242,6 +248,38 @@ export default new Router({
           path: '',
           name: 'fitall',
           component: FITAll
+        }
+      ]
+    },
+    {
+      path: '/blog',
+      component:BlogView,
+      children: [
+        {
+          path: 'detail',
+          name: 'blogdetail',
+          component: BlogDetail
+        },
+        {
+          path: '',
+          name: 'blogall',
+          component: BlogAll
+        }
+      ]
+    },
+    {
+      path: '/ads',
+      component:AdsView,
+      children: [
+        {
+          path: 'detail',
+          name: 'adsdetail',
+          component: AdsDetailComponent
+        },
+        {
+          path: '',
+          name: 'adsall',
+          component: AdsAllComponent
         }
       ]
     }
