@@ -53,7 +53,7 @@
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>CarTransType Introduce</b></h5>
-                    <CustomEditForm :dataParent="editedItem.carTransTypeIntro" v-on:childtoparent="editedItem.carTransTypeIntro=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'cartrans'" :dataParent="editedItem.carTransTypeIntro" v-on:childtoparent="editedItem.carTransTypeIntro=$event"></CustomEditForm>
                 </v-flex>
                 </v-layout>
                 <v-layout>

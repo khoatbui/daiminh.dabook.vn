@@ -41,7 +41,7 @@
                     <h5>
                       <b>PriceType Intro</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.priceTypeIntro" v-on:childtoparent="editedItem.priceTypeIntro=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'pricetype'" :dataParent="editedItem.priceTypeIntro" v-on:childtoparent="editedItem.priceTypeIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select

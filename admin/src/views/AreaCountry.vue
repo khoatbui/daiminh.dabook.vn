@@ -44,9 +44,9 @@
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5>
-                      <b>Travel Style Intro</b>
+                      <b>Area Intro</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.areaCountryIntro" v-on:childtoparent="editedItem.areaCountryIntro=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'areaintro'" :dataParent="editedItem.areaCountryIntro" v-on:childtoparent="editedItem.areaCountryIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select

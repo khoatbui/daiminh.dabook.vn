@@ -7,6 +7,18 @@ var pricePackageSchema = new mongoose.Schema({
     lang:String,
     pricePackageImages:[{fileName:String,filePath:String,destination:String,size:Number}],
     pricePackageImagesWebp:[{fileName:String,filePath:String,destination:String,size:Number}],
+    price:{isRequired:Boolean,
+        groupCode:String,
+        selectType:String,
+        priceTypeId:{ type: mongoose.Schema.Types.ObjectId, ref: 'PriceType' },
+        startDate:Date,
+        endDate:Date,
+        netPrice:Number,
+        unitTypeId:{ type: mongoose.Schema.Types.ObjectId, ref: 'UnitType' },
+        commission:{
+            commission:Number,
+            commissionType:String},
+        order:Number,},
     prices:[{
         isRequired:Boolean,
         groupCode:String,

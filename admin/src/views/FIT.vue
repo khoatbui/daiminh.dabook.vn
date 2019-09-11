@@ -37,7 +37,7 @@
                   </v-flex>
                    <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>Travel Style Intro</b></h5>
-                    <CustomEditForm :dataParent="editedItem.fitIntro" v-on:childtoparent="editedItem.fitIntro=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'fitintro'" :dataParent="editedItem.fitIntro" v-on:childtoparent="editedItem.fitIntro=$event"></CustomEditForm>
                 </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select

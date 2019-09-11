@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
 var productSchema = new mongoose.Schema({
+  productSupplierId:{ type: mongoose.Schema.Types.ObjectId, ref: 'ProductSupplier' },
+  productCategoryId:{ type: mongoose.Schema.Types.ObjectId, ref: 'ProductCategory' },
   productCode: String,
   productName: String,
   productIntro: String,

@@ -460,7 +460,38 @@ module.exports.webpuploadTourListImg=async (req, res) => {
         res.sendStatus(400);
     }
   }
-
+  module.exports.uploadProductSupplierImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/product/supplier');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/product/supplier');
+        result.push({'fileName':element.filename,'filePath':`img/product/supplier/${element.filename}`,'destination':element.destination,'src':`img/product/supplier/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+  module.exports.uploadProductCategoryImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/product/category');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/product/category');
+        result.push({'fileName':element.filename,'filePath':`img/product/category/${element.filename}`,'destination':element.destination,'src':`img/product/category/${element.filename}`})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
   module.exports.webpuploadTourSupplierImg=async (req, res) => {
     try {
         var result=[];

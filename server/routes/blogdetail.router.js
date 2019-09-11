@@ -11,10 +11,10 @@ var bodyParser = require('body-parser')
 
 var router = express.Router()
 // create application/json parser
-var jsonParser = bodyParser.json({limit: '50mb', extended: true})
+var jsonParser = bodyParser.json({limit: '500mb', extended: true})
 
 // create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({limit: '50mb', extended: true})
+var urlencodedParser = bodyParser.urlencoded({limit: '500mb', extended: true})
 
 
 router.get('/',controller.index)

@@ -45,7 +45,7 @@
                     <h5>
                       <b>Travel Style Intro</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.travelServiceIntro" v-on:childtoparent="editedItem.travelServiceIntro=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'travelstyleintro'" :dataParent="editedItem.travelServiceIntro" v-on:childtoparent="editedItem.travelServiceIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select

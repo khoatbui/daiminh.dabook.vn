@@ -55,6 +55,7 @@
                     </h5>
                     <CustomEditForm
                       :dataParent="editedItem.pricePackageIntro"
+                       :idComponent="'pricepackage'"
                       v-on:childtoparent="editedItem.pricePackageIntro=$event"
                     ></CustomEditForm>
                   </v-flex>
@@ -462,6 +463,7 @@ export default {
       AXIOS.get(apiIP + "/pricePackage/", { crossdomain: true })
         .then(response => {
           this.pricePackage = response.data;
+          console.log(this.pricePackage);
         })
         .catch(function(error) {})
         .finally(function() {});

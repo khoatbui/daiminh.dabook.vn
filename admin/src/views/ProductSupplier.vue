@@ -1,9 +1,16 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>MICE CRUD</v-toolbar-title>
+      <v-toolbar-title>SUPPLIER CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -12,6 +19,9 @@
           <v-card>
             <v-card-title class="pink white--text">
               <span class="headline">{{ formTitle }}</span>
+              <v-spacer></v-spacer>
+              <v-btn color="white darken-1" flat @click="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
             </v-card-title>
 
             <v-card-text>
@@ -21,30 +31,21 @@
                   <v-flex xs12 sm6 md4>
                     <v-text-field
                       required
-                      :rules="[() => editedItem.miceCode.length > 0 || 'Required field']"
-                      v-model="editedItem.miceCode"
-                      label="MICECode"
+                      :rules="[() => editedItem.productSupplierCode.length > 0 || 'Required field']"
+                      v-model="editedItem.productSupplierCode"
+                      label="productSupplierCode"
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.order" label="Order"></v-text-field>
+                    <v-text-field v-model="editedItem.productSupplierName" label="productSupplierName"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-checkbox v-model="editedItem.isUsed" :label="`IsUsed?`"></v-checkbox>
+                    <v-text-field v-model="editedItem.markUpPlus" label="MarkupPlus"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm12 md12>
-                    <v-text-field v-model="editedItem.keyword" label="Keyword"></v-text-field>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.markUpPercent" label="MarkupPercent"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 class="sub-add-component">
-                    <v-text-field v-model="editedItem.miceName" label="MICE Name"></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
-                    <h5>
-                      <b>MICE Intro</b>
-                    </h5>
-                    <CustomEditForm :idComponent="'travelstype'" :dataParent="editedItem.miceIntro" v-on:childtoparent="editedItem.miceIntro=$event"></CustomEditForm>
-                  </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
+                  <v-flex xs12 sm6 md4>
                     <v-select
                       v-model="editedItem.lang"
                       :items="language"
@@ -53,42 +54,26 @@
                       label="Language"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs12 sm6 md3 class="sub-add-component">
-                    <v-btn color="blue darken-1" dark @click="addMICEIntroByLang">Add</v-btn>
+                  
+                  <v-flex xs12 sm6 md2>
+                    <v-checkbox v-model="editedItem.isPromote" :label="`isPromote?`"></v-checkbox>
                   </v-flex>
-                </v-layout>
-                <v-layout>
-                  <v-flex xs12 sm12 md12 class="border-top">
-                    <v-data-table
-                      :headers="miceIntrosHeader"
-                      :items="editedItem.miceIntros"
-                      class="elevation-1"
-                      width="100%"
-                    >
-                      <template v-slot:items="props">
-                        <td class="justify-center px-0">
-                          <v-icon class="px-2" small @click="editMICEIntroByLang(props.item)">edit</v-icon>
-                          <v-icon small @click="deleteMICEIntroByLang(props.item)">delete</v-icon>
-                        </td>
-                        <td>{{props.item.miceName}}</td>
-                        <td>{{props.item.lang}}</td>
-                        <td>{{props.item.miceIntro}}</td>
-                      </template>
-                    </v-data-table>
+                   <v-flex xs12 sm6 md2>
+                    <v-checkbox v-model="editedItem.isUsed" :label="`isUsed?`"></v-checkbox>
                   </v-flex>
                 </v-layout>
                 <v-layout wrap>
-                  <v-flex xs12 sm12 md4>
+                   <v-flex xs12 sm12 md4>
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImg = $event"
-                      v-bind:routerPath="apiIP+'/upload/tour/mice'"
+                      v-bind:routerPath="apiIP+'/upload/product/supplier'"
                       :title="`Upload High Quality`"
                     ></file-upload>
                   </v-flex>
                   <v-flex xs12 sm12 md8>
                     <ImageListComponent
-                      :data="editedItem.miceImages"
+                      :data="editedItem.productSupplierImages"
                       @getDeleteFile="deleteImage($event)"
                     ></ImageListComponent>
                   </v-flex>
@@ -96,13 +81,13 @@
                     <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
                     <file-upload
                       @getUploadFilesURL="uploadImgWebp = $event"
-                      v-bind:routerPath="apiIP+'/upload/tour/mice/webmp'"
+                      v-bind:routerPath="apiIP+'/upload/product/supplier/webmp'"
                       :title="`Upload Webp Image`"
                     ></file-upload>
                   </v-flex>
                   <v-flex xs12 sm12 md8>
                     <ImageListComponent
-                      :data="editedItem.miceImagesWebp"
+                      :data="editedItem.productSupplierImagesWebp"
                       @getDeleteFile="deleteImageWebp($event)"
                     ></ImageListComponent>
                   </v-flex>
@@ -119,30 +104,45 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="mice" class="elevation-1">
+    <v-data-table :headers="headers" :items="productSupplier" :search="search" class="elevation-1">
       <template v-slot:items="props">
-        <tr>
-          <td class="justify-center layout px-0">
+        <tr class="whitespace-nowrap">
+          <td class="justify-start px-0">
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
-          <td>{{ props.item.miceCode }}</td>
-          <td>{{ props.item.miceName }}</td>
-          <td>{{ props.item.miceNameEN }}</td>
+          <td>{{ props.item.productSupplierCode }}</td>
+          <td>{{ props.item.productSupplierName }}</td>
+          <td>{{ props.item.markUpPlus }}</td>
+          <td>{{ props.item.markUpPercent }}</td>
           <td>{{ props.item.lang }}</td>
-          <td>{{ props.item.isUsed }}</td>
-          <td>{{ props.item.order }}</td>
-          <td>{{ props.item.keyword }}</td>
+          <td>{{ props.item.createBy }}</td>
+          <td>{{ props.item.createDate }}</td>
         </tr>
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
+       <template v-slot:no-results>
+        <v-alert :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+        </v-alert>
+      </template>
     </v-data-table>
+    <v-snackbar v-model="snackbar.snackbar">
+      {{ snackbar.text }}
+      <v-btn dark flat @click="snackbar.snackbar = false">Close</v-btn>
+    </v-snackbar>
+    
+      <v-btn absolute dark fab bottom right small color="pink">
+        <download-excel :data="productSupplier" name= "productSupplier.xls">
+<i class="far fa-file-excel"></i>
+        </download-excel>
+      </v-btn>
   </div>
 </template>
 <script>
-var apiIP = process.env.VUE_APP_API_IPADDRESS;
+var apiIP = process.env.VUE_APP_API_IPADDRESS
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import ImageListComponent from "../components/ImageListComponent.vue";
@@ -165,69 +165,69 @@ export default {
     ImageListComponent
   },
   data: () => ({
-    apiIP: apiIP,
-    uploadImg: [],
+     apiIP: apiIP,
+     uploadImg: [],
     uploadImgWebp: [],
-    search: "",
+     search: '',
     valid: true,
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
     dialog: false,
-    miceIntrosHeader: [
-      { text: "Actions", value: "name", sortable: false },
-      { text: "MICEName", value: "miceName" },
-      { text: "language", value: "lang" },
-      { text: "MICEIntro", value: "miceIntro" }
-    ],
     headers: [
-      { text: "Actions", value: "name", sortable: false },
+      { text: "Actions",align:"center", value: "name", sortable: false },
       {
-        text: "MICECode",
-        sortable: false,
-        value: "miceCode"
+        text: "productSupplierCode",
+        value: "productSupplierCode"
       },
-      { text: "MICEName", value: "miceName" },
-      { text: "MICENameEN", value: "miceNameEN" },
+      { text: "productSupplierName", value: "productSupplierName" },
+      { text: "MarkupPlus", value: "markUpPlus" },
+      { text: "MarkupPercent", value: "markUpPercent" },
       { text: "Language", value: "lang" },
-      { text: "isUsed", value: "isUsed" },
-      { text: "order", value: "order" },
-      { text: "keyword", value: "keyword" }
+      { text: "Create By", value: "createBy" },
+      { text: "Create Date", value: "createDate" }
     ],
-    mice: [],
+    productSupplier: [],
     language: [
       { langCode: "EN", langName: "English" },
       { langCode: "KO", langName: "Korea" },
       { langCode: "VI", langName: "VietNam" }
     ],
     editedIndex: -1,
+    editId: "",
     editedItem: {
-      miceCode: "",
-      miceName: "",
-      miceIntro: "",
+      productSupplierCode: "",
+      productSupplierName: "",
       lang: "EN",
-      miceImages: [],
-      removeImage: [],
-      miceImagesWebp: [],
+      markUpPlus:200000,
+      markUpPercent:0,
+      createBy: "",
+      modifyBy:"",
+      productSupplierImages: [],
+      removeImage:[],
+      productSupplierImagesWebp: [],
       removeImageWebp: [],
-      isUsed: true,
-      keyword: "",
-      order: 0,
-      miceIntros: []
+      isPromote:false,
+      isUsed:true
     },
     defaultItem: {
-      miceCode: "",
-      miceName: "",
-      miceIntro: "",
+      productSupplierCode: "",
+      productSupplierName: "",
       lang: "EN",
-      miceImages: [],
-      removeImage: [],
-      miceImagesWebp: [],
+       markUpPlus:200000,
+      markUpPercent:0,
+      createBy: "",
+            modifyBy:"",
+      productSupplierImages: [],
+      removeImage:[],
+      productSupplierImagesWebp: [],
       removeImageWebp: [],
-      isUsed: true,
-      keyword: "",
-      order: 0,
-      miceIntros: []
+      isPromote:false,
+      isUsed:true
+    },
+    snackbar: {
+      snackbar: false,
+      text: ""
     }
   }),
 
@@ -254,9 +254,9 @@ export default {
 
   methods: {
     initialize() {
-      AXIOS.get(apiIP + "/mice/", { crossdomain: true })
+      AXIOS.get(apiIP + "/productsupplier/", { crossdomain: true })
         .then(response => {
-          this.mice = response.data;
+          this.productSupplier = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -268,24 +268,24 @@ export default {
       delete this.editedItem._id;
       this.editId = item._id;
       this.dialog = true;
-      this.disableSelect = true;
       this.editedItem.removeImage = [];
       this.editedItem.removeImageWebp = [];
     },
 
     deleteItem(item) {
       confirm("Are you sure you want to delete this item?") &&
-        AXIOS.delete(apiIP + "/mice/" + item._id)
+        AXIOS.delete(apiIP + "/productsupplier/" + item._id)
           .then(response => {
             this.snackbar.snackbar = true;
             this.snackbar.text = response.data;
-            this.initialize();
+                       this.initialize();
+
           })
           .catch(function(error) {})
           .finally(function() {});
     },
     deleteImage(image) {
-      this.editedItem.miceImages.forEach(function(item, index, object) {
+      this.editedItem.productSupplierImages.forEach(function(item, index, object) {
         if (image.fileName == item.fileName) {
           object.splice(index, 1);
         }
@@ -293,7 +293,7 @@ export default {
       this.editedItem.removeImage.push(image);
     },
     deleteImageWebp() {
-      this.editedItem.miceImagesWebp.forEach(function(item, index, object) {
+      this.editedItem.productSupplierImagesWebp.forEach(function(item, index, object) {
         if (image.fileName == item.fileName) {
           object.splice(index, 1);
         }
@@ -303,7 +303,6 @@ export default {
 
     close() {
       this.dialog = false;
-      this.disableSelect = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
@@ -313,61 +312,33 @@ export default {
     save() {
       if (this.uploadImg.length > 0) {
         this.uploadImg.forEach(element => {
-          this.editedItem.miceImages.push(element);
+          this.editedItem.productSupplierImages.push(element);
         });
       }
       if (this.uploadImgWebp.length > 0) {
         this.uploadImgWebp.forEach(element => {
-          this.editedItem.miceImagesWebp.push(element);
+          this.editedItem.productSupplierImagesWebp.push(element);
         });
       }
       this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          AXIOS.post(apiIP + "/mice/update/" + this.editId, this.editedItem)
-            .then(response => {})
+          AXIOS.post(apiIP + "/productsupplier/update/"+ this.editId, this.editedItem)
+            .then(response => {
+            })
             .catch(function(error) {})
             .finally(function() {});
         } else {
-          AXIOS.post(apiIP + "/mice/insert", this.editedItem)
-            .then(response => {})
+          AXIOS.post(apiIP + "/productsupplier/insert", this.editedItem)
+            .then(response => {
+            })
             .catch(function(error) {})
             .finally(function() {});
         }
-        this.initialize();
+                    this.initialize();
         this.close();
       }
-      this.uploadImg = [];
-      this.editedItem.removeImage = [];
-    },
-    addMICEIntroByLang() {
-      var isFound=false;
-      this.editedItem.miceIntros.forEach(element => {
-        if (element.lang === this.editedItem.lang) {
-          element.miceName= this.editedItem.miceName;
-        element.miceIntro= this.editedItem.miceIntro;
-        isFound=true;
-        return;
-        }
-      });
-      if (isFound===false) {
-      this.editedItem.miceIntros.push({
-        miceName: this.editedItem.miceName,
-        miceIntro: this.editedItem.miceIntro,
-        lang: this.editedItem.lang
-      });
-      }
-    },
-    deleteMICEIntroByLang(item) {
-      const index = this.editedItem.miceIntros.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
-        this.editedItem.miceIntros.splice(index, 1);
-    },
-    editMICEIntroByLang(item) {
-      this.editedItem.miceName=item.miceName;
-      this.editedItem.miceIntro=item.miceIntro;
-      this.editedItem.lang=item.lang;
     }
   }
 };
@@ -379,5 +350,16 @@ export default {
   max-width: 50px !important;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.disabled {
+  pointer-events: none;
+  color: #bfcbd9;
+  cursor: not-allowed;
+  background-image: none;
+  background-color: #eef1f6;
+  border-color: #d1dbe5;
+}
+.whitespace-nowrap td{
+  white-space: nowrap;
 }
 </style>

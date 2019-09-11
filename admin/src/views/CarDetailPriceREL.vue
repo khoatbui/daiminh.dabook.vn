@@ -110,7 +110,7 @@
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>Trip Introduce</b></h5>
-                    <CustomEditForm :dataParent="editedItem.tripIntro" v-on:childtoparent="editedItem.tripIntro=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'tripintro'" :dataParent="editedItem.tripIntro" v-on:childtoparent="editedItem.tripIntro=$event"></CustomEditForm>
                 </v-flex>
                 </v-layout>
                 <v-layout>

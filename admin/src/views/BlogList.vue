@@ -131,7 +131,7 @@
                     <h5>
                       <b>Blog Introduce</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.blogIntro" v-on:childtoparent="editedItem.blogIntro=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'blogintro'" :dataParent="editedItem.blogIntro" v-on:childtoparent="editedItem.blogIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select
@@ -244,6 +244,8 @@
           <td>{{ props.item.isUsed }}</td>
           <td>{{ props.item.order }}</td>
           <td>{{ props.item.keyword }}</td>
+          <td>{{ props.item.createDate }}</td>
+          <td>{{ props.item.modifyDate }}</td>
           <td>{{ props.item.blogIntro }}</td>
         </tr>
       </template>
@@ -313,6 +315,8 @@ export default {
       { text: "isUsed", value: "isUsed" },
       { text: "order", value: "order" },
       { text: "keyword", value: "keyword" },
+      { text: "Create Date", value: "createDate" },
+      { text: "Modify Date", value: "modifyDate" },
       { text: "Intro", value: "blogIntro" }
     ],
     filterByCombo: {
@@ -474,7 +478,6 @@ export default {
       AXIOS.get(apiIP + "/bloglist/", { crossdomain: true })
         .then(response => {
           this.blogList = response.data;
-          console.log(this.blogList);
         })
         .catch(function(error) {})
         .finally(function() {});

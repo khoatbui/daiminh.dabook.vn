@@ -30,6 +30,12 @@
             <v-btn flat to="/unittype">UnitType</v-btn>
           </v-list-tile>
            <v-list-tile>
+            <v-btn flat to="/productsupplier">Product Supplier</v-btn>
+          </v-list-tile>
+          <v-list-tile>
+            <v-btn flat to="/productcategory">Product Category</v-btn>
+          </v-list-tile>
+           <v-list-tile>
             <v-btn flat to="/product">Product</v-btn>
           </v-list-tile>
            <v-list-tile>

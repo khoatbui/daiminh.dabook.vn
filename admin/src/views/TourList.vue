@@ -156,7 +156,7 @@
                     <h5>
                       <b>Tour Introduce</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.tourIntro" v-on:childtoparent="editedItem.tourIntro=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'ourintro'" :dataParent="editedItem.tourIntro" v-on:childtoparent="editedItem.tourIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-text-field v-model="editedItem.from" label="From(Destination)"></v-text-field>

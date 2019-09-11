@@ -72,7 +72,7 @@
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>Package Introduce</b></h5>
-                    <CustomEditForm :dataParent="editedItem.packageIntro" v-on:childtoparent="editedItem.packageIntro=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'packageintro'" :dataParent="editedItem.packageIntro" v-on:childtoparent="editedItem.packageIntro=$event"></CustomEditForm>
                 </v-flex>
                 </v-layout>
                 <v-layout>

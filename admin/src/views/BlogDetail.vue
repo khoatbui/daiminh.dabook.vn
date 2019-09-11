@@ -49,31 +49,31 @@
                     <h5>
                       <b>Block01</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block01" v-on:childtoparent="editedItem.block01=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'block01'" :dataParent="editedItem.block01" v-on:childtoparent="editedItem.block01=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block02</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block02" v-on:childtoparent="editedItem.block02=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'block02'" :dataParent="editedItem.block02" v-on:childtoparent="editedItem.block02=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block03</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block03" v-on:childtoparent="editedItem.block03=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'block03'" :dataParent="editedItem.block03" v-on:childtoparent="editedItem.block03=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block04</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block04" v-on:childtoparent="editedItem.block04=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'block04'" :dataParent="editedItem.block04" v-on:childtoparent="editedItem.block04=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Block05</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.block05" v-on:childtoparent="editedItem.block05=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'block05'" :dataParent="editedItem.block05" v-on:childtoparent="editedItem.block05=$event"></CustomEditForm>
                   </v-flex>
                 </v-layout>
 
@@ -143,6 +143,7 @@
       :search="search"
       class="elevation-1"
       dense
+      v-if="componentLoaded.blogDetail==true || itemsFilter.length>0"
     >
       <template v-slot:items="props">
         <tr style="height:2rem;line-height:1rem;oveflow:hidden">
@@ -154,12 +155,6 @@
             >settings_overscan</v-icon>
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
-          </td>
-          <td>
-            <p v-html="props.item.blogId.blogName"></p>
-          </td>
-          <td>
-            <p v-html="props.item.blogId.blogCode"></p>
           </td>
           <td class="w-25">
             <p class="one-row" v-html="props.item.block01"></p>
@@ -213,6 +208,7 @@
   </div>
 </template>
 <script>
+//process.env.VUE_APP_API_IPADDRESS
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
@@ -249,16 +245,6 @@ export default {
     dialog: false,
     headers: [
       { text: "Actions", value: "name", sortable: false },
-      {
-        text: "Blog",
-        align: "left",
-        value: "blogId.blogName"
-      },
-      {
-        text: "Blog",
-        align: "left",
-        value: "blogId.blogCode"
-      },
       { text: "Block01", align: "left", value: "block01" },
       { text: "Block02", align: "left", value: "block02" },
       { text: "Block03", align: "left", value: "block03" },
@@ -328,7 +314,10 @@ export default {
       detailDocs: [],
       isUsed:true
     },
-    componentLoaded: false,
+    componentLoaded:{
+      blogList:false,
+      blogDetail:false
+    },
   }),
 
   computed: {
@@ -338,8 +327,10 @@ export default {
     itemsFilter() {
       // This creates a new empty object, copies the item into it,
       // then calculates `fullAddress` and copies that entry into it
-
-      return this.blogdetail.filter(i => {
+      if (this.componentLoaded.blogDetail != true) {
+        return this.blogdetail;
+      }
+      var temp=this.blogdetail.filter(i => {
         return (
           (this.filterByCombo.blogId.blogCode === "ALL" ||
             i.blogId._id === this.filterByCombo.blogId._id) &&
@@ -347,6 +338,7 @@ export default {
             i.lang === this.filterByCombo.language.langCode)
         );
       });
+      return temp;
     },
     deletePermision() {
       if (this.$store.state.user.login.permision === "ADMIN") {
@@ -354,12 +346,12 @@ export default {
       }
     },
     blogListByLang() {
-      if (this.componentLoaded === false) {
-        return;
+      if (this.componentLoaded.blogList === false) {
+        return this.bloglist;
       }
       this.bloglist.forEach(element => {
         element.blogIntros.forEach(area => {
-          if (area.lang.toUpperCase() === "EN") {
+          if (area.lang.toUpperCase() === "EN" && area!=null) {
             element.blogName = area.blogName;
             element.blogIntro = area.blogIntro;
           }
@@ -382,6 +374,14 @@ export default {
   },
   methods: {
     initialize() {
+      AXIOS.get(apiIP + "/blogdetail/", { crossdomain: true })
+        .then(response => {
+          this.blogdetail = response.data;
+          this.componentLoaded.blogDetail = true;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+        
       AXIOS.get(apiIP + "/bloglist/getused", { crossdomain: true })
         .then(response => {
           this.bloglist = response.data;
@@ -392,13 +392,7 @@ export default {
             blogId: -1,
             blogIntros: []
           });
-          this.componentLoaded = true;
-        })
-        .catch(function(error) {})
-        .finally(function() {});
-      AXIOS.get(apiIP + "/blogdetail/", { crossdomain: true })
-        .then(response => {
-          this.blogdetail = response.data;
+          this.componentLoaded.blogList = true;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -427,7 +421,6 @@ export default {
     },
 
     close() {
-      console.log(this.editedItem.block05);
       this.dialog = false;
       this.disableSelect = false;
       setTimeout(() => {
@@ -507,6 +500,6 @@ export default {
 .one-row{
   height: 40px;
     overflow: hidden;
-    width: 100px;
+    width: 300px;
 }
 </style>

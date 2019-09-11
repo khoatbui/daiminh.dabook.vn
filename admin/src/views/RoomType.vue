@@ -115,7 +115,7 @@
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>RoomType Introduce</b></h5>
-                    <CustomEditForm :dataParent="editedItem.roomTypeIntro" v-on:childtoparent="editedItem.roomTypeIntro=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'roomtyoe'" :dataParent="editedItem.roomTypeIntro" v-on:childtoparent="editedItem.roomTypeIntro=$event"></CustomEditForm>
                 </v-flex>
                 </v-layout>
                 <v-layout>

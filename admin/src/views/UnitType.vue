@@ -41,7 +41,7 @@
                     <h5>
                       <b>UnitType Intro</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.unitTypeIntro" v-on:childtoparent="editedItem.unitTypeIntro=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'iniutype'" :dataParent="editedItem.unitTypeIntro" v-on:childtoparent="editedItem.unitTypeIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select

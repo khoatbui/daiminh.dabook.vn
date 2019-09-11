@@ -91,7 +91,7 @@
                     <h5>
                       <b>Hotel Introduce</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.hotelIntro" v-on:childtoparent="editedItem.hotelIntro=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'hotelintro'" :dataParent="editedItem.hotelIntro" v-on:childtoparent="editedItem.hotelIntro=$event"></CustomEditForm>
                   </v-flex>
                 </v-layout>
                 <v-layout>

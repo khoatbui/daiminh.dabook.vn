@@ -62,7 +62,7 @@
                     <h5>
                       <b>Destination Intro</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.destinationIntro" v-on:childtoparent="editedItem.destinationIntro=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'destination'" :dataParent="editedItem.destinationIntro" v-on:childtoparent="editedItem.destinationIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select

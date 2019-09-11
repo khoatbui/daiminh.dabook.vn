@@ -43,7 +43,7 @@
                   </v-flex>
                    <v-flex xs12 sm12 md12 class="group-card sub-add-component">
                     <h5><b>Note</b></h5>
-                    <CustomEditForm :dataParent="editedItem.note" v-on:childtoparent="editedItem.note=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'not'" :dataParent="editedItem.note" v-on:childtoparent="editedItem.note=$event"></CustomEditForm>
                 </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select

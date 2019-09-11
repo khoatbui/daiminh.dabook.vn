@@ -43,31 +43,31 @@
                     <h5>
                       <b>Program</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.program" v-on:childtoparent="editedItem.program=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'prodgram'" :dataParent="editedItem.program" v-on:childtoparent="editedItem.program=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Transport</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.transport" v-on:childtoparent="editedItem.transport=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'transport'" :dataParent="editedItem.transport" v-on:childtoparent="editedItem.transport=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Service Include</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.serviceInclude" v-on:childtoparent="editedItem.serviceInclude=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'serviceinclude'" :dataParent="editedItem.serviceInclude" v-on:childtoparent="editedItem.serviceInclude=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Service Not Include</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.shouldTake" v-on:childtoparent="editedItem.shouldTake=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'servicenot'" :dataParent="editedItem.shouldTake" v-on:childtoparent="editedItem.shouldTake=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Should Take</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.shouldTake" v-on:childtoparent="editedItem.shouldTake=$event"></CustomEditForm>
+                    <CustomEditForm  :idComponent="'shouldtake'" :dataParent="editedItem.shouldTake" v-on:childtoparent="editedItem.shouldTake=$event"></CustomEditForm>
                   </v-flex>
                 </v-layout>
 

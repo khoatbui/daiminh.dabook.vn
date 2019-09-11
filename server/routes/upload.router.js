@@ -226,6 +226,23 @@ var tourSupplierUpload = multer.diskStorage({
 })
 const uploadTourSupplier = multer({storage:tourSupplierUpload});
 
+//PRODUCT SUPPLIER IMAGE
+var productSupplierUpload = multer.diskStorage({
+  destination: `./uploads/product/supplier`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadProductSupplier = multer({storage:productSupplierUpload});
+
+//PRODUCT CATEGORY IMAGE
+var productCategoryUpload = multer.diskStorage({
+  destination: `./uploads/product/category`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadProductCategory = multer({storage:productCategoryUpload});
 //TOUR SUPPLIER IMAGE
 var blogListUpload = multer.diskStorage({
   destination: `./uploads/blog/bloglist`,
@@ -234,6 +251,8 @@ var blogListUpload = multer.diskStorage({
 }
 })
 const uploadBlogList = multer({storage:blogListUpload});
+
+
 
 //TOUR DOCUMENT
 var tourDocumentUpload = multer.diskStorage({
@@ -375,6 +394,9 @@ router.post('/hotel/roomtype/roomtypeintro',uploadRoomTypeIntro.single('image'),
 router.post('/hotel/package/packageintro',uploadPackageIntro.single('image'),controller.uploadPackageIntroImg)
 router.post('/tour/fit/fitintro',uploadFITIntro.single('image'),controller.uploadFITIntroImg)
 router.post('/blog/blogdetail/blogdetailintro',uploadBlogDetailIntro.single('image'),controller.uploadBlogDetailIntroImg)
+
+router.post('/product/supplier',uploadProductSupplier.array('photos', 12),controller.uploadProductSupplierImg)
+router.post('/product/category',uploadProductCategory.array('photos', 12),controller.uploadProductCategoryImg)
 
 
 module.exports = router

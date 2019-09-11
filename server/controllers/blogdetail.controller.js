@@ -10,7 +10,7 @@ module.exports.index =function(req,res){
     })
 };
 module.exports.getUsed =function(req,res){
-    BlogDetail.find({"isUsed":true}).then(function(blogdetail){
+    BlogDetail.find({"isUsed":true}).populate('blogId').then(function(blogdetail){
         res.send(blogdetail)
     })
   };

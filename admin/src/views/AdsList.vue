@@ -116,7 +116,7 @@
                     <h5>
                       <b>Ads Introduce</b>
                     </h5>
-                    <CustomEditForm :dataParent="editedItem.adsIntro" v-on:childtoparent="editedItem.adsIntro=$event"></CustomEditForm>
+                    <CustomEditForm :idComponent="'adsintro'" :dataParent="editedItem.adsIntro" v-on:childtoparent="editedItem.adsIntro=$event"></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm6 md3 class="sub-add-component">
                     <v-select

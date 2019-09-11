@@ -237,6 +237,17 @@ const router = new Router({
       name: 'adsdetail',
       component: () => import(/* webpackChunkName: "about" */ './views/AdsDetail.vue'),
       meta: { requiresAuth: true }
+    },{
+      path: '/productsupplier',
+      name: 'productsupplier',
+      component: () => import(/* webpackChunkName: "about" */ './views/ProductSupplier.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/productcategory',
+      name: 'productcategory',
+      component: () => import(/* webpackChunkName: "about" */ './views/ProductCategory.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/product',

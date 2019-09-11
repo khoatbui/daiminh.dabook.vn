@@ -12,6 +12,7 @@
       >
         <button
           class="menububble__button"
+          type="button"
           :class="{ 'is-active': isActive.bold() }"
           @click="commands.bold"
         >
@@ -22,6 +23,7 @@
 
         <button
           class="menububble__button"
+          type="button"
           :class="{ 'is-active': isActive.italic() }"
           @click="commands.italic"
         >
@@ -81,6 +83,7 @@
         </button>
         <button
           class="menububble__button"
+          type="button"
           :class="{ 'is-active': isActive.code() }"
           @click="commands.code"
         >
@@ -360,7 +363,7 @@
     <editor-content class="editor__content" :editor="editor" />
     <input
       type="file"
-      id="imgupload"
+      :id="`imgupload${idComponent}`"
       style="visibility: hidden"
       v-on:change="previewFile(editor.commands.image)"
     />
@@ -410,7 +413,8 @@ function getBase64(file) {
 export default {
   name: "CustomEditForm",
   props: {
-    dataParent: String
+    dataParent: String,
+    idComponent:String,
   },
   components: {
     EditorContent,
@@ -462,7 +466,7 @@ export default {
   },
   methods: {
     openDialog() {
-      window.document.getElementById("imgupload").click();
+      window.document.getElementById(`imgupload${this.idComponent}`).click();
       return false;
     },
     getOldData() {
@@ -474,7 +478,7 @@ export default {
     },
     previewFile(commands) {
       var preview = document.querySelector("img");
-      getBase64(document.getElementById("imgupload").files[0]).then(data =>{
+      getBase64(document.getElementById(`imgupload${this.idComponent}`).files[0]).then(data =>{
         console.log(data);
         commands({src: data })
       }

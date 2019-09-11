@@ -25,12 +25,22 @@
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
                     <v-select
-                      v-model="editedItem.supplierId"
-                      :items="supplier"
-                      item-text="supplierName"
+                      v-model="editedItem.productSupplierId"
+                      :items="productSupplier"
+                      item-text="productSupplierName"
                       item-value="_id"
                       v-bind:class="{ disabled: disableSelect }"
                       label="Supplier"
+                    ></v-select>
+                  </v-flex>
+                   <v-flex xs12 sm6 md4>
+                    <v-select
+                      v-model="editedItem.productCategoryId"
+                      :items="productCategory"
+                      item-text="productCategoryName"
+                      item-value="_id"
+                      v-bind:class="{ disabled: disableSelect }"
+                      label="Category"
                     ></v-select>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
@@ -83,6 +93,7 @@
                     </h5>
                     <CustomEditForm
                       :dataParent="editedItem.productIntro"
+                      :idComponent="'productintro'"
                       v-on:childtoparent="editedItem.productIntro=$event"
                     ></CustomEditForm>
                   </v-flex>
@@ -134,6 +145,7 @@
                     </h5>
                     <CustomEditForm
                       :dataParent="editedItem.blockIntro.blockIntro"
+                      :idComponent="'blockintro'"
                       v-on:childtoparent="editedItem.blockIntro.blockIntro=$event"
                     ></CustomEditForm>
                   </v-flex>
@@ -237,7 +249,8 @@
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
-          <td>{{ props.item.supplierId.supplierName }}</td>
+          <td>{{ props.item.productSupplierId.productSupplierName }}</td>
+          <td>{{ props.item.productCategoryId.productCategoryName }}</td>
           <td>{{ props.item.productCode }}</td>
           <td>{{ props.item.productName }}</td>
           <td>{{ props.item.star }}</td>
@@ -321,7 +334,8 @@ export default {
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
-      { text: "Supplier", value: "supplierId.supplierName" },
+      { text: "Supplier", value: "productSupplierId.productSupplierName" },
+      { text: "Category", value: "productCategoryId.productCategoryName" },
       { text: "City", value: "city.cityName" },
       { text: "productCode", value: "productCode" },
       { text: "ProductName", value: "productName" },
@@ -335,14 +349,16 @@ export default {
       { langCode: "KO", langName: "Korea" },
       { langCode: "VI", langName: "VietNam" }
     ],
-    supplier: [],
+    productSupplier: [],
+    productCategory: [],
     pricePackage: [],
     product: [],
     editedIndex: -1,
     disableSelect: false,
     editId: "",
     editedItem: {
-      supplierId: "",
+      productSupplierId: "",
+      productCategoryId: "",
       productCode: "",
       productName: "",
       lang: "EN",
@@ -371,7 +387,8 @@ export default {
       modifyBy: ""
     },
     defaultItem: {
-      supplierId: "",
+      productSupplierId: "",
+      productCategoryId: "",
       productCode: "",
       productName: "",
       productIntro: "",
@@ -434,9 +451,15 @@ export default {
         })
         .catch(function(error) {})
         .finally(function() {});
-      AXIOS.get(apiIP + "/supplier/getused", { crossdomain: true })
+      AXIOS.get(apiIP + "/productsupplier/getused", { crossdomain: true })
         .then(response => {
-          this.supplier = response.data;
+          this.productSupplier = response.data;
+        })
+        .catch(function(error) {})
+        .finally(function() {});
+      AXIOS.get(apiIP + "/productcategory/getused", { crossdomain: true })
+        .then(response => {
+          this.productCategory = response.data;
         })
         .catch(function(error) {})
         .finally(function() {});
