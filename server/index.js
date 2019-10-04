@@ -59,14 +59,14 @@ const adsType=require('./routes/adstype.router')
 const adsList=require('./routes/adslist.router')
 const adsDetail=require('./routes/adsdetail.router')
 
-const reviews=require('./routes/reviews.router')
-
 const pricepackage=require('./routes/pricepackage.router')
 const priceType=require('./routes/pricetype.router')
 const unitType=require('./routes/unittype.router')
 const product=require('./routes/product.router')
 const productSupplier=require('./routes/productsupplier.router')
 const productCategory=require('./routes/productcategory.router')
+
+const reviewsRouter=require('./routes/reviews.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -125,7 +125,8 @@ app.use('/product',product)
 app.use('/productsupplier',productSupplier)
 app.use('/productcategory',productCategory)
 
-app.use('/reviews',reviews);
+app.use('/reviews',reviewsRouter)
+
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

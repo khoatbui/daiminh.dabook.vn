@@ -27,7 +27,5 @@ router.delete('/:_id', controller.deleteReviews)
 
 router.post('/insert', jsonParser,controller.insertReviews)
 
-router.post('/postinsertnewreviews', jsonParser,controller.insertReviews)
-
 router.post('/update/:_id', jsonParser,controller.updateReviews)
 module.exports = router

@@ -1,6 +1,6 @@
 var Reviews = require('../models/reviews.model')
-var Supplier=require('../models/supplier.model')
 var mongoose = require('mongoose');
+var UploadController=require('../controllers/upload.controller')
 
 module.exports.index =function(req,res){
     Reviews.find().then(function(reviews){
@@ -9,7 +9,7 @@ module.exports.index =function(req,res){
 };
 module.exports.getUsed =function(req,res){
     Reviews.find({"isUsed":true}).then(function(reviews){
-        res.send('ss')
+        res.send(reviews)
     })
 };
 
@@ -32,13 +32,12 @@ module.exports.deleteReviews= function (req, res) {
 
 module.exports.insertReviews= function (req, res) {
     req.body.createDate=new Date();
-    delete req.body.modifyBy;
         Reviews.create(req.body, function (err, reviews) {
         if (err){
             console.log(err);
         } 
         else{
-            res.send('review')
+            res.send(reviews)
         }
         })
 };
@@ -55,20 +54,7 @@ module.exports.updateReviews=function (req, res) {
                  res.status(200).send(reviews);
         }
      });
-};
-
-module.exports.getReviewsBySupplier=(req,res,next) => {
-    Reviews.find({supplierId:req.params.index}).then(function(reviews){
-        console.log(reviews);
-        res.send(reviews)
-    })
-};
-
-module.exports.getReviewsBySupplierCode=(req,res,next) => {
-    Supplier.findOne({supplierCode:req.params.index}).then(function(supp){
-        Reviews.find({supplierId:supp._id}).then(function(reviews){
-            res.send(reviews)
-        })
-    })
+     UploadController.removeImage(req.body.removeImage);
+     UploadController.removeImageWebp(req.body.removeImageWebp);
 };
 
