@@ -242,10 +242,12 @@
           <td>{{ props.item.blogName }}</td>
           <td>{{ props.item.lang }}</td>
           <td>{{ props.item.isUsed }}</td>
+          <td>{{ props.item.isHot }}</td>
+          <td>{{ props.item.isBlog }}</td>
           <td>{{ props.item.order }}</td>
-          <td>{{ props.item.keyword }}</td>
           <td>{{ props.item.createDate }}</td>
           <td>{{ props.item.modifyDate }}</td>
+          <td>{{ props.item.keyword }}</td>
           <td>{{ props.item.blogIntro }}</td>
         </tr>
       </template>
@@ -263,6 +265,7 @@
   </div>
 </template>
 <script>
+// process.env.VUE_APP_API_IPADDRESS
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
@@ -313,10 +316,12 @@ export default {
       { text: "BlogName", value: "blogName" },
       { text: "Language", value: "lang" },
       { text: "isUsed", value: "isUsed" },
+      { text: "Hot?", value: "isHot" },
+      { text: "Blog?", value: "isBlog" },
       { text: "order", value: "order" },
-      { text: "keyword", value: "keyword" },
       { text: "Create Date", value: "createDate" },
       { text: "Modify Date", value: "modifyDate" },
+      { text: "keyword", value: "keyword" },
       { text: "Intro", value: "blogIntro" }
     ],
     filterByCombo: {

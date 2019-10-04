@@ -1,9 +1,10 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>PRODUCT CRUD</v-toolbar-title>
+      <v-toolbar-title>PRICE PACKAGE CRUD</v-toolbar-title>
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -107,7 +108,6 @@
                       item-value="_id"
                       label="Price Type"
                       class="sub-add-component"
-                      v-bind:class="{ disabled: disableSelect }"
                       @input="changedPriceCombobox"
                     ></v-select>
                   </v-flex>
@@ -168,7 +168,6 @@
                       item-value="_id"
                       label="Unit Type"
                       class="sub-add-component"
-                      v-bind:class="{ disabled: disableSelect }"
                       @input="changedUnitTypeCombobox"
                     ></v-select>
                   </v-flex>
@@ -265,7 +264,7 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="pricePackage" class="elevation-1">
+    <v-data-table :headers="headers" :items="pricePackage" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr>
           <td class="justify-center layout px-0">
@@ -280,6 +279,13 @@
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
+      </template>
+      <template v-slot:no-results>
+        <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+        >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
   </div>

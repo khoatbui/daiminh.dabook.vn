@@ -156,7 +156,13 @@
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
-          <td class="w-25">
+           <td class="w-25">
+            <p class="one-row" v-html="props.item.blogId.blogCode"></p>
+          </td>
+           <td class="w-25">
+            <p class="one-row" v-html="props.item.blogId.blogName"></p>
+          </td>
+           <td class="w-25">
             <p class="one-row" v-html="props.item.block01"></p>
           </td>
           <td class="w-25">
@@ -245,6 +251,8 @@ export default {
     dialog: false,
     headers: [
       { text: "Actions", value: "name", sortable: false },
+      { text: "BlockCode", align: "left", value: "blogId.blogCode" },
+      { text: "BlockName", align: "left", value: "blogId.blogName" },
       { text: "Block01", align: "left", value: "block01" },
       { text: "Block02", align: "left", value: "block02" },
       { text: "Block03", align: "left", value: "block03" },
@@ -327,18 +335,29 @@ export default {
     itemsFilter() {
       // This creates a new empty object, copies the item into it,
       // then calculates `fullAddress` and copies that entry into it
-      if (this.componentLoaded.blogDetail != true) {
-        return this.blogdetail;
-      }
-      var temp=this.blogdetail.filter(i => {
+      console.log(this.filterByCombo);
+      return this.blogdetail.filter(i => {
+        console.log(`----${ i.createDate}`)
+        console.log(i.blogId.blogCode)
         return (
           (this.filterByCombo.blogId.blogCode === "ALL" ||
-            i.blogId._id === this.filterByCombo.blogId._id) &&
+            i.blogId.blogCode === this.filterByCombo.blogId.blogCode) &&
           (this.filterByCombo.language.langCode === "ALL" ||
             i.lang === this.filterByCombo.language.langCode)
         );
       });
-      return temp;
+      // if (this.componentLoaded.blogDetail != true) {
+      //   return this.blogdetail;
+      // }
+      // var temp=this.blogdetail.filter(i => {
+      //   return (
+      //     (this.filterByCombo.blogId.blogCode === "ALL" ||
+      //       i.blogId._id === this.filterByCombo.blogId._id) &&
+      //     (this.filterByCombo.language.langCode === "ALL" ||
+      //       i.lang === this.filterByCombo.language.langCode)
+      //   );
+      // });
+      // return temp;
     },
     deletePermision() {
       if (this.$store.state.user.login.permision === "ADMIN") {

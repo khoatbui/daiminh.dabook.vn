@@ -206,6 +206,37 @@ module.exports.webpuploadCarTypeImg=async (req, res) => {
         res.sendStatus(400);
     }
   }
+  module.exports.uploadCarTripImg=async (req, res) => {
+    try {
+        var result=[];
+       console.log(req.files)
+       req.files.forEach(element => {
+    copyFile(element.path, '../daiminh.dabook.vn/img/car/trip');
+    copyFile(element.path, '../m.daiminh.dabook.vn/img/car/trip');
+        result.push({'fileName':element.filename,'filePath':`img/car/trip/${element.filename}`,'destination':element.destination})
+    });
+    console.log(result);
+    res.json({'files':result});
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+  }
+  module.exports.webpuploadCarTripImg=async (req, res) => {
+      try {
+          var result=[];
+         console.log(req.files)
+         req.files.forEach(element => {
+      copyFile(element.path, '../daiminh.dabook.vn/webmp/img/car/trip');
+          result.push({'fileName':element.filename,'filePath':`webmp/img/car/trip/${element.filename}`,'destination':element.destination})
+      });
+      console.log(result);
+      res.json({'files':result});
+      } catch (err) {
+          console.log(err);
+          res.sendStatus(400);
+      }
+    }
 module.exports.uploadCityImg=async (req, res) => {
   try {
       var result=[];

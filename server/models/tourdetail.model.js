@@ -2,6 +2,12 @@ var mongoose = require('mongoose')
 var tourDetailSchema = new mongoose.Schema({
     tourId:{ type: mongoose.Schema.Types.ObjectId, ref: 'TourList' },
     program: String,
+    timeLine:{
+        time:String,
+        program:String,
+        order:Number
+    },
+    programV2:[],
     transport: String,
     serviceInclude: String,
     serviceNotInclude:String,

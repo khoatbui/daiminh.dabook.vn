@@ -29,7 +29,6 @@
                       :items="productSupplier"
                       item-text="productSupplierName"
                       item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
                       label="Supplier"
                     ></v-select>
                   </v-flex>
@@ -39,7 +38,6 @@
                       :items="productCategory"
                       item-text="productCategoryName"
                       item-value="_id"
-                      v-bind:class="{ disabled: disableSelect }"
                       label="Category"
                     ></v-select>
                   </v-flex>
@@ -76,7 +74,7 @@
                   </v-flex>
 
                   <v-flex xs12 sm6 md2 class="sub-add-component">
-                    <v-select
+                   <v-select
                       v-model="editedItem.lang"
                       :items="language"
                       item-text="langName"
@@ -242,7 +240,7 @@
         </v-form>
       </v-dialog>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="product" :search="search" class="elevation-1">
+    <v-data-table :headers="headers" :items="productByLang" :search="search" class="elevation-1">
       <template v-slot:items="props">
         <tr class="whitespace-nowrap">
           <td class="justify-center px-0">
@@ -419,7 +417,8 @@ export default {
     snackbar: {
       snackbar: false,
       text: ""
-    }
+    },
+    completedLoad:false
   }),
 
   computed: {
@@ -430,6 +429,20 @@ export default {
       if (this.$store.state.user.login.permision === "ADMIN") {
         return true;
       }
+    },
+    productByLang() {
+      if (this.completedLoad==false) {
+        return this.product;
+      }
+      this.product.forEach(element => {
+        element.productIntros.forEach(item => {
+          if (item.lang === 'VI') {
+          element.productName = item.productName;
+          element.productIntro = item.productIntro;
+        }
+        });
+      });
+      return this.product;
     }
   },
 
@@ -448,6 +461,7 @@ export default {
       AXIOS.get(apiIP + "/product/", { crossdomain: true })
         .then(response => {
           this.product = response.data;
+          this.completedLoad=true;
         })
         .catch(function(error) {})
         .finally(function() {});
@@ -472,6 +486,7 @@ export default {
     },
 
     editItem(item) {
+      try {
       this.editedIndex = 100;
       this.editedItem = Object.assign({}, item);
       delete this.editedItem._id;
@@ -480,9 +495,13 @@ export default {
       this.disableSelect = true;
       this.editedItem.removeImage = [];
       this.editedItem.removeImageWebp = [];
+      } catch (error) {
+        alert(error);
+      }
     },
 
     deleteItem(item) {
+      try {
       confirm("Are you sure you want to delete this item?") &&
         AXIOS.delete(apiIP + "/product/" + item._id)
           .then(response => {
@@ -492,34 +511,50 @@ export default {
           })
           .catch(function(error) {})
           .finally(function() {});
+          } catch (error) {
+        alert(error);
+      }
     },
     deleteImage(image) {
+      try {
       this.editedItem.productImages.forEach(function(item, index, object) {
         if (image.fileName == item.fileName) {
           object.splice(index, 1);
         }
       });
       this.editedItem.removeImage.push(image);
+      } catch (error) {
+        alert(error);
+      }
     },
     deleteImageWebp() {
+      try {
       this.editedItem.productImagesWebp.forEach(function(item, index, object) {
         if (image.fileName == item.fileName) {
           object.splice(index, 1);
         }
       });
       this.editedItem.removeImageWebp.push(image);
+      } catch (error) {
+        alert(error);
+      }
     },
 
     close() {
+      try {
       this.dialog = false;
       this.disableSelect = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       }, 300);
+      } catch (error) {
+        alert(error);
+      }
     },
 
     save() {
+      try {
       if (this.uploadImg.length > 0) {
         this.uploadImg.forEach(element => {
           this.editedItem.productImages.push(element);
@@ -549,8 +584,12 @@ export default {
       }
       this.uploadImg = [];
       this.editedItem.removeImage = [];
+      } catch (error) {
+        alert(error);
+      }
     },
     addProductIntroByLang() {
+      try {
       var isFound = false;
       this.editedItem.productIntros.forEach(element => {
         if (element.lang === this.editedItem.lang) {
@@ -567,43 +606,86 @@ export default {
           lang: this.editedItem.lang
         });
       }
+      } catch (error) {
+        alert(error);
+      }
     },
     deleteProductIntroByLang(item) {
+      try {
       const index = this.editedItem.productIntros.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
         this.editedItem.productIntros.splice(index, 1);
+        } catch (error) {
+        alert(error);
+      }
     },
     editProductIntroByLang(item) {
+      try {
       this.editedItem.productName = item.productName;
       this.editedItem.productIntro = item.productIntro;
       this.editedItem.lang = item.lang;
+      } catch (error) {
+        alert(error);
+      }
     },
     addBlockIntroByLang() {
+      try {
+      var isFound = false;
+      this.editedItem.blockIntros.forEach(element => {
+        if (element.lang === this.editedItem.blockIntro.lang && element.blockName == this.editedItem.blockIntro.blockName) {
+          element.blockName = this.editedItem.blockIntro.blockName;
+          element.blockIntro = this.editedItem.blockIntro.blockIntro;
+          element.order= this.editedItem.blockIntro.order
+          isFound = true;
+          return;
+        }
+      });
+      if (isFound === false) {
       this.editedItem.blockIntros.push({
         blockName: this.editedItem.blockIntro.blockName,
         blockIntro: this.editedItem.blockIntro.blockIntro,
         lang: this.editedItem.blockIntro.lang,
         order: this.editedItem.blockIntro.order
       });
+      }
+      } catch (error) {
+        alert(error);
+      }
     },
     deleteBlockIntroByLang(item) {
+      try {
       const index = this.editedItem.blockIntros.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
         this.editedItem.blockIntros.splice(index, 1);
+        } catch (error) {
+        alert(error);
+      }
     },
     editBlockIntroByLang(item) {
+      try {
       this.editedItem.blockIntro.blockName = item.blockName;
       this.editedItem.blockIntro.blockIntro = item.blockIntro;
       this.editedItem.blockIntro.lang = item.lang;
       this.editedItem.blockIntro.order = item.order;
+      } catch (error) {
+        alert(error);
+      }
     },
     deletePricePackage(item) {
+      try {
       const index = this.editedItem.pricePackages.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
         this.editedItem.pricePackages.splice(index, 1);
+        } catch (error) {
+        alert(error);
+      }
     },
     addPricePackage() {
+      try {
       this.editedItem.pricePackages.push(this.editedItem.pricePackage);
+      } catch (error) {
+        alert(error);
+      }
     }
   }
 };

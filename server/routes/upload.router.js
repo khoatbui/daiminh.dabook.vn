@@ -63,6 +63,15 @@ var cartypeUpload = multer.diskStorage({
 })
 const uploadCarType = multer({storage:cartypeUpload});
 
+//CAR TRIP IMAGE
+var cartripUpload = multer.diskStorage({
+  destination: `./uploads/car/trip`,
+  filename: function (req, file, cb) {
+      cb(null,moment().format("YYYYMMDDHHMMSS") + file.originalname)
+}
+})
+const uploadCarTrip = multer({storage:cartripUpload});
+
 //CITY IMAGE
 var cityUpload = multer.diskStorage({
   destination: `./uploads/tour/city`,
@@ -353,6 +362,8 @@ router.post('/car/supplier',uploadCarSupplier.array('photos', 12),controller.upl
 router.post('/car/supplier/webmp',uploadCarSupplier.array('photos', 12),controller.webpuploadCarSupplierImg)
 router.post('/car/cartype',uploadCarType.array('photos', 12),controller.uploadCarTypeImg)
 router.post('/car/cartype/webmp',uploadCarType.array('photos', 12),controller.webpuploadCarTypeImg)
+router.post('/car/trip',uploadCarTrip.array('photos', 12),controller.uploadCarTripImg)
+router.post('/car/trip/webmp',uploadCarTrip.array('photos', 12),controller.webpuploadCarTripImg)
 
 router.post('/tour/city',uploadCity.array('photos', 12),controller.uploadCityImg)
 router.post('/tour/city/webmp',uploadCity.array('photos', 12),controller.webpuploadCityImg)

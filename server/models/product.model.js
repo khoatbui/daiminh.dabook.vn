@@ -5,6 +5,7 @@ var productSchema = new mongoose.Schema({
   productCode: String,
   productName: String,
   productIntro: String,
+  lang:String,
   productIntros: [],
   blockIntro: {
     blockName: String,

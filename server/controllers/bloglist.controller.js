@@ -11,12 +11,12 @@ module.exports.index =function(req,res){
 };
 
 module.exports.getUsed =function(req,res){
-    BlogList.find({"isUsed":true}).populate('destinationId').populate('ctaId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
+    BlogList.find({"isUsed":true}).sort({createDate:-1}).populate('destinationId').populate('ctaId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
         res.send(bloglist)
     })
   };
 module.exports.getUsedBlog =function(req,res){
-    BlogList.find({"isUsed":true,"isBlog":true}).populate('destinationId').populate('ctaId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
+    BlogList.find({"isUsed":true,"isBlog":true}).sort({createDate:-1}).populate('destinationId').populate('ctaId').populate('travelStyleId').populate('blogTypeId').then(function(bloglist){
         res.send(bloglist)
     })
   };

@@ -45,6 +45,67 @@
                     </h5>
                     <CustomEditForm  :idComponent="'prodgram'" :dataParent="editedItem.program" v-on:childtoparent="editedItem.program=$event"></CustomEditForm>
                   </v-flex>
+                </v-layout>
+                   <v-layout wrap class="sub-add-component my-4">
+                    <v-flex xs12 sm12 md2 class="sub-add-component">
+                      <v-select
+                      v-model="editedItem.timeLine.icon"
+                      :items="icons"
+                      item-text="iconName"
+                      item-value="iconCode"
+                      label="Icon"
+                    >
+                    <template slot='selection' slot-scope='{ item }'>
+                      <font-awesome-icon far icon="spinner" />
+                    </template>
+                    <template slot='item' slot-scope='{ item }'>
+                      <div v-html="item.iconCode"></div>
+                    </template>
+                    </v-select>
+                    </v-flex>
+                  <v-flex xs12 sm12 md2 class="sub-add-component">
+                    <v-text-field v-model="editedItem.timeLine.time" label="Timeline Time"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md4 class="sub-add-component">
+                    <v-text-field v-model="editedItem.timeLine.title" label="Timeline Title"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md2 class="sub-add-component">
+                    <v-text-field v-model="editedItem.timeLine.order" label="Order"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addProgramTimeLine">Add</v-btn>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5>
+                      <b>Program TimeLine</b>
+                    </h5>
+                    <CustomEditForm  :idComponent="'programV2'" :dataParent="editedItem.timeLine.program" v-on:childtoparent="editedItem.timeLine.program=$event"></CustomEditForm>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="programTimelineHeader"
+                      :items="editedItem.programV2"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon
+                            class="px-2"
+                            small
+                            @click="editProgramTimeLine(props.item)"
+                          >edit</v-icon>
+                          <v-icon small @click="deleteProgramTimeLine(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.order}}</td>
+                        <td>{{props.item.time}}</td>
+                        <td>{{props.item.title}}</td>
+                        <td>{{props.item.program}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
+                <v-layout>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Transport</b>
@@ -205,6 +266,13 @@ export default {
     componentLoaded:false,
     endDateModal: false,
     dialog: false,
+    programTimelineHeader: [
+       { text: "Actions", value: "name", sortable: false },
+       { text: "Order", align: "center", value: "order" },
+       { text: "Time", align: "center", value: "time" },
+       { text: "Title", align: "center", value: "title" },
+       { text: "Program", align: "center", value: "program" },
+    ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
       {
@@ -246,6 +314,14 @@ export default {
     editedItem: {
       tourId: "",
       program: "",
+      timeLine:{
+        icon:"",
+        time:"",
+        title:"",
+        program:"",
+        order:0,
+      },
+      programV2:[],
       transport: "",
       serviceInclude: "",
       serviceNotInclude: "",
@@ -263,6 +339,14 @@ export default {
     defaultItem: {
       tourId: "",
       program: "",
+      timeLine:{
+        icon:"",
+        time:"",
+        title:"",
+        program:"",
+        order:0,
+      },
+      programV2:[],
       transport: "",
       serviceInclude: "",
       serviceNotInclude: "",
@@ -276,7 +360,17 @@ export default {
       removeImage: [],
       removeDoc: [],
       detailDocs: []
-    }
+    },
+    icons:[
+      {
+        iconName:'Spinner',
+        iconCode:'<font-awesome-icon far icon="spinner" />'
+      },
+      {
+        iconName:'UserSecret',
+        iconCode:'<font-awesome-icon icon="user-alt" />'
+      },
+    ]
   }),
 
   computed: {
@@ -420,7 +514,37 @@ export default {
     },
     replace(item) {
       return item.replace("block", "");
-    }
+    },
+    
+    addProgramTimeLine() {
+      var isFound = false;
+      this.editedItem.programV2.forEach(element => {
+        if (element.time == this.editedItem.timeLine.time) {
+          element.time = this.editedItem.timeLine.time;
+          element.program = this.editedItem.timeLine.program;
+          element.order= this.editedItem.timeLine.order
+          isFound = true;
+          return;
+        }
+      });
+      if (isFound === false) {
+      this.editedItem.programV2.push({
+        time: this.editedItem.timeLine.time,
+        program: this.editedItem.timeLine.program,
+        order: this.editedItem.timeLine.order
+      });
+      }
+    },
+    deleteProgramTimeLine(item) {
+      const index = this.editedItem.programV2.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.programV2.splice(index, 1);
+    },
+    editProgramTimeLine(item) {
+      this.editedItem.timeLine.time = item.time;
+      this.editedItem.timeLine.program = item.program;
+      this.editedItem.timeLine.order = item.order;
+    },
   }
 };
 </script>

@@ -272,6 +272,36 @@
                     </v-data-table>
                   </v-flex>
                 </v-layout>
+                <v-layout wrap>
+                  <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImg = $event"
+                      v-bind:routerPath="apiIP+'/upload/car/trip'"
+                      :title="`Upload High Quality`"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.tripImages"
+                      @getDeleteFile="deleteImage($event)"
+                    ></ImageListComponent>
+                  </v-flex>
+                  <v-flex xs12 sm12 md4>
+                    <!-- <file-upload v-model="editedItem.roomImages" label="RoomType Image" v-bind:routerPath="apiIP+'/upload/room-type-image'"></file-upload> -->
+                    <file-upload
+                      @getUploadFilesURL="uploadImgWebp = $event"
+                      v-bind:routerPath="apiIP+'/upload/car/trip/webmp'"
+                      :title="`Upload Webp Image`"
+                    ></file-upload>
+                  </v-flex>
+                  <v-flex xs12 sm12 md8>
+                    <ImageListComponent
+                      :data="editedItem.tripImagesWebp"
+                      @getDeleteFile="deleteImageWebp($event)"
+                    ></ImageListComponent>
+                  </v-flex>
+                </v-layout>
               </v-container>
             </v-card-text>
             <v-card-actions>
@@ -429,6 +459,8 @@
 var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import moment from "moment";
+import FileUpload from "../components/FileUpload.vue";
+import ImageListComponent from "../components/ImageListComponent.vue";
 
 const AXIOS = axios.create({
   baseURL: `http://localhost:8082/Fleet-App/api/`,
@@ -443,7 +475,12 @@ const AXIOS = axios.create({
   }
 });
 export default {
+  components: {
+    FileUpload,
+    ImageListComponent
+  },
   data: () => ({
+    apiIP:apiIP,
     filterByCombo: {
       supplierId: {
         supplierCode: "ALL"
@@ -472,6 +509,8 @@ export default {
     },
     search: "",
     valid: true,
+    uploadImg: [],
+    uploadImgWebp: [],
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
     endDateModal: false,
@@ -596,6 +635,10 @@ export default {
       isPriceUsed:true,
       isPricePromotion:false,
       tripIntros:[],
+      tripImages: [],
+      removeImage: [],
+      tripImagesWebp: [],
+      removeImageWebp: [],
       map:""
     },
     defaultItem: {
@@ -623,6 +666,10 @@ export default {
         groupCode: ""
       },
       optionServices: [],
+      tripImages: [],
+      removeImage: [],
+      tripImagesWebp: [],
+      removeImageWebp: [],
       lang: "EN",
       isUsed: true,
       createBy: "",
@@ -783,6 +830,23 @@ export default {
           .catch(function(error) {})
           .finally(function() {});
     },
+    
+    deleteImage(image) {
+      this.editedItem.tripImages.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImage.push(image);
+    },
+    deleteImageWebp() {
+      this.editedItem.tripImagesWebp.forEach(function(item, index, object) {
+        if (image.fileName == item.fileName) {
+          object.splice(index, 1);
+        }
+      });
+      this.editedItem.removeImageWebp.push(image);
+    },
     close() {
       this.dialog = false;
       this.disableSelect = false;
@@ -793,7 +857,16 @@ export default {
     },
 
     save() {
-      console.log(this.editedItem);
+      if (this.uploadImg.length > 0) {
+        this.uploadImg.forEach(element => {
+          this.editedItem.tripImages.push(element);
+        });
+      }
+      if (this.uploadImgWebp.length > 0) {
+        this.uploadImgWebp.forEach(element => {
+          this.editedItem.tripImagesWebp.push(element);
+        });
+      }
      this.editedItem.modifyBy = this.$store.state.user.login.userName;
       this.editedItem.createBy = this.$store.state.user.login.userName;
       if (
@@ -823,6 +896,8 @@ export default {
         this.initialize();
         this.close();
       }
+      this.uploadImg = [];
+      this.editedItem.removeImage = [];
     },
     addTripIntroByLang() {
       this.editedItem.tripIntros.push({

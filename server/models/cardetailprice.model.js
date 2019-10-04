@@ -27,6 +27,12 @@ var carDetailPriceSchema = new mongoose.Schema({
         carTypeIntro: String,
         carImages:[]
     }],
+  tripImages: [
+    { fileName: String, filePath: String, destination: String, size: Number }
+  ],
+  tripImagesWebp: [
+    { fileName: String, filePath: String, destination: String, size: Number }
+  ],
     createBy:String,
     createDate:Date,
     modifyBy:String,
