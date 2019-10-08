@@ -7,6 +7,7 @@
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-dialog v-model="dialog" max-width="900px">
         <template v-slot:activator="{ on }">
+          <v-btn color="primary" dark class="mb-2" @click="initialize()">Reload</v-btn>
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
         </template>
         <v-form ref="form" v-model="valid">
@@ -43,33 +44,38 @@
                     <h5>
                       <b>Program</b>
                     </h5>
-                    <CustomEditForm  :idComponent="'prodgram'" :dataParent="editedItem.program" v-on:childtoparent="editedItem.program=$event"></CustomEditForm>
+                    <CustomEditForm
+                      :idComponent="'prodgram'"
+                      :dataParent="editedItem.program"
+                      v-on:childtoparent="editedItem.program=$event"
+                    ></CustomEditForm>
                   </v-flex>
                 </v-layout>
-                   <v-layout wrap class="sub-add-component my-4">
-                    <v-flex xs12 sm12 md2 class="sub-add-component">
-                      <v-select
+                <v-layout wrap class="sub-add-component my-4">
+                  <v-flex xs12 sm12 md2 class="sub-add-component">
+                    <v-select
                       v-model="editedItem.timeLine.icon"
                       :items="icons"
-                      item-text="iconName"
+                      item-text="iconCode"
                       item-value="iconCode"
                       label="Icon"
+                      class="icon__group"
                     >
-                    <template slot='selection' slot-scope='{ item }'>
-                      <font-awesome-icon far icon="spinner" />
-                    </template>
-                    <template slot='item' slot-scope='{ item }'>
-                      <div v-html="item.iconCode"></div>
-                    </template>
+                      <template slot="selection" slot-scope="{ item }">
+                        <div v-html="item.iconCode"></div>
+                      </template>
+                      <template slot="item" slot-scope="{ item }">
+                        <div v-html="item.iconCode"></div>
+                      </template>
                     </v-select>
-                    </v-flex>
+                  </v-flex>
                   <v-flex xs12 sm12 md2 class="sub-add-component">
                     <v-text-field v-model="editedItem.timeLine.time" label="Timeline Time"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm12 md4 class="sub-add-component">
+                  <v-flex xs12 sm12 md5 class="sub-add-component">
                     <v-text-field v-model="editedItem.timeLine.title" label="Timeline Title"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm12 md2 class="sub-add-component">
+                  <v-flex xs12 sm12 md1 class="sub-add-component">
                     <v-text-field v-model="editedItem.timeLine.order" label="Order"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md2 class="sub-add-component">
@@ -79,7 +85,11 @@
                     <h5>
                       <b>Program TimeLine</b>
                     </h5>
-                    <CustomEditForm  :idComponent="'programV2'" :dataParent="editedItem.timeLine.program" v-on:childtoparent="editedItem.timeLine.program=$event"></CustomEditForm>
+                    <CustomEditForm
+                      :idComponent="'programV2'"
+                      :dataParent="editedItem.timeLine.program"
+                      v-on:childtoparent="editedItem.timeLine.program=$event"
+                    ></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="border-top">
                     <v-data-table
@@ -90,11 +100,7 @@
                     >
                       <template v-slot:items="props">
                         <td class="justify-center px-0">
-                          <v-icon
-                            class="px-2"
-                            small
-                            @click="editProgramTimeLine(props.item)"
-                          >edit</v-icon>
+                          <v-icon class="px-2" small @click="editProgramTimeLine(props.item)">edit</v-icon>
                           <v-icon small @click="deleteProgramTimeLine(props.index)">delete</v-icon>
                         </td>
                         <td>{{props.item.order}}</td>
@@ -105,30 +111,88 @@
                     </v-data-table>
                   </v-flex>
                 </v-layout>
-                <v-layout>
+                <v-layout wrap class="sub-add-component my-4">
+                  <v-flex xs12 sm12 md6 class="sub-add-component">
+                    <v-text-field
+                      v-model="editedItem.content.contentName"
+                      label="Addition Information Name"
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md2 class="sub-add-component">
+                    <v-text-field v-model="editedItem.content.order" label="Order"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md2 class="sub-add-component">
+                    <v-btn color="blue darken-1" dark @click="addAdditionContent">Add</v-btn>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="group-card sub-add-component">
+                    <h5>
+                      <b>Addition Information</b>
+                    </h5>
+                    <CustomEditForm
+                      :idComponent="'content'"
+                      :dataParent="editedItem.content.contentDetail"
+                      v-on:childtoparent="editedItem.content.contentDetail=$event"
+                    ></CustomEditForm>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 class="border-top">
+                    <v-data-table
+                      :headers="contentHeader"
+                      :items="editedItem.additionContents"
+                      class="elevation-1"
+                      width="100%"
+                    >
+                      <template v-slot:items="props">
+                        <td class="justify-center px-0">
+                          <v-icon class="px-2" small @click="editAdditionContent(props.item)">edit</v-icon>
+                          <v-icon small @click="deleteAdditionContent(props.index)">delete</v-icon>
+                        </td>
+                        <td>{{props.item.order}}</td>
+                        <td>{{props.item.contentName}}</td>
+                        <td>{{props.item.contentDetail}}</td>
+                      </template>
+                    </v-data-table>
+                  </v-flex>
+                </v-layout>
+                <v-layout wrap>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Transport</b>
                     </h5>
-                    <CustomEditForm  :idComponent="'transport'" :dataParent="editedItem.transport" v-on:childtoparent="editedItem.transport=$event"></CustomEditForm>
+                    <CustomEditForm
+                      :idComponent="'transport'"
+                      :dataParent="editedItem.transport"
+                      v-on:childtoparent="editedItem.transport=$event"
+                    ></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Service Include</b>
                     </h5>
-                    <CustomEditForm :idComponent="'serviceinclude'" :dataParent="editedItem.serviceInclude" v-on:childtoparent="editedItem.serviceInclude=$event"></CustomEditForm>
+                    <CustomEditForm
+                      :idComponent="'serviceinclude'"
+                      :dataParent="editedItem.serviceInclude"
+                      v-on:childtoparent="editedItem.serviceInclude=$event"
+                    ></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Service Not Include</b>
                     </h5>
-                    <CustomEditForm :idComponent="'servicenot'" :dataParent="editedItem.shouldTake" v-on:childtoparent="editedItem.shouldTake=$event"></CustomEditForm>
+                    <CustomEditForm
+                      :idComponent="'servicenot'"
+                      :dataParent="editedItem.shouldTake"
+                      v-on:childtoparent="editedItem.shouldTake=$event"
+                    ></CustomEditForm>
                   </v-flex>
                   <v-flex xs12 sm12 md12 class="group-card">
                     <h5>
                       <b>Should Take</b>
                     </h5>
-                    <CustomEditForm  :idComponent="'shouldtake'" :dataParent="editedItem.shouldTake" v-on:childtoparent="editedItem.shouldTake=$event"></CustomEditForm>
+                    <CustomEditForm
+                      :idComponent="'shouldtake'"
+                      :dataParent="editedItem.shouldTake"
+                      v-on:childtoparent="editedItem.shouldTake=$event"
+                    ></CustomEditForm>
                   </v-flex>
                 </v-layout>
 
@@ -196,6 +260,11 @@
       <template v-slot:items="props">
         <tr>
           <td class="justify-center layout px-0">
+            <v-icon
+              small
+              class="mr-2"
+              @click.stop="dialog_detail = true;selectedItem=props.item"
+            >settings_overscan</v-icon>
             <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
             <v-icon small @click="deleteItem(props.item)" :disabled="!deletePermision">delete</v-icon>
           </td>
@@ -231,6 +300,42 @@
         >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
+    <v-dialog v-model="dialog_detail" width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Tour detail</span>
+        </v-card-title>
+        <v-card-text>
+          <div
+            v-for="(item,i) in selectedItem.programV2"
+            :key="i +'tourdetail'"
+            class="d-flex justify-start"
+          >
+            <div class="icon__component">
+              <span class="icon__line" v-html="item.icon"></span>
+            </div>
+            <div  class="content__component">
+              <div>
+                <span class="p-2 mx-2 font-weight-black">{{item.time}}</span>
+                <span class="p-2 mx-2 font-weight-black">{{item.title}}</span>
+              </div>
+              <div v-html="item.program"></div>
+            </div>
+          </div>
+          <div
+            v-for="(item,i) in selectedItem.additionContents"
+            :key="i +'additioncontent'"
+          >
+          <h4>{{item.contentName}}</h4>
+          <div v-html="item.contentDetail"></div>
+          </div>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary darken-1" text @click="dialog_detail = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -255,23 +360,34 @@ const AXIOS = axios.create({
 export default {
   components: {
     FileUpload,
-    DocUpload,
+    DocUpload
   },
   data: () => ({
+    dialog_detail: false,
+    editedIndex: -1,
+    selectedItem: {},
+    editedProgramTimeLineIndex: -1,
+    editedContentIndex: -1,
     apiIP: apiIP,
     valid: true,
     uploadDocument: [],
     date: new Date().toISOString().substr(0, 10),
     startDateModal: false,
-    componentLoaded:false,
+    componentLoaded: false,
     endDateModal: false,
     dialog: false,
     programTimelineHeader: [
-       { text: "Actions", value: "name", sortable: false },
-       { text: "Order", align: "center", value: "order" },
-       { text: "Time", align: "center", value: "time" },
-       { text: "Title", align: "center", value: "title" },
-       { text: "Program", align: "center", value: "program" },
+      { text: "Actions", value: "name", sortable: false },
+      { text: "Order", value: "order" },
+      { text: "Time", value: "time" },
+      { text: "Title", value: "title" },
+      { text: "Program", value: "program" }
+    ],
+    contentHeader: [
+      { text: "Actions", value: "name", sortable: false },
+      { text: "Order", value: "order" },
+      { text: "ContentName", value: "contentName" },
+      { text: "ContentDetail", value: "contentDetail" }
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
@@ -314,14 +430,20 @@ export default {
     editedItem: {
       tourId: "",
       program: "",
-      timeLine:{
-        icon:"",
-        time:"",
-        title:"",
-        program:"",
-        order:0,
+      timeLine: {
+        icon: "",
+        time: "",
+        title: "",
+        program: "",
+        order: 0
       },
-      programV2:[],
+      content: {
+        contentName: "",
+        contentDetail: "",
+        order: 0
+      },
+      programV2: [],
+      additionContents: [],
       transport: "",
       serviceInclude: "",
       serviceNotInclude: "",
@@ -339,14 +461,20 @@ export default {
     defaultItem: {
       tourId: "",
       program: "",
-      timeLine:{
-        icon:"",
-        time:"",
-        title:"",
-        program:"",
-        order:0,
+      timeLine: {
+        icon: "",
+        time: "",
+        title: "",
+        program: "",
+        order: 0
       },
-      programV2:[],
+      content: {
+        contentName: "",
+        contentDetail: "",
+        order: 0
+      },
+      programV2: [],
+      additionContents: [],
       transport: "",
       serviceInclude: "",
       serviceNotInclude: "",
@@ -361,15 +489,357 @@ export default {
       removeDoc: [],
       detailDocs: []
     },
-    icons:[
+    icons: [
       {
-        iconName:'Spinner',
-        iconCode:'<font-awesome-icon far icon="spinner" />'
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">fiber_manual_record</i>'
       },
       {
-        iconName:'UserSecret',
-        iconCode:'<font-awesome-icon icon="user-alt" />'
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--success">fiber_manual_record</i>'
       },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--warning">fiber_manual_record</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--danger">fiber_manual_record</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--primary">fiber_manual_record</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--info">fiber_manual_record</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--light">fiber_manual_record</i>'
+      },
+
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--success">brightness_auto</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--warning">brightness_auto</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">brightness_auto</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--danger">brightness_auto</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--primary">brightness_auto</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--info">brightness_auto</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--light">brightness_auto</i>'
+      },
+
+      {
+        iconName: "Spinner",
+        iconCode: '<i class="material-icons custom__icon--success">fastfood</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode: '<i class="material-icons custom__icon--warning">fastfood</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">fastfood</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode: '<i class="material-icons custom__icon--danger">fastfood</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode: '<i class="material-icons custom__icon--primary">fastfood</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode: '<i class="material-icons custom__icon--info">fastfood</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode: '<i class="material-icons custom__icon--light">fastfood</i>'
+      },
+
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--success">monetization_on</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--warning">monetization_on</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">monetization_on</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--danger">monetization_on</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--primary">monetization_on</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--info">monetization_on</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--light">monetization_on</i>'
+      },
+
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--success">turned_in_not</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--warning">turned_in_not</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">turned_in_not</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--danger">turned_in_not</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--primary">turned_in_not</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--info">turned_in_not</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--light">turned_in_not</i>'
+      },
+
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--success">favorite_border</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--warning">favorite_border</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">favorite_border</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--danger">favorite_border</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--primary">favorite_border</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--info">favorite_border</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--light">favorite_border</i>'
+      },
+
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--success">copyright</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--warning">copyright</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">copyright</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode: '<i class="material-icons custom__icon--danger">copyright</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--primary">copyright</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode: '<i class="material-icons custom__icon--info">copyright</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode: '<i class="material-icons custom__icon--light">copyright</i>'
+      },
+
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--success">check_circle</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--warning">check_circle</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">check_circle</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--danger">check_circle</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--primary">check_circle</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--info">check_circle</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--light">check_circle</i>'
+      },
+
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--success">verified_user</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--warning">verified_user</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">verified_user</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--danger">verified_user</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--primary">verified_user</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--info">verified_user</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--light">verified_user</i>'
+      },
+
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--success">calendar_today</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--warning">calendar_today</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--secondary">calendar_today</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--danger">calendar_today</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--primary">calendar_today</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--info">calendar_today</i>'
+      },
+      {
+        iconName: "Spinner",
+        iconCode:
+          '<i class="material-icons custom__icon--light">calendar_today</i>'
+      }
     ]
   }),
 
@@ -395,19 +865,19 @@ export default {
         return true;
       }
     },
-    tourListByLang(){
+    tourListByLang() {
       if (this.componentLoaded === false) {
         return;
       }
       this.tourlist.forEach(element => {
         element.tourIntros.forEach(area => {
-          if (area.lang.toUpperCase() === 'EN') {
+          if (area.lang.toUpperCase() === "EN") {
             element.tourName = area.tourName;
           }
         });
       });
       return this.tourlist;
-    },
+    }
   },
 
   watch: {
@@ -429,10 +899,12 @@ export default {
           this.tourlistFilter.unshift({
             tourCode: "ALL",
             tourName: "ALL",
-            tourIntros:[{
-              tourName:'ALL',
-              lang:'EN'
-            }],
+            tourIntros: [
+              {
+                tourName: "ALL",
+                lang: "EN"
+              }
+            ],
             tourId: -1
           });
           this.componentLoaded = true;
@@ -449,7 +921,7 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = 100;
+      this.editedIndex = this.tourdetail.indexOf(item);
       this.editedItem = Object.assign({}, item);
       delete this.editedItem._id;
       this.editId = item._id;
@@ -477,6 +949,8 @@ export default {
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
+        this.editAdditionContent = -1;
+        this.editProgramTimeLine = -1;
       }, 300);
     },
 
@@ -515,25 +989,53 @@ export default {
     replace(item) {
       return item.replace("block", "");
     },
-    
+
     addProgramTimeLine() {
-      var isFound = false;
-      this.editedItem.programV2.forEach(element => {
-        if (element.time == this.editedItem.timeLine.time) {
-          element.time = this.editedItem.timeLine.time;
-          element.program = this.editedItem.timeLine.program;
-          element.order= this.editedItem.timeLine.order
-          isFound = true;
-          return;
-        }
-      });
-      if (isFound === false) {
-      this.editedItem.programV2.push({
-        time: this.editedItem.timeLine.time,
-        program: this.editedItem.timeLine.program,
-        order: this.editedItem.timeLine.order
-      });
+      console.log(this.editedProgramTimeLineIndex);
+      if (this.editedProgramTimeLineIndex > -1) {
+        this.editedItem.programV2[
+          this.editedProgramTimeLineIndex
+        ].icon = this.editedItem.timeLine.icon;
+        this.editedItem.programV2[
+          this.editedProgramTimeLineIndex
+        ].time = this.editedItem.timeLine.time;
+        this.editedItem.programV2[
+          this.editedProgramTimeLineIndex
+        ].title = this.editedItem.timeLine.title;
+        this.editedItem.programV2[
+          this.editedProgramTimeLineIndex
+        ].program = this.editedItem.timeLine.program;
+        this.editedItem.programV2[
+          this.editedProgramTimeLineIndex
+        ].order = this.editedItem.timeLine.order;
+        console.log(this.editedItem.programV2);
+      } else {
+        this.editedItem.programV2.push({
+          icon: this.editedItem.timeLine.icon,
+          time: this.editedItem.timeLine.time,
+          title: this.editedItem.timeLine.title,
+          program: this.editedItem.timeLine.program,
+          order: this.editedItem.timeLine.order
+        });
       }
+      this.editedProgramTimeLineIndex = -1;
+      // var isFound = false;
+      // this.editedItem.programV2.forEach(element => {
+      //   if (element.time == this.editedItem.timeLine.time) {
+      //     element.time = this.editedItem.timeLine.time;
+      //     element.program = this.editedItem.timeLine.program;
+      //     element.order = this.editedItem.timeLine.order;
+      //     isFound = true;
+      //     return;
+      //   }
+      // });
+      // if (isFound === false) {
+      //   this.editedItem.programV2.push({
+      //     time: this.editedItem.timeLine.time,
+      //     program: this.editedItem.timeLine.program,
+      //     order: this.editedItem.timeLine.order
+      //   });
+      // }
     },
     deleteProgramTimeLine(item) {
       const index = this.editedItem.programV2.indexOf(item);
@@ -541,10 +1043,59 @@ export default {
         this.editedItem.programV2.splice(index, 1);
     },
     editProgramTimeLine(item) {
+      console.log(this.editedItem.programV2);
+      this.editedProgramTimeLineIndex = this.editedItem.programV2.indexOf(item);
       this.editedItem.timeLine.time = item.time;
+      this.editedItem.timeLine.title = item.title;
       this.editedItem.timeLine.program = item.program;
       this.editedItem.timeLine.order = item.order;
     },
+
+    addAdditionContent() {
+      if (this.editedContentIndex > -1) {
+        this.editedItem.additionContents[
+          this.editedContentIndex
+        ].contentDetail = this.editedItem.content.contentDetail;
+        this.editedItem.additionContents[
+          this.editedContentIndex
+        ].order = this.editedItem.content.order;
+      } else {
+        this.editedItem.additionContents.push({
+          contentName: this.editedItem.content.contentName,
+          contentDetail: this.editedItem.content.contentDetail,
+          order: this.editedItem.content.order
+        });
+      }
+      this.editedContentIndex = -1;
+      //   this.close()
+      // var isFound = false;
+      // this.editedItem.additionContents.forEach(element => {
+      //   if (element.contentName == this.editedItem.content.contentName) {
+      //     element.contentDetail = this.editedItem.content.contentDetail;
+      //     element.order = this.editedItem.content.order;
+      //     isFound = true;
+      //     return;
+      //   }
+      // });
+      // if (isFound === false) {
+      //   this.editedItem.additionContents.push({
+      //     contentName: this.editedItem.content.contentName,
+      //     contentDetail: this.editedItem.content.contentDetail,
+      //     order: this.editedItem.content.order
+      //   });
+      // }
+    },
+    deleteAdditionContent(item) {
+      const index = this.editedItem.additionContents.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.editedItem.additionContents.splice(index, 1);
+    },
+    editAdditionContent(item) {
+      this.editedContentIndex = this.editedItem.additionContents.indexOf(item);
+      this.editedItem.content.contentName = item.contentName;
+      this.editedItem.content.contentDetail = item.contentDetail;
+      this.editedItem.content.order = item.order;
+    }
   }
 };
 </script>
@@ -574,5 +1125,72 @@ export default {
   box-shadow: 0px 2px 4px #c1c1c1; */
   margin-bottom: 40px;
   /* border: 1px solid #01b3fa; */
+}
+.custom__icon--success {
+  color: #28a745 !important;
+}
+.custom__icon--primary {
+  color: #007bff !important;
+}
+.custom__icon--secondary {
+  color: #6c757d !important;
+}
+.custom__icon--danger {
+  color: #dc3545 !important;
+}
+.custom__icon--warning {
+  color: #ffc107 !important;
+}
+.custom__icon--info {
+  color: #17a2b8 !important;
+}
+.custom__icon--light {
+  color: #fdfdfd !important;
+}
+.icon__group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.v-list.theme--light {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+  overflow: scroll;
+}
+.icon__component{
+  width: 50px;
+  max-width: 50px;
+}
+.icon__line{
+  position: relative;
+  height: 100%;
+  width: 100%;
+    display: inline-block;
+    z-index: 1;
+}
+.icon__line i{
+  position: absolute;
+  top:0;
+  left:30%;
+  z-index:1;
+}
+.icon__line::after{
+  content:' ';
+  border: 1px solid gray;
+  height:100%;
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  z-index: -0;
+}
+.icon__line::before{
+  content:' ';
+  border: 1px solid gray;
+  height:100%;
+  position: absolute;
+  left: 50%;
+  z-index: -0;
 }
 </style>

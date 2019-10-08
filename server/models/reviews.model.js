@@ -3,8 +3,8 @@ var reviewsSchema = new mongoose.Schema({
     bookingCode: String,
     customerName: String,
     customerEmail: String,
-    reviewsContent:String,
-    voteScore:Number,
+    reviews:{
+    },
     lang:String,
     createBy:String,
     createDate:Date,

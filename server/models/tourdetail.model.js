@@ -3,11 +3,19 @@ var tourDetailSchema = new mongoose.Schema({
     tourId:{ type: mongoose.Schema.Types.ObjectId, ref: 'TourList' },
     program: String,
     timeLine:{
+        icon:String,
         time:String,
+        title:String,
         program:String,
         order:Number
     },
+    content:{
+        contentName:String,
+        contentDetail:String,
+        order:Number,
+      },
     programV2:[],
+    additionContents:[],
     transport: String,
     serviceInclude: String,
     serviceNotInclude:String,
