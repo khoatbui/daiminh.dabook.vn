@@ -67,6 +67,8 @@ const productSupplier=require('./routes/productsupplier.router')
 const productCategory=require('./routes/productcategory.router')
 
 const reviewsRouter=require('./routes/reviews.router')
+const reviewsBookingRelRouter=require('./routes/reviewsbookingrel.router')
+const reviewsBookingRelHisRouter=require('./routes/reviewsbookingrelhis.router')
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -126,6 +128,8 @@ app.use('/productsupplier',productSupplier)
 app.use('/productcategory',productCategory)
 
 app.use('/reviews',reviewsRouter)
+app.use('/reviewsbookingrel',reviewsBookingRelRouter)
+app.use('/reviewsbookingrelhis',reviewsBookingRelHisRouter)
 
 
 app.use(function(req, res, next) {

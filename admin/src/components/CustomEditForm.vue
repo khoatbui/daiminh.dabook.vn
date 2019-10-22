@@ -478,11 +478,17 @@ export default {
     },
     previewFile(commands) {
       var preview = document.querySelector("img");
+      var sizeImg=document.getElementById(`imgupload${this.idComponent}`).files[0].size;
+      if (sizeImg>=1572864) {
+        alert(`Kich thuoc anh qua lon (${sizeImg/(1024*1024)} mb), vui long giam kich thuoc anh`)
+      }
+      else{
       getBase64(document.getElementById(`imgupload${this.idComponent}`).files[0]).then(data =>{
         console.log(data);
         commands({src: data })
       }
       );
+      }
     }
   }
 };

@@ -5,19 +5,19 @@
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
-      <v-dialog v-model="dialog" max-width="900px">
+      <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
         </template>
         <v-form ref="form" v-model="valid">
           <v-card>
-            <v-card-title class="pink white--text">
-              <span class="headline">{{ formTitle }}</span>
+            <v-toolbar dark color="primary">
+          <v-btn color="blue darken-1" :disabled="!valid" fab small dark  @click="dialog = false">X</v-btn>
+              <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-btn color="white darken-1" dark flat @click="close">Cancel</v-btn>
               <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
-            </v-card-title>
-
+            </v-toolbar>
             <v-card-text>
               <v-subheader>KEY</v-subheader>
               <v-container grid-list-xl>
@@ -162,23 +162,11 @@
            <td class="w-25">
             <p class="one-row" v-html="props.item.blogId.blogName"></p>
           </td>
-           <td class="w-25">
-            <p class="one-row" v-html="props.item.block01"></p>
-          </td>
-          <td class="w-25">
-            <p class="one-row" v-html="props.item.block02"></p>
-          </td>
-          <td class="w-25">
-            <p class="one-row" v-html="props.item.block03"></p>
-          </td>
-          <td class="w-25">
-            <p class="one-row" v-html="props.item.block04"></p>
-          </td>
-          <td class="w-25">
-            <p class="one-row" v-html="props.item.block05"></p>
-          </td>
           <td class="w-25">
             <p v-html="props.item.lang"></p>
+          </td>
+          <td class="w-25">
+            <p v-html="props.item.modifyDate"></p>
           </td>
         </tr>
       </template>
@@ -193,11 +181,15 @@
         >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
-    <v-dialog v-model="dialog_detail" width="600px">
+    <v-dialog v-model="dialog_detail" fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-card>
+       <v-toolbar dark color="primary">
         <v-card-title>
           <span class="headline">Blog detail</span>
         </v-card-title>
+          <v-spacer></v-spacer>
+          <v-btn color="primary darken-1" text @click="dialog_detail = false">Close</v-btn>
+         </v-toolbar>
         <v-card-text>
           <div v-html="selectedItem.block01"></div>
           <div v-html="selectedItem.block02"></div>
@@ -253,16 +245,8 @@ export default {
       { text: "Actions", value: "name", sortable: false },
       { text: "BlockCode", align: "left", value: "blogId.blogCode" },
       { text: "BlockName", align: "left", value: "blogId.blogName" },
-      { text: "Block01", align: "left", value: "block01" },
-      { text: "Block02", align: "left", value: "block02" },
-      { text: "Block03", align: "left", value: "block03" },
-      {
-        text: "Block04",
-        align: "left",
-        value: "block04"
-      },
-      { text: "Block05", align: "left", value: "block05" },
-      { text: "Language", align: "left", value: "lang" }
+      { text: "Language", align: "left", value: "lang" },
+      { text: "ModifyDate", align: "left", value: "modifyDate" }
     ],
     filterByCombo: {
       blogId: {

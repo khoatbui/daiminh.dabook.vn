@@ -18,6 +18,11 @@ module.exports.getmReviewsById=(req,res,next) => {
         res.send(reviews)
     })
 };
+module.exports.getReviewsByBooking=(req,res,next) => {
+    Reviews.find({"bookingCode":req.params._id}).then(function(reviews){
+        res.send(reviews)
+    })
+};
 
 module.exports.deleteReviews= function (req, res) {
     Reviews.deleteOne({ _id: req.params._id }, function(err) {

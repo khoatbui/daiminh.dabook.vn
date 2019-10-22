@@ -5,7 +5,7 @@
 + Noi dung
 ==================================*/
 var express = require('express')
-var controller=require('../controllers/reviews.controller')
+var controller=require('../controllers/reviewsbookingrel.controller')
 var authMiddleware=require('../middleware/auth.middleware')
 var bodyParser = require('body-parser')
 
@@ -21,13 +21,13 @@ router.get('/',controller.index)
 
 router.get('/getused',controller.getUsed)
 
-router.get('/m/getreviewsbyid/:_id',controller.getmReviewsById)
+router.get('/getactive',controller.getActive)
 
-router.get('/getreviewsbybooking/:_id',controller.getReviewsByBooking)
+router.get('/m/getreviewsbookingrelbyid/:_id',controller.getmReviewsBookingRELById)
 
-router.delete('/:_id', controller.deleteReviews)
+router.delete('/:_id', controller.deleteReviewsBookingREL)
 
-router.post('/insert', jsonParser,controller.insertReviews)
+router.post('/insert', jsonParser,controller.insertReviewsBookingREL)
 
-router.post('/update/:_id', jsonParser,controller.updateReviews)
+router.post('/update/:_id', jsonParser,controller.updateReviewsBookingREL)
 module.exports = router

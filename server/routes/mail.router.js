@@ -21,6 +21,8 @@ router.post('/m/tour-booking',jsonParser,controller.sendMobileTourBookingEmail)
 
 router.post('/tour-booking', jsonParser,controller.sendTourBookingEmail)
 
-router.post('/car-booking', jsonParser, )
+router.post('/generalrequest', jsonParser,controller.sendGeneralRequestEmail)
+
+router.post('/car-booking', jsonParser,controller.sendCarBookingEmail )
 
 module.exports = router

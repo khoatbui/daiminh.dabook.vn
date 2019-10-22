@@ -5,17 +5,19 @@
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
-      <v-dialog v-model="dialog" max-width="900px">
+      <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark class="mb-2" @click="initialize()">Reload</v-btn>
           <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
         </template>
         <v-form ref="form" v-model="valid">
           <v-card>
-            <v-card-title class="pink white--text">
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
-
+            <v-toolbar dark color="primary">
+          <v-btn color="blue darken-1" :disabled="!valid" fab small dark  @click="dialog = false">X</v-btn>
+              <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" :disabled="!valid" dark @click="save">Save</v-btn>
+            </v-toolbar>
             <v-card-text>
               <v-subheader>KEY</v-subheader>
               <v-container grid-list-xl>
@@ -106,7 +108,6 @@
                         <td>{{props.item.order}}</td>
                         <td>{{props.item.time}}</td>
                         <td>{{props.item.title}}</td>
-                        <td>{{props.item.program}}</td>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -148,7 +149,6 @@
                         </td>
                         <td>{{props.item.order}}</td>
                         <td>{{props.item.contentName}}</td>
-                        <td>{{props.item.contentDetail}}</td>
                       </template>
                     </v-data-table>
                   </v-flex>
@@ -270,22 +270,10 @@
           </td>
           <td v-html="replace(props.item.tourId.tourName)"></td>
           <td>
-            <p v-html="props.item.program"></p>
-          </td>
-          <td>
-            <p v-html="props.item.transport"></p>
-          </td>
-          <td>
-            <p v-html="props.item.serviceInclude"></p>
-          </td>
-          <td>
-            <p v-html="props.item.serviceNotInclude"></p>
-          </td>
-          <td>
-            <p v-html="props.item.shouldTake"></p>
-          </td>
-          <td>
             <p v-html="props.item.lang"></p>
+          </td>
+          <td>
+            <p v-html="props.item.modifyDate"></p>
           </td>
         </tr>
       </template>
@@ -300,34 +288,35 @@
         >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
-    <v-dialog v-model="dialog_detail" width="600px">
+    <v-dialog v-model="dialog_detail" fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-card>
+         <v-toolbar dark color="primary">
         <v-card-title>
           <span class="headline">Tour detail</span>
         </v-card-title>
+          <v-spacer></v-spacer>
+          <v-btn color="primary darken-1" text @click="dialog_detail = false">Close</v-btn>
+         </v-toolbar>
         <v-card-text>
           <div
-            v-for="(item,i) in selectedItem.programV2"
+            v-for="(item,i) in orderProgram"
             :key="i +'tourdetail'"
             class="d-flex justify-start"
           >
             <div class="icon__component">
               <span class="icon__line" v-html="item.icon"></span>
             </div>
-            <div  class="content__component">
+            <div class="content__component">
               <div>
                 <span class="p-2 mx-2 font-weight-black">{{item.time}}</span>
                 <span class="p-2 mx-2 font-weight-black">{{item.title}}</span>
               </div>
-              <div v-html="item.program"></div>
+              <div class="content__program" v-html="item.program"></div>
             </div>
           </div>
-          <div
-            v-for="(item,i) in selectedItem.additionContents"
-            :key="i +'additioncontent'"
-          >
-          <h4>{{item.contentName}}</h4>
-          <div v-html="item.contentDetail"></div>
+          <div v-for="(item,i) in orderAdditionInfo" :key="i +'additioncontent'">
+            <h4>{{item.contentName}}</h4>
+            <div class="content__program" v-html="item.contentDetail"></div>
           </div>
         </v-card-text>
         <v-card-actions>
@@ -343,6 +332,7 @@ var apiIP = process.env.VUE_APP_API_IPADDRESS;
 import axios from "axios";
 import FileUpload from "../components/FileUpload.vue";
 import DocUpload from "../components/DocUpload.vue";
+import _ from "lodash";
 
 import moment from "moment";
 const AXIOS = axios.create({
@@ -363,6 +353,7 @@ export default {
     DocUpload
   },
   data: () => ({
+    _:_,
     dialog_detail: false,
     editedIndex: -1,
     selectedItem: {},
@@ -380,14 +371,12 @@ export default {
       { text: "Actions", value: "name", sortable: false },
       { text: "Order", value: "order" },
       { text: "Time", value: "time" },
-      { text: "Title", value: "title" },
-      { text: "Program", value: "program" }
+      { text: "Title", value: "title" }
     ],
     contentHeader: [
       { text: "Actions", value: "name", sortable: false },
       { text: "Order", value: "order" },
-      { text: "ContentName", value: "contentName" },
-      { text: "ContentDetail", value: "contentDetail" }
+      { text: "ContentName", value: "contentName" }
     ],
     headers: [
       { text: "Actions", value: "name", sortable: false },
@@ -397,15 +386,8 @@ export default {
         sortable: false,
         value: "tourId.tourName"
       },
-      { text: "Program", align: "center", value: "program" },
-      { text: "Transport", align: "center", value: "transport" },
-      { text: "Service Include", align: "center", value: "serviceInclude" },
-      {
-        text: "Service NotInclude",
-        value: "serviceNotInclude"
-      },
-      { text: "ShouldTake", align: "center", value: "shouldTake" },
-      { text: "Language", align: "center", value: "lang" }
+      { text: "Language", align: "center", value: "lang" },
+      { text: "ModifyDate", align: "center", value: "modifyDate" }
     ],
     filterByCombo: {
       tourId: {
@@ -877,6 +859,12 @@ export default {
         });
       });
       return this.tourlist;
+    },
+    orderProgram(){
+      return _.orderBy(this.selectedItem.programV2,'order');
+    },
+    orderAdditionInfo(){
+      return _.orderBy(this.selectedItem.additionContents,'order');
     }
   },
 
@@ -949,8 +937,8 @@ export default {
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
-        this.editAdditionContent = -1;
-        this.editProgramTimeLine = -1;
+        this.editedContentIndex = -1;
+        this.editedProgramTimeLineIndex = -1;
       }, 300);
     },
 
@@ -1019,23 +1007,6 @@ export default {
         });
       }
       this.editedProgramTimeLineIndex = -1;
-      // var isFound = false;
-      // this.editedItem.programV2.forEach(element => {
-      //   if (element.time == this.editedItem.timeLine.time) {
-      //     element.time = this.editedItem.timeLine.time;
-      //     element.program = this.editedItem.timeLine.program;
-      //     element.order = this.editedItem.timeLine.order;
-      //     isFound = true;
-      //     return;
-      //   }
-      // });
-      // if (isFound === false) {
-      //   this.editedItem.programV2.push({
-      //     time: this.editedItem.timeLine.time,
-      //     program: this.editedItem.timeLine.program,
-      //     order: this.editedItem.timeLine.order
-      //   });
-      // }
     },
     deleteProgramTimeLine(item) {
       const index = this.editedItem.programV2.indexOf(item);
@@ -1056,6 +1027,9 @@ export default {
         this.editedItem.additionContents[
           this.editedContentIndex
         ].contentDetail = this.editedItem.content.contentDetail;
+         this.editedItem.additionContents[
+          this.editedContentIndex
+        ].contentName = this.editedItem.content.contentName;
         this.editedItem.additionContents[
           this.editedContentIndex
         ].order = this.editedItem.content.order;
@@ -1147,50 +1121,54 @@ export default {
 .custom__icon--light {
   color: #fdfdfd !important;
 }
-.icon__group {
+/* .icon__group {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-}
-.v-list.theme--light {
+} */
+/* .v-list.theme--light {
   display: flex;
   flex-wrap: wrap;
   width: 300px;
   overflow: scroll;
-}
-.icon__component{
+} */
+.icon__component {
   width: 50px;
   max-width: 50px;
 }
-.icon__line{
+.icon__line {
   position: relative;
   height: 100%;
   width: 100%;
-    display: inline-block;
-    z-index: 1;
+  display: inline-block;
+  z-index: 1;
 }
-.icon__line i{
+.icon__line i {
   position: absolute;
-  top:0;
-  left:30%;
-  z-index:1;
+  top: 0;
+  left: 30%;
+  z-index: 1;
 }
-.icon__line::after{
-  content:' ';
+.icon__line::after {
+  content: " ";
   border: 1px solid gray;
-  height:100%;
+  height: 100%;
   position: absolute;
   left: 50%;
   bottom: 0px;
   z-index: -0;
 }
-.icon__line::before{
-  content:' ';
+.icon__line::before {
+  content: " ";
   border: 1px solid gray;
-  height:100%;
+  height: 100%;
   position: absolute;
   left: 50%;
   z-index: -0;
+}
+.content__program img {
+  max-width: 100%;
+  width: 100% !important;
 }
 </style>
