@@ -861,10 +861,10 @@ export default {
       return this.tourlist;
     },
     orderProgram(){
-      return _.orderBy(this.selectedItem.programV2,'order');
+      return _.orderBy(this.selectedItem.programV2,Number,'order');
     },
     orderAdditionInfo(){
-      return _.orderBy(this.selectedItem.additionContents,'order');
+      return _.orderBy(this.selectedItem.additionContents,Number,'order');
     }
   },
 
