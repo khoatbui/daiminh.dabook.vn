@@ -19,7 +19,7 @@
     "core-js": "^2.6.5",
     "dotenv": "^8.0.0",
     "es6-promise": "^4.2.8",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",
     "tiptap": "^1.25.0",
